@@ -79,8 +79,6 @@ export class DenialListComponent {
     this.dataGrid.instance.updateDimensions();
   };
 
-  // customizePhoneCell = ({ value }) => (value ? formatPhone(value) : undefined);
-
   //================Exporting Function=====================
   onExporting(e) {
     if (e.format === 'pdf') {
