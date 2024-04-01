@@ -1,0 +1,16 @@
+.inputBox {
+  display: flex;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  background-color: rgb(19, 19, 19);
+  height: 100%;
+  border: none;
+  outline: none;
+
+}
+
+.inputBox:hover{
+  background-color: rgb(19, 19, 19);
+  cursor: pointer;
+}

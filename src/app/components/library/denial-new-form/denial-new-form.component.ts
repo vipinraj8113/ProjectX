@@ -20,6 +20,7 @@ interface dropdownData {
 @Component({
   selector: 'contact-new-form',
   templateUrl: './denial-new-form.component.html',
+  styleUrls: ['./denial-new-form.component.scss'],
   providers: [DataService],
 })
 export class DenialNewFormComponent {

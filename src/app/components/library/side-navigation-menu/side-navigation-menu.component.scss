@@ -10,17 +10,13 @@
   .menu-container {
     background-color: var(--side-panel-background);
     min-height: 100%;
-    width: 250px;
+    width: 260px;
     display: flex;
     flex: 1;
     padding-top: var(--toolbar-vertical-padding);
     padding-bottom: var(--footer-height);
 
     ::ng-deep .dx-treeview {
-
-      // ## Long text positioning
-      white-space: nowrap;
-
       // ## Icon width customization
       .dx-treeview-item {
         padding-left: 0;

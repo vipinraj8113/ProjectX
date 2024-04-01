@@ -149,6 +149,8 @@ export class DenialListComponent {
     const updataDate = event.newData;
     const oldData = event.oldData;
     const combinedData = { ...oldData, ...updataDate };
+    console.log("onrowUpdated Data getting ",combinedData)
+
     let id = combinedData.ID;
     let code = combinedData.CODE;
     let description = combinedData.DESCRIPTION;
@@ -177,9 +179,6 @@ export class DenialListComponent {
           );
         }
       });
-    console.log('old data:', oldData);
-    console.log('new data:', updataDate);
-    console.log('modified data:', combinedData);
 
     event.cancel = true; // Prevent the default update operation
   }

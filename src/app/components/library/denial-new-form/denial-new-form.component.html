@@ -1,4 +1,4 @@
-<dx-form class="plain-styled-form" >
+<dx-form class="plain-styled-form">
   <dxi-item itemType="group">
     <dxo-col-count-by-screen
       [xs]="1"
@@ -19,7 +19,7 @@
 
     <dxi-item>
       <div *dxTemplate>
-        <form-textbox
+        <form-textbox 
           label="DESCRIPTION"
           [(value)]="newDenial.DESCRIPTION"
           [isEditing]="true"
@@ -30,30 +30,29 @@
 
     <dxi-item>
       <div *dxTemplate>
-
+        <label>TYPE</label>
         <dx-select-box
-          label="TYPE"
+          class="inputBox"
           [items]="Denial_Type_DropDownData"
           displayExpr="DESCRIPTION"
           valueExpr="ID"
           placeholder="Select a type"
           [(value)]="newDenial.TYPE_ID"
-        ></dx-select-box
-        >
+        ></dx-select-box>
       </div>
     </dxi-item>
 
     <dxi-item>
       <div *dxTemplate>
+        <label>CATEGORY</label>
         <dx-select-box
-          label="CATEGORY"
+          class="inputBox"
           [items]="Denial_Category_DropDownData"
           displayExpr="DESCRIPTION"
           valueExpr="ID"
           placeholder="Select a Category"
           [(value)]="newDenial.CATEGORY_ID"
-          ></dx-select-box
-        >
+        ></dx-select-box>
       </div>
     </dxi-item>
   </dxi-item>
