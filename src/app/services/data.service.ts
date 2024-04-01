@@ -17,7 +17,7 @@ export class DataService {
 
   //====================denials Fetching==================
   public getDenialsData() {
-    return this.http.get<any>(`${BASE_URL}DenialMaster/List`);
+    return this.http.post<any>(`${BASE_URL}DenialMaster/List`, {});
   }
 
   //------------------- denials Type Dropdown Fetching -----------
@@ -28,26 +28,26 @@ export class DataService {
   }
 
   //====================Add Denials========================
-  addDenial(CODE: any, DESCRIPTION: any, TYPE_ID: any, CATEGORY_ID: any) {
-    const DenialAddData = { CODE, DESCRIPTION, TYPE_ID, CATEGORY_ID };
-    return this.http.post(`${BASE_URL}DenialMaster/insert`, DenialAddData);
+  addDenial(DenialCode: any, Description: any, DenialTypeID: any, DenialCategoryID: any) {
+    const DenialAddData = { DenialCode, Description, DenialTypeID, DenialCategoryID };
+    return this.http.post(`${BASE_URL}DenialMaster/Insert`, DenialAddData);
   }
 
   //------------update Denial--------------------------
   updateDenial(
-    ID: any,
-    CODE: any,
-    DESCRIPTION: any,
-    TYPE_ID: any,
-    CATEGORY_ID: any
+
+    DenialCode: any,
+    Description: any,
+    DenialTypeID: any,
+    DenialCategoryID: any
   ) {
-    const UpdateData = { ID, CODE, DESCRIPTION, TYPE_ID, CATEGORY_ID };
+    const UpdateData = { DenialCode, Description, DenialTypeID, DenialCategoryID };
     return this.http.post(`${BASE_URL}DenialMaster/Update`, UpdateData);
   }
 
   //================REmove Denial=========================
   removeDenial(id: any) {
-    return this.http.get(`${BASE_URL}DenialMaster/delete/${id}`);
+    return this.http.post(`${BASE_URL}DenialMaster/delete/${id}`,{});
   }
 
   // ===========================================================================
@@ -358,7 +358,7 @@ The result can be exported to HTML or Markdown.`;
             ...task,
             startDate: taskStart.toJSDate(),
             endDate: taskStart.plus({ hours: 3 }).toJSDate(),
-            description: promptDescription,
+            Description: promptDescription,
             calendarId: weekDay,
           };
         });

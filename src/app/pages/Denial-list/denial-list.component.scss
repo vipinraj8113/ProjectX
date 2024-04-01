@@ -2,7 +2,7 @@
 @use "sass:math";
 
 :host {
-  --side-panel-toolbar-height: 76px;
+  --side-panel-toolbar-height: 72px;
 
   width: 100%;
   display: contents;
@@ -49,12 +49,5 @@
   }
 }
 
-// .edit-cell {
-//   position: relative;
 
-//   contact-status {
-//     position: absolute;
-//     margin-top: 10px;
-//     margin-left: 11px;
-//   }
-// }
+

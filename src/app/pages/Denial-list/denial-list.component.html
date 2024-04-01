@@ -5,6 +5,7 @@
     height="100%"
     [dataSource]="dataSource"
     [showBorders]="true"
+    [allowColumnResizing]="true"
     [allowColumnReordering]="true"
     [rowAlternationEnabled]="true"
     rowAlternationInterval="2"
@@ -13,9 +14,13 @@
     (onRowUpdating)="onRowUpdating($event)"
   >
     <dxo-paging [pageSize]="10"></dxo-paging>
-    <dxo-editing mode="popup" [allowUpdating]="true" [allowDeleting]="true">
+    <dxo-editing
+      mode="popup"
+      [allowUpdating]="true"
+      [allowDeleting]="true"
+      [popup]="{ width: '40%', height: '60vh' }"
+    >
     </dxo-editing>
-
     <dxo-pager [visible]="true" [showPageSizeSelector]="true"></dxo-pager>
     <dxo-load-panel [showPane]="false"></dxo-load-panel>
     <dxo-scrolling mode="virtual"></dxo-scrolling>
@@ -32,12 +37,10 @@
       [formats]="['xlsx', 'pdf']"
     >
     </dxo-export>
-
     <dxo-toolbar>
       <dxi-item location="before">
         <div class="grid-header">Denials</div>
       </dxi-item>
-
       <dxi-item location="after" locateInMenu="auto">
         <dx-button
           text="Add Denials"
@@ -73,9 +76,9 @@
     <dxo-selection mode="multiple"></dxo-selection>
     <dxo-header-filter [visible]="true"></dxo-header-filter>
 
-    <dxi-column dataField="CODE"></dxi-column>
-    <dxi-column dataField="DESCRIPTION"></dxi-column>
-    <dxi-column dataField="TYPE_ID" caption="TYPE">
+    <dxi-column dataField="DenialCode" caption="CODE"></dxi-column>
+    <dxi-column dataField="Description"></dxi-column>
+    <dxi-column dataField="DenialTypeID" caption="TYPE">
       <dxo-lookup
         [dataSource]="Denial_Type_DropDownData"
         displayExpr="DESCRIPTION"
@@ -83,7 +86,7 @@
       >
       </dxo-lookup>
     </dxi-column>
-    <dxi-column dataField="CATEGORY_ID" caption="CATEGORY">
+    <dxi-column dataField="DenialCategoryID" caption="CATEGORY">
       <dxo-lookup
         [dataSource]="Denial_category_DropDownData"
         displayExpr="DESCRIPTION"
@@ -95,8 +98,9 @@
 
   <form-popup
     [(visible)]="isAddContactPopupOpened"
-    (save)="onClickSaveNewContact()"
+    (save)="onClickSaveNewDenial()"
     titleText="New Denial"
+    style="width: 500px; height: 300px"
   >
     <contact-new-form></contact-new-form>
   </form-popup>

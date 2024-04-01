@@ -26,10 +26,10 @@ interface dropdownData {
 export class DenialNewFormComponent {
   newDenialData = {
     iD: '',
-    CODE: '',
-    DESCRIPTION: '',
-    TYPE_ID: '',
-    CATEGORY_ID: '',
+    DenialCode: '',
+    Description: '',
+    DenialTypeID: '',
+    DenialCategoryID: '',
     CATEGORY_NAME: '',
     TYPE_NAME: '',
   };

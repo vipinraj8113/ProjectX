@@ -20,10 +20,10 @@ import { ThemeService } from './services';
 import { DxFormModule } from 'devextreme-angular';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TaskListModule } from 'src/app/components/library/task-list-grid/task-list-grid.component';
-import { ClaimSummaryComponent } from './pages/claim-summary/claim-summary.component';
+import { ClaimSummaryComponent, ClaimSummaryModule } from './pages/claim-summary/claim-summary.component';
 
 @NgModule({
-  declarations: [AppComponent, ClaimSummaryComponent],
+  declarations: [AppComponent],
   imports: [
     TaskListModule,
     BrowserModule,
@@ -37,6 +37,7 @@ import { ClaimSummaryComponent } from './pages/claim-summary/claim-summary.compo
     UnauthenticatedContentModule,
     DxSelectBoxModule,
     DenialListModule,
+    ClaimSummaryModule,
     AnalyticsDashboardModule,
     DxFormModule,
     ReactiveFormsModule,

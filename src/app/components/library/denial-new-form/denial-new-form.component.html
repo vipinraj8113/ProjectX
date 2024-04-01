@@ -10,7 +10,7 @@
       <div *dxTemplate>
         <form-textbox
           label="CODE"
-          [(value)]="newDenial.CODE"
+          [(value)]="newDenial.DenialCode"
           [isEditing]="true"
         >
         </form-textbox>
@@ -19,9 +19,9 @@
 
     <dxi-item>
       <div *dxTemplate>
-        <form-textbox 
+        <form-textbox
           label="DESCRIPTION"
-          [(value)]="newDenial.DESCRIPTION"
+          [(value)]="newDenial.Description"
           [isEditing]="true"
         >
         </form-textbox>
@@ -37,7 +37,7 @@
           displayExpr="DESCRIPTION"
           valueExpr="ID"
           placeholder="Select a type"
-          [(value)]="newDenial.TYPE_ID"
+          [(value)]="newDenial.DenialTypeID"
         ></dx-select-box>
       </div>
     </dxi-item>
@@ -51,7 +51,7 @@
           displayExpr="DESCRIPTION"
           valueExpr="ID"
           placeholder="Select a Category"
-          [(value)]="newDenial.CATEGORY_ID"
+          [(value)]="newDenial.DenialCategoryID"
         ></dx-select-box>
       </div>
     </dxi-item>

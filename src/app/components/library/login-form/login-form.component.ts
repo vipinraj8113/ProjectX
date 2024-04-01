@@ -48,8 +48,6 @@ export class LoginFormComponent implements OnInit {
     e.preventDefault();
     const { username, password } = this.formData;
     console.log('log data :', username, password);
-    // this.loading = true;
-
     this.authService.logIn(username, password).subscribe((response: any) => {
       if (response.flag == 1) {
         localStorage.setItem('sidemenuItems', JSON.stringify(response.menus));
@@ -71,7 +69,8 @@ export class LoginFormComponent implements OnInit {
   };
 
   async ngOnInit(): Promise<void> {
-    this.defaultAuthData = await this.authService.getUser();
+    console.log()
+    // this.defaultAuthData = await this.authService.getUser();
   }
 }
 @NgModule({

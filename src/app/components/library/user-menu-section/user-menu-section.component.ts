@@ -22,6 +22,7 @@ export class UserMenuSectionComponent {
 
   @ViewChild('userInfoList', { read: ElementRef }) userInfoList: ElementRef<HTMLElement>;
 
+
   constructor() {}
 
   handleListItemClick(e: DxListTypes.ItemClickEvent) {

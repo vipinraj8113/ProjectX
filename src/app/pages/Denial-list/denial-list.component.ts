@@ -9,7 +9,7 @@ import {
 } from 'devextreme-angular';
 import { exportDataGrid as exportDataGridToPdf } from 'devextreme/pdf_exporter';
 import { exportDataGrid as exportDataGridToXLSX } from 'devextreme/excel_exporter';
-import { CardActivitiesModule, ContactStatusModule } from 'src/app/components';
+// import { CardActivitiesModule, ContactStatusModule } from 'src/app/components';
 import DataSource from 'devextreme/data/data_source';
 import { CommonModule } from '@angular/common';
 import { DataService } from 'src/app/services';
@@ -17,7 +17,6 @@ import { Workbook } from 'exceljs';
 import { saveAs } from 'file-saver-es';
 import { jsPDF } from 'jspdf';
 import notify from 'devextreme/ui/notify';
-import { formatPhone } from 'src/app/pipes/phone.pipe';
 import { FormPopupModule } from 'src/app/components';
 import { ContactPanelModule } from 'src/app/components/library/contact-panel/contact-panel.component';
 import {
@@ -25,10 +24,11 @@ import {
   DenialNewFormModule,
 } from 'src/app/components/library/denial-new-form/denial-new-form.component';
 import { DxLookupModule } from 'devextreme-angular';
+import { Router, ActivatedRoute } from '@angular/router';
 
 interface dropdownData {
   ID: number;
-  DESCRIPTION: string;
+  Description: string;
 }
 
 @Component({
@@ -62,7 +62,11 @@ export class DenialListComponent {
       }),
   });
 
-  constructor(private service: DataService) {
+  constructor(
+    private service: DataService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {
     this.getDenial_Type_DropDown();
     this.getDenial_Category_DropDown();
   }
@@ -75,9 +79,13 @@ export class DenialListComponent {
     this.dataGrid.instance.refresh();
   };
 
-  onPinnedChange = () => {
-    this.dataGrid.instance.updateDimensions();
-  };
+  // onPinnedChange = () => {
+  //   this.dataGrid.instance.updateDimensions();
+  // };
+
+  // onSelectionChanged(data: any) {
+  //   this.selectedItemKeys = data.selectedRowKeys;
+  // }
 
   //================Exporting Function=====================
   onExporting(e) {
@@ -109,24 +117,26 @@ export class DenialListComponent {
     }
   }
 
-  onSelectionChanged(data: any) {
-    this.selectedItemKeys = data.selectedRowKeys;
-  }
-
   //============ADD NEW DENIALS======================
 
-  onClickSaveNewContact = () => {
-    const { CODE, DESCRIPTION, TYPE_ID, CATEGORY_ID } =
+  onClickSaveNewDenial = () => {
+    const { DenialCode, Description, DenialTypeID, DenialCategoryID } =
       this.denialComponent.getNewDenialData();
-    console.log('data kittiiiiiii', CODE, DESCRIPTION, TYPE_ID, CATEGORY_ID);
+    console.log(
+      'data kittiiiiiii',
+      DenialCode,
+      Description,
+      DenialTypeID,
+      DenialCategoryID
+    );
     this.service
-      .addDenial(CODE, DESCRIPTION, TYPE_ID, CATEGORY_ID)
+      .addDenial(DenialCode, Description, DenialTypeID, DenialCategoryID)
       .subscribe((result: any) => {
         if (result) {
           this.dataGrid.instance.refresh();
           notify(
             {
-              message: `New Denial "${CODE} ${DESCRIPTION} ${TYPE_ID} ${CATEGORY_ID}" saved Successfully`,
+              message: `New Denial "${DenialCode} ${Description} ${DenialTypeID} ${DenialCategoryID}" saved Successfully`,
               position: { at: 'top center', my: 'top center' },
             },
             'success'
@@ -149,16 +159,15 @@ export class DenialListComponent {
     const updataDate = event.newData;
     const oldData = event.oldData;
     const combinedData = { ...oldData, ...updataDate };
-    console.log("onrowUpdated Data getting ",combinedData)
+    console.log('onrowUpdated Data getting ', combinedData);
 
-    let id = combinedData.ID;
-    let code = combinedData.CODE;
-    let description = combinedData.DESCRIPTION;
-    let type_id = combinedData.TYPE_ID;
-    let category_id = combinedData.CATEGORY_ID;
+    let code = combinedData.DenialCode;
+    let Description = combinedData.Description;
+    let DenialTypeID = combinedData.DenialTypeID;
+    let DenialCategoryID = combinedData.DenialCategoryID;
 
     this.service
-      .updateDenial(id, code, description, type_id, category_id)
+      .updateDenial(code, Description, DenialTypeID, DenialCategoryID)
       .subscribe((data: any) => {
         if (data) {
           notify(
@@ -168,7 +177,11 @@ export class DenialListComponent {
             },
             'success'
           );
-          window.location.reload();
+          this.router
+            .navigateByUrl('/', { skipLocationChange: true })
+            .then(() => {
+              this.router.navigate([this.route.snapshot.url.join('/')]);
+            });
         } else {
           notify(
             {
@@ -189,7 +202,6 @@ export class DenialListComponent {
     console.log('selected row data :', SelectedRow);
     this.service.removeDenial(SelectedRow.ID).subscribe(() => {
       try {
-        // Your delete logic here
         notify(
           {
             message: 'Delete operation successful',
@@ -248,8 +260,6 @@ export class DenialListComponent {
     ContactPanelModule,
     DenialNewFormModule,
     FormPopupModule,
-    CardActivitiesModule,
-    ContactStatusModule,
     CommonModule,
   ],
   providers: [],
