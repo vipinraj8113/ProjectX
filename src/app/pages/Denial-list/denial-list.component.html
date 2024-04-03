@@ -21,7 +21,15 @@
       [popup]="{ width: '40%', height: '60vh' }"
     >
     </dxo-editing>
-    <dxo-pager [visible]="true" [showPageSizeSelector]="true"></dxo-pager>
+    <dxo-pager
+    [visible]="true"
+    [allowedPageSizes]="allowedPageSizes"
+    [displayMode]="displayMode"
+    [showPageSizeSelector]="showPageSizeSelector"
+    [showInfo]="showInfo"
+    [showNavigationButtons]="showNavButtons"
+  >
+  </dxo-pager>
     <dxo-load-panel [showPane]="false"></dxo-load-panel>
     <dxo-scrolling mode="virtual"></dxo-scrolling>
     <dxo-sorting mode="multiple"></dxo-sorting>
@@ -47,7 +55,7 @@
           icon="plus"
           type="default"
           stylingMode="contained"
-          (onClick)="addContact()"
+          (onClick)="addDenial()"
         ></dx-button>
       </dxi-item>
       <dxi-item
@@ -102,6 +110,6 @@
     titleText="New Denial"
     style="width: 500px; height: 300px"
   >
-    <contact-new-form></contact-new-form>
+    <contact-denial-form></contact-denial-form>
   </form-popup>
 </div>

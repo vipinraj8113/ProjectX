@@ -12,7 +12,6 @@ import { exportDataGrid as exportDataGridToXLSX } from 'devextreme/excel_exporte
 // import { CardActivitiesModule, ContactStatusModule } from 'src/app/components';
 import DataSource from 'devextreme/data/data_source';
 import { CommonModule } from '@angular/common';
-import { DataService } from 'src/app/services';
 import { Workbook } from 'exceljs';
 import { saveAs } from 'file-saver-es';
 import { jsPDF } from 'jspdf';
@@ -25,6 +24,7 @@ import {
 } from 'src/app/components/library/denial-new-form/denial-new-form.component';
 import { DxLookupModule } from 'devextreme-angular';
 import { Router, ActivatedRoute } from '@angular/router';
+import { ReportService } from 'src/app/services/Report-data.service';
 
 interface dropdownData {
   ID: number;
@@ -34,7 +34,7 @@ interface dropdownData {
 @Component({
   templateUrl: './claim-summary.component.html',
   styleUrls: ['./claim-summary.component.scss'],
-  providers: [DataService],
+  providers: [ReportService],
 })
 export class ClaimSummaryComponent {
   @ViewChild(DxDataGridComponent, { static: true })
@@ -43,49 +43,55 @@ export class ClaimSummaryComponent {
   @ViewChild(DenialNewFormComponent, { static: false })
   denialComponent: DenialNewFormComponent;
 
+  // @ViewChild('dataGrid', { static: false }) dataGrid: DxDataGridComponent;
+  @ViewChild('dataGrid2', { static: false }) dataGrid2: DxDataGridComponent;
   isPanelOpened = false;
 
   isAddContactPopupOpened = false;
+  isFilterOpened = true;
 
   selectedItemKeys: any[] = [];
-  Denial_Type_DropDownData: dropdownData[];
-  Denial_category_DropDownData: dropdownData[];
-  ID: any;
+  Denial_Type_DropDownData: dropdownData[]; // Variable for storing drop down
+  Denial_category_DropDownData: dropdownData[]; // Variable for storing drop down
 
-  dataSource = new DataSource<any>({
+  GridSource: any; //--variable for using column wise filtering data---
+  //========Variables for Pagination ====================
+  readonly allowedPageSizes: any = [5, 10, 'all'];
+  displayMode: any = 'full';
+  showPageSizeSelector = true;
+  showInfo = true;
+  showNavButtons = true;
+  summaryData: any;
+  //============Get DataSource VAluee======================
+  dataSource: any = new DataSource<any>({
     load: () =>
       new Promise((resolve, reject) => {
-        this.service.getDenialsData().subscribe({
-          next: (data: any) => resolve(data),
+        this.service.get_Claim_Summary_Date_wise().subscribe({
+          next: (data: any) => {
+            this.summaryData = data.Columns;
+            // console.log("summary data",this.summaryData)
+            resolve(data.ClaimDetails);
+          },
           error: ({ message }) => reject(message),
         });
       }),
   });
 
+  //============Constructor==================
   constructor(
-    private service: DataService,
+    private service: ReportService,
     private router: Router,
     private route: ActivatedRoute
-  ) {
-    this.getDenial_Type_DropDown();
-    this.getDenial_Category_DropDown();
-  }
+  ) {}
 
-  addContact() {
-    this.isAddContactPopupOpened = true;
-  }
-
+  //=============DataGrid Refreshing=======================
   refresh = () => {
     this.dataGrid.instance.refresh();
   };
-
-  // onPinnedChange = () => {
-  //   this.dataGrid.instance.updateDimensions();
-  // };
-
-  // onSelectionChanged(data: any) {
-  //   this.selectedItemKeys = data.selectedRowKeys;
-  // }
+  //=====================Search on Each Column====================
+  applyFilter() {
+    this.GridSource.filter();
+  }
 
   //================Exporting Function=====================
   onExporting(e) {
@@ -115,137 +121,6 @@ export class ClaimSummaryComponent {
       });
       e.cancel = true;
     }
-  }
-
-  //============ADD NEW DENIALS======================
-
-  onClickSaveNewDenial = () => {
-    const { DenialCode, Description, DenialTypeID, DenialCategoryID } =
-      this.denialComponent.getNewDenialData();
-    console.log(
-      'data kittiiiiiii',
-      DenialCode,
-      Description,
-      DenialTypeID,
-      DenialCategoryID
-    );
-    this.service
-      .addDenial(DenialCode, Description, DenialTypeID, DenialCategoryID)
-      .subscribe((result: any) => {
-        if (result) {
-          this.dataGrid.instance.refresh();
-          notify(
-            {
-              message: `New Denial "${DenialCode} ${Description} ${DenialTypeID} ${DenialCategoryID}" saved Successfully`,
-              position: { at: 'top center', my: 'top center' },
-            },
-            'success'
-          );
-        } else {
-          notify(
-            {
-              message: `Your Data Not Saved`,
-              position: { at: 'top right', my: 'top right' },
-            },
-            'error'
-          );
-        }
-      });
-  };
-
-  //====================Update Denial Row Data==============
-
-  onRowUpdating(event) {
-    const updataDate = event.newData;
-    const oldData = event.oldData;
-    const combinedData = { ...oldData, ...updataDate };
-    console.log('onrowUpdated Data getting ', combinedData);
-
-    let code = combinedData.DenialCode;
-    let Description = combinedData.Description;
-    let DenialTypeID = combinedData.DenialTypeID;
-    let DenialCategoryID = combinedData.DenialCategoryID;
-
-    this.service
-      .updateDenial(code, Description, DenialTypeID, DenialCategoryID)
-      .subscribe((data: any) => {
-        if (data) {
-          notify(
-            {
-              message: `New Denial updated Successfully`,
-              position: { at: 'top center', my: 'top center' },
-            },
-            'success'
-          );
-          this.router
-            .navigateByUrl('/', { skipLocationChange: true })
-            .then(() => {
-              this.router.navigate([this.route.snapshot.url.join('/')]);
-            });
-        } else {
-          notify(
-            {
-              message: `Your Data Not Saved`,
-              position: { at: 'top right', my: 'top right' },
-            },
-            'error'
-          );
-        }
-      });
-
-    event.cancel = true; // Prevent the default update operation
-  }
-
-  // =================Remove Denial=========================
-  onRowRemoving(event: any) {
-    var SelectedRow = event.key;
-    console.log('selected row data :', SelectedRow);
-    this.service.removeDenial(SelectedRow.ID).subscribe(() => {
-      try {
-        notify(
-          {
-            message: 'Delete operation successful',
-            position: { at: 'top right', my: 'top right' },
-          },
-          'success'
-        );
-        this.dataGrid.instance.refresh();
-        window.location.reload();
-      } catch (error) {
-        notify(
-          {
-            message: 'Delete operation failed',
-            position: { at: 'top right', my: 'top right' },
-          },
-          'error'
-        );
-      }
-    });
-  }
-
-  //=============Get Denial Type Drop dwn Data==============================
-  getDenial_Type_DropDown() {
-    let dropdownType = 'DENIALTYPE';
-    this.service
-      .get_Denial_Dropdown_Data(dropdownType)
-      .subscribe((data: any) => {
-        this.Denial_Type_DropDownData = data;
-        console.log('drop down dataaaaaaaaa', this.Denial_Type_DropDownData);
-      });
-  }
-
-  //=============Get Denial Type Drop dwn Data==============================
-  getDenial_Category_DropDown() {
-    let dropdownType = 'DENIALCATEGORY';
-    this.service
-      .get_Denial_Dropdown_Data(dropdownType)
-      .subscribe((data: any) => {
-        this.Denial_category_DropDownData = data;
-        console.log(
-          'drop down dataaaaaaaaa',
-          this.Denial_category_DropDownData
-        );
-      });
   }
 }
 

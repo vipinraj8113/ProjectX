@@ -52,6 +52,13 @@ export class DenialListComponent {
   Denial_category_DropDownData: dropdownData[];
   ID: any;
 
+  //========Variables for Pagination ====================
+  readonly allowedPageSizes: any = [5, 10, 'all'];
+  displayMode: any = 'full';
+  showPageSizeSelector = true;
+  showInfo = true;
+  showNavButtons = true;
+  //=================Fetchiong DataSource=====================
   dataSource = new DataSource<any>({
     load: () =>
       new Promise((resolve, reject) => {
@@ -71,7 +78,7 @@ export class DenialListComponent {
     this.getDenial_Category_DropDown();
   }
 
-  addContact() {
+  addDenial() {
     this.isAddContactPopupOpened = true;
   }
 
