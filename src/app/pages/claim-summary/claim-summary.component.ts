@@ -43,12 +43,10 @@ export class ClaimSummaryComponent {
   @ViewChild(DenialNewFormComponent, { static: false })
   denialComponent: DenialNewFormComponent;
 
-  // @ViewChild('dataGrid', { static: false }) dataGrid: DxDataGridComponent;
-  @ViewChild('dataGrid2', { static: false }) dataGrid2: DxDataGridComponent;
   isPanelOpened = false;
 
   isAddContactPopupOpened = false;
-  isFilterOpened = true;
+  isFilterOpened = false;
 
   selectedItemKeys: any[] = [];
   Denial_Type_DropDownData: dropdownData[]; // Variable for storing drop down
@@ -77,13 +75,21 @@ export class ClaimSummaryComponent {
       }),
   });
 
-  //============Constructor==================
+  //=======================Constructor==================
   constructor(
     private service: ReportService,
     private router: Router,
     private route: ActivatedRoute
   ) {}
 
+  //============Show Filter Row==========================
+  filterClick = () => {
+    if (this.isFilterOpened == false) {
+      this.isFilterOpened = true;
+    } else {
+      this.isFilterOpened = false;
+    }
+  };
   //=============DataGrid Refreshing=======================
   refresh = () => {
     this.dataGrid.instance.refresh();

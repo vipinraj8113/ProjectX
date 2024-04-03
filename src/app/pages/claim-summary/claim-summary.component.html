@@ -27,8 +27,11 @@
     <dxo-sorting mode="multiple"></dxo-sorting>
     <dxo-header-filter [visible]="true"></dxo-header-filter>
     <dxo-column-chooser [enabled]="true"></dxo-column-chooser>
-    <dxo-search-panel [visible]="true" placeholder="Search" ></dxo-search-panel>
-    <dxo-filter-row visible="true" [applyFilter]="applyFilter"></dxo-filter-row>
+    <dxo-search-panel [visible]="true" placeholder="Search"></dxo-search-panel>
+    <dxo-filter-row
+      [visible]="isFilterOpened"
+      [applyFilter]="applyFilter"
+    ></dxo-filter-row>
     <dxo-export
       [enabled]="true"
       [allowExportSelectedData]="true"
@@ -40,15 +43,27 @@
         <div class="grid-header">Claim Summary Reports</div>
       </dxi-item>
       <dxi-item
-        location="after"
-        locateInMenu="auto"
-        showText="inMenu"
+      location="after"
+      locateInMenu="auto"
+      showText="inMenu"
+      widget="dxButton"
+      [options]="{
+        text: 'Refresh',
+        icon: 'refresh',
+        onClick: refresh,
+        stylingMode: 'text'
+      }"
+    ></dxi-item>
+    <dxi-item location="after" locateInMenu="auto">
+      <div class="separator"></div>
+    </dxi-item>
+      <dxi-item
         widget="dxButton"
         [options]="{
-          text: 'Refresh',
-          icon: 'refresh',
-          onClick: refresh,
-          stylingMode: 'text'
+          text: 'Filter',
+          icon: 'filter',
+          onClick: filterClick,
+
         }"
       ></dxi-item>
       <dxi-item location="after" locateInMenu="auto">
