@@ -26,8 +26,9 @@
     <dxo-scrolling mode="virtual"></dxo-scrolling>
     <dxo-sorting mode="multiple"></dxo-sorting>
     <dxo-header-filter [visible]="true"></dxo-header-filter>
-    <dxo-column-chooser [enabled]="true"></dxo-column-chooser>
-    <dxo-search-panel [visible]="true" placeholder="Search"></dxo-search-panel>
+    <dxo-column-chooser [enabled]="true" mode="select"></dxo-column-chooser>
+    <!-- <dxo-column-location location="before" colIndex="0"></dxo-column-location> -->
+    <!-- <dxo-search-panel [visible]="true" placeholder="Search" (onKeyDown)="onSearchKeydown($event)"></dxo-search-panel> -->
     <dxo-filter-row
       [visible]="isFilterOpened"
       [applyFilter]="applyFilter"
@@ -43,33 +44,43 @@
         <div class="grid-header">Claim Summary Reports</div>
       </dxi-item>
       <dxi-item
-      location="after"
-      locateInMenu="auto"
-      showText="inMenu"
-      widget="dxButton"
-      [options]="{
-        text: 'Refresh',
-        icon: 'refresh',
-        onClick: refresh,
-        stylingMode: 'text'
-      }"
-    ></dxi-item>
-    <dxi-item location="after" locateInMenu="auto">
-      <div class="separator"></div>
-    </dxi-item>
+        location="after"
+        locateInMenu="auto"
+        showText="inMenu"
+        widget="dxButton"
+        [options]="{
+          text: 'Refresh',
+          icon: 'refresh',
+          onClick: refresh,
+          stylingMode: 'text'
+        }"
+      ></dxi-item>
+      <dxi-item location="after" locateInMenu="auto">
+        <div class="separator"></div>
+      </dxi-item>
       <dxi-item
         widget="dxButton"
         [options]="{
           text: 'Filter',
           icon: 'filter',
           onClick: filterClick,
-
         }"
       ></dxi-item>
       <dxi-item location="after" locateInMenu="auto">
         <div class="separator"></div>
       </dxi-item>
       <dxi-item name="columnChooserButton" locateInMenu="auto"></dxi-item>
+      <dxi-item location="after" locateInMenu="auto">
+        <div class="separator"></div>
+      </dxi-item>
+      <dxi-item
+        widget="dxButton"
+        [options]="{
+          text: 'summary',
+          icon: 'formula',
+          onClick: SummaryClick,
+        }"
+      ></dxi-item>
       <dxi-item location="after" locateInMenu="auto">
         <div class="separator"></div>
       </dxi-item>
@@ -82,18 +93,22 @@
 
     <dxo-selection mode="multiple"></dxo-selection>
     <dxo-header-filter [visible]="true"></dxo-header-filter>
-    <dxo-summary>
-      <dxi-total-item column="ClaimedAmount" summaryType="sum">
-      </dxi-total-item>
-      <dxi-total-item column="RemittedAmount" summaryType="sum">
-      </dxi-total-item>
-      <dxi-total-item column="RejectedAmount" summaryType="sum">
-      </dxi-total-item>
-      <dxi-total-item column="PaidAmount" summaryType="sum"> </dxi-total-item>
-      <dxi-total-item column="BalanceAmount" summaryType="sum">
-      </dxi-total-item>
-      <dxi-total-item column="ResubmittedAmt" summaryType="sum">
-      </dxi-total-item>
-    </dxo-summary>
+
+    <div *ngIf="isSummaryOpened">
+      <dxo-summary>
+        <dxi-total-item column="ClaimedAmount" summaryType="sum" [valueFormat]="{ type: 'fixedPoint', precision: 2 }">
+        </dxi-total-item>
+        <dxi-total-item column="RemittedAmount" summaryType="sum" [valueFormat]="{ type: 'fixedPoint', precision: 2 }">
+        </dxi-total-item>
+        <dxi-total-item column="RejectedAmount" summaryType="sum" [valueFormat]="{ type: 'fixedPoint', precision: 2 }">
+        </dxi-total-item>
+        <dxi-total-item column="PaidAmount" summaryType="sum" [valueFormat]="{ type: 'fixedPoint', precision: 2 }">
+        </dxi-total-item>
+        <dxi-total-item column="BalanceAmount" summaryType="sum" [valueFormat]="{ type: 'fixedPoint', precision: 2 }">
+        </dxi-total-item>
+        <dxi-total-item column="ResubmittedAmt" summaryType="sum" [valueFormat]="{ type: 'fixedPoint', precision: 2 }">
+        </dxi-total-item>
+      </dxo-summary>
+    </div>
   </dx-data-grid>
 </div>

@@ -9,13 +9,11 @@ import {
 } from 'devextreme-angular';
 import { exportDataGrid as exportDataGridToPdf } from 'devextreme/pdf_exporter';
 import { exportDataGrid as exportDataGridToXLSX } from 'devextreme/excel_exporter';
-// import { CardActivitiesModule, ContactStatusModule } from 'src/app/components';
 import DataSource from 'devextreme/data/data_source';
 import { CommonModule } from '@angular/common';
 import { Workbook } from 'exceljs';
 import { saveAs } from 'file-saver-es';
 import { jsPDF } from 'jspdf';
-import notify from 'devextreme/ui/notify';
 import { FormPopupModule } from 'src/app/components';
 import { ContactPanelModule } from 'src/app/components/library/contact-panel/contact-panel.component';
 import {
@@ -46,7 +44,8 @@ export class ClaimSummaryComponent {
   isPanelOpened = false;
 
   isAddContactPopupOpened = false;
-  isFilterOpened = false;
+  isFilterOpened = false;//filter row enable-desable variable
+  isSummaryOpened=false//summary row enable-desable variable
 
   selectedItemKeys: any[] = [];
   Denial_Type_DropDownData: dropdownData[]; // Variable for storing drop down
@@ -90,14 +89,36 @@ export class ClaimSummaryComponent {
       this.isFilterOpened = false;
     }
   };
+   //============Show Filter Row==========================
+   SummaryClick = () => {
+    if (this.isSummaryOpened == false) {
+      this.isSummaryOpened = true;
+    } else {
+      this.isSummaryOpened = false;
+    }
+  };
   //=============DataGrid Refreshing=======================
   refresh = () => {
     this.dataGrid.instance.refresh();
   };
-  //=====================Search on Each Column====================
+  //=====================Search on Each Column=============
   applyFilter() {
     this.GridSource.filter();
   }
+
+  //===========Column Locating USing Column Name===========
+  onSearchKeydown(event: Event): void {
+    const keyboardEvent = event as KeyboardEvent;
+    if (keyboardEvent.key === 'Enter') {
+      const columnName = (keyboardEvent.target as HTMLInputElement).value;
+      const columnIndex = this.dataSource.columns.findIndex(col => col.dataField === columnName);
+      if (columnIndex !== -1) {
+        const dataGrid = document.querySelector('.grid.theme-dependent') as any;
+        dataGrid.instance.getScrollable().scrollTo({ left: columnIndex * 100 });
+      }
+    }
+  }
+
 
   //================Exporting Function=====================
   onExporting(e) {
