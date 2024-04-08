@@ -1,4 +1,4 @@
-import { Component, ViewChild, NgModule } from '@angular/core';
+import { Component, ViewChild, NgModule, OnInit } from '@angular/core';
 import {
   DxButtonModule,
   DxDataGridModule,
@@ -6,7 +6,7 @@ import {
   DxDropDownButtonModule,
   DxSelectBoxModule,
   DxTextBoxModule,
-  DxFormModule
+  DxFormModule,
 } from 'devextreme-angular';
 import { DxDateBoxModule } from 'devextreme-angular';
 import { DxToolbarModule } from 'devextreme-angular/ui/toolbar';
@@ -27,7 +27,13 @@ import { DxLookupModule } from 'devextreme-angular';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ReportService } from 'src/app/services/Report-data.service';
 import { ToolbarAnalyticsModule } from 'src/app/components/utils/toolbar-analytics/toolbar-analytics.component';
-
+import {
+  DxAccordionModule,
+  DxCheckBoxModule,
+  DxSliderModule,
+  DxTagBoxModule,
+  DxTemplateModule,
+} from 'devextreme-angular';
 interface dropdownData {
   ID: number;
   Description: string;
@@ -48,8 +54,8 @@ export class ClaimSummaryComponent {
   isPanelOpened = false;
 
   isAddContactPopupOpened = false;
-  isFilterOpened = false;//filter row enable-desable variable
-  isSummaryOpened=false//summary row enable-desable variable
+  isFilterOpened = false; //filter row enable-desable variable
+  isSummaryOpened = false; //summary row enable-desable variable
 
   selectedItemKeys: any[] = [];
   Denial_Type_DropDownData: dropdownData[]; // Variable for storing drop down
@@ -63,19 +69,32 @@ export class ClaimSummaryComponent {
   showInfo = true;
   showNavButtons = true;
   summaryData: any;
+  Params: boolean = false;
+  //================Variables for Storing selected Parameters========
+  SearchOn_Value: any;
+  Facility_Value: any;
+  EncounterType_Value: any;
+  From_Date_Value: any;
+  To_Date_Value: any;
+
+  //===========Variables For DataSource Of Multiple DropDowns=========
+  SearchOn_DataSource: any;
+  Facility_DataSource: any;
+  EncounterType_DataSource: any;
+
   //============Get DataSource VAluee======================
   dataSource: any = new DataSource<any>({
-    // load: () =>
-    //   new Promise((resolve, reject) => {
-    //     this.service.get_Claim_Summary_Date_wise().subscribe({
-    //       next: (data: any) => {
-    //         this.summaryData = data.Columns;
-    //         // console.log("summary data",this.summaryData)
-    //         resolve(data.ClaimDetails);
-    //       },
-    //       error: ({ message }) => reject(message),
-    //     });
-    //   }),
+    load: () =>
+      new Promise((resolve, reject) => {
+        this.service.get_Claim_Summary_Date_wise().subscribe({
+          next: (data: any) => {
+            this.summaryData = data.Columns;
+            // console.log("summary data",this.summaryData)
+            resolve(data.ClaimDetails);
+          },
+          error: ({ message }) => reject(message),
+        });
+      }),
   });
 
   //=======================Constructor==================
@@ -83,8 +102,45 @@ export class ClaimSummaryComponent {
     private service: ReportService,
     private router: Router,
     private route: ActivatedRoute
-  ) {}
+  ) {
+    this.fetch_Dropdown_InitData();
+  }
+  // NgOnInit() {
+  //   this.fetch_Dropdown_InitData();
+  // }
 
+  //============Fetching DropDown Init Data==============
+  fetch_Dropdown_InitData() {
+    this.service.get_Init_Data().subscribe((response: any) => {
+      this.SearchOn_DataSource = response.SearchOn;
+      this.Facility_DataSource = response.Facility;
+      this.EncounterType_DataSource = response.EncountrType;
+
+      console.log('Init Data Fetched Successfully :', this.SearchOn_DataSource);
+    });
+  }
+
+  //============Fetching Report DataSource===============
+
+  Fetch_Report_DataSource() {
+    console.log(
+      'apply button clicked :',
+      this.SearchOn_Value,
+      this.Facility_Value,
+      this.EncounterType_Value,
+      this.From_Date_Value,
+      this.To_Date_Value
+    );
+  }
+
+  //============Show Parametrs Div=======================
+  show_Parameter_Div() {
+    if (this.Params == true) {
+      this.Params = false;
+    } else {
+      this.Params = true;
+    }
+  }
   //============Show Filter Row==========================
   filterClick = () => {
     if (this.isFilterOpened == false) {
@@ -93,8 +149,8 @@ export class ClaimSummaryComponent {
       this.isFilterOpened = false;
     }
   };
-   //============Show Filter Row==========================
-   SummaryClick = () => {
+  //============Show Filter Row==========================
+  SummaryClick = () => {
     if (this.isSummaryOpened == false) {
       this.isSummaryOpened = true;
     } else {
@@ -122,7 +178,6 @@ export class ClaimSummaryComponent {
   //     }
   //   }
   // }
-
 
   //================Exporting Function=====================
   onExporting(e) {
@@ -170,7 +225,12 @@ export class ClaimSummaryComponent {
     DxFormModule,
     ToolbarAnalyticsModule,
     DxDateBoxModule,
-    DxToolbarModule
+    DxToolbarModule,
+    DxAccordionModule,
+    DxCheckBoxModule,
+    DxSliderModule,
+    DxTagBoxModule,
+    DxTemplateModule,
   ],
   providers: [],
   exports: [],

@@ -1,69 +1,98 @@
 <div class="view-wrapper list-page">
-  <div>
-
-
   <div class="paramsDiv">
-  <dx-toolbar class="theme-dependent mainDiv">
+    <dx-toolbar class="theme-dependent mainDiv" [visible]="Params">
+      <dxi-item location="before" class="" >
+        <div class="dx-fieldset-header FieldHeader">Search On</div>
+        <div class="dx-field">
+          <dx-lookup
+            [items]="SearchOn_DataSource"
+            displayExpr="Name"
+            valueExpr="ID"
+            [(value)]="SearchOn_Value"
+          >
+            <dxo-drop-down-options
+              [showTitle]="false"
+              class=""
+            ></dxo-drop-down-options>
+          </dx-lookup>
+        </div>
+      </dxi-item>
 
-    <dxi-item location="before" class="FieldHeaderDiv">
-      <div class="dx-fieldset-header FieldHeader">Search On</div>
-      <div class="dx-field">
-        <dx-lookup [items]="" displayExpr="Name" valueExpr="ID">
-          <dxo-drop-down-options
-            [showTitle]="false"
-            class="FieldHeaderDiv"
-          ></dxo-drop-down-options>
-        </dx-lookup>
-      </div>
-    </dxi-item>
+      <dxi-item location="before" class=" " >
+        <div class="dx-fieldset-header FieldHeader">Facility</div>
+        <div class="dx-field">
+          <dx-lookup
+            [items]="Facility_DataSource"
+            displayExpr="Name"
+            valueExpr="ID"
+            [(value)]="Facility_Value"
+          >
+            <dxo-drop-down-options [showTitle]="false"></dxo-drop-down-options>
+          </dx-lookup>
+        </div>
+      </dxi-item>
 
-    <dxi-item location="before" class="FieldHeaderDiv">
-      <div class="dx-fieldset-header FieldHeader">Facility</div>
-      <div class="dx-field">
-        <dx-lookup [items]="" displayExpr="Name" valueExpr="ID" class="optn">
-          <dxo-drop-down-options [showTitle]="false"></dxo-drop-down-options>
-        </dx-lookup>
-      </div>
-    </dxi-item>
+      <dxi-item location="before" class="" >
+        <div class="dx-fieldset-header FieldHeader">Encounter Type</div>
+        <div class="dx-field">
+          <dx-lookup
+            [items]="EncounterType_DataSource"
+            displayExpr="Name"
+            valueExpr="ID"
+            [(value)]="EncounterType_Value"
+          >
+            <dxo-drop-down-options [showTitle]="false"></dxo-drop-down-options>
+          </dx-lookup>
+        </div>
+      </dxi-item>
 
-    <dxi-item location="before" class="FieldHeaderDiv">
-      <div class="dx-fieldset-header FieldHeader">Encounter Type</div>
-      <div class="dx-field">
-        <dx-lookup [items]="" displayExpr="Name" valueExpr="ID" class="optn">
-          <dxo-drop-down-options [showTitle]="false"></dxo-drop-down-options>
-        </dx-lookup>
-      </div>
-    </dxi-item>
+      <dxi-item location="before" class="" >
+        <div class="dx-fieldset-header FieldHeader">From Date</div>
+        <dx-date-box
+          applyValueMode="useButtons"
+          displayFormat="dd/MM/yyyy"
+          valueFormat="yyyy-MM-dd"
+          placeholder="From Date"
+          [(value)]="From_Date_Value"
+        >
+        </dx-date-box>
+      </dxi-item>
 
-    <dxi-item location="before" class="FieldHeaderDiv">
-      <div class="dx-fieldset-header FieldHeader">From Date</div>
-      <dx-date-box applyValueMode="useButtons" displayFormat="dd/MM/yyyy">
-      </dx-date-box>
-    </dxi-item>
+      <dxi-item location="before" class="" >
+        <div class="dx-fieldset-header FieldHeader">To Date</div>
+        <dx-date-box
+          applyValueMode="useButtons"
+          displayFormat="dd/MM/yyyy"
+          valueFormat="yyyy-MM-dd"
+          placeholder="To Date"
+          [(value)]="To_Date_Value"
+        >
+        </dx-date-box>
+      </dxi-item>
 
-    <dxi-item location="before" class="FieldHeaderDiv">
-      <div class="dx-fieldset-header FieldHeader">To Date</div>
-      <dx-date-box applyValueMode="useButtons" displayFormat="dd/MM/yyyy" >
-      </dx-date-box>
-    </dxi-item>
+      <dxi-item location="after" locateInMenu="auto" class="applyDiv">
+        <dx-button
+          class="add-card"
+          icon="todo"
+          text="Apply"
+          type="default"
+          stylingMode="contained"
+          (onClick)="Fetch_Report_DataSource()"
+        >
+        </dx-button>
+      </dxi-item>
+    </dx-toolbar>
+  </div>
 
-    <dxi-item location="after" locateInMenu="auto" class="applyDiv">
-      <dx-button
-        class="add-card"
-        icon="todo"
-        text="Apply"
-        type="default"
-        stylingMode="contained"
-      >
-      </dx-button>
-    </dxi-item>
+  <dx-button
+    class="ToggleButton"
+    stylingMode="contained"
+    icon="spindown"
+    type="normal"
+    (onClick)="show_Parameter_Div()"
+  >
+  </dx-button>
 
-  </dx-toolbar>
-</div>
-<div class="hiderButton">
-<p>ddsjklnfsjfjsdfndsjfvndsjkvbdsjbdjk</p>
-</div>
-</div>
   <dx-data-grid
     class="grid theme-dependent"
     height="100%"
