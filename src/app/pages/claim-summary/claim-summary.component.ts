@@ -6,7 +6,10 @@ import {
   DxDropDownButtonModule,
   DxSelectBoxModule,
   DxTextBoxModule,
+  DxFormModule
 } from 'devextreme-angular';
+import { DxDateBoxModule } from 'devextreme-angular';
+import { DxToolbarModule } from 'devextreme-angular/ui/toolbar';
 import { exportDataGrid as exportDataGridToPdf } from 'devextreme/pdf_exporter';
 import { exportDataGrid as exportDataGridToXLSX } from 'devextreme/excel_exporter';
 import DataSource from 'devextreme/data/data_source';
@@ -23,6 +26,7 @@ import {
 import { DxLookupModule } from 'devextreme-angular';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ReportService } from 'src/app/services/Report-data.service';
+import { ToolbarAnalyticsModule } from 'src/app/components/utils/toolbar-analytics/toolbar-analytics.component';
 
 interface dropdownData {
   ID: number;
@@ -61,17 +65,17 @@ export class ClaimSummaryComponent {
   summaryData: any;
   //============Get DataSource VAluee======================
   dataSource: any = new DataSource<any>({
-    load: () =>
-      new Promise((resolve, reject) => {
-        this.service.get_Claim_Summary_Date_wise().subscribe({
-          next: (data: any) => {
-            this.summaryData = data.Columns;
-            // console.log("summary data",this.summaryData)
-            resolve(data.ClaimDetails);
-          },
-          error: ({ message }) => reject(message),
-        });
-      }),
+    // load: () =>
+    //   new Promise((resolve, reject) => {
+    //     this.service.get_Claim_Summary_Date_wise().subscribe({
+    //       next: (data: any) => {
+    //         this.summaryData = data.Columns;
+    //         // console.log("summary data",this.summaryData)
+    //         resolve(data.ClaimDetails);
+    //       },
+    //       error: ({ message }) => reject(message),
+    //     });
+    //   }),
   });
 
   //=======================Constructor==================
@@ -107,17 +111,17 @@ export class ClaimSummaryComponent {
   }
 
   //===========Column Locating USing Column Name===========
-  onSearchKeydown(event: Event): void {
-    const keyboardEvent = event as KeyboardEvent;
-    if (keyboardEvent.key === 'Enter') {
-      const columnName = (keyboardEvent.target as HTMLInputElement).value;
-      const columnIndex = this.dataSource.columns.findIndex(col => col.dataField === columnName);
-      if (columnIndex !== -1) {
-        const dataGrid = document.querySelector('.grid.theme-dependent') as any;
-        dataGrid.instance.getScrollable().scrollTo({ left: columnIndex * 100 });
-      }
-    }
-  }
+  // onSearchKeydown(event: Event): void {
+  //   const keyboardEvent = event as KeyboardEvent;
+  //   if (keyboardEvent.key === 'Enter') {
+  //     const columnName = (keyboardEvent.target as HTMLInputElement).value;
+  //     const columnIndex = this.dataSource.columns.findIndex(col => col.dataField === columnName);
+  //     if (columnIndex !== -1) {
+  //       const dataGrid = document.querySelector('.grid.theme-dependent') as any;
+  //       dataGrid.instance.getScrollable().scrollTo({ left: columnIndex * 100 });
+  //     }
+  //   }
+  // }
 
 
   //================Exporting Function=====================
@@ -163,6 +167,10 @@ export class ClaimSummaryComponent {
     DenialNewFormModule,
     FormPopupModule,
     CommonModule,
+    DxFormModule,
+    ToolbarAnalyticsModule,
+    DxDateBoxModule,
+    DxToolbarModule
   ],
   providers: [],
   exports: [],

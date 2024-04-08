@@ -14,7 +14,7 @@
   bottom: 0;
   left: 0;
   right: 0;
-  flex-direction: row;
+  flex-direction: column;
   padding: 0 15px;
 
   .grid {
@@ -54,4 +54,66 @@
   user-panel {
     display: inherit;
   }
+}
+
+// -------------------------------------------
+
+// @use "../../../../variables.scss" as *;
+// @use "sass:math";
+
+.toolbar-header {
+  @include header();
+}
+
+@media only screen and (max-width: 400px) {
+  // ::ng-deep .dx-tab {
+  //   min-width: 70px;
+  // }
+
+  ::ng-deep .dx-theme-generic .dx-fieldset,
+  ::ng-deep .dx-theme-material .dx-fieldset {
+    width: 40%;
+    float: left;
+  }
+
+  ::ng-deep .dx-field > .dx-lookup {
+    flex: 1;
+  }
+
+  ::ng-deep #age {
+    display: inline-block;
+  }
+}
+.FieldHeader {
+  margin-bottom: 0px;
+  font-size: 15px;
+}
+.FieldHeaderDiv {
+  padding-left: 25px;
+}
+
+.mainDiv {
+  height: 80px;
+  padding: 10px;
+  margin-bottom: 0px;
+}
+.applyDiv {
+  margin-top: 18px;
+}
+
+.optn {
+  width: 150px;
+}
+.paramsDiv {
+  margin-bottom: 0px;
+}
+.hiderButton {
+  height: 10px;
+
+  margin: 0px;
+  margin-top: 0px;
+  background-color: rgb(3, 234, 157);
+}
+.dx-toolbar {
+  margin-bottom: 0px;
 }

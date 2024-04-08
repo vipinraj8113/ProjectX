@@ -1,4 +1,69 @@
 <div class="view-wrapper list-page">
+  <div>
+
+
+  <div class="paramsDiv">
+  <dx-toolbar class="theme-dependent mainDiv">
+
+    <dxi-item location="before" class="FieldHeaderDiv">
+      <div class="dx-fieldset-header FieldHeader">Search On</div>
+      <div class="dx-field">
+        <dx-lookup [items]="" displayExpr="Name" valueExpr="ID">
+          <dxo-drop-down-options
+            [showTitle]="false"
+            class="FieldHeaderDiv"
+          ></dxo-drop-down-options>
+        </dx-lookup>
+      </div>
+    </dxi-item>
+
+    <dxi-item location="before" class="FieldHeaderDiv">
+      <div class="dx-fieldset-header FieldHeader">Facility</div>
+      <div class="dx-field">
+        <dx-lookup [items]="" displayExpr="Name" valueExpr="ID" class="optn">
+          <dxo-drop-down-options [showTitle]="false"></dxo-drop-down-options>
+        </dx-lookup>
+      </div>
+    </dxi-item>
+
+    <dxi-item location="before" class="FieldHeaderDiv">
+      <div class="dx-fieldset-header FieldHeader">Encounter Type</div>
+      <div class="dx-field">
+        <dx-lookup [items]="" displayExpr="Name" valueExpr="ID" class="optn">
+          <dxo-drop-down-options [showTitle]="false"></dxo-drop-down-options>
+        </dx-lookup>
+      </div>
+    </dxi-item>
+
+    <dxi-item location="before" class="FieldHeaderDiv">
+      <div class="dx-fieldset-header FieldHeader">From Date</div>
+      <dx-date-box applyValueMode="useButtons" displayFormat="dd/MM/yyyy">
+      </dx-date-box>
+    </dxi-item>
+
+    <dxi-item location="before" class="FieldHeaderDiv">
+      <div class="dx-fieldset-header FieldHeader">To Date</div>
+      <dx-date-box applyValueMode="useButtons" displayFormat="dd/MM/yyyy" >
+      </dx-date-box>
+    </dxi-item>
+
+    <dxi-item location="after" locateInMenu="auto" class="applyDiv">
+      <dx-button
+        class="add-card"
+        icon="todo"
+        text="Apply"
+        type="default"
+        stylingMode="contained"
+      >
+      </dx-button>
+    </dxi-item>
+
+  </dx-toolbar>
+</div>
+<div class="hiderButton">
+<p>ddsjklnfsjfjsdfndsjfvndsjkvbdsjbdjk</p>
+</div>
+</div>
   <dx-data-grid
     class="grid theme-dependent"
     height="100%"
@@ -96,17 +161,41 @@
 
     <div *ngIf="isSummaryOpened">
       <dxo-summary>
-        <dxi-total-item column="ClaimedAmount" summaryType="sum" [valueFormat]="{ type: 'fixedPoint', precision: 2 }">
+        <dxi-total-item
+          column="ClaimedAmount"
+          summaryType="sum"
+          [valueFormat]="{ type: 'fixedPoint', precision: 2 }"
+        >
         </dxi-total-item>
-        <dxi-total-item column="RemittedAmount" summaryType="sum" [valueFormat]="{ type: 'fixedPoint', precision: 2 }">
+        <dxi-total-item
+          column="RemittedAmount"
+          summaryType="sum"
+          [valueFormat]="{ type: 'fixedPoint', precision: 2 }"
+        >
         </dxi-total-item>
-        <dxi-total-item column="RejectedAmount" summaryType="sum" [valueFormat]="{ type: 'fixedPoint', precision: 2 }">
+        <dxi-total-item
+          column="RejectedAmount"
+          summaryType="sum"
+          [valueFormat]="{ type: 'fixedPoint', precision: 2 }"
+        >
         </dxi-total-item>
-        <dxi-total-item column="PaidAmount" summaryType="sum" [valueFormat]="{ type: 'fixedPoint', precision: 2 }">
+        <dxi-total-item
+          column="PaidAmount"
+          summaryType="sum"
+          [valueFormat]="{ type: 'fixedPoint', precision: 2 }"
+        >
         </dxi-total-item>
-        <dxi-total-item column="BalanceAmount" summaryType="sum" [valueFormat]="{ type: 'fixedPoint', precision: 2 }">
+        <dxi-total-item
+          column="BalanceAmount"
+          summaryType="sum"
+          [valueFormat]="{ type: 'fixedPoint', precision: 2 }"
+        >
         </dxi-total-item>
-        <dxi-total-item column="ResubmittedAmt" summaryType="sum" [valueFormat]="{ type: 'fixedPoint', precision: 2 }">
+        <dxi-total-item
+          column="ResubmittedAmt"
+          summaryType="sum"
+          [valueFormat]="{ type: 'fixedPoint', precision: 2 }"
+        >
         </dxi-total-item>
       </dxo-summary>
     </div>
