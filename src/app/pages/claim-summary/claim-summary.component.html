@@ -1,71 +1,90 @@
 <div class="view-wrapper list-page">
   <div class="paramsDiv">
-    <dx-toolbar class="theme-dependent mainDiv" [visible]="Params">
-      <dxi-item location="before" class="" >
+    <dx-toolbar
+      class="theme-dependent mainDiv d-flex flex-wrap align-items-start flex-md-row flex-column"
+      [visible]="Params"
+    >
+      <dxi-item location="before" class="flex-grow-1">
         <div class="dx-fieldset-header FieldHeader">Search On</div>
-        <div class="dx-field">
+        <div class="dx-field flex-grow-1 form-control-sm">
           <dx-lookup
             [items]="SearchOn_DataSource"
             displayExpr="Name"
             valueExpr="ID"
             [(value)]="SearchOn_Value"
+            placeholder="select searchOn value"
+            [width]="'auto'"
           >
             <dxo-drop-down-options
               [showTitle]="false"
-              class=""
+              [width]="'auto'"
             ></dxo-drop-down-options>
           </dx-lookup>
         </div>
       </dxi-item>
 
-      <dxi-item location="before" class=" " >
+      <dxi-item location="before" class="flex-grow-1 ms-3">
         <div class="dx-fieldset-header FieldHeader">Facility</div>
-        <div class="dx-field">
+        <div class="dx-field flex-grow-1 form-control-sm">
           <dx-lookup
             [items]="Facility_DataSource"
             displayExpr="Name"
             valueExpr="ID"
             [(value)]="Facility_Value"
+            placeholder="select facility value"
           >
-            <dxo-drop-down-options [showTitle]="false"></dxo-drop-down-options>
+            <dxo-drop-down-options
+              [showTitle]="false"
+              [width]="'auto'"
+            ></dxo-drop-down-options>
           </dx-lookup>
         </div>
       </dxi-item>
 
-      <dxi-item location="before" class="" >
+      <dxi-item location="before" class="flex-grow-1 ms-3">
         <div class="dx-fieldset-header FieldHeader">Encounter Type</div>
-        <div class="dx-field">
+        <div class="dx-field flex-grow-1">
           <dx-lookup
             [items]="EncounterType_DataSource"
             displayExpr="Name"
             valueExpr="ID"
             [(value)]="EncounterType_Value"
+            placeholder="select encounter Type value"
           >
-            <dxo-drop-down-options [showTitle]="false"></dxo-drop-down-options>
+            <dxo-drop-down-options
+              [showTitle]="false"
+              [width]="'auto'"
+            ></dxo-drop-down-options>
           </dx-lookup>
         </div>
       </dxi-item>
 
-      <dxi-item location="before" class="" >
+      <dxi-item location="before" class="flex-grow-1 ms-3">
         <div class="dx-fieldset-header FieldHeader">From Date</div>
         <dx-date-box
-          applyValueMode="useButtons"
+        type="date"
+
           displayFormat="dd/MM/yyyy"
-          valueFormat="yyyy-MM-dd"
+          valueFormat="yyyy/MM/dd"
           placeholder="From Date"
           [(value)]="From_Date_Value"
+          [min]="minDate"
+          [max]="maxDate"
         >
         </dx-date-box>
       </dxi-item>
 
-      <dxi-item location="before" class="" >
+      <dxi-item location="before" class="flex-grow-1 ms-3">
         <div class="dx-fieldset-header FieldHeader">To Date</div>
         <dx-date-box
-          applyValueMode="useButtons"
+        type="date"
+
           displayFormat="dd/MM/yyyy"
-          valueFormat="yyyy-MM-dd"
+          valueFormat="yyyy/MM/dd"
           placeholder="To Date"
           [(value)]="To_Date_Value"
+          [min]="minDate"
+          [max]="maxDate"
         >
         </dx-date-box>
       </dxi-item>
@@ -77,25 +96,17 @@
           text="Apply"
           type="default"
           stylingMode="contained"
-          (onClick)="Fetch_Report_DataSource()"
+          (onClick)="get_Report_DataSource()"
         >
         </dx-button>
       </dxi-item>
     </dx-toolbar>
   </div>
 
-  <dx-button
-    class="ToggleButton"
-    stylingMode="contained"
-    icon="spindown"
-    type="normal"
-    (onClick)="show_Parameter_Div()"
-  >
-  </dx-button>
-
   <dx-data-grid
     class="grid theme-dependent"
     height="100%"
+    noDataText="no data loaded..!!"
     [dataSource]="dataSource"
     [showBorders]="true"
     [allowColumnResizing]="true"
@@ -138,6 +149,18 @@
         <div class="grid-header">Claim Summary Reports</div>
       </dxi-item>
       <dxi-item
+        widget="dxButton"
+        [options]="{
+          text: '',
+          icon: 'filter',
+          onClick: show_Parameter_Div,
+          title: 'Show Filtering Options'
+        }"
+      ></dxi-item>
+      <dxi-item location="after" locateInMenu="auto">
+        <div class="separator"></div>
+      </dxi-item>
+      <dxi-item
         location="after"
         locateInMenu="auto"
         showText="inMenu"
@@ -146,7 +169,8 @@
           text: 'Refresh',
           icon: 'refresh',
           onClick: refresh,
-          stylingMode: 'text'
+          stylingMode: 'text',
+          title: 'Refresh'
         }"
       ></dxi-item>
       <dxi-item location="after" locateInMenu="auto">
@@ -155,9 +179,10 @@
       <dxi-item
         widget="dxButton"
         [options]="{
-          text: 'Filter',
-          icon: 'filter',
+          text: '',
+          icon: 'find',
           onClick: filterClick,
+          title: 'Search Column'
         }"
       ></dxi-item>
       <dxi-item location="after" locateInMenu="auto">
@@ -170,9 +195,10 @@
       <dxi-item
         widget="dxButton"
         [options]="{
-          text: 'summary',
+          text: '',
           icon: 'formula',
           onClick: SummaryClick,
+          title: 'Summary'
         }"
       ></dxi-item>
       <dxi-item location="after" locateInMenu="auto">
@@ -188,7 +214,7 @@
     <dxo-selection mode="multiple"></dxo-selection>
     <dxo-header-filter [visible]="true"></dxo-header-filter>
 
-    <div *ngIf="isSummaryOpened">
+    <ng-container *ngIf="isSummaryOpened">
       <dxo-summary>
         <dxi-total-item
           column="ClaimedAmount"
@@ -223,10 +249,10 @@
         <dxi-total-item
           column="ResubmittedAmt"
           summaryType="sum"
-          [valueFormat]="{ type: 'fixedPoint', precision: 2 }"
+          [valueFormat]="{ type: 'fixedPoint', precision: 2, }"
         >
         </dxi-total-item>
       </dxo-summary>
-    </div>
+    </ng-container>
   </dx-data-grid>
 </div>

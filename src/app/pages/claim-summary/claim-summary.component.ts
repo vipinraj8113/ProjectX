@@ -53,15 +53,17 @@ export class ClaimSummaryComponent {
 
   isPanelOpened = false;
 
-  isAddContactPopupOpened = false;
+
   isFilterOpened = false; //filter row enable-desable variable
-  isSummaryOpened = false; //summary row enable-desable variable
+  isSummaryOpened = true; //summary row enable-desable variable
 
   selectedItemKeys: any[] = [];
   Denial_Type_DropDownData: dropdownData[]; // Variable for storing drop down
   Denial_category_DropDownData: dropdownData[]; // Variable for storing drop down
 
   GridSource: any; //--variable for using column wise filtering data---
+
+
   //========Variables for Pagination ====================
   readonly allowedPageSizes: any = [5, 10, 'all'];
   displayMode: any = 'full';
@@ -69,33 +71,39 @@ export class ClaimSummaryComponent {
   showInfo = true;
   showNavButtons = true;
   summaryData: any;
-  Params: boolean = false;
+  Params: boolean = true;
   //================Variables for Storing selected Parameters========
   SearchOn_Value: any;
   Facility_Value: any;
   EncounterType_Value: any;
-  From_Date_Value: any;
-  To_Date_Value: any;
+  From_Date_Value: any = new Date();
+  To_Date_Value: any = new Date();
 
   //===========Variables For DataSource Of Multiple DropDowns=========
   SearchOn_DataSource: any;
   Facility_DataSource: any;
   EncounterType_DataSource: any;
 
+  dataSource: any;
+  minDate: Date;
+  maxDate: Date;
+
+
   //============Get DataSource VAluee======================
-  dataSource: any = new DataSource<any>({
-    load: () =>
-      new Promise((resolve, reject) => {
-        this.service.get_Claim_Summary_Date_wise().subscribe({
-          next: (data: any) => {
-            this.summaryData = data.Columns;
-            // console.log("summary data",this.summaryData)
-            resolve(data.ClaimDetails);
-          },
-          error: ({ message }) => reject(message),
-        });
-      }),
-  });
+  //=====
+  // dataSource: any = new DataSource<any>({
+  //   load: () =>
+  //     new Promise((resolve, reject) => {
+  //       this.service.get_Claim_Summary_Date_wise().subscribe({
+  //         next: (data: any) => {
+  //           this.summaryData = data.Columns;
+  //           // console.log("summary data",this.summaryData)
+  //           resolve(data.ClaimDetails);
+  //         },
+  //         error: ({ message }) => reject(message),
+  //       });
+  //     }),
+  // });
 
   //=======================Constructor==================
   constructor(
@@ -103,12 +111,40 @@ export class ClaimSummaryComponent {
     private router: Router,
     private route: ActivatedRoute
   ) {
+    this.minDate = new Date(2000, 1, 1); // Set the minimum date
+    this.maxDate = new Date(); // Set the maximum date
     this.fetch_Dropdown_InitData();
   }
-  // NgOnInit() {
-  //   this.fetch_Dropdown_InitData();
-  // }
 
+  //============Fetch DataSource For Reporting Grid================
+  loadData(
+    searchOn: any,
+    Facility: any,
+    encounterType: any,
+    fromData: any,
+    toDate: any
+  ) {
+    this.dataSource = new DataSource<any>({
+      load: () =>
+        new Promise((resolve, reject) => {
+          this.service
+            .get_Claim_Summary_Date_wise(
+              searchOn,
+              Facility,
+              encounterType,
+              fromData,
+              toDate
+            )
+            .subscribe({
+              next: (data: any) => {
+                this.summaryData = data.Columns;
+                resolve(data.ClaimDetails);
+              },
+              error: ({ message }) => reject(message),
+            });
+        }),
+    });
+  }
   //============Fetching DropDown Init Data==============
   fetch_Dropdown_InitData() {
     this.service.get_Init_Data().subscribe((response: any) => {
@@ -120,21 +156,29 @@ export class ClaimSummaryComponent {
     });
   }
 
-  //============Fetching Report DataSource===============
+  //============Call DataSource Using Selected Values===============
 
-  Fetch_Report_DataSource() {
-    console.log(
-      'apply button clicked :',
-      this.SearchOn_Value,
-      this.Facility_Value,
-      this.EncounterType_Value,
-      this.From_Date_Value,
-      this.To_Date_Value
-    );
+  get_Report_DataSource() {
+    var searchOn = this.SearchOn_Value;
+    var Facility = this.Facility_Value;
+    var EncounterType = this.EncounterType_Value;
+    var fromDate = this.formatDate(this.From_Date_Value);
+    var toDate = this.formatDate(this.To_Date_Value);
+    console.log("date picked successfully :",fromDate,toDate)
+    this.loadData(searchOn, Facility, EncounterType, fromDate, toDate);
+    this. show_Parameter_Div()
+  }
+  //==============change the format of date=============
+  formatDate(dateString: any) {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+    return `${year}/${month}/${day}`;
   }
 
   //============Show Parametrs Div=======================
-  show_Parameter_Div() {
+  show_Parameter_Div=() =>{
     if (this.Params == true) {
       this.Params = false;
     } else {

@@ -9,14 +9,20 @@ export class ReportService {
   constructor(private http: HttpClient) {}
 
   //==========Fetch data of Claim Summary Date Wise=============
-  get_Claim_Summary_Date_wise() {
+  get_Claim_Summary_Date_wise(
+    SearchOn: any,
+    Facility: any,
+    EncounterType: any,
+    DateFrom: any,
+    DateTo: any
+  ) {
     const url = `${BASE_URL}reports/claimdetails`;
     const reqBodyData = {
-      SearchOn: 'EncounterStartDate',
-      DateFrom: '2018-12-01',
-      DateTo: '2018-12-31',
-      EncounterType: 'OP',
-      Facility: 'MF90001',
+      SearchOn: SearchOn,
+      DateFrom: DateFrom,
+      DateTo: DateTo,
+      EncounterType: EncounterType,
+      Facility: Facility,
     };
     return this.http.post(url, reqBodyData);
   }
