@@ -106,7 +106,7 @@
   <dx-data-grid
     class="grid theme-dependent"
     height="100%"
-    noDataText="no data loaded..!!"
+    noDataText=" "
     [dataSource]="dataSource"
     [showBorders]="true"
     [allowColumnResizing]="true"
@@ -214,45 +214,52 @@
     <dxo-selection mode="multiple"></dxo-selection>
     <dxo-header-filter [visible]="true"></dxo-header-filter>
 
-    <ng-container *ngIf="isSummaryOpened">
-      <dxo-summary>
+    <div [class.summary-hidden]="isSummaryOpened">
+      <dxo-summary summaryText="Total" >
         <dxi-total-item
           column="ClaimedAmount"
           summaryType="sum"
+          displayFormat="{0}"
           [valueFormat]="{ type: 'fixedPoint', precision: 2 }"
         >
         </dxi-total-item>
         <dxi-total-item
           column="RemittedAmount"
           summaryType="sum"
+          displayFormat="{0}"
           [valueFormat]="{ type: 'fixedPoint', precision: 2 }"
+          text="''"
         >
         </dxi-total-item>
         <dxi-total-item
           column="RejectedAmount"
           summaryType="sum"
+          displayFormat="{0}"
           [valueFormat]="{ type: 'fixedPoint', precision: 2 }"
         >
         </dxi-total-item>
         <dxi-total-item
           column="PaidAmount"
           summaryType="sum"
+          displayFormat="{0}"
           [valueFormat]="{ type: 'fixedPoint', precision: 2 }"
         >
         </dxi-total-item>
         <dxi-total-item
           column="BalanceAmount"
           summaryType="sum"
+          displayFormat="{0}"
           [valueFormat]="{ type: 'fixedPoint', precision: 2 }"
         >
         </dxi-total-item>
         <dxi-total-item
           column="ResubmittedAmt"
           summaryType="sum"
+          displayFormat="{0}"
           [valueFormat]="{ type: 'fixedPoint', precision: 2, }"
         >
         </dxi-total-item>
       </dxo-summary>
-    </ng-container>
+    </div>
   </dx-data-grid>
 </div>
