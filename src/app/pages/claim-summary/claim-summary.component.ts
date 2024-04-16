@@ -1,4 +1,4 @@
-import { Component, ViewChild, NgModule, OnInit } from '@angular/core';
+import { Component, ViewChild, NgModule, OnInit,AfterViewInit } from '@angular/core';
 import {
   DxButtonModule,
   DxDataGridModule,
@@ -44,9 +44,9 @@ interface dropdownData {
   styleUrls: ['./claim-summary.component.scss'],
   providers: [ReportService],
 })
-export class ClaimSummaryComponent {
+export class ClaimSummaryComponent implements AfterViewInit {
   @ViewChild(DxDataGridComponent, { static: true })
-  dataGrid: DxDataGridComponent;
+  dataGrid : DxDataGridComponent;
 
   @ViewChild(DenialNewFormComponent, { static: false })
   denialComponent: DenialNewFormComponent;
@@ -55,7 +55,8 @@ export class ClaimSummaryComponent {
 
 
   isFilterOpened = false; //filter row enable-desable variable
-  isSummaryOpened = true; //summary row enable-desable variable
+  isSummaryOpened = false; //summary row enable-desable variable
+  isParamsOpend: boolean = true;
 
   selectedItemKeys: any[] = [];
   Denial_Type_DropDownData: dropdownData[]; // Variable for storing drop down
@@ -71,7 +72,7 @@ export class ClaimSummaryComponent {
   showInfo = true;
   showNavButtons = true;
   summaryData: any;
-  Params: boolean = true;
+
   //================Variables for Storing selected Parameters========
   SearchOn_Value: any;
   Facility_Value: any;
@@ -114,6 +115,13 @@ export class ClaimSummaryComponent {
     this.minDate = new Date(2000, 1, 1); // Set the minimum date
     this.maxDate = new Date(); // Set the maximum date
     this.fetch_Dropdown_InitData();
+  }
+
+  ngAfterViewInit() {
+    if (this.dataGrid) {
+      const columns = this.dataGrid.instance.getVisibleColumns();
+      console.log(columns);
+    }
   }
 
   //============Fetch DataSource For Reporting Grid================
@@ -164,7 +172,7 @@ export class ClaimSummaryComponent {
     var EncounterType = this.EncounterType_Value;
     var fromDate = this.formatDate(this.From_Date_Value);
     var toDate = this.formatDate(this.To_Date_Value);
-    console.log("date picked successfully :",fromDate,toDate)
+    // console.log("date picked successfully :",fromDate,toDate)
     this.loadData(searchOn, Facility, EncounterType, fromDate, toDate);
     this. show_Parameter_Div()
   }
@@ -179,10 +187,10 @@ export class ClaimSummaryComponent {
 
   //============Show Parametrs Div=======================
   show_Parameter_Div=() =>{
-    if (this.Params == true) {
-      this.Params = false;
+    if (this.isParamsOpend == true) {
+      this.isParamsOpend = false;
     } else {
-      this.Params = true;
+      this.isParamsOpend = true;
     }
   }
   //============Show Filter Row==========================
@@ -203,6 +211,7 @@ export class ClaimSummaryComponent {
   };
   //=============DataGrid Refreshing=======================
   refresh = () => {
+
     this.dataGrid.instance.refresh();
   };
   //=====================Search on Each Column=============
@@ -211,17 +220,26 @@ export class ClaimSummaryComponent {
   }
 
   //===========Column Locating USing Column Name===========
-  // onSearchKeydown(event: Event): void {
-  //   const keyboardEvent = event as KeyboardEvent;
-  //   if (keyboardEvent.key === 'Enter') {
-  //     const columnName = (keyboardEvent.target as HTMLInputElement).value;
-  //     const columnIndex = this.dataSource.columns.findIndex(col => col.dataField === columnName);
-  //     if (columnIndex !== -1) {
-  //       const dataGrid = document.querySelector('.grid.theme-dependent') as any;
-  //       dataGrid.instance.getScrollable().scrollTo({ left: columnIndex * 100 });
-  //     }
-  //   }
-  // }
+  onToolbarPreparing(e) {
+    const dataGrid = e.component;
+
+    e.toolbarOptions.items.unshift({
+      location: 'before',
+      widget: 'dxTextBox',
+      options: {
+        placeholder: 'Search',
+        onValueChanged: function (args) {
+          const columnIndex = dataGrid.columnOption('columnName').index;
+          dataGrid.clearFilter();
+          if (args.value) {
+            dataGrid.filter(['columnName', 'contains', args.value]);
+            dataGrid.focus(dataGrid.getCellElement(0, columnIndex));
+            dataGrid.selectRowsByIndexes([], true);
+          }
+        },
+      },
+    });
+  }
 
   //================Exporting Function=====================
   onExporting(e) {

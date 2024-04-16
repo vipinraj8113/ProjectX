@@ -2,7 +2,7 @@
   <div class="paramsDiv">
     <dx-toolbar
       class="theme-dependent mainDiv d-flex flex-wrap align-items-start flex-md-row flex-column"
-      [visible]="Params"
+      [visible]="isParamsOpend"
     >
       <dxi-item location="before" class="flex-grow-1">
         <div class="dx-fieldset-header FieldHeader">Search On</div>
@@ -62,8 +62,7 @@
       <dxi-item location="before" class="flex-grow-1 ms-3">
         <div class="dx-fieldset-header FieldHeader">From Date</div>
         <dx-date-box
-        type="date"
-
+          type="date"
           displayFormat="dd/MM/yyyy"
           valueFormat="yyyy/MM/dd"
           placeholder="From Date"
@@ -77,8 +76,7 @@
       <dxi-item location="before" class="flex-grow-1 ms-3">
         <div class="dx-fieldset-header FieldHeader">To Date</div>
         <dx-date-box
-        type="date"
-
+          type="date"
           displayFormat="dd/MM/yyyy"
           valueFormat="yyyy/MM/dd"
           placeholder="To Date"
@@ -113,10 +111,15 @@
     [columnAutoWidth]="true"
     [allowColumnReordering]="true"
     [rowAlternationEnabled]="true"
+    [columnFixing]="{ enabled: true }"
     rowAlternationInterval="2"
     (onExporting)="onExporting($event)"
     style="width: auto; overflow-x: auto"
+    [filterRow]="{ visible: false }"
+    [headerFilter]="{ visible: false }"
+
   >
+    <dxo-search-panel [visible]="true"></dxo-search-panel>
     <dxo-paging [pageSize]="10"></dxo-paging>
     <dxo-pager
       [visible]="true"
@@ -133,7 +136,8 @@
     <dxo-header-filter [visible]="true"></dxo-header-filter>
     <dxo-column-chooser [enabled]="true" mode="select"></dxo-column-chooser>
     <!-- <dxo-column-location location="before" colIndex="0"></dxo-column-location> -->
-    <!-- <dxo-search-panel [visible]="true" placeholder="Search" (onKeyDown)="onSearchKeydown($event)"></dxo-search-panel> -->
+    <dxo-search-panel [visible]="true" placeholder="Search" ></dxo-search-panel>
+
     <dxo-filter-row
       [visible]="isFilterOpened"
       [applyFilter]="applyFilter"
@@ -205,17 +209,21 @@
         <div class="separator"></div>
       </dxi-item>
       <dxi-item name="exportButton"></dxi-item>
-      <dxi-item location="after" locateInMenu="auto">
-        <div class="separator"></div>
-      </dxi-item>
+      <!-- <dxi-item location="after" locateInMenu="auto"> </dxi-item> -->
       <dxi-item name="searchPanel" locateInMenu="auto"></dxi-item>
     </dxo-toolbar>
+
+    <dxo-grouping
+      [autoExpandAll]="false"
+      [contextMenuEnabled]="true"
+      [expandMode]="'rowClick'"
+    ></dxo-grouping>
 
     <dxo-selection mode="multiple"></dxo-selection>
     <dxo-header-filter [visible]="true"></dxo-header-filter>
 
-    <div [class.summary-hidden]="isSummaryOpened">
-      <dxo-summary summaryText="Total" >
+    <div>
+      <dxo-summary summaryText="Total" *ngIf="isSummaryOpened">
         <dxi-total-item
           column="ClaimedAmount"
           summaryType="sum"
