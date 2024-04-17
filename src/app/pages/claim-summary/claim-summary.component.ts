@@ -1,4 +1,10 @@
-import { Component, ViewChild, NgModule, OnInit,AfterViewInit } from '@angular/core';
+import {
+  Component,
+  ViewChild,
+  NgModule,
+  OnInit,
+  AfterViewInit,
+} from '@angular/core';
 import {
   DxButtonModule,
   DxDataGridModule,
@@ -46,13 +52,12 @@ interface dropdownData {
 })
 export class ClaimSummaryComponent implements AfterViewInit {
   @ViewChild(DxDataGridComponent, { static: true })
-  dataGrid : DxDataGridComponent;
+  dataGrid: DxDataGridComponent;
 
   @ViewChild(DenialNewFormComponent, { static: false })
   denialComponent: DenialNewFormComponent;
 
   isPanelOpened = false;
-
 
   isFilterOpened = false; //filter row enable-desable variable
   isSummaryOpened = false; //summary row enable-desable variable
@@ -64,14 +69,13 @@ export class ClaimSummaryComponent implements AfterViewInit {
 
   GridSource: any; //--variable for using column wise filtering data---
 
-
   //========Variables for Pagination ====================
   readonly allowedPageSizes: any = [5, 10, 'all'];
   displayMode: any = 'full';
   showPageSizeSelector = true;
   showInfo = true;
   showNavButtons = true;
-  summaryData: any;
+  columnsData: any;
 
   //================Variables for Storing selected Parameters========
   SearchOn_Value: any;
@@ -85,26 +89,12 @@ export class ClaimSummaryComponent implements AfterViewInit {
   Facility_DataSource: any;
   EncounterType_DataSource: any;
 
-  dataSource: any;
-  minDate: Date;
-  maxDate: Date;
+  dataSource: any; //storing data from api
+  columnsConfig: any; // used to store all column name
+  minDate: Date; // validation for data fields
+  maxDate: Date; // validation for data fields
 
-
-  //============Get DataSource VAluee======================
-  //=====
-  // dataSource: any = new DataSource<any>({
-  //   load: () =>
-  //     new Promise((resolve, reject) => {
-  //       this.service.get_Claim_Summary_Date_wise().subscribe({
-  //         next: (data: any) => {
-  //           this.summaryData = data.Columns;
-  //           // console.log("summary data",this.summaryData)
-  //           resolve(data.ClaimDetails);
-  //         },
-  //         error: ({ message }) => reject(message),
-  //       });
-  //     }),
-  // });
+  systemCurrencyCode: any; // using store system currency format
 
   //=======================Constructor==================
   constructor(
@@ -115,6 +105,8 @@ export class ClaimSummaryComponent implements AfterViewInit {
     this.minDate = new Date(2000, 1, 1); // Set the minimum date
     this.maxDate = new Date(); // Set the maximum date
     this.fetch_Dropdown_InitData();
+    this.systemCurrencyCode = this.service.getSystemCurrencyCode();
+    console.log(this.systemCurrencyCode)
   }
 
   ngAfterViewInit() {
@@ -145,7 +137,22 @@ export class ClaimSummaryComponent implements AfterViewInit {
             )
             .subscribe({
               next: (data: any) => {
-                this.summaryData = data.Columns;
+                this.columnsData = data.Columns;
+                // Assuming columnsData is the array of column objects you provided
+                this.columnsConfig = this.columnsData.map((column) => {
+                  return {
+                    dataField: column.Name,
+                    caption: column.Title,
+                    format:
+                      column.Type === 'Decimal'
+                        ? {
+                            type: 'fixedPoint',
+                            precision: 2,
+                            currency: this.systemCurrencyCode,
+                          }
+                        : undefined,
+                  };
+                });
                 resolve(data.ClaimDetails);
               },
               error: ({ message }) => reject(message),
@@ -174,7 +181,7 @@ export class ClaimSummaryComponent implements AfterViewInit {
     var toDate = this.formatDate(this.To_Date_Value);
     // console.log("date picked successfully :",fromDate,toDate)
     this.loadData(searchOn, Facility, EncounterType, fromDate, toDate);
-    this. show_Parameter_Div()
+    this.show_Parameter_Div();
   }
   //==============change the format of date=============
   formatDate(dateString: any) {
@@ -186,13 +193,13 @@ export class ClaimSummaryComponent implements AfterViewInit {
   }
 
   //============Show Parametrs Div=======================
-  show_Parameter_Div=() =>{
+  show_Parameter_Div = () => {
     if (this.isParamsOpend == true) {
       this.isParamsOpend = false;
     } else {
       this.isParamsOpend = true;
     }
-  }
+  };
   //============Show Filter Row==========================
   filterClick = () => {
     if (this.isFilterOpened == false) {
@@ -211,7 +218,6 @@ export class ClaimSummaryComponent implements AfterViewInit {
   };
   //=============DataGrid Refreshing=======================
   refresh = () => {
-
     this.dataGrid.instance.refresh();
   };
   //=====================Search on Each Column=============

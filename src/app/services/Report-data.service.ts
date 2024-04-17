@@ -27,10 +27,17 @@ export class ReportService {
     return this.http.post(url, reqBodyData);
   }
 
-  //==========Fetch DropDown Data ==============================
+  //==================Fetch DropDown Data ==============================
   get_Init_Data() {
     const url = `${baseURL2}/initdata`;
     const reqBody = {};
     return this.http.post(url, reqBody);
+  }
+//=========================Fetch System Currency Format==================
+  getSystemCurrencyCode(): string {
+    return new Intl.NumberFormat(navigator.language, {
+      style: 'currency',
+      currency: 'USD', // Default currency code
+    }).resolvedOptions().currency;
   }
 }
