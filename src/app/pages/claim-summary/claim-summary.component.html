@@ -118,7 +118,6 @@
     [filterRow]="{ visible: false }"
     [headerFilter]="{ visible: false }"
     [columns]="columnsConfig"
-
   >
     <dxo-search-panel [visible]="true"></dxo-search-panel>
     <dxo-paging [pageSize]="10"></dxo-paging>
@@ -135,9 +134,10 @@
     <dxo-scrolling mode="virtual"></dxo-scrolling>
     <dxo-sorting mode="multiple"></dxo-sorting>
     <dxo-header-filter [visible]="true"></dxo-header-filter>
-    <dxo-column-chooser [enabled]="true" mode="select"></dxo-column-chooser>
+
+    <dxo-column-chooser [enabled]="true" mode="select"> </dxo-column-chooser>
     <!-- <dxo-column-location location="before" colIndex="0"></dxo-column-location> -->
-    <dxo-search-panel [visible]="true" placeholder="Search" ></dxo-search-panel>
+    <dxo-search-panel [visible]="true" placeholder="Search"></dxo-search-panel>
 
     <dxo-filter-row
       [visible]="isFilterOpened"
@@ -210,8 +210,22 @@
         <div class="separator"></div>
       </dxi-item>
       <dxi-item name="exportButton"></dxi-item>
-      <!-- <dxi-item location="after" locateInMenu="auto"> </dxi-item> -->
-      <dxi-item name="searchPanel" locateInMenu="auto"></dxi-item>
+      <dxi-item location="after" locateInMenu="auto">
+        <div class="separator"></div>
+      </dxi-item>
+      <dxi-item
+        widget="dxSelectBox"
+
+        [options]="{
+        valueExpr:selectedColumnName,
+        dataSource:ColumnNames,
+        searchEnabled:true,
+        onValueChanged: makeColumnVisible,
+        placeholder:'Search Column'
+      }"
+
+      >
+      </dxi-item>
     </dxo-toolbar>
 
     <dxo-grouping
@@ -223,8 +237,8 @@
     <dxo-selection mode="multiple"></dxo-selection>
     <dxo-header-filter [visible]="true"></dxo-header-filter>
 
-    <div>
-      <dxo-summary summaryText="Total" *ngIf="isSummaryOpened">
+    <ng-container *ngIf="isSummaryOpened">
+      <dxo-summary summaryText="Total">
         <dxi-total-item
           column="ClaimedAmount"
           summaryType="sum"
@@ -237,7 +251,6 @@
           summaryType="sum"
           displayFormat="{0}"
           [valueFormat]="{ type: 'fixedPoint', precision: 2 }"
-          text="''"
         >
         </dxi-total-item>
         <dxi-total-item
@@ -269,6 +282,6 @@
         >
         </dxi-total-item>
       </dxo-summary>
-    </div>
+    </ng-container>
   </dx-data-grid>
 </div>

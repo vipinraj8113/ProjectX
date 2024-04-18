@@ -95,6 +95,8 @@ export class ClaimSummaryComponent implements AfterViewInit {
   maxDate: Date; // validation for data fields
 
   systemCurrencyCode: any; // using store system currency format
+  ColumnNames: any;
+  selectedColumnName: any;
 
   //=======================Constructor==================
   constructor(
@@ -106,7 +108,7 @@ export class ClaimSummaryComponent implements AfterViewInit {
     this.maxDate = new Date(); // Set the maximum date
     this.fetch_Dropdown_InitData();
     this.systemCurrencyCode = this.service.getSystemCurrencyCode();
-    console.log(this.systemCurrencyCode)
+    console.log(this.systemCurrencyCode);
   }
 
   ngAfterViewInit() {
@@ -138,6 +140,9 @@ export class ClaimSummaryComponent implements AfterViewInit {
             .subscribe({
               next: (data: any) => {
                 this.columnsData = data.Columns;
+                this.ColumnNames = this.columnsData.map(
+                  (column) => column.Name
+                );
                 // Assuming columnsData is the array of column objects you provided
                 this.columnsConfig = this.columnsData.map((column) => {
                   return {
@@ -225,26 +230,17 @@ export class ClaimSummaryComponent implements AfterViewInit {
     this.GridSource.filter();
   }
 
-  //===========Column Locating USing Column Name===========
-  onToolbarPreparing(e) {
-    const dataGrid = e.component;
+  //===========Column location finding===========
 
-    e.toolbarOptions.items.unshift({
-      location: 'before',
-      widget: 'dxTextBox',
-      options: {
-        placeholder: 'Search',
-        onValueChanged: function (args) {
-          const columnIndex = dataGrid.columnOption('columnName').index;
-          dataGrid.clearFilter();
-          if (args.value) {
-            dataGrid.filter(['columnName', 'contains', args.value]);
-            dataGrid.focus(dataGrid.getCellElement(0, columnIndex));
-            dataGrid.selectRowsByIndexes([], true);
-          }
-        },
-      },
-    });
+  makeColumnVisible(e: any) {
+    this.selectedColumnName = e.value;
+    // console.log('Selected column name:', this.selectedColumnName);
+    var columnValue = this.selectedColumnName.toString();
+    if (this.selectedColumnName != '') {
+      this.dataGrid.instance.columnOption(columnValue, 'visibleIndex');
+    } else {
+      console.error('Selected column name is undefined or null');
+    }
   }
 
   //================Exporting Function=====================
