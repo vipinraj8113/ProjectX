@@ -96,7 +96,7 @@ export class ClaimSummaryComponent implements AfterViewInit {
 
   systemCurrencyCode: any; // using store system currency format
   ColumnNames: any;
-  selectedColumnName: any;
+  selectedColumnName: string;
 
   //=======================Constructor==================
   constructor(
@@ -199,31 +199,21 @@ export class ClaimSummaryComponent implements AfterViewInit {
 
   //============Show Parametrs Div=======================
   show_Parameter_Div = () => {
-    if (this.isParamsOpend == true) {
-      this.isParamsOpend = false;
-    } else {
-      this.isParamsOpend = true;
-    }
+    this.isParamsOpend = !this.isParamsOpend;
   };
+
   //============Show Filter Row==========================
   filterClick = () => {
-    if (this.isFilterOpened == false) {
-      this.isFilterOpened = true;
-    } else {
-      this.isFilterOpened = false;
-    }
+    this.isFilterOpened = !this.isFilterOpened;
   };
   //============Show Filter Row==========================
   SummaryClick = () => {
-    if (this.isSummaryOpened == false) {
-      this.isSummaryOpened = true;
-    } else {
-      this.isSummaryOpened = false;
-    }
+    this.isSummaryOpened = !this.isSummaryOpened;
   };
   //=============DataGrid Refreshing=======================
   refresh = () => {
     this.dataGrid.instance.refresh();
+    console.log('grid console:', this.dataGrid.instance);
   };
   //=====================Search on Each Column=============
   applyFilter() {
@@ -231,17 +221,31 @@ export class ClaimSummaryComponent implements AfterViewInit {
   }
 
   //===========Column location finding===========
+  makeColumnVisible = (e: any) => {
+    const columnName = e.value;
+    const columns = this.dataGrid.instance.getVisibleColumns();
+    const columnIndex = columns.findIndex(
+      (column) => column.dataField === columnName
+    );
+    console.log('column index:', columnName, columnIndex);
+    if (columnIndex !== -1) {
+      const columnWidth = 100; // Adjust 100 to fit your column width
+      const scrollLeft = columnIndex * columnWidth;
+      this.dataGrid.instance.getScrollable().scrollTo({ left: scrollLeft });
 
-  makeColumnVisible(e: any) {
-    this.selectedColumnName = e.value;
-    // console.log('Selected column name:', this.selectedColumnName);
-    var columnValue = this.selectedColumnName.toString();
-    if (this.selectedColumnName != '') {
-      this.dataGrid.instance.columnOption(columnValue, 'visibleIndex');
-    } else {
-      console.error('Selected column name is undefined or null');
+      // Highlight the column
+      const headerCells = document.querySelectorAll(
+        '.dx-header-row .dx-header-cell'
+      );
+      headerCells.forEach((cell, index) => {
+        if (index === columnIndex) {
+          cell.classList.add('highlight-column');
+        } else {
+          cell.classList.remove('highlight-column');
+        }
+      });
     }
-  }
+  };
 
   //================Exporting Function=====================
   onExporting(e) {

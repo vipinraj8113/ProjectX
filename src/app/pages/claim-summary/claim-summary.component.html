@@ -215,15 +215,16 @@
       </dxi-item>
       <dxi-item
         widget="dxSelectBox"
-
         [options]="{
-        valueExpr:selectedColumnName,
-        dataSource:ColumnNames,
-        searchEnabled:true,
-        onValueChanged: makeColumnVisible,
-        placeholder:'Search Column'
-      }"
+          valueExpr: selectedColumnName,
+          dataSource: ColumnNames,
+          searchEnabled: true,
+          onValueChanged: makeColumnVisible,
+          placeholder: 'Search Column',
+          noDataText: 'load data and try again',
+          width: 'auto',
 
+        }"
       >
       </dxi-item>
     </dxo-toolbar>

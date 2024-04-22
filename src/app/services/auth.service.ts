@@ -49,6 +49,12 @@ export class AuthService {
 
   constructor(private router: Router, private http: HttpClient) {}
 
+  //============================================================
+  getIPAddress() {
+    return this.http.get('https://api.ipify.org/?format=json');
+  }
+
+  //================Log In function===============================
   logIn(username: any, password: any) {
     const API_URL = 'http://103.180.120.134/projectx/api/userS/LOGIN';
     const ReqBody = {
@@ -96,7 +102,6 @@ export class AuthService {
 
   async changePassword(email: string, recoveryCode: string) {
     try {
-
       return {
         isOk: true,
       };
