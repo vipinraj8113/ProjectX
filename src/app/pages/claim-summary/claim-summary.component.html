@@ -102,6 +102,7 @@
   </div>
 
   <dx-data-grid
+    id="main-grid"
     class="grid theme-dependent"
     height="100%"
     noDataText=" "
@@ -111,10 +112,12 @@
     [columnAutoWidth]="true"
     [allowColumnReordering]="true"
     [rowAlternationEnabled]="true"
-    [columnFixing]="{ enabled: true }"
+    [columnFixing]="{
+      enabled: true,
+      texts: { fix: 'Freeze', unfix: 'Unfreeze' }
+    }"
     rowAlternationInterval="2"
     (onExporting)="onExporting($event)"
-    style="width: auto; overflow-x: auto"
     [filterRow]="{ visible: false }"
     [headerFilter]="{ visible: false }"
     [columns]="columnsConfig"
@@ -238,8 +241,65 @@
     <dxo-selection mode="multiple"></dxo-selection>
     <dxo-header-filter [visible]="true"></dxo-header-filter>
 
-    <ng-container *ngIf="isSummaryOpened">
-      <dxo-summary summaryText="Total">
+
+      <dxo-summary class="mainSummaryDiv"  summaryText="Total">
+        <!-- ==========================Group item Summary===================== -->
+        <dxi-group-item
+          column="ClaimedAmount"
+          summaryType="sum"
+          displayFormat="{0}"
+          [valueFormat]="{ type: 'fixedPoint', precision: 2 }"
+          [alignByColumn]="true"
+          [showInGroupFooter]="false"
+        >
+        </dxi-group-item>
+        <dxi-group-item
+          column="RemittedAmount"
+          summaryType="sum"
+          displayFormat="{0}"
+          [valueFormat]="{ type: 'fixedPoint', precision: 2 }"
+          [alignByColumn]="true"
+          [showInGroupFooter]="false"
+        >
+        </dxi-group-item>
+        <dxi-group-item
+          column="RejectedAmount"
+          summaryType="sum"
+          displayFormat="{0}"
+          [valueFormat]="{ type: 'fixedPoint', precision: 2 }"
+          [alignByColumn]="true"
+          [showInGroupFooter]="false"
+        >
+        </dxi-group-item>
+        <dxi-group-item
+          column="PaidAmount"
+          summaryType="sum"
+          displayFormat="{0}"
+          [valueFormat]="{ type: 'fixedPoint', precision: 2 }"
+          [alignByColumn]="true"
+          [showInGroupFooter]="false"
+        >
+        </dxi-group-item>
+        <dxi-group-item
+          column="BalanceAmount"
+          summaryType="sum"
+          displayFormat="{0}"
+          [valueFormat]="{ type: 'fixedPoint', precision: 2 }"
+          [alignByColumn]="true"
+          [showInGroupFooter]="false"
+        >
+        </dxi-group-item>
+        <dxi-group-item
+          column="ResubmittedAmt"
+          summaryType="sum"
+          displayFormat="{0}"
+          [valueFormat]="{ type: 'fixedPoint', precision: 2, }"
+          [alignByColumn]="true"
+          [showInGroupFooter]="false"
+        >
+        </dxi-group-item>
+        <!-- ==========================Grand Total Summary==================== -->
+        <ng-container class="totalsummaryDiv" *ngIf="isSummaryOpened">
         <dxi-total-item
           column="ClaimedAmount"
           summaryType="sum"
@@ -282,7 +342,8 @@
           [valueFormat]="{ type: 'fixedPoint', precision: 2, }"
         >
         </dxi-total-item>
+      </ng-container>
       </dxo-summary>
-    </ng-container>
+
   </dx-data-grid>
 </div>
