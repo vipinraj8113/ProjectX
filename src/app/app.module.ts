@@ -20,10 +20,20 @@ import { ThemeService } from './services';
 import { DxFormModule } from 'devextreme-angular';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TaskListModule } from 'src/app/components/library/task-list-grid/task-list-grid.component';
-import { ClaimSummaryComponent, ClaimSummaryModule } from './pages/claim-summary/claim-summary.component';
+import {
+  ClaimSummaryComponent,
+  ClaimSummaryModule,
+} from './pages/REPORT PAGES/claim-summary/claim-summary.component';
+import { ClaimSummaryMonthWiseComponent } from './pages/REPORT PAGES/claim-summary-month-wise/claim-summary-month-wise.component';
+import { ClaimSummaryPayerWiseComponent } from './pages/REPORT PAGES/claim-summary-payer-wise/claim-summary-payer-wise.component';
+import { DoctorWithHighIncomeComponent } from './pages/REPORT PAGES/doctor-with-high-income/doctor-with-high-income.component';
+import { DoctorWithHighDenialsComponent } from './pages/REPORT PAGES/doctor-with-high-denials/doctor-with-high-denials.component';
+import { RejectedClaimsComponent } from './pages/REPORT PAGES/rejected-claims/rejected-claims.component';
+import { BalanceAmountToBeReceivedComponent } from './pages/REPORT PAGES/balance-amount-to-be-received/balance-amount-to-be-received.component';
+import { ResubmissionSummaryComponent } from './pages/REPORT PAGES/resubmission-summary/resubmission-summary.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, ClaimSummaryMonthWiseComponent, ClaimSummaryPayerWiseComponent, DoctorWithHighIncomeComponent, DoctorWithHighDenialsComponent, RejectedClaimsComponent, BalanceAmountToBeReceivedComponent, ResubmissionSummaryComponent],
   imports: [
     TaskListModule,
     BrowserModule,
