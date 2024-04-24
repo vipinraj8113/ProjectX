@@ -97,6 +97,7 @@ export class ClaimSummaryComponent implements AfterViewInit {
   systemCurrencyCode: any; // using store system currency format
   ColumnNames: any;
   selectedColumnName: string;
+columntitle: any="column titleeeee";
 
   //=======================Constructor==================
   constructor(
@@ -108,7 +109,7 @@ export class ClaimSummaryComponent implements AfterViewInit {
     this.maxDate = new Date(); // Set the maximum date
     this.fetch_Dropdown_InitData();
     this.systemCurrencyCode = this.service.getSystemCurrencyCode();
-    console.log(this.systemCurrencyCode);
+    console.log('currencyyyyyyyyyyyyyyyyy', this.systemCurrencyCode);
   }
 
   ngAfterViewInit() {
@@ -153,12 +154,13 @@ export class ClaimSummaryComponent implements AfterViewInit {
                         ? {
                             type: 'fixedPoint',
                             precision: 2,
-                            currency: this.systemCurrencyCode,
+                            // currency: this.systemCurrencyCode,
                           }
                         : undefined,
                   };
                 });
                 resolve(data.ClaimDetails);
+                console.log('column config ', this.columnsConfig);
               },
               error: ({ message }) => reject(message),
             });
@@ -229,21 +231,11 @@ export class ClaimSummaryComponent implements AfterViewInit {
     );
     console.log('column index:', columnName, columnIndex);
     if (columnIndex !== -1) {
-      const columnWidth = 100; // Adjust 100 to fit your column width
-      const scrollLeft = columnIndex * columnWidth;
+      const columnWidth = 200; // Adjust 100 to fit your column width
+      const scrollLeft = (columnIndex - 1) * columnWidth;
       this.dataGrid.instance.getScrollable().scrollTo({ left: scrollLeft });
 
-      // Highlight the column
-      const headerCells = document.querySelectorAll(
-        '.dx-header-row .dx-header-cell'
-      );
-      headerCells.forEach((cell, index) => {
-        if (index === columnIndex) {
-          cell.classList.add('highlight-column');
-        } else {
-          cell.classList.remove('highlight-column');
-        }
-      });
+      this.dataGrid.instance.columnOption(columnName, 'cssClass', 'highlighted-column');
     }
   };
 

@@ -54,19 +54,30 @@ $theme-mode: null !default;
   --background-gray-color: #{color.change($base-text-color, $alpha: 0.04)};
   --texteditor-edit-color: #{$texteditor-color};
   --texteditor-label-color: #{$texteditor-label-color};
-  --base-text-color-alpha: #{rgba($base-text-color, alpha($base-text-color) * 0.7)};
+  --base-text-color-alpha: #{rgba(
+      $base-text-color,
+      alpha($base-text-color) * 0.7
+    )};
   --toolbar-height: #{toolbar_sizes.$fluent-toolbar-height};
   --filled-texteditor-input-horizontal-padding: #{$fluent-field-value-horizontal-padding};
   --list-padding-left: #{$fluent-list-item-horizontal-padding};
   --list-padding-vertical: #{$fluent-list-item-vertical-padding};
-  --footer-left-padding: #{calc((var(--side-panel-min-width) - $fluent-base-icon-size) / 2)};
+  --footer-left-padding: #{calc(
+      (var(--side-panel-min-width) - $fluent-base-icon-size) / 2
+    )};
   --popup-toolbar-item-spacing: #{$fluent-popup-toolbar-item-spacing};
   --drop-down-gnrc-button-height: #{$fluent-base-inline-widget-height};
   --theme-padding: #{$fluent-button-horizontal-padding};
   --tooltip-danger-button-color: #{color.change($base-danger, $alpha: 0.1)};
   --tooltip-success-button-color: #{color.change($base-success, $alpha: 0.1)};
   --subtitle-text-color: var(--texteditor-label-color);
-  --button-height-theme-difference: calc((var(--theme-padding) - 10px) / 3); // WA for no button-height in fluent theme
-  --button-height: calc(26px + var(--button-height-theme-difference)); // remove when design-system is released
-  --scheduler-toolbar-height: calc(var(--button-height) + 2 * var(--theme-padding));
+  --button-height-theme-difference: calc(
+    (var(--theme-padding) - 10px) / 3
+  ); // WA for no button-height in fluent theme
+  --button-height: calc(
+    26px + var(--button-height-theme-difference)
+  ); // remove when design-system is released
+  --scheduler-toolbar-height: calc(
+    var(--button-height) + 2 * var(--theme-padding)
+  );
 }
