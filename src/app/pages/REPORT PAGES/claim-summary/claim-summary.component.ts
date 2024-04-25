@@ -97,7 +97,7 @@ export class ClaimSummaryComponent implements AfterViewInit {
   systemCurrencyCode: any; // using store system currency format
   ColumnNames: any;
   selectedColumnName: string;
-columntitle: any="column titleeeee";
+  columntitle: any = 'column titleeeee';
 
   //=======================Constructor==================
   constructor(
@@ -109,17 +109,16 @@ columntitle: any="column titleeeee";
     this.maxDate = new Date(); // Set the maximum date
     this.fetch_Dropdown_InitData();
     this.systemCurrencyCode = this.service.getSystemCurrencyCode();
-    console.log('currencyyyyyyyyyyyyyyyyy', this.systemCurrencyCode);
   }
 
   ngAfterViewInit() {
     if (this.dataGrid) {
       const columns = this.dataGrid.instance.getVisibleColumns();
-      console.log(columns);
+      // console.log(columns);
     }
   }
 
-  //============Fetch DataSource For Reporting Grid================
+  //============Fetch DataSource For Reporting Grid======
   loadData(
     searchOn: any,
     Facility: any,
@@ -159,8 +158,12 @@ columntitle: any="column titleeeee";
                         : undefined,
                   };
                 });
-                resolve(data.ClaimDetails);
-                console.log('column config ', this.columnsConfig);
+                const claimDetails = data.ClaimDetails;
+                localStorage.setItem(
+                  'DataSource',
+                  JSON.stringify(claimDetails)
+                );
+                resolve(claimDetails);
               },
               error: ({ message }) => reject(message),
             });
@@ -174,23 +177,28 @@ columntitle: any="column titleeeee";
       this.Facility_DataSource = response.Facility;
       this.EncounterType_DataSource = response.EncountrType;
 
-      console.log('Init Data Fetched Successfully :', this.SearchOn_DataSource);
+      // console.log('Init Data Fetched Successfully :', this.SearchOn_DataSource);
     });
   }
 
-  //============Call DataSource Using Selected Values===============
-
+  //============Call DataSource Using Selected Values====
   get_Report_DataSource() {
     var searchOn = this.SearchOn_Value;
     var Facility = this.Facility_Value;
     var EncounterType = this.EncounterType_Value;
     var fromDate = this.formatDate(this.From_Date_Value);
     var toDate = this.formatDate(this.To_Date_Value);
-    // console.log("date picked successfully :",fromDate,toDate)
     this.loadData(searchOn, Facility, EncounterType, fromDate, toDate);
     this.show_Parameter_Div();
   }
-  //==============change the format of date=============
+  //==============DataLoading After Reload Page==========
+  // DataSorce_After_reload_Page() {
+  //   const loadedData = JSON.parse(localStorage.getItem('DataSource'));
+  //   if (loadedData != '' || undefined) {
+  //     this.dataSource = loadedData;
+  //   }else
+  // }
+  //=================change the format of date===========
   formatDate(dateString: any) {
     const date = new Date(dateString);
     const year = date.getFullYear();
@@ -212,34 +220,38 @@ columntitle: any="column titleeeee";
   SummaryClick = () => {
     this.isSummaryOpened = !this.isSummaryOpened;
   };
-  //=============DataGrid Refreshing=======================
+  //=============DataGrid Refreshing=====================
   refresh = () => {
     this.dataGrid.instance.refresh();
-    console.log('grid console:', this.dataGrid.instance);
+    // // console.log('grid console:', this.dataGrid.instance);
   };
-  //=====================Search on Each Column=============
+  //=====================Search on Each Column===========
   applyFilter() {
     this.GridSource.filter();
   }
 
-  //===========Column location finding===========
+  //===========Column location finding===================
   makeColumnVisible = (e: any) => {
     const columnName = e.value;
     const columns = this.dataGrid.instance.getVisibleColumns();
     const columnIndex = columns.findIndex(
       (column) => column.dataField === columnName
     );
-    console.log('column index:', columnName, columnIndex);
+    // console.log('column index:', columnName, columnIndex);
     if (columnIndex !== -1) {
       const columnWidth = 200; // Adjust 100 to fit your column width
       const scrollLeft = (columnIndex - 1) * columnWidth;
       this.dataGrid.instance.getScrollable().scrollTo({ left: scrollLeft });
 
-      this.dataGrid.instance.columnOption(columnName, 'cssClass', 'highlighted-column');
+      this.dataGrid.instance.columnOption(
+        columnName,
+        'cssClass',
+        'highlighted-column'
+      );
     }
   };
 
-  //================Exporting Function=====================
+  //================Exporting Function===================
   onExporting(e) {
     if (e.format === 'pdf') {
       const doc = new jsPDF();

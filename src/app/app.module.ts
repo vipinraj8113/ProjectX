@@ -33,7 +33,16 @@ import { BalanceAmountToBeReceivedComponent } from './pages/REPORT PAGES/balance
 import { ResubmissionSummaryComponent } from './pages/REPORT PAGES/resubmission-summary/resubmission-summary.component';
 
 @NgModule({
-  declarations: [AppComponent, ClaimSummaryMonthWiseComponent, ClaimSummaryPayerWiseComponent, DoctorWithHighIncomeComponent, DoctorWithHighDenialsComponent, RejectedClaimsComponent, BalanceAmountToBeReceivedComponent, ResubmissionSummaryComponent],
+  declarations: [
+    AppComponent,
+    ClaimSummaryMonthWiseComponent,
+    ClaimSummaryPayerWiseComponent,
+    DoctorWithHighIncomeComponent,
+    DoctorWithHighDenialsComponent,
+    RejectedClaimsComponent,
+    BalanceAmountToBeReceivedComponent,
+    ResubmissionSummaryComponent,
+  ],
   imports: [
     TaskListModule,
     BrowserModule,
