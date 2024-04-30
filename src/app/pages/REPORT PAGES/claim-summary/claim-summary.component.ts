@@ -2,8 +2,8 @@ import {
   Component,
   ViewChild,
   NgModule,
-  OnInit,
   AfterViewInit,
+  OnDestroy,
 } from '@angular/core';
 import {
   DxButtonModule,
@@ -14,6 +14,7 @@ import {
   DxTextBoxModule,
   DxFormModule,
 } from 'devextreme-angular';
+import { DxPopupModule } from 'devextreme-angular/ui/popup';
 import { DxDateBoxModule } from 'devextreme-angular';
 import { DxToolbarModule } from 'devextreme-angular/ui/toolbar';
 import { exportDataGrid as exportDataGridToPdf } from 'devextreme/pdf_exporter';
@@ -50,7 +51,7 @@ interface dropdownData {
   styleUrls: ['./claim-summary.component.scss'],
   providers: [ReportService],
 })
-export class ClaimSummaryComponent implements AfterViewInit {
+export class ClaimSummaryComponent implements AfterViewInit, OnDestroy {
   @ViewChild(DxDataGridComponent, { static: true })
   dataGrid: DxDataGridComponent;
 
@@ -62,6 +63,7 @@ export class ClaimSummaryComponent implements AfterViewInit {
   isFilterOpened = false; //filter row enable-desable variable
   isSummaryOpened = false; //summary row enable-desable variable
   isParamsOpend: boolean = true;
+  isSaveMemorisedOpened: boolean = false;
 
   selectedItemKeys: any[] = [];
   Denial_Type_DropDownData: dropdownData[]; // Variable for storing drop down
@@ -75,6 +77,8 @@ export class ClaimSummaryComponent implements AfterViewInit {
   showPageSizeSelector = true;
   showInfo = true;
   showNavButtons = true;
+  show_Pagination = false;
+
   columnsData: any;
 
   //================Variables for Storing selected Parameters========
@@ -96,8 +100,8 @@ export class ClaimSummaryComponent implements AfterViewInit {
 
   systemCurrencyCode: any; // using store system currency format
   ColumnNames: any;
-  selectedColumnName: string;
-  columntitle: any = 'column titleeeee';
+
+  hint_for_Parametr_div: any = 'Hide Parameters';
 
   //=======================Constructor==================
   constructor(
@@ -109,6 +113,10 @@ export class ClaimSummaryComponent implements AfterViewInit {
     this.maxDate = new Date(); // Set the maximum date
     this.fetch_Dropdown_InitData();
     this.systemCurrencyCode = this.service.getSystemCurrencyCode();
+    const loadedPAgeFlag = JSON.parse(localStorage.getItem('loadedFlag'));
+    if (loadedPAgeFlag == 'true') {
+      this.DataSorce_After_reload_Page();
+    }
   }
 
   ngAfterViewInit() {
@@ -116,6 +124,11 @@ export class ClaimSummaryComponent implements AfterViewInit {
       const columns = this.dataGrid.instance.getVisibleColumns();
       // console.log(columns);
     }
+  }
+  ngOnDestroy() {
+    // Remove localStorage item when the component is destroyed
+    localStorage.removeItem('DataSource');
+    localStorage.removeItem('loadedFlag');
   }
 
   //============Fetch DataSource For Reporting Grid======
@@ -159,11 +172,9 @@ export class ClaimSummaryComponent implements AfterViewInit {
                   };
                 });
                 const claimDetails = data.ClaimDetails;
-                localStorage.setItem(
-                  'DataSource',
-                  JSON.stringify(claimDetails)
-                );
+                localStorage.setItem('DataSource', JSON.stringify(data));
                 resolve(claimDetails);
+                this.show_Pagination = true;
               },
               error: ({ message }) => reject(message),
             });
@@ -180,7 +191,6 @@ export class ClaimSummaryComponent implements AfterViewInit {
       // console.log('Init Data Fetched Successfully :', this.SearchOn_DataSource);
     });
   }
-
   //============Call DataSource Using Selected Values====
   get_Report_DataSource() {
     var searchOn = this.SearchOn_Value;
@@ -189,15 +199,43 @@ export class ClaimSummaryComponent implements AfterViewInit {
     var fromDate = this.formatDate(this.From_Date_Value);
     var toDate = this.formatDate(this.To_Date_Value);
     this.loadData(searchOn, Facility, EncounterType, fromDate, toDate);
+    localStorage.setItem('loadedFlag', JSON.stringify('true'));
     this.show_Parameter_Div();
   }
   //==============DataLoading After Reload Page==========
-  // DataSorce_After_reload_Page() {
-  //   const loadedData = JSON.parse(localStorage.getItem('DataSource'));
-  //   if (loadedData != '' || undefined) {
-  //     this.dataSource = loadedData;
-  //   }else
-  // }
+  DataSorce_After_reload_Page() {
+    this.dataSource = new DataSource<any>({
+      load: () =>
+        new Promise((resolve, reject) => {
+          const localStorageData = JSON.parse(
+            localStorage.getItem('DataSource')
+          );
+          if (localStorageData) {
+            const data = localStorageData;
+            this.columnsData = data.Columns;
+            this.ColumnNames = this.columnsData.map((column) => column.Name);
+            this.columnsConfig = this.columnsData.map((column) => {
+              return {
+                dataField: column.Name,
+                caption: column.Title,
+                format:
+                  column.Type === 'Decimal'
+                    ? {
+                        type: 'fixedPoint',
+                        precision: 2,
+                        // currency: this.systemCurrencyCode,
+                      }
+                    : undefined,
+              };
+            });
+            resolve(data.ClaimDetails);
+            this.show_Pagination = true;
+          } else {
+            reject(' ');
+          }
+        }),
+    });
+  }
   //=================change the format of date===========
   formatDate(dateString: any) {
     const date = new Date(dateString);
@@ -206,12 +244,13 @@ export class ClaimSummaryComponent implements AfterViewInit {
     const day = date.getDate().toString().padStart(2, '0');
     return `${year}/${month}/${day}`;
   }
-
   //============Show Parametrs Div=======================
   show_Parameter_Div = () => {
     this.isParamsOpend = !this.isParamsOpend;
+    this.hint_for_Parametr_div = this.isParamsOpend
+      ? 'Hide Parameters'
+      : 'Show Parameters';
   };
-
   //============Show Filter Row==========================
   filterClick = () => {
     this.isFilterOpened = !this.isFilterOpened;
@@ -220,6 +259,11 @@ export class ClaimSummaryComponent implements AfterViewInit {
   SummaryClick = () => {
     this.isSummaryOpened = !this.isSummaryOpened;
   };
+  //===========Show Memorise Saving popup===============
+  // ShowPopupClick = () => {
+  //   this.isSaveMemorisedOpened = !this.isSaveMemorisedOpened;
+  // };
+
   //=============DataGrid Refreshing=====================
   refresh = () => {
     this.dataGrid.instance.refresh();
@@ -280,6 +324,72 @@ export class ClaimSummaryComponent implements AfterViewInit {
       e.cancel = true;
     }
   }
+
+  //================Save MEmorize Reports===============
+  save_Memorise_Report = () => {
+    const allColumns = this.ColumnNames;
+    const columns = this.dataGrid.instance.getVisibleColumns();
+    const VisiblecolumnNames = columns
+      .map((col) => col.caption || col.dataField)
+      .filter((name) => name !== undefined);
+    const hiddenColumns = allColumns.filter(
+      (colName) => !VisiblecolumnNames.includes(colName)
+    );
+    // Create an array of objects to store column visibility settings
+    const columnVisibilitySettings = [];
+
+    // Set visibility to false for columns not in VisiblecolumnNames
+    allColumns.forEach((colName) => {
+      if (!VisiblecolumnNames.includes(colName)) {
+        columnVisibilitySettings.push({
+          columnName: colName,
+          visibility: 'false',
+        });
+      } else {
+        columnVisibilitySettings.push({
+          columnName: colName,
+          visibility: 'true',
+        });
+      }
+    });
+
+    console.log('All columns:', allColumns);
+    console.log('Visible columns:', VisiblecolumnNames);
+    console.log('Hidden columns:', hiddenColumns);
+    console.log('Column visibility settings:', columnVisibilitySettings);
+
+    // let menuItems = JSON.parse(localStorage.getItem('sidemenuItems'));
+    // //=======Find the maximum ID currently present in the menuItems array
+    // let maxId = Math.max(...menuItems.map((item) => parseInt(item.id)));
+
+    // //=======Calculate the new ID by incrementing the maximum ID by 1
+    // let newId = (maxId !== -Infinity ? maxId : 0) + 1;
+
+    // //=======Calculate the new IDs for the items array
+    // let maxItemIds = Math.max(
+    //   ...menuItems.flatMap((item) =>
+    //     item.items.map((subItem) => parseInt(subItem.id))
+    //   )
+    // );
+    // let newItemIds = (maxItemIds !== -Infinity ? maxItemIds : 0) + 1;
+    // let currentpageUrl = this.router.url;
+    // //=======Push the new item with the calculated ID
+    // menuItems.push({
+    //   path: '',
+    //   text: 'Memorize Report',
+    //   icon: 'newfolder',
+    //   id: newId.toString(),
+    //   items: [
+    //     {
+    //       id: newItemIds.toString(),
+    //       text: 'Claim Summary - Date wise',
+    //       path: currentpageUrl.toString(),
+    //     },
+    //   ],
+    // });
+    // console.log('after push some data', menuItems);
+    // localStorage.setItem('sidemenuItems', JSON.stringify(menuItems));
+  };
 }
 
 @NgModule({
@@ -303,6 +413,7 @@ export class ClaimSummaryComponent implements AfterViewInit {
     DxSliderModule,
     DxTagBoxModule,
     DxTemplateModule,
+    DxPopupModule,
   ],
   providers: [],
   exports: [],

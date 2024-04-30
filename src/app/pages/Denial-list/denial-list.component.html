@@ -104,11 +104,10 @@
     </dxi-column>
   </dx-data-grid>
 
-  <form-popup
+  <form-popup class="formPopupClass"
     [(visible)]="isAddContactPopupOpened"
     (save)="onClickSaveNewDenial()"
     titleText="New Denial"
-    style="width: 500px; height: 300px"
   >
     <contact-denial-form></contact-denial-form>
   </form-popup>

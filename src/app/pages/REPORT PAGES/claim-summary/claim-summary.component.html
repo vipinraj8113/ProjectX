@@ -105,7 +105,7 @@
     id="main-grid"
     class="grid theme-dependent"
     height="100%"
-    noDataText=" "
+    noDataText="no data"
     [dataSource]="dataSource"
     [showBorders]="true"
     [allowColumnResizing]="true"
@@ -127,12 +127,12 @@
       [caption]="column.caption"
       [format]="column.format"
       [width]="200"
-      
     ></dxi-column>
 
     <dxo-search-panel [visible]="true"></dxo-search-panel>
-    <dxo-paging [pageSize]="10"></dxo-paging>
+    <dxo-paging *ngIf="show_Pagination" [pageSize]="10"></dxo-paging>
     <dxo-pager
+      *ngIf="show_Pagination"
       [visible]="true"
       [allowedPageSizes]="allowedPageSizes"
       [displayMode]="displayMode"
@@ -170,7 +170,7 @@
           text: '',
           icon: 'filter',
           onClick: show_Parameter_Div,
-          hint: 'Search Options'
+          hint: hint_for_Parametr_div
         }"
       ></dxi-item>
       <dxi-item location="after" locateInMenu="auto">
@@ -225,19 +225,28 @@
         <div class="separator"></div>
       </dxi-item>
       <dxi-item
-        widget="dxSelectBox"
+        widget="dxButton"
         [options]="{
-          valueExpr: selectedColumnName,
-          dataSource: ColumnNames,
-          searchEnabled: true,
-          onValueChanged: makeColumnVisible,
-          placeholder: 'Search Column',
-          noDataText: 'load data and try again',
-          width: 'auto',
-
+          text: '',
+          icon: 'newfolder',
+          onClick: save_Memorise_Report,
+          hint: 'Save Memorize Report'
         }"
-      >
-      </dxi-item>
+      ></dxi-item>
+      <dxi-item
+  class="columnfinderclass"
+  widget="dxSelectBox"
+  [options]="{
+    dataSource: ColumnNames,
+    searchEnabled: true,
+    onValueChanged: makeColumnVisible,
+    placeholder: 'Search Column',
+    noDataText: 'load data and try again',
+    showDropDownButton: true,
+    hint:'Column location finder'
+  }"
+>
+</dxi-item>
     </dxo-toolbar>
 
     <dxo-grouping
@@ -305,6 +314,7 @@
         [showInGroupFooter]="false"
       >
       </dxi-group-item>
+
       <!-- ==========================Grand Total Summary==================== -->
       <ng-container class="totalsummaryDiv" *ngIf="isSummaryOpened">
         <dxi-total-item
@@ -352,4 +362,20 @@
       </ng-container>
     </dxo-summary>
   </dx-data-grid>
+  <!-- <dx-popup
+  [(visible)]="isSaveMemorisedOpened"
+  [title]="'Memorise Report'"
+  [width]="400"
+  [height]="500"
+>
+  <dx-form id="form">
+    <dxi-item itemType="group" cssClass="form-group" [colCount]="1">
+      <dxi-item itemType="group">
+        <dxi-item dataField="Report Name"></dxi-item>
+        <dxi-item dataField="City"></dxi-item>
+      </dxi-item>
+    </dxi-item>
+  </dx-form>
+</dx-popup> -->
+
 </div>
