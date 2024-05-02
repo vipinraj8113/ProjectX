@@ -50,6 +50,7 @@ export class LoginFormComponent implements OnInit {
     console.log('log data :', username, password);
     this.authService.logIn(username, password).subscribe((response: any) => {
       if (response.flag == 1) {
+        localStorage.setItem('logData', JSON.stringify(response.data));
         localStorage.setItem('sidemenuItems', JSON.stringify(response.menus));
         this.router.navigateByUrl('/analytics-dashboard');
       } else {

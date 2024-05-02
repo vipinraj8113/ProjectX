@@ -86,14 +86,6 @@ export class DenialListComponent {
     this.dataGrid.instance.refresh();
   };
 
-  // onPinnedChange = () => {
-  //   this.dataGrid.instance.updateDimensions();
-  // };
-
-  // onSelectionChanged(data: any) {
-  //   this.selectedItemKeys = data.selectedRowKeys;
-  // }
-
   //================Exporting Function=====================
   onExporting(e) {
     if (e.format === 'pdf') {
