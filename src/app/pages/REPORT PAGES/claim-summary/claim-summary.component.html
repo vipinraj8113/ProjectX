@@ -234,23 +234,22 @@
         }"
       ></dxi-item>
       <dxi-item
-  class="columnfinderclass"
-  widget="dxSelectBox"
-  [options]="{
-    dataSource: ColumnNames,
-    searchEnabled: true,
-    onValueChanged: makeColumnVisible,
-    placeholder: 'Search Column',
-    noDataText: 'load data and try again',
-    showDropDownButton: true,
-    hint:'Column location finder',
-    dropDownOptions: {
-      width: 'auto'
-    }
-
-  }"
->
-</dxi-item>
+        class="columnfinderclass"
+        widget="dxSelectBox"
+        [options]="{
+          dataSource: ColumnNames,
+          searchEnabled: true,
+          onValueChanged: makeColumnVisible,
+          placeholder: 'Search Column',
+          noDataText: 'load data and try again',
+          showDropDownButton: true,
+          hint: 'Column location finder',
+          dropDownOptions: {
+            width: 'auto'
+          }
+        }"
+      >
+      </dxi-item>
     </dxo-toolbar>
 
     <dxo-grouping
@@ -381,5 +380,4 @@
     </dxi-item>
   </dx-form>
 </dx-popup> -->
-
 </div>
