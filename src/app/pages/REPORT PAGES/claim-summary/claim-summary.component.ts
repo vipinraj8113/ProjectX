@@ -201,12 +201,30 @@ export class ClaimSummaryComponent implements AfterViewInit {
     var EncounterType = this.EncounterType_Value;
     var fromDate = this.formatDate(this.From_Date_Value);
     var toDate = this.formatDate(this.To_Date_Value);
+
+    // Create an object with the variables
+    var reportData = {
+      searchOn: searchOn,
+      Facility: Facility,
+      EncounterType: EncounterType,
+      fromDate: fromDate,
+      toDate: toDate,
+    };
+    // Store the object in session storage
+    sessionStorage.setItem('reportData', JSON.stringify(reportData));
     this.loadData(searchOn, Facility, EncounterType, fromDate, toDate);
     sessionStorage.setItem('loadedFlag', JSON.stringify('true'));
     this.show_Parameter_Div();
   }
   //==============DataLoading After Reload Page==========
   DataSorce_After_reload_Page() {
+    const report_Parameters = JSON.parse(sessionStorage.getItem('reportData'));
+    this.SearchOn_Value = report_Parameters.searchOn;
+    this.Facility_Value = report_Parameters.Facility;
+    this.EncounterType_Value = report_Parameters.EncounterType;
+    this.From_Date_Value = report_Parameters.fromDate;
+    this.To_Date_Value = report_Parameters.toDate;
+
     this.dataSource = new DataSource<any>({
       load: () =>
         new Promise((resolve, reject) => {
