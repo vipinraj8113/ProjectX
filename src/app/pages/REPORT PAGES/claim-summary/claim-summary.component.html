@@ -14,6 +14,8 @@
             [(value)]="SearchOn_Value"
             placeholder="select searchOn value"
             [width]="'auto'"
+            required
+            (valueChanged)="onSearchOnValueChanged()"
           >
             <dxo-drop-down-options
               [showTitle]="false"
@@ -32,6 +34,7 @@
             valueExpr="ID"
             [(value)]="Facility_Value"
             placeholder="select facility value"
+            (valueChanged)="onSearchOnValueChanged()"
           >
             <dxo-drop-down-options
               [showTitle]="false"
@@ -50,6 +53,7 @@
             valueExpr="ID"
             [(value)]="EncounterType_Value"
             placeholder="select encounter Type value"
+            (valueChanged)="onSearchOnValueChanged()"
           >
             <dxo-drop-down-options
               [showTitle]="false"

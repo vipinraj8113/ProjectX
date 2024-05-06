@@ -16,6 +16,8 @@ import {
   DxTreeViewComponent,
   DxTreeViewTypes,
 } from 'devextreme-angular/ui/tree-view';
+import { DxTabPanelModule } from 'devextreme-angular';
+
 import * as events from 'devextreme/events';
 // import { navigation } from '../../../app-navigation';
 
@@ -118,7 +120,7 @@ export class SideNavigationMenuComponent implements AfterViewInit, OnDestroy ,On
 }
 
 @NgModule({
-  imports: [DxTreeViewModule],
+  imports: [DxTreeViewModule,DxTabPanelModule],
   declarations: [SideNavigationMenuComponent],
   exports: [SideNavigationMenuComponent],
 })

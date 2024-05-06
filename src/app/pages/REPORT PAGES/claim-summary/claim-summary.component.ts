@@ -13,6 +13,7 @@ import {
   DxSelectBoxModule,
   DxTextBoxModule,
   DxFormModule,
+  DxLookupComponent,
 } from 'devextreme-angular';
 import { DxPopupModule } from 'devextreme-angular/ui/popup';
 import { DxDateBoxModule } from 'devextreme-angular';
@@ -57,6 +58,8 @@ export class ClaimSummaryComponent implements AfterViewInit {
 
   @ViewChild(DenialNewFormComponent, { static: false })
   denialComponent: DenialNewFormComponent;
+
+  @ViewChild('lookup', { static: false }) lookup: DxLookupComponent;
 
   isPanelOpened = false;
 
@@ -113,7 +116,7 @@ export class ClaimSummaryComponent implements AfterViewInit {
     this.maxDate = new Date(); // Set the maximum date
     this.fetch_Dropdown_InitData();
     this.systemCurrencyCode = this.service.getSystemCurrencyCode();
-    const loadedPAgeFlag = JSON.parse(localStorage.getItem('loadedFlag'));
+    const loadedPAgeFlag = JSON.parse(sessionStorage.getItem('loadedFlag'));
     if (loadedPAgeFlag == 'true') {
       this.DataSorce_After_reload_Page();
     }
@@ -122,14 +125,16 @@ export class ClaimSummaryComponent implements AfterViewInit {
   ngAfterViewInit() {
     if (this.dataGrid) {
       const columns = this.dataGrid.instance.getVisibleColumns();
-      // console.log(columns);
     }
   }
-  // ngOnDestroy() {
-  //   // Remove localStorage item when the component is destroyed
-  //   localStorage.removeItem('DataSource');
-  //   localStorage.removeItem('loadedFlag');
-  // }
+  //============Hide drop down after Value Selected========
+  onSearchOnValueChanged() {
+    // Close the dropdown
+    const lookupInstance = this.lookup.instance;
+    if (lookupInstance) {
+      lookupInstance.close();
+    }
+  }
 
   //============Fetch DataSource For Reporting Grid======
   loadData(
@@ -172,7 +177,7 @@ export class ClaimSummaryComponent implements AfterViewInit {
                   };
                 });
                 const claimDetails = data.ClaimDetails;
-                localStorage.setItem('DataSource', JSON.stringify(data));
+                sessionStorage.setItem('DataSource', JSON.stringify(data));
                 resolve(claimDetails);
                 this.show_Pagination = true;
               },
@@ -187,8 +192,6 @@ export class ClaimSummaryComponent implements AfterViewInit {
       this.SearchOn_DataSource = response.SearchOn;
       this.Facility_DataSource = response.Facility;
       this.EncounterType_DataSource = response.EncountrType;
-
-      // console.log('Init Data Fetched Successfully :', this.SearchOn_DataSource);
     });
   }
   //============Call DataSource Using Selected Values====
@@ -199,7 +202,7 @@ export class ClaimSummaryComponent implements AfterViewInit {
     var fromDate = this.formatDate(this.From_Date_Value);
     var toDate = this.formatDate(this.To_Date_Value);
     this.loadData(searchOn, Facility, EncounterType, fromDate, toDate);
-    localStorage.setItem('loadedFlag', JSON.stringify('true'));
+    sessionStorage.setItem('loadedFlag', JSON.stringify('true'));
     this.show_Parameter_Div();
   }
   //==============DataLoading After Reload Page==========
@@ -208,7 +211,7 @@ export class ClaimSummaryComponent implements AfterViewInit {
       load: () =>
         new Promise((resolve, reject) => {
           const localStorageData = JSON.parse(
-            localStorage.getItem('DataSource')
+            sessionStorage.getItem('DataSource')
           );
           if (localStorageData) {
             const data = localStorageData;
@@ -360,38 +363,6 @@ export class ClaimSummaryComponent implements AfterViewInit {
     console.log('Visible columns:', VisiblecolumnNames);
     console.log('Hidden columns:', hiddenColumns);
     console.log('Column visibility settings:', columnVisibilitySettings);
-
-    // let menuItems = JSON.parse(localStorage.getItem('sidemenuItems'));
-    // //=======Find the maximum ID currently present in the menuItems array
-    // let maxId = Math.max(...menuItems.map((item) => parseInt(item.id)));
-
-    // //=======Calculate the new ID by incrementing the maximum ID by 1
-    // let newId = (maxId !== -Infinity ? maxId : 0) + 1;
-
-    // //=======Calculate the new IDs for the items array
-    // let maxItemIds = Math.max(
-    //   ...menuItems.flatMap((item) =>
-    //     item.items.map((subItem) => parseInt(subItem.id))
-    //   )
-    // );
-    // let newItemIds = (maxItemIds !== -Infinity ? maxItemIds : 0) + 1;
-    // let currentpageUrl = this.router.url;
-    // //=======Push the new item with the calculated ID
-    // menuItems.push({
-    //   path: '',
-    //   text: 'Memorize Report',
-    //   icon: 'newfolder',
-    //   id: newId.toString(),
-    //   items: [
-    //     {
-    //       id: newItemIds.toString(),
-    //       text: 'Claim Summary - Date wise',
-    //       path: currentpageUrl.toString(),
-    //     },
-    //   ],
-    // });
-    // console.log('after push some data', menuItems);
-    // localStorage.setItem('sidemenuItems', JSON.stringify(menuItems));
   };
 }
 

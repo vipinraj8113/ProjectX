@@ -130,6 +130,7 @@ export class AuthService {
 
   async logOut() {
     localStorage.removeItem('sidemenuItems');
+    sessionStorage.clear();
     this.router.navigate(['/auth/login']);
   }
 }
