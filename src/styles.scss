@@ -395,13 +395,14 @@ body {
 
   .dx-datagrid-headers.dx-datagrid-nowrap.dx-bordered-top-view {
     border-radius: 8px 8px 0 0;
+    // background-color: yellow;
   }
 
   .theme-dependent {
     .dx-gridbase-container {
       > .dx-bordered-bottom-view {
         border-radius: 0 0 8px 8px;
-        
+
       }
     }
   }
@@ -417,4 +418,8 @@ body {
   .right-side-panel.open {
     background-color: var(--base-bg);
   }
+}
+
+.highlighted-column{
+  background-color: rgba(8, 8, 8, 0.211);
 }

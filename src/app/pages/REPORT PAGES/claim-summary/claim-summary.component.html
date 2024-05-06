@@ -111,12 +111,10 @@
     [allowColumnResizing]="true"
     [columnAutoWidth]="true"
     [allowColumnReordering]="true"
-    [rowAlternationEnabled]="true"
     [columnFixing]="{
       enabled: true,
       texts: { fix: 'Freeze', unfix: 'Unfreeze' }
     }"
-    rowAlternationInterval="2"
     (onExporting)="onExporting($event)"
     [filterRow]="{ visible: false }"
     [headerFilter]="{ visible: false }"
@@ -245,7 +243,8 @@
           showDropDownButton: true,
           hint: 'Column location finder',
           dropDownOptions: {
-            width: 'auto'
+            width: 'auto',
+
           }
         }"
       >

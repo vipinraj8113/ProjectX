@@ -51,7 +51,7 @@ interface dropdownData {
   styleUrls: ['./claim-summary.component.scss'],
   providers: [ReportService],
 })
-export class ClaimSummaryComponent implements AfterViewInit, OnDestroy {
+export class ClaimSummaryComponent implements AfterViewInit {
   @ViewChild(DxDataGridComponent, { static: true })
   dataGrid: DxDataGridComponent;
 
@@ -113,10 +113,10 @@ export class ClaimSummaryComponent implements AfterViewInit, OnDestroy {
     this.maxDate = new Date(); // Set the maximum date
     this.fetch_Dropdown_InitData();
     this.systemCurrencyCode = this.service.getSystemCurrencyCode();
-    // const loadedPAgeFlag = JSON.parse(localStorage.getItem('loadedFlag'));
-    // if (loadedPAgeFlag == 'true') {
-    //   this.DataSorce_After_reload_Page();
-    // }
+    const loadedPAgeFlag = JSON.parse(localStorage.getItem('loadedFlag'));
+    if (loadedPAgeFlag == 'true') {
+      this.DataSorce_After_reload_Page();
+    }
   }
 
   ngAfterViewInit() {
@@ -125,11 +125,11 @@ export class ClaimSummaryComponent implements AfterViewInit, OnDestroy {
       // console.log(columns);
     }
   }
-  ngOnDestroy() {
-    // Remove localStorage item when the component is destroyed
-    localStorage.removeItem('DataSource');
-    localStorage.removeItem('loadedFlag');
-  }
+  // ngOnDestroy() {
+  //   // Remove localStorage item when the component is destroyed
+  //   localStorage.removeItem('DataSource');
+  //   localStorage.removeItem('loadedFlag');
+  // }
 
   //============Fetch DataSource For Reporting Grid======
   loadData(
@@ -199,43 +199,43 @@ export class ClaimSummaryComponent implements AfterViewInit, OnDestroy {
     var fromDate = this.formatDate(this.From_Date_Value);
     var toDate = this.formatDate(this.To_Date_Value);
     this.loadData(searchOn, Facility, EncounterType, fromDate, toDate);
-    // localStorage.setItem('loadedFlag', JSON.stringify('true'));
+    localStorage.setItem('loadedFlag', JSON.stringify('true'));
     this.show_Parameter_Div();
   }
   //==============DataLoading After Reload Page==========
-  // DataSorce_After_reload_Page() {
-  //   this.dataSource = new DataSource<any>({
-  //     load: () =>
-  //       new Promise((resolve, reject) => {
-  //         const localStorageData = JSON.parse(
-  //           localStorage.getItem('DataSource')
-  //         );
-  //         if (localStorageData) {
-  //           const data = localStorageData;
-  //           this.columnsData = data.Columns;
-  //           this.ColumnNames = this.columnsData.map((column) => column.Name);
-  //           this.columnsConfig = this.columnsData.map((column) => {
-  //             return {
-  //               dataField: column.Name,
-  //               caption: column.Title,
-  //               format:
-  //                 column.Type === 'Decimal'
-  //                   ? {
-  //                       type: 'fixedPoint',
-  //                       precision: 2,
-  //                       // currency: this.systemCurrencyCode,
-  //                     }
-  //                   : undefined,
-  //             };
-  //           });
-  //           resolve(data.ClaimDetails);
-  //           this.show_Pagination = true;
-  //         } else {
-  //           reject(' ');
-  //         }
-  //       }),
-  //   });
-  // }
+  DataSorce_After_reload_Page() {
+    this.dataSource = new DataSource<any>({
+      load: () =>
+        new Promise((resolve, reject) => {
+          const localStorageData = JSON.parse(
+            localStorage.getItem('DataSource')
+          );
+          if (localStorageData) {
+            const data = localStorageData;
+            this.columnsData = data.Columns;
+            this.ColumnNames = this.columnsData.map((column) => column.Name);
+            this.columnsConfig = this.columnsData.map((column) => {
+              return {
+                dataField: column.Name,
+                caption: column.Title,
+                format:
+                  column.Type === 'Decimal'
+                    ? {
+                        type: 'fixedPoint',
+                        precision: 2,
+                        // currency: this.systemCurrencyCode,
+                      }
+                    : undefined,
+              };
+            });
+            resolve(data.ClaimDetails);
+            this.show_Pagination = true;
+          } else {
+            reject(' ');
+          }
+        }),
+    });
+  }
   //=================change the format of date===========
   formatDate(dateString: any) {
     const date = new Date(dateString);
@@ -292,6 +292,9 @@ export class ClaimSummaryComponent implements AfterViewInit, OnDestroy {
         'cssClass',
         'highlighted-column'
       );
+      setTimeout(() => {
+        this.dataGrid.instance.columnOption(columnName, 'cssClass', null);
+      }, 2000); // 1000 milliseconds = 1 second
     }
   };
 
