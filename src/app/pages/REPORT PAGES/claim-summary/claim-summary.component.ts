@@ -4,6 +4,7 @@ import {
   NgModule,
   AfterViewInit,
   OnDestroy,
+  OnInit,
 } from '@angular/core';
 import {
   DxButtonModule,
@@ -106,6 +107,8 @@ export class ClaimSummaryComponent implements AfterViewInit {
 
   hint_for_Parametr_div: any = 'Hide Parameters';
 
+  currentTime: any = new Date(); //==Crrent time for passing memorise report
+
   //=======================Constructor==================
   constructor(
     private service: ReportService,
@@ -121,6 +124,13 @@ export class ClaimSummaryComponent implements AfterViewInit {
       this.DataSorce_After_reload_Page();
     }
   }
+
+  // ngOnInit(): void {
+  //   setInterval(() => {
+  //     this.currentTime = this.formatDate(new Date());
+  //     console.log("current time:", this.currentTime);
+  //   }, 1000); // Update every second
+  // }
 
   ngAfterViewInit() {
     if (this.dataGrid) {
@@ -250,6 +260,7 @@ export class ClaimSummaryComponent implements AfterViewInit {
             });
             resolve(data.ReportData);
             this.show_Pagination = true;
+            console.log('hdfjhshf', this.show_Pagination);
           } else {
             reject(' ');
           }
@@ -350,6 +361,11 @@ export class ClaimSummaryComponent implements AfterViewInit {
 
   //================Save MEmorize Reports===============
   save_Memorise_Report = () => {
+    const logData = JSON.parse(localStorage.getItem('logData'));
+    const user_Id = logData.USER_ID;
+    // const Report_ID = this.router.url.slice(1);
+    const Report_ID = 'RPT_CLAIM_DETAILS';
+    const reportColumns = this.columnsData;
     const allColumns = this.ColumnNames;
     const columns = this.dataGrid.instance.getVisibleColumns();
     const VisiblecolumnNames = columns
@@ -358,28 +374,18 @@ export class ClaimSummaryComponent implements AfterViewInit {
     const hiddenColumns = allColumns.filter(
       (colName) => !VisiblecolumnNames.includes(colName)
     );
-    // Create an array of objects to store column visibility settings
-    const columnVisibilitySettings = [];
-
-    // Set visibility to false for columns not in VisiblecolumnNames
-    allColumns.forEach((colName) => {
-      if (!VisiblecolumnNames.includes(colName)) {
-        columnVisibilitySettings.push({
-          columnName: colName,
-          visibility: 'false',
-        });
-      } else {
-        columnVisibilitySettings.push({
-          columnName: colName,
-          visibility: 'true',
-        });
-      }
+    const memoriseReportColumns = reportColumns.map((column) => {
+      return {
+        ...column,
+        Visibility: hiddenColumns.includes(column.Name) ? 'false' : 'true',
+      };
     });
-
-    console.log('All columns:', allColumns);
-    console.log('Visible columns:', VisiblecolumnNames);
-    console.log('Hidden columns:', hiddenColumns);
-    console.log('Column visibility settings:', columnVisibilitySettings);
+    this.service
+      .save_Memorise_report(user_Id, Report_ID, memoriseReportColumns)
+      .subscribe((response) => {
+        console.log(response.message);
+      });
+    console.log(user_Id, Report_ID, memoriseReportColumns);
   };
 }
 

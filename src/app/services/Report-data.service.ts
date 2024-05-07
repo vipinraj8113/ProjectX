@@ -40,4 +40,21 @@ export class ReportService {
       currency: 'USD', // Default currency code
     }).resolvedOptions().currency;
   }
+//=========================Save memorise Report==========================
+save_Memorise_report(userId:any,reportId:any,memoriseColumnData:any):any{
+  const url=`${BASE_URL}userreports/insert`
+  const reqBody={
+    "USER_ID":userId,
+    "REPORT_ID":reportId,
+    "userreport_coloumn":memoriseColumnData
+  }
+  return this.http.post(url,reqBody)
+
+}
+
+
+
+
+
+
 }
