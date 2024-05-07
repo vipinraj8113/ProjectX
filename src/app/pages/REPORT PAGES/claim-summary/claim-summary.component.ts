@@ -135,7 +135,6 @@ export class ClaimSummaryComponent implements AfterViewInit {
       lookupInstance.close();
     }
   }
-
   //============Fetch DataSource For Reporting Grid======
   loadData(
     searchOn: any,
@@ -157,7 +156,7 @@ export class ClaimSummaryComponent implements AfterViewInit {
             )
             .subscribe({
               next: (data: any) => {
-                this.columnsData = data.Columns;
+                this.columnsData = data.ReportColumns;
                 this.ColumnNames = this.columnsData.map(
                   (column) => column.Name
                 );
@@ -176,7 +175,7 @@ export class ClaimSummaryComponent implements AfterViewInit {
                         : undefined,
                   };
                 });
-                const claimDetails = data.ClaimDetails;
+                const claimDetails = data.ReportData;
                 sessionStorage.setItem('DataSource', JSON.stringify(data));
                 resolve(claimDetails);
                 this.show_Pagination = true;
@@ -233,7 +232,7 @@ export class ClaimSummaryComponent implements AfterViewInit {
           );
           if (localStorageData) {
             const data = localStorageData;
-            this.columnsData = data.Columns;
+            this.columnsData = data.ReportColumns;
             this.ColumnNames = this.columnsData.map((column) => column.Name);
             this.columnsConfig = this.columnsData.map((column) => {
               return {
@@ -249,7 +248,7 @@ export class ClaimSummaryComponent implements AfterViewInit {
                     : undefined,
               };
             });
-            resolve(data.ClaimDetails);
+            resolve(data.ReportData);
             this.show_Pagination = true;
           } else {
             reject(' ');
@@ -315,7 +314,7 @@ export class ClaimSummaryComponent implements AfterViewInit {
       );
       setTimeout(() => {
         this.dataGrid.instance.columnOption(columnName, 'cssClass', null);
-      }, 2000); // 1000 milliseconds = 1 second
+      }, 3000); // 1000 milliseconds = 1 second
     }
   };
 

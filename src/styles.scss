@@ -10,10 +10,10 @@ body {
 * {
   box-sizing: border-box;
 }
-#main-grid {
-  width: auto;
-  overflow-x: auto;
-}
+// #main-grid {
+//   width: auto;
+//   overflow-x: auto;
+// }
 
 .header-text {
   @include header();
