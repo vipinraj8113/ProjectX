@@ -27,6 +27,7 @@ import { Workbook } from 'exceljs';
 import { saveAs } from 'file-saver-es';
 import { jsPDF } from 'jspdf';
 import { FormPopupModule } from 'src/app/components';
+import notify from 'devextreme/ui/notify';
 import { ContactPanelModule } from 'src/app/components/library/contact-panel/contact-panel.component';
 import {
   DenialNewFormComponent,
@@ -109,6 +110,8 @@ export class ClaimSummaryComponent implements AfterViewInit {
 
   currentTime: any = new Date(); //==Crrent time for passing memorise report
 
+  memoriseEnable:any = 'false';
+
   //=======================Constructor==================
   constructor(
     private service: ReportService,
@@ -166,7 +169,10 @@ export class ClaimSummaryComponent implements AfterViewInit {
             )
             .subscribe({
               next: (data: any) => {
-                this.columnsData = data.ReportColumns;
+                this.columnsData =
+                  this.memoriseEnable === 'true'
+                    ? data.PersonalColumns
+                    : data.ReportColumns;
                 this.ColumnNames = this.columnsData.map(
                   (column) => column.Name
                 );
@@ -175,6 +181,7 @@ export class ClaimSummaryComponent implements AfterViewInit {
                   return {
                     dataField: column.Name,
                     caption: column.Title,
+                    visible: column.Visibility === 'true' ? true : false,
                     format:
                       column.Type === 'Decimal'
                         ? {
@@ -186,6 +193,7 @@ export class ClaimSummaryComponent implements AfterViewInit {
                   };
                 });
                 const claimDetails = data.ReportData;
+                console.log('memorise checking', data);
                 sessionStorage.setItem('DataSource', JSON.stringify(data));
                 resolve(claimDetails);
                 this.show_Pagination = true;
@@ -242,12 +250,16 @@ export class ClaimSummaryComponent implements AfterViewInit {
           );
           if (localStorageData) {
             const data = localStorageData;
-            this.columnsData = data.ReportColumns;
+            this.columnsData =
+              this.memoriseEnable === 'true'
+                ? data.PersonalColumns
+                : data.ReportColumns;
             this.ColumnNames = this.columnsData.map((column) => column.Name);
             this.columnsConfig = this.columnsData.map((column) => {
               return {
                 dataField: column.Name,
                 caption: column.Title,
+                visible: column.Visibility === 'true' ? true : false,
                 format:
                   column.Type === 'Decimal'
                     ? {
@@ -290,10 +302,15 @@ export class ClaimSummaryComponent implements AfterViewInit {
   SummaryClick = () => {
     this.isSummaryOpened = !this.isSummaryOpened;
   };
-  //===========Show Memorise Saving popup===============
-  // ShowPopupClick = () => {
-  //   this.isSaveMemorisedOpened = !this.isSaveMemorisedOpened;
-  // };
+  //===========Show Memorise Report===============
+  ShowMemoriseTable = () => {
+    if(this.memoriseEnable==='true'){
+      this.memoriseEnable='false'
+    }else{
+      this.memoriseEnable='true'
+    }
+    this.get_Report_DataSource()
+  };
 
   //=============DataGrid Refreshing=====================
   refresh = () => {
@@ -383,7 +400,24 @@ export class ClaimSummaryComponent implements AfterViewInit {
     this.service
       .save_Memorise_report(user_Id, Report_ID, memoriseReportColumns)
       .subscribe((response) => {
-        console.log(response.message);
+        if (response) {
+          notify(
+            {
+              message: `${response.message}`,
+              position: { at: 'top right', my: 'top right' },
+            },
+            'success'
+          );
+          console.log(response.message);
+        } else {
+          notify(
+            {
+              message: `${response.message}`,
+              position: { at: 'top right', my: 'top right' },
+            },
+            'error'
+          );
+        }
       });
     console.log(user_Id, Report_ID, memoriseReportColumns);
   };

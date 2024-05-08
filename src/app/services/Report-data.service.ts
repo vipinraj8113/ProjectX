@@ -18,6 +18,7 @@ export class ReportService {
   ) {
     const url = `${BASE_URL}reports/claimdetails`;
     const reqBodyData = {
+      userid:'2',
       SearchOn: SearchOn,
       DateFrom: DateFrom,
       DateTo: DateTo,

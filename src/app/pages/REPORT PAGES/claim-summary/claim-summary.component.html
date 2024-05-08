@@ -128,6 +128,7 @@
       [dataField]="column.dataField"
       [caption]="column.caption"
       [format]="column.format"
+      [visible]="column.visible"
       [width]="200"
     ></dxi-column>
 
@@ -148,7 +149,13 @@
     <dxo-sorting mode="multiple"></dxo-sorting>
     <dxo-header-filter [visible]="true" highlight="true"></dxo-header-filter>
 
-    <dxo-column-chooser [enabled]="true" mode="select"> </dxo-column-chooser>
+    <dxo-column-chooser [enabled]="true" >
+      <!-- <dxo-position
+      my="right top"
+      at="right bottom"
+      of=".dx-datagrid-column-chooser-button"
+    ></dxo-position> -->
+    </dxo-column-chooser>
     <!-- <dxo-column-location location="before" colIndex="0"></dxo-column-location> -->
     <dxo-search-panel [visible]="true" placeholder="Search"></dxo-search-panel>
 
@@ -233,6 +240,19 @@
           icon: 'newfolder',
           onClick: save_Memorise_Report,
           hint: 'Save Memorize Report'
+        }"
+      ></dxi-item>
+      <dxi-item location="after" locateInMenu="auto">
+        <div class="separator"></div>
+      </dxi-item>
+      <dxi-item
+        widget="dxButton"
+        [options]="{
+          text: '',
+          icon: 'datafield',
+          onClick: ShowMemoriseTable,
+          hint: 'Show Memorise Report',
+          width: '50px'
         }"
       ></dxi-item>
       <dxi-item
