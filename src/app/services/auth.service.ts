@@ -20,7 +20,7 @@ const defaultPath = '/';
 //==================================Default USer Name and details=======================
 export const defaultUser: IUser = {
   email: 'Nithin@gmail.com',
-  name: 'Nithin Siva',
+  name: 'Nithin Sivadas',
   avatarUrl:
     'https://js.devexpress.com/Demos/WidgetsGallery/JSDemos/images/employees/01.png',
 };
