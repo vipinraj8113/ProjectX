@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
+// const BASE_URL = 'http://localhost/projectx/api/';
+// const baseURL2 = 'http://localhost/crsdashboard/api/initdata';
 const BASE_URL = 'http://103.180.120.134/projectx/api/';
 const baseURL2 = 'http://103.180.120.134/crsdashboard/api/initdata';
 
@@ -18,7 +20,7 @@ export class ReportService {
   ) {
     const url = `${BASE_URL}reports/claimdetails`;
     const reqBodyData = {
-      userid:'2',
+      userid: '2',
       SearchOn: SearchOn,
       DateFrom: DateFrom,
       DateTo: DateTo,
@@ -34,28 +36,25 @@ export class ReportService {
     const reqBody = {};
     return this.http.post(url, reqBody);
   }
-//=========================Fetch System Currency Format==================
+  //=========================Fetch System Currency Format==================
   getSystemCurrencyCode(): string {
     return new Intl.NumberFormat(navigator.language, {
       style: 'currency',
       currency: 'USD', // Default currency code
     }).resolvedOptions().currency;
   }
-//=========================Save memorise Report==========================
-save_Memorise_report(userId:any,reportId:any,memoriseColumnData:any):any{
-  const url=`${BASE_URL}userreports/insert`
-  const reqBody={
-    "USER_ID":userId,
-    "REPORT_ID":reportId,
-    "userreport_coloumn":memoriseColumnData
+  //=========================Save memorise Report==========================
+  save_Memorise_report(
+    userId: any,
+    reportId: any,
+    memoriseColumnData: any
+  ): any {
+    const url = `${BASE_URL}userreports/insert`;
+    const reqBody = {
+      USER_ID: userId,
+      REPORT_ID: reportId,
+      userreport_coloumn: memoriseColumnData,
+    };
+    return this.http.post(url, reqBody);
   }
-  return this.http.post(url,reqBody)
-
-}
-
-
-
-
-
-
 }

@@ -193,10 +193,12 @@ export class ClaimSummaryComponent implements AfterViewInit {
                   };
                 });
                 const claimDetails = data.ReportData;
+                console.log("data loaded",claimDetails)
                 console.log('memorise checking', data);
-                sessionStorage.setItem('DataSource', JSON.stringify(data));
+                // sessionStorage.setItem('DataSource', JSON.stringify(data));
                 resolve(claimDetails);
                 this.show_Pagination = true;
+
               },
               error: ({ message }) => reject(message),
             });
@@ -241,43 +243,44 @@ export class ClaimSummaryComponent implements AfterViewInit {
     this.EncounterType_Value = report_Parameters.EncounterType;
     this.From_Date_Value = report_Parameters.fromDate;
     this.To_Date_Value = report_Parameters.toDate;
+    this.loadData(this.SearchOn_Value,this.Facility_Value,this.EncounterType_Value,this.From_Date_Value,this.To_Date_Value)
 
-    this.dataSource = new DataSource<any>({
-      load: () =>
-        new Promise((resolve, reject) => {
-          const localStorageData = JSON.parse(
-            sessionStorage.getItem('DataSource')
-          );
-          if (localStorageData) {
-            const data = localStorageData;
-            this.columnsData =
-              this.memoriseEnable === 'true'
-                ? data.PersonalColumns
-                : data.ReportColumns;
-            this.ColumnNames = this.columnsData.map((column) => column.Name);
-            this.columnsConfig = this.columnsData.map((column) => {
-              return {
-                dataField: column.Name,
-                caption: column.Title,
-                visible: column.Visibility === 'true' ? true : false,
-                format:
-                  column.Type === 'Decimal'
-                    ? {
-                        type: 'fixedPoint',
-                        precision: 2,
-                        // currency: this.systemCurrencyCode,
-                      }
-                    : undefined,
-              };
-            });
-            resolve(data.ReportData);
-            this.show_Pagination = true;
-            console.log('hdfjhshf', this.show_Pagination);
-          } else {
-            reject(' ');
-          }
-        }),
-    });
+    // this.dataSource = new DataSource<any>({
+    //   load: () =>
+    //     new Promise((resolve, reject) => {
+    //       const localStorageData = JSON.parse(
+    //         sessionStorage.getItem('DataSource')
+    //       );
+    //       if (localStorageData) {
+    //         const data = localStorageData;
+    //         this.columnsData =
+    //           this.memoriseEnable === 'true'
+    //             ? data.PersonalColumns
+    //             : data.ReportColumns;
+    //         this.ColumnNames = this.columnsData.map((column) => column.Name);
+    //         this.columnsConfig = this.columnsData.map((column) => {
+    //           return {
+    //             dataField: column.Name,
+    //             caption: column.Title,
+    //             visible: column.Visibility === 'true' ? true : false,
+    //             format:
+    //               column.Type === 'Decimal'
+    //                 ? {
+    //                     type: 'fixedPoint',
+    //                     precision: 2,
+    //                     // currency: this.systemCurrencyCode,
+    //                   }
+    //                 : undefined,
+    //           };
+    //         });
+    //         resolve(data.ReportData);
+    //         this.show_Pagination = true;
+    //         console.log('hdfjhshf', this.show_Pagination);
+    //       } else {
+    //         reject(' ');
+    //       }
+    //     }),
+    // });
   }
   //=================change the format of date===========
   formatDate(dateString: any) {

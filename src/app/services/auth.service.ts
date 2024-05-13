@@ -49,7 +49,7 @@ export class AuthService {
 
   constructor(private router: Router, private http: HttpClient) {}
 
-  //============================================================
+  //=================internet ip of system================================
   getIPAddress() {
     return this.http.get('https://api.ipify.org/?format=json');
   }
