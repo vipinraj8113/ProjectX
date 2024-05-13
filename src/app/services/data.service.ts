@@ -9,7 +9,8 @@ import { Sale, SalesOrOpportunitiesByCategory } from '../types/analytics';
 
 const API_URL = 'https://js.devexpress.com/Demos/RwaService/api';
 
-const BASE_URL = 'http://103.180.120.134/projectx/api/';
+// const BASE_URL = 'http://103.180.120.134/projectx/api/';
+const BASE_URL = 'http://localhost/projectx/api/';
 
 @Injectable()
 export class DataService {
