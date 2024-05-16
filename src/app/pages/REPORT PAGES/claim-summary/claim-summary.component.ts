@@ -315,7 +315,8 @@ export class ClaimSummaryComponent implements AfterViewInit {
   //==============Show Memorise Report===================
   ShowMemoriseTable = (e: any) => {
     this.memoriseDropDownSelectedValue = e.value;
-    this.memoriseEnable = this.memoriseEnable === 'true' ? 'false' : 'true';
+    // this.memoriseEnable = this.memoriseEnable === 'true' ? 'false' : 'true';
+    this.memoriseEnable = 'true'
     this.get_Report_DataSource();
   };
   //=============DataGrid Refreshing=====================
