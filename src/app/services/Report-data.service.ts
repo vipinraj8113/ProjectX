@@ -12,6 +12,7 @@ export class ReportService {
 
   //==========Fetch data of Claim Summary Date Wise=============
   get_Claim_Summary_Date_wise(
+    userId:any,
     SearchOn: any,
     Facility: any,
     EncounterType: any,
@@ -20,7 +21,7 @@ export class ReportService {
   ) {
     const url = `${BASE_URL}reports/claimdetails`;
     const reqBodyData = {
-      userid: '2',
+      userid: userId,
       SearchOn: SearchOn,
       DateFrom: DateFrom,
       DateTo: DateTo,
@@ -47,13 +48,17 @@ export class ReportService {
   save_Memorise_report(
     userId: any,
     reportId: any,
-    memoriseColumnData: any
+    reportName:any,
+    memoriseColumnData: any,
+    filterParameters:any
   ): any {
     const url = `${BASE_URL}userreports/insert`;
     const reqBody = {
       USER_ID: userId,
       REPORT_ID: reportId,
+      USER_REPORT_NAME:reportName,
       userreport_coloumn: memoriseColumnData,
+      userreport_parameter:filterParameters
     };
     return this.http.post(url, reqBody);
   }

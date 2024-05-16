@@ -54,10 +54,14 @@
     display: inherit;
   }
 }
-.highlighted-column {
-  background-color: yellow;
-  /* Add any other styles for highlighting */
+.save-button {
+  position: absolute;
+  bottom: 35px;
+  right: 25px;
 }
+
+
+
 // -------------------------------------------
 
 // @use "../../../../variables.scss" as *;

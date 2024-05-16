@@ -44,6 +44,10 @@ import {
   DxTagBoxModule,
   DxTemplateModule,
 } from 'devextreme-angular';
+import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
+
+//======================Dropdown interface=======================
 interface dropdownData {
   ID: number;
   Description: string;
@@ -110,17 +114,31 @@ export class ClaimSummaryComponent implements AfterViewInit {
 
   currentTime: any = new Date(); //==Crrent time for passing memorise report
 
-  memoriseEnable:any = 'false';
-
+  memoriseEnable: any = 'false';
+  logData: any;
+  user_Id: any = 2;
+  Report_Page: string;
+  Parameters: any[] = [];
+  myform: FormGroup;
+  MemoriseReportName: any;
+  memoriseDropDownSelectedValue: any;
+  MemoriseReportColumns: any;
+  memorise_Dropdown_Data: any;
   //=======================Constructor==================
   constructor(
     private service: ReportService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private fb: FormBuilder
   ) {
     this.minDate = new Date(2000, 1, 1); // Set the minimum date
     this.maxDate = new Date(); // Set the maximum date
     this.fetch_Dropdown_InitData();
+    this.logData = JSON.parse(localStorage.getItem('logData'));
+    this.user_Id = this.logData.USER_ID;
+    this.Report_Page = this.router.url.slice(1);
+    const parametrs = JSON.parse(sessionStorage.getItem('reportData'));
+    this.Parameters.push(parametrs);
     this.systemCurrencyCode = this.service.getSystemCurrencyCode();
     const loadedPAgeFlag = JSON.parse(sessionStorage.getItem('loadedFlag'));
     if (loadedPAgeFlag == 'true') {
@@ -128,19 +146,12 @@ export class ClaimSummaryComponent implements AfterViewInit {
     }
   }
 
-  // ngOnInit(): void {
-  //   setInterval(() => {
-  //     this.currentTime = this.formatDate(new Date());
-  //     console.log("current time:", this.currentTime);
-  //   }, 1000); // Update every second
-  // }
-
   ngAfterViewInit() {
     if (this.dataGrid) {
       const columns = this.dataGrid.instance.getVisibleColumns();
     }
   }
-  //============Hide drop down after Value Selected========
+  //============Hide drop down after Value Selected======
   onSearchOnValueChanged() {
     // Close the dropdown
     const lookupInstance = this.lookup.instance;
@@ -150,6 +161,7 @@ export class ClaimSummaryComponent implements AfterViewInit {
   }
   //============Fetch DataSource For Reporting Grid======
   loadData(
+    userId: any,
     searchOn: any,
     Facility: any,
     encounterType: any,
@@ -161,6 +173,7 @@ export class ClaimSummaryComponent implements AfterViewInit {
         new Promise((resolve, reject) => {
           this.service
             .get_Claim_Summary_Date_wise(
+              userId,
               searchOn,
               Facility,
               encounterType,
@@ -169,13 +182,33 @@ export class ClaimSummaryComponent implements AfterViewInit {
             )
             .subscribe({
               next: (data: any) => {
+                const personalReportData = data.PersonalReports;
+                this.memorise_Dropdown_Data = personalReportData.map(
+                  (personalReport) => {
+                    return {
+                      name: personalReport.name,
+                    };
+                  }
+                );
+
+                // Find the PersonalReport object with the name "first test"
+                const personalReport = data.PersonalReports.find(
+                  (report) => report.name === this.memoriseDropDownSelectedValue
+                );
+
+                // Extract the columns if the personalReport is found
+                this.MemoriseReportColumns = personalReport
+                  ? personalReport.Columns
+                  : [];
+
                 this.columnsData =
                   this.memoriseEnable === 'true'
-                    ? data.PersonalColumns
+                    ? this.MemoriseReportColumns
                     : data.ReportColumns;
                 this.ColumnNames = this.columnsData.map(
                   (column) => column.Name
                 );
+
                 // Assuming columnsData is the array of column objects you provided
                 this.columnsConfig = this.columnsData.map((column) => {
                   return {
@@ -193,12 +226,15 @@ export class ClaimSummaryComponent implements AfterViewInit {
                   };
                 });
                 const claimDetails = data.ReportData;
-                console.log("data loaded",claimDetails)
+                console.log('data loaded', claimDetails);
                 console.log('memorise checking', data);
+                console.log(
+                  'memorised columns only ',
+                  this.MemoriseReportColumns
+                );
                 // sessionStorage.setItem('DataSource', JSON.stringify(data));
                 resolve(claimDetails);
                 this.show_Pagination = true;
-
               },
               error: ({ message }) => reject(message),
             });
@@ -215,6 +251,7 @@ export class ClaimSummaryComponent implements AfterViewInit {
   }
   //============Call DataSource Using Selected Values====
   get_Report_DataSource() {
+    var userId = this.user_Id;
     var searchOn = this.SearchOn_Value;
     var Facility = this.Facility_Value;
     var EncounterType = this.EncounterType_Value;
@@ -223,64 +260,34 @@ export class ClaimSummaryComponent implements AfterViewInit {
 
     // Create an object with the variables
     var reportData = {
-      searchOn: searchOn,
-      Facility: Facility,
-      EncounterType: EncounterType,
-      fromDate: fromDate,
-      toDate: toDate,
+      SEARCH_ON: searchOn,
+      FACILITY_ID: Facility,
+      ENCOUNTER_TYPE: EncounterType,
+      START_DATE: fromDate,
+      END_DATE: toDate,
     };
     // Store the object in session storage
     sessionStorage.setItem('reportData', JSON.stringify(reportData));
-    this.loadData(searchOn, Facility, EncounterType, fromDate, toDate);
+    this.loadData(userId, searchOn, Facility, EncounterType, fromDate, toDate);
     sessionStorage.setItem('loadedFlag', JSON.stringify('true'));
     this.show_Parameter_Div();
   }
   //==============DataLoading After Reload Page==========
   DataSorce_After_reload_Page() {
     const report_Parameters = JSON.parse(sessionStorage.getItem('reportData'));
-    this.SearchOn_Value = report_Parameters.searchOn;
-    this.Facility_Value = report_Parameters.Facility;
-    this.EncounterType_Value = report_Parameters.EncounterType;
-    this.From_Date_Value = report_Parameters.fromDate;
-    this.To_Date_Value = report_Parameters.toDate;
-    this.loadData(this.SearchOn_Value,this.Facility_Value,this.EncounterType_Value,this.From_Date_Value,this.To_Date_Value)
-
-    // this.dataSource = new DataSource<any>({
-    //   load: () =>
-    //     new Promise((resolve, reject) => {
-    //       const localStorageData = JSON.parse(
-    //         sessionStorage.getItem('DataSource')
-    //       );
-    //       if (localStorageData) {
-    //         const data = localStorageData;
-    //         this.columnsData =
-    //           this.memoriseEnable === 'true'
-    //             ? data.PersonalColumns
-    //             : data.ReportColumns;
-    //         this.ColumnNames = this.columnsData.map((column) => column.Name);
-    //         this.columnsConfig = this.columnsData.map((column) => {
-    //           return {
-    //             dataField: column.Name,
-    //             caption: column.Title,
-    //             visible: column.Visibility === 'true' ? true : false,
-    //             format:
-    //               column.Type === 'Decimal'
-    //                 ? {
-    //                     type: 'fixedPoint',
-    //                     precision: 2,
-    //                     // currency: this.systemCurrencyCode,
-    //                   }
-    //                 : undefined,
-    //           };
-    //         });
-    //         resolve(data.ReportData);
-    //         this.show_Pagination = true;
-    //         console.log('hdfjhshf', this.show_Pagination);
-    //       } else {
-    //         reject(' ');
-    //       }
-    //     }),
-    // });
+    this.SearchOn_Value = report_Parameters.SEARCH_ON;
+    this.Facility_Value = report_Parameters.FACILITY_ID;
+    this.EncounterType_Value = report_Parameters.ENCOUNTER_TYPE;
+    this.From_Date_Value = report_Parameters.START_DATE;
+    this.To_Date_Value = report_Parameters.END_DATE;
+    this.loadData(
+      this.user_Id,
+      this.SearchOn_Value,
+      this.Facility_Value,
+      this.EncounterType_Value,
+      this.From_Date_Value,
+      this.To_Date_Value
+    );
   }
   //=================change the format of date===========
   formatDate(dateString: any) {
@@ -305,16 +312,12 @@ export class ClaimSummaryComponent implements AfterViewInit {
   SummaryClick = () => {
     this.isSummaryOpened = !this.isSummaryOpened;
   };
-  //===========Show Memorise Report===============
-  ShowMemoriseTable = () => {
-    if(this.memoriseEnable==='true'){
-      this.memoriseEnable='false'
-    }else{
-      this.memoriseEnable='true'
-    }
-    this.get_Report_DataSource()
+  //==============Show Memorise Report===================
+  ShowMemoriseTable = (e: any) => {
+    this.memoriseDropDownSelectedValue = e.value;
+    this.memoriseEnable = this.memoriseEnable === 'true' ? 'false' : 'true';
+    this.get_Report_DataSource();
   };
-
   //=============DataGrid Refreshing=====================
   refresh = () => {
     this.dataGrid.instance.refresh();
@@ -324,7 +327,6 @@ export class ClaimSummaryComponent implements AfterViewInit {
   applyFilter() {
     this.GridSource.filter();
   }
-
   //===========Column location finding===================
   makeColumnVisible = (e: any) => {
     const columnName = e.value;
@@ -348,7 +350,6 @@ export class ClaimSummaryComponent implements AfterViewInit {
       }, 3000); // 1000 milliseconds = 1 second
     }
   };
-
   //================Exporting Function===================
   onExporting(e) {
     if (e.format === 'pdf') {
@@ -378,13 +379,18 @@ export class ClaimSummaryComponent implements AfterViewInit {
       e.cancel = true;
     }
   }
-
-  //================Save MEmorize Reports===============
-  save_Memorise_Report = () => {
-    const logData = JSON.parse(localStorage.getItem('logData'));
-    const user_Id = logData.USER_ID;
-    // const Report_ID = this.router.url.slice(1);
-    const Report_ID = 'RPT_CLAIM_DETAILS';
+  //==========show memorise save pop up=================
+  show_Memorise_popup = () => {
+    this.isSaveMemorisedOpened = !this.isSaveMemorisedOpened;
+  };
+  //==========fetch custome memorise report name==========
+  onMemoriseReportNameChanged(e) {
+    this.MemoriseReportName = e.value;
+  }
+  //================Save Memorize Reports==============
+  save_Memorise_Report() {
+    const memoriseName = this.MemoriseReportName;
+    const filterParameters = this.Parameters;
     const reportColumns = this.columnsData;
     const allColumns = this.ColumnNames;
     const columns = this.dataGrid.instance.getVisibleColumns();
@@ -401,7 +407,13 @@ export class ClaimSummaryComponent implements AfterViewInit {
       };
     });
     this.service
-      .save_Memorise_report(user_Id, Report_ID, memoriseReportColumns)
+      .save_Memorise_report(
+        this.user_Id,
+        this.Report_Page,
+        memoriseName,
+        memoriseReportColumns,
+        this.Parameters
+      )
       .subscribe((response) => {
         if (response) {
           notify(
@@ -422,8 +434,14 @@ export class ClaimSummaryComponent implements AfterViewInit {
           );
         }
       });
-    console.log(user_Id, Report_ID, memoriseReportColumns);
-  };
+    console.log(
+      this.user_Id,
+      this.Report_Page,
+      this.Parameters,
+      memoriseName,
+      memoriseReportColumns
+    );
+  }
 }
 
 @NgModule({
@@ -448,6 +466,7 @@ export class ClaimSummaryComponent implements AfterViewInit {
     DxTagBoxModule,
     DxTemplateModule,
     DxPopupModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   exports: [],

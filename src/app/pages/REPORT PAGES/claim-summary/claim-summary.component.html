@@ -149,13 +149,7 @@
     <dxo-sorting mode="multiple"></dxo-sorting>
     <dxo-header-filter [visible]="true" highlight="true"></dxo-header-filter>
 
-    <dxo-column-chooser [enabled]="true" >
-      <!-- <dxo-position
-      my="right top"
-      at="right bottom"
-      of=".dx-datagrid-column-chooser-button"
-    ></dxo-position> -->
-    </dxo-column-chooser>
+    <dxo-column-chooser [enabled]="true" mode="select"> </dxo-column-chooser>
     <!-- <dxo-column-location location="before" colIndex="0"></dxo-column-location> -->
     <dxo-search-panel [visible]="true" placeholder="Search"></dxo-search-panel>
 
@@ -238,7 +232,7 @@
         [options]="{
           text: '',
           icon: 'newfolder',
-          onClick: save_Memorise_Report,
+          onClick: show_Memorise_popup,
           hint: 'Save Memorize Report'
         }"
       ></dxi-item>
@@ -246,13 +240,21 @@
         <div class="separator"></div>
       </dxi-item>
       <dxi-item
-        widget="dxButton"
+        widget="dxSelectBox"
         [options]="{
           text: '',
+          dataSource:memorise_Dropdown_Data,
+          displayExpr:'name',
+          valueExpr:'name',
           icon: 'datafield',
-          onClick: ShowMemoriseTable,
           hint: 'Show Memorise Report',
-          width: '50px'
+          noDataText: 'load data and try again',
+          selectable: true,
+          placeholder:'memorise report',
+          onValueChanged:ShowMemoriseTable,
+          dropDownOptions:{
+            width: 'auto',
+          }
         }"
       ></dxi-item>
       <dxi-item
@@ -387,19 +389,65 @@
       </ng-container>
     </dxo-summary>
   </dx-data-grid>
-  <!-- <dx-popup
-  [(visible)]="isSaveMemorisedOpened"
-  [title]="'Memorise Report'"
-  [width]="400"
-  [height]="500"
->
-  <dx-form id="form">
-    <dxi-item itemType="group" cssClass="form-group" [colCount]="1">
-      <dxi-item itemType="group">
-        <dxi-item dataField="Report Name"></dxi-item>
-        <dxi-item dataField="City"></dxi-item>
+  <dx-popup
+    [(visible)]="isSaveMemorisedOpened"
+    [title]="'Memorise Report'"
+    [width]="400"
+    [height]="500"
+  >
+    <dx-form id="form">
+      <dxi-item itemType="group" cssClass="form-group" [colCount]="1">
+        <dxi-item itemType="group">
+          <dxi-item
+            dataField="MemoriseReportName"
+            caption="Memorise Report Name"
+            [editorOptions]="{ placeholder: 'Enter Memorise Name',value:MemoriseReportName, onValueChanged: onMemoriseReportNameChanged.bind(this)}"
+
+            [label]="{
+              text: 'Memorise Report Name :',
+              visible: true,
+              location: 'top',
+              alignment: 'left',
+              showColon: false,
+              showRequiredMark: false,
+              textStyle: { fontWeight: 'bold' }
+            }"
+          >
+          </dxi-item>
+          <!-- <dxi-item
+            dataField="Report Name"
+            [editorOptions]="{ placeholder: Report_Page, readOnly: true }"
+            [label]="{
+              text: 'Report Page :',
+              visible: true,
+              location: 'top',
+              alignment: 'left',
+              showColon: false,
+              showRequiredMark: false,
+              textStyle: { fontWeight: 'bold' }
+            }"
+          ></dxi-item> -->
+          <!-- <dxi-item
+            dataField="User Id"
+            [editorOptions]="{ placeholder: user_Id , readOnly: true , }"
+            [label]="{
+              text: 'User Id :',
+              visible: true,
+              location: 'top',
+              alignment: 'left',
+              showColon: false,
+              showRequiredMark: false,
+              textStyle: { fontWeight: 'bold' }
+            }"
+          ></dxi-item> -->
+        </dxi-item>
       </dxi-item>
-    </dxi-item>
-  </dx-form>
-</dx-popup> -->
+    </dx-form>
+    <dx-button
+      text="Save"
+      type="default"
+      (onClick)="save_Memorise_Report()"
+      class="save-button"
+    ></dx-button>
+  </dx-popup>
 </div>
