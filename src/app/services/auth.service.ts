@@ -17,6 +17,10 @@ export interface IResponse {
 
 const defaultPath = '/';
 
+//=============================Base url==============================
+import {BaseURL} from '../services/constant-url.service'
+
+
 //==================================Default USer Name and details=======================
 export const defaultUser: IUser = {
   email: 'Nithin@gmail.com',
@@ -56,7 +60,7 @@ export class AuthService {
 
   //================Log In function===============================
   logIn(username: any, password: any) {
-    const API_URL = 'http://103.180.120.134/projectx/api/userS/LOGIN';
+    const API_URL =` ${BaseURL}userS/LOGIN`;
     const ReqBody = {
       LOGIN_NAME: username,
       PASSWORD: password,

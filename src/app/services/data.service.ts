@@ -6,10 +6,11 @@ import { map, groupBy, mergeMap, toArray } from 'rxjs/operators';
 import { Task } from 'src/app/types/task';
 import { Contact } from 'src/app/types/contact';
 import { Sale, SalesOrOpportunitiesByCategory } from '../types/analytics';
+import {BaseURL} from '../services/constant-url.service'
 
 const API_URL = 'https://js.devexpress.com/Demos/RwaService/api';
 
-const BASE_URL = 'http://103.180.120.134/projectx/api/';
+const BASE_URL = BaseURL;
 // const BASE_URL = 'http://localhost/projectx/api/';
 
 @Injectable()

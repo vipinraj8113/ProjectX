@@ -1,10 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { BaseURL,InitData_URL} from '../services/constant-url.service'
 
 // const BASE_URL = 'http://localhost/projectx/api/';
 // const baseURL2 = 'http://localhost/crsdashboard/api/initdata';
-const BASE_URL = 'http://103.180.120.134/projectx/api/';
-const baseURL2 = 'http://103.180.120.134/crsdashboard/api/initdata';
+const BASE_URL =BaseURL;
+const baseURL2 = InitData_URL;
 
 @Injectable()
 export class ReportService {

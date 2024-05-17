@@ -139,6 +139,7 @@ export class ClaimSummaryComponent implements AfterViewInit {
     this.Report_Page = this.router.url.slice(1);
     const parametrs = JSON.parse(sessionStorage.getItem('reportData'));
     this.Parameters.push(parametrs);
+    console.log("parameters :",this.Parameters)
     this.systemCurrencyCode = this.service.getSystemCurrencyCode();
     const loadedPAgeFlag = JSON.parse(sessionStorage.getItem('loadedFlag'));
     if (loadedPAgeFlag == 'true') {
