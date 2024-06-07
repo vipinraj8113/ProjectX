@@ -236,6 +236,7 @@ export class ClaimSummaryComponent implements AfterViewInit {
                 // sessionStorage.setItem('DataSource', JSON.stringify(data));
                 resolve(claimDetails);
                 this.show_Pagination = true;
+                this.refresh
               },
               error: ({ message }) => reject(message),
             });

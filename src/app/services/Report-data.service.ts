@@ -58,8 +58,8 @@ export class ReportService {
       USER_ID: userId,
       REPORT_ID: reportId,
       USER_REPORT_NAME:reportName,
-      userreport_coloumn: memoriseColumnData,
-      userreport_parameter:filterParameters
+      columns: memoriseColumnData,
+      parameters:filterParameters
     };
     return this.http.post(url, reqBody);
   }
