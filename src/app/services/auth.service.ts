@@ -60,10 +60,16 @@ export class AuthService {
 
   //================Log In function===============================
   logIn(username: any, password: any) {
-    const API_URL =` ${BaseURL}userS/LOGIN`;
+    const API_URL =` ${BaseURL}user/LOGIN`;
     const ReqBody = {
       LOGIN_NAME: username,
       PASSWORD: password,
+      LOCAL_IP:"192.168.1.143",
+      COMPUTER_NAME:"System1",
+      DOMAIN_NAME:"Domain1",
+      COMPUTER_USER:"User1",
+      INTERNET_IP:"192.158.1.38",
+      SYSTEM_TIME_UTC:"2020-09-07T00:08:09"
     };
     return this.http.post<any>(API_URL, ReqBody);
   }
