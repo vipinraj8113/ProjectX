@@ -96,6 +96,7 @@ export class ClaimSummaryComponent implements AfterViewInit {
   EncounterType_Value: any;
   From_Date_Value: any = new Date();
   To_Date_Value: any = new Date();
+  AsOnDate: any;
 
   //===========Variables For DataSource Of Multiple DropDowns=========
   SearchOn_DataSource: any;
@@ -124,6 +125,9 @@ export class ClaimSummaryComponent implements AfterViewInit {
   memoriseDropDownSelectedValue: any;
   MemoriseReportColumns: any;
   memorise_Dropdown_Data: any;
+
+  years: number[] = [];
+  selectedYear: number | null = null;
   //=======================Constructor==================
   constructor(
     private service: ReportService,
@@ -134,12 +138,19 @@ export class ClaimSummaryComponent implements AfterViewInit {
     this.minDate = new Date(2000, 1, 1); // Set the minimum date
     this.maxDate = new Date(); // Set the maximum date
     this.fetch_Dropdown_InitData();
+    //============Year field dataSource===============
+    const currentYear = new Date().getFullYear();
+    for (let year = currentYear ; year >= currentYear - 50; year--) {
+      this.years.push(year);
+    }
+
+
     this.logData = JSON.parse(localStorage.getItem('logData'));
     this.user_Id = this.logData.USER_ID;
     this.Report_Page = this.router.url.slice(1);
     const parametrs = JSON.parse(sessionStorage.getItem('reportData'));
     this.Parameters.push(parametrs);
-    console.log("parameters :",this.Parameters)
+    console.log('parameters :', this.Parameters);
     this.systemCurrencyCode = this.service.getSystemCurrencyCode();
     const loadedPAgeFlag = JSON.parse(sessionStorage.getItem('loadedFlag'));
     if (loadedPAgeFlag == 'true') {
@@ -151,6 +162,12 @@ export class ClaimSummaryComponent implements AfterViewInit {
     if (this.dataGrid) {
       const columns = this.dataGrid.instance.getVisibleColumns();
     }
+  }
+
+  onYearChanged(e: any): void {
+    const selectedYear = e.value;
+    this.From_Date_Value = new Date(selectedYear, 0, 1); // January 1 of the selected year
+    this.To_Date_Value = new Date(selectedYear, 11, 31); // December 31 of the selected year
   }
   //============Hide drop down after Value Selected======
   onSearchOnValueChanged() {
@@ -236,7 +253,7 @@ export class ClaimSummaryComponent implements AfterViewInit {
                 // sessionStorage.setItem('DataSource', JSON.stringify(data));
                 resolve(claimDetails);
                 this.show_Pagination = true;
-                this.refresh
+                this.refresh;
               },
               error: ({ message }) => reject(message),
             });
@@ -318,7 +335,7 @@ export class ClaimSummaryComponent implements AfterViewInit {
   ShowMemoriseTable = (e: any) => {
     this.memoriseDropDownSelectedValue = e.value;
     // this.memoriseEnable = this.memoriseEnable === 'true' ? 'false' : 'true';
-    this.memoriseEnable = 'true'
+    this.memoriseEnable = 'true';
     this.get_Report_DataSource();
   };
   //=============DataGrid Refreshing=====================
