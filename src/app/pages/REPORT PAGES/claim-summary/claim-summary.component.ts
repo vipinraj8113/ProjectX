@@ -33,7 +33,11 @@ import {
   DenialNewFormComponent,
   DenialNewFormModule,
 } from 'src/app/components/library/denial-new-form/denial-new-form.component';
-import { DxLookupModule } from 'devextreme-angular';
+import {
+  DxLookupModule,
+  DxDropDownBoxModule,
+  DxResizableModule,
+} from 'devextreme-angular';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ReportService } from 'src/app/services/Report-data.service';
 import { ToolbarAnalyticsModule } from 'src/app/components/utils/toolbar-analytics/toolbar-analytics.component';
@@ -44,6 +48,11 @@ import {
   DxTagBoxModule,
   DxTemplateModule,
 } from 'devextreme-angular';
+import {
+  DxTreeViewComponent,
+  DxTreeViewModule,
+  DxTreeViewTypes,
+} from 'devextreme-angular/ui/tree-view';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -66,6 +75,8 @@ export class ClaimSummaryComponent implements AfterViewInit {
   denialComponent: DenialNewFormComponent;
 
   @ViewChild('lookup', { static: false }) lookup: DxLookupComponent;
+  @ViewChild(DxTreeViewComponent, { static: false })
+  treeView: DxTreeViewComponent;
 
   isPanelOpened = false;
 
@@ -92,7 +103,7 @@ export class ClaimSummaryComponent implements AfterViewInit {
 
   //================Variables for Storing selected Parameters========
   SearchOn_Value: any;
-  Facility_Value: any;
+  Facility_Value: any[];
   EncounterType_Value: any;
   From_Date_Value: any = new Date();
   To_Date_Value: any = new Date();
@@ -126,8 +137,11 @@ export class ClaimSummaryComponent implements AfterViewInit {
   MemoriseReportColumns: any;
   memorise_Dropdown_Data: any;
 
+  monthDataSource: { name: string; value: number }[];
   years: number[] = [];
+  selectedmonth: any;
   selectedYear: number | null = null;
+
   //=======================Constructor==================
   constructor(
     private service: ReportService,
@@ -140,10 +154,11 @@ export class ClaimSummaryComponent implements AfterViewInit {
     this.fetch_Dropdown_InitData();
     //============Year field dataSource===============
     const currentYear = new Date().getFullYear();
-    for (let year = currentYear ; year >= currentYear - 50; year--) {
+    for (let year = currentYear; year >= currentYear - 50; year--) {
       this.years.push(year);
     }
-
+    //=============month field datasource============
+    this.monthDataSource=this.service.getMonths()
 
     this.logData = JSON.parse(localStorage.getItem('logData'));
     this.user_Id = this.logData.USER_ID;
@@ -157,26 +172,85 @@ export class ClaimSummaryComponent implements AfterViewInit {
       this.DataSorce_After_reload_Page();
     }
   }
+  onResize(event: any): void {
+    // Handle resize event
+    console.log('Resized', event);
+  }
 
   ngAfterViewInit() {
     if (this.dataGrid) {
       const columns = this.dataGrid.instance.getVisibleColumns();
     }
   }
+//================Year value change ===========================
 
   onYearChanged(e: any): void {
-    const selectedYear = e.value;
-    this.From_Date_Value = new Date(selectedYear, 0, 1); // January 1 of the selected year
-    this.To_Date_Value = new Date(selectedYear, 11, 31); // December 31 of the selected year
+    this.selectedYear = e.value;
+    this.From_Date_Value = new Date(this.selectedYear, 0, 1); // January 1 of the selected year
+    this.To_Date_Value = new Date(this.selectedYear, 11, 31); // December 31 of the selected year
+  }
+//================Month value change ===========================
+  onMonthValueChanged(e:any){
+    this.selectedmonth = e.value;
+    console.log("selected month ",this.selectedmonth)
+    this.From_Date_Value = new Date(this.selectedYear, this.selectedmonth, 1); // January 1 of the selected year
+    this.To_Date_Value = new Date(this.selectedYear, this.selectedmonth +1, 0); // December 31 of the selected year
   }
   //============Hide drop down after Value Selected======
-  onSearchOnValueChanged() {
+  onDropdownValueChanged() {
     // Close the dropdown
     const lookupInstance = this.lookup.instance;
     if (lookupInstance) {
       lookupInstance.close();
     }
   }
+  onDropDownBoxValueChanged() {
+    this.updateSelection(this.treeView?.instance);
+    const allItem = this.Facility_DataSource.find(
+      (item) => item.Name === 'All'
+    );
+    if (this.Facility_Value.includes(allItem.ID)) {
+      const otherIds = this.Facility_DataSource.filter(
+        (item) => item.Name !== 'All'
+      ).map((item) => item.ID);
+      this.Facility_Value = otherIds;
+      this.treeView.instance.selectAll();
+    } else {
+      this.treeView.instance.unselectAll();
+    }
+  }
+  onTreeViewReady(e: DxTreeViewTypes.ContentReadyEvent) {
+    this.updateSelection(e.component);
+  }
+  updateSelection(treeView: DxTreeViewComponent['instance']) {
+    if (!treeView) return;
+
+    if (!this.Facility_Value) {
+      treeView.unselectAll();
+    }
+
+    this.Facility_Value?.forEach((value) => {
+      treeView.selectItem(value);
+    });
+  }
+
+  onTreeViewSelectionChanged(e: DxTreeViewTypes.ItemSelectionChangedEvent) {
+    this.Facility_Value = e.component.getSelectedNodeKeys();
+    const allItem = this.Facility_DataSource.find(
+      (item) => item.Name === 'All'
+    );
+    const selectedItems = this.treeView.instance
+      .getSelectedNodes()
+      .map((node) => node.itemData.ID);
+
+    if (selectedItems.length === this.Facility_DataSource.length - 1) {
+      this.Facility_Value = [allItem.ID, ...selectedItems];
+      this.treeView.instance.selectAll();
+    } else {
+      this.Facility_Value = selectedItems.filter((id) => id !== allItem.ID);
+    }
+  }
+
   //============Fetch DataSource For Reporting Grid======
   loadData(
     userId: any,
@@ -208,12 +282,9 @@ export class ClaimSummaryComponent implements AfterViewInit {
                     };
                   }
                 );
-
-                // Find the PersonalReport object with the name "first test"
                 const personalReport = data.PersonalReports.find(
                   (report) => report.name === this.memoriseDropDownSelectedValue
                 );
-
                 // Extract the columns if the personalReport is found
                 this.MemoriseReportColumns = personalReport
                   ? personalReport.Columns
@@ -233,6 +304,7 @@ export class ClaimSummaryComponent implements AfterViewInit {
                     dataField: column.Name,
                     caption: column.Title,
                     visible: column.Visibility === 'true' ? true : false,
+                    type: column.Type,
                     format:
                       column.Type === 'Decimal'
                         ? {
@@ -264,7 +336,9 @@ export class ClaimSummaryComponent implements AfterViewInit {
   fetch_Dropdown_InitData() {
     this.service.get_Init_Data().subscribe((response: any) => {
       this.SearchOn_DataSource = response.SearchOn;
-      this.Facility_DataSource = response.Facility;
+      this.Facility_DataSource = response.Facility.filter(
+        (item) => item.Name !== 'All'
+      );
       this.EncounterType_DataSource = response.EncountrType;
     });
   }
@@ -272,7 +346,7 @@ export class ClaimSummaryComponent implements AfterViewInit {
   get_Report_DataSource() {
     var userId = this.user_Id;
     var searchOn = this.SearchOn_Value;
-    var Facility = this.Facility_Value;
+    var Facility = this.Facility_Value.join(', ');
     var EncounterType = this.EncounterType_Value;
     var fromDate = this.formatDate(this.From_Date_Value);
     var toDate = this.formatDate(this.To_Date_Value);
@@ -307,6 +381,7 @@ export class ClaimSummaryComponent implements AfterViewInit {
       this.From_Date_Value,
       this.To_Date_Value
     );
+    this.isParamsOpend=false
   }
   //=================change the format of date===========
   formatDate(dateString: any) {
@@ -371,33 +446,8 @@ export class ClaimSummaryComponent implements AfterViewInit {
     }
   };
   //================Exporting Function===================
-  onExporting(e) {
-    if (e.format === 'pdf') {
-      const doc = new jsPDF();
-      exportDataGridToPdf({
-        jsPDFDocument: doc,
-        component: e.component,
-      }).then(() => {
-        doc.save('Denials.pdf');
-      });
-    } else {
-      const workbook = new Workbook();
-      const worksheet = workbook.addWorksheet('Denials');
-
-      exportDataGridToXLSX({
-        component: e.component,
-        worksheet,
-        autoFilterEnabled: true,
-      }).then(() => {
-        workbook.xlsx.writeBuffer().then((buffer) => {
-          saveAs(
-            new Blob([buffer], { type: 'application/octet-stream' }),
-            'Denials.xlsx'
-          );
-        });
-      });
-      e.cancel = true;
-    }
+  onExporting(e: any) {
+    this.service.exportDataGrid(e);
   }
   //==========show memorise save pop up=================
   show_Memorise_popup = () => {
@@ -472,6 +522,8 @@ export class ClaimSummaryComponent implements AfterViewInit {
     DxSelectBoxModule,
     DxTextBoxModule,
     DxLookupModule,
+    DxResizableModule,
+    DxDropDownBoxModule,
     ContactPanelModule,
     DenialNewFormModule,
     FormPopupModule,
@@ -487,6 +539,7 @@ export class ClaimSummaryComponent implements AfterViewInit {
     DxTemplateModule,
     DxPopupModule,
     ReactiveFormsModule,
+    DxTreeViewModule,
   ],
   providers: [],
   exports: [],

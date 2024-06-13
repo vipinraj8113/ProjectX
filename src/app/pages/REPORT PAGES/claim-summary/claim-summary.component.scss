@@ -34,9 +34,10 @@
         padding: var(--toolbar-margin-bottom) 0;
       }
 
-      .dx-datagrid-content .dx-row {
+      .dx-datagrid-content .dx-row   {
         cursor: pointer;
-        height: 5px;
+        height: 3rem;
+        // padding: 0px
       }
     }
 

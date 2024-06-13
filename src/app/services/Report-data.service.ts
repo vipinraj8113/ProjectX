@@ -1,19 +1,43 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BaseURL,InitData_URL} from '../services/constant-url.service'
-
+import { BaseURL, InitData_URL } from '../services/constant-url.service';
+import { exportDataGrid as exportDataGridToPdf } from 'devextreme/pdf_exporter';
+import { exportDataGrid as exportDataGridToXLSX } from 'devextreme/excel_exporter';
+import { jsPDF } from 'jspdf';
+import { Workbook } from 'exceljs';
+import { saveAs } from 'file-saver-es';
 // const BASE_URL = 'http://localhost/projectx/api/';
 // const baseURL2 = 'http://localhost/crsdashboard/api/initdata';
-const BASE_URL =BaseURL;
+const BASE_URL = BaseURL;
 const baseURL2 = InitData_URL;
 
 @Injectable()
 export class ReportService {
+  private months: { name: string; value: number }[] = [
+    { name: 'January', value: 0 },
+    { name: 'February', value: 1 },
+    { name: 'March', value: 2 },
+    { name: 'April', value: 3 },
+    { name: 'May', value: 4 },
+    { name: 'June', value: 5 },
+    { name: 'July', value: 6 },
+    { name: 'August', value: 7 },
+    { name: 'September', value: 8 },
+    { name: 'October', value: 9 },
+    { name: 'November', value: 10 },
+    { name: 'December', value: 11 },
+  ];
+
   constructor(private http: HttpClient) {}
+
+  //============Share months to component ================
+  getMonths(): { name: string; value: number }[] {
+    return this.months;
+  }
 
   //==========Fetch data of Claim Summary Date Wise=============
   get_Claim_Summary_Date_wise(
-    userId:any,
+    userId: any,
     SearchOn: any,
     Facility: any,
     EncounterType: any,
@@ -49,18 +73,47 @@ export class ReportService {
   save_Memorise_report(
     userId: any,
     reportId: any,
-    reportName:any,
+    reportName: any,
     memoriseColumnData: any,
-    filterParameters:any
+    filterParameters: any
   ): any {
     const url = `${BASE_URL}userreports/insert`;
     const reqBody = {
       USER_ID: userId,
       REPORT_ID: reportId,
-      USER_REPORT_NAME:reportName,
+      USER_REPORT_NAME: reportName,
       columns: memoriseColumnData,
-      parameters:filterParameters
+      parameters: filterParameters,
     };
     return this.http.post(url, reqBody);
+  }
+
+  //==============Export function==================
+  exportDataGrid(e: any) {
+    if (e.format === 'pdf') {
+      const doc = new jsPDF();
+      exportDataGridToPdf({
+        jsPDFDocument: doc,
+        component: e.component,
+      }).then(() => {
+        doc.save('Denials.pdf');
+      });
+    } else {
+      const workbook = new Workbook();
+      const worksheet = workbook.addWorksheet('Denials');
+      exportDataGridToXLSX({
+        component: e.component,
+        worksheet,
+        autoFilterEnabled: true,
+      }).then(() => {
+        workbook.xlsx.writeBuffer().then((buffer) => {
+          saveAs(
+            new Blob([buffer], { type: 'application/octet-stream' }),
+            'Denials.xlsx'
+          );
+        });
+      });
+      e.cancel = true;
+    }
   }
 }
