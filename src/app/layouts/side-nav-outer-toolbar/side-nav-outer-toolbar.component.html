@@ -30,7 +30,46 @@
     >
   </side-navigation-menu>
 
-  <div class="content">
+  <!-- <div class="content">
     <router-outlet></router-outlet>
+  </div> -->
+   <!-- Content Area -->
+   <div class="content">
+    <dx-sortable
+      filter=".dx-tab"
+      [data]="tabs"
+      itemOrientation="horizontal"
+      dragDirection="horizontal"
+      (onDragStart)="onTabDragStart($event)"
+      (onReorder)="onTabDrop($event)"
+    >
+   
+      <dx-tab-panel
+        [dataSource]="tabs"
+        [height]="'auto'"
+        itemTitleTemplate="title"
+        itemTemplate="item"
+        [deferRendering]="false"
+        [showNavButtons]="true"
+        [repaintChangesOnly]="true"
+        [selectedIndex]="selectedIndex"
+      >
+        <div *dxTemplate="let tab of 'title'">
+          <span>{{ tab.title }}</span>
+          <i
+            *ngIf="showCloseButton()"
+            class="dx-icon dx-icon-close"
+            (click)="closeButtonHandler(tab)"
+          ></i>
+        </div>
+        <div *dxTemplate="let tab of 'item'">
+          <ng-container>
+            <router-outlet></router-outlet>
+          </ng-container>
+        </div>
+       
+      </dx-tab-panel>
+   
+    </dx-sortable>
   </div>
 </dx-drawer>

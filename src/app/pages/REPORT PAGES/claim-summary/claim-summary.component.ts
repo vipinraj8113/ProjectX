@@ -55,7 +55,11 @@ import {
 } from 'devextreme-angular/ui/tree-view';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
-
+import {
+  DxSortableModule,
+  DxTabPanelModule,
+  DxListModule,
+} from 'devextreme-angular';
 //======================Dropdown interface=======================
 interface dropdownData {
   ID: number;
@@ -158,7 +162,7 @@ export class ClaimSummaryComponent implements AfterViewInit {
       this.years.push(year);
     }
     //=============month field datasource============
-    this.monthDataSource=this.service.getMonths()
+    this.monthDataSource = this.service.getMonths();
 
     this.logData = JSON.parse(localStorage.getItem('logData'));
     this.user_Id = this.logData.USER_ID;
@@ -182,19 +186,19 @@ export class ClaimSummaryComponent implements AfterViewInit {
       const columns = this.dataGrid.instance.getVisibleColumns();
     }
   }
-//================Year value change ===========================
+  //================Year value change ===========================
 
   onYearChanged(e: any): void {
     this.selectedYear = e.value;
     this.From_Date_Value = new Date(this.selectedYear, 0, 1); // January 1 of the selected year
     this.To_Date_Value = new Date(this.selectedYear, 11, 31); // December 31 of the selected year
   }
-//================Month value change ===========================
-  onMonthValueChanged(e:any){
+  //================Month value change ===========================
+  onMonthValueChanged(e: any) {
     this.selectedmonth = e.value;
-    console.log("selected month ",this.selectedmonth)
+    console.log('selected month ', this.selectedmonth);
     this.From_Date_Value = new Date(this.selectedYear, this.selectedmonth, 1); // January 1 of the selected year
-    this.To_Date_Value = new Date(this.selectedYear, this.selectedmonth +1, 0); // December 31 of the selected year
+    this.To_Date_Value = new Date(this.selectedYear, this.selectedmonth + 1, 0); // December 31 of the selected year
   }
   //============Hide drop down after Value Selected======
   onDropdownValueChanged() {
@@ -381,7 +385,7 @@ export class ClaimSummaryComponent implements AfterViewInit {
       this.From_Date_Value,
       this.To_Date_Value
     );
-    this.isParamsOpend=false
+    this.isParamsOpend = false;
   }
   //=================change the format of date===========
   formatDate(dateString: any) {
@@ -540,6 +544,9 @@ export class ClaimSummaryComponent implements AfterViewInit {
     DxPopupModule,
     ReactiveFormsModule,
     DxTreeViewModule,
+    DxSortableModule,
+    DxTabPanelModule,
+    DxListModule,
   ],
   providers: [],
   exports: [],

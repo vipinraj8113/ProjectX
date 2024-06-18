@@ -13,8 +13,18 @@ import { CommonModule } from '@angular/common';
 
 import { Router, RouterModule, NavigationEnd, Event } from '@angular/router';
 import { ScreenService, AppInfoService } from '../../services';
-import { SideNavigationMenuModule, AppHeaderModule, AppFooterModule } from '../../components';
-
+import {
+  SideNavigationMenuModule,
+  AppHeaderModule,
+  AppFooterModule,
+} from '../../components';
+import {
+  DxButtonModule,
+  DxSortableModule,
+  DxTabPanelModule,
+  DxListModule,
+  DxTemplateModule,
+} from 'devextreme-angular';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -23,7 +33,8 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./side-nav-outer-toolbar.component.scss'],
 })
 export class SideNavOuterToolbarComponent implements OnInit, OnDestroy {
-  @ViewChild(DxScrollViewComponent, { static: true }) scrollView!: DxScrollViewComponent;
+  @ViewChild(DxScrollViewComponent, { static: true })
+  scrollView!: DxScrollViewComponent;
 
   @Input()
   title!: string;
@@ -45,8 +56,13 @@ export class SideNavOuterToolbarComponent implements OnInit, OnDestroy {
   routerSubscription: Subscription;
 
   screenSubscription: Subscription;
-
-  constructor(private screen: ScreenService, private router: Router, public appInfo: AppInfoService) {
+  tabs: any[] = [];
+  selectedIndex = 0;
+  constructor(
+    private screen: ScreenService,
+    private router: Router,
+    public appInfo: AppInfoService
+  ) {
     this.routerSubscription = this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
         this.selectedRoute = event.urlAfterRedirects.split('?')[0];
@@ -57,7 +73,9 @@ export class SideNavOuterToolbarComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.menuOpened = this.screen.sizes['screen-large'];
 
-    this.screenSubscription = this.screen.changed.subscribe(() => this.updateDrawer());
+    this.screenSubscription = this.screen.changed.subscribe(() =>
+      this.updateDrawer()
+    );
 
     this.updateDrawer();
   }
@@ -85,19 +103,52 @@ export class SideNavOuterToolbarComponent implements OnInit, OnDestroy {
     return !this.menuOpened;
   }
 
+  // navigationChanged(event: DxTreeViewTypes.ItemClickEvent) {
+  //   const path = (event.itemData as any).path;
+  //   const pointerEvent = event.event;
+
+  //   if (path && this.menuOpened) {
+  //     if (event.node?.selected) {
+  //       pointerEvent?.preventDefault();
+  //     } else {
+  //       this.router.navigate([path]);
+  //     }
+
+  //     if (this.hideMenuAfterNavigation) {
+  //       this.temporaryMenuOpened = false;
+  //       this.menuOpened = false;
+  //       pointerEvent?.stopPropagation();
+  //     }
+  //   } else {
+  //     pointerEvent?.preventDefault();
+  //   }
+  // }
+
+  //===================================================================
   navigationChanged(event: DxTreeViewTypes.ItemClickEvent) {
     const path = (event.itemData as any).path;
     const pointerEvent = event.event;
-
-    if (path && this.menuOpened) {
-      if (event.node?.selected) {
-        pointerEvent?.preventDefault();
+    // console.log(pointerEvent)
+    
+    if (path && this.menuOpened) {   
+      //  this.router.navigate([path])
+      const tabExists = this.tabs.some((tab) => tab.path === path);
+      if (!tabExists) {
+        this.tabs.push({
+          title: event.itemData.text,
+          path: path,
+          content: `Content for ${event.itemData.text}`,
+        });
+        this.selectedIndex = this.tabs.length - 1;
+        // this.router.navigate([path]);
       } else {
-        this.router.navigate([path]);
+        this.selectedIndex = this.tabs.findIndex((tab) => tab.path === path);
       }
-
+      
+      if (this.menuOpened) {
+        pointerEvent?.preventDefault();
+      }
       if (this.hideMenuAfterNavigation) {
-        this.temporaryMenuOpened = false;
         this.menuOpened = false;
         pointerEvent?.stopPropagation();
       }
@@ -107,11 +158,40 @@ export class SideNavOuterToolbarComponent implements OnInit, OnDestroy {
   }
 
   navigationClick() {
+    // this.menuOpened = !this.menuOpened;
     if (this.showMenuAfterClick) {
       this.temporaryMenuOpened = true;
       this.menuOpened = true;
     }
   }
+
+  disableButton() {
+    // Disable Add Tab button if needed
+    return false;
+  }
+
+  onTabDragStart(event) {
+    // Logic for tab drag start
+  }
+
+  onTabDrop(event) {
+    // Logic for tab drop
+  }
+
+  showCloseButton() {
+    // Logic to show/hide close button
+    return true;
+  }
+
+  closeButtonHandler(tab:any) {
+    // Logic to handle tab close
+    this.tabs = this.tabs.filter((t) => t !== tab);
+    if (this.selectedIndex >= this.tabs.length) {
+      this.selectedIndex = this.tabs.length - 1;
+    }
+  }
+
+ 
 }
 
 @NgModule({
@@ -121,9 +201,14 @@ export class SideNavOuterToolbarComponent implements OnInit, OnDestroy {
     DxDrawerModule,
     AppHeaderModule,
     CommonModule,
-    AppFooterModule
+    AppFooterModule,
+    DxButtonModule,
+    DxSortableModule,
+    DxTabPanelModule,
+    DxListModule,
+    DxTemplateModule,
   ],
   exports: [SideNavOuterToolbarComponent],
   declarations: [SideNavOuterToolbarComponent],
 })
-export class SideNavOuterToolbarModule { }
+export class SideNavOuterToolbarModule {}
