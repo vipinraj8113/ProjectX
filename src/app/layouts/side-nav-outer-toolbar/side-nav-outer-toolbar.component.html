@@ -24,10 +24,10 @@
     (openMenu)="navigationClick()"
 
   >
-    <app-footer
+    <!-- <app-footer
       >Project-X @ {{ appInfo.currentYear }} <br />
       Developer : Nithin Azentia</app-footer
-    >
+    > -->
   </side-navigation-menu>
 
   <!-- <div class="content">
@@ -44,9 +44,8 @@
       (onReorder)="onTabDrop($event)"
     >
    
-      <dx-tab-panel
+      <dx-tab-panel class="tabPanelDiv"
         [dataSource]="tabs"
-        [height]="'auto'"
         itemTitleTemplate="title"
         itemTemplate="item"
         [deferRendering]="false"
@@ -54,7 +53,7 @@
         [repaintChangesOnly]="true"
         [selectedIndex]="selectedIndex"
       >
-        <div *dxTemplate="let tab of 'title'">
+        <div *dxTemplate="let tab of 'title'" (click)="TabItemClick(tab)">
           <span>{{ tab.title }}</span>
           <i
             *ngIf="showCloseButton()"
@@ -63,7 +62,7 @@
           ></i>
         </div>
         <div *dxTemplate="let tab of 'item'">
-          <ng-container>
+          <ng-container *ngIf="selectedIndex === tabs.indexOf(tab)">
             <router-outlet></router-outlet>
           </ng-container>
         </div>

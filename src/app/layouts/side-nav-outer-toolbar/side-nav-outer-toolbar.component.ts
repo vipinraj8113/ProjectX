@@ -26,6 +26,7 @@ import {
   DxTemplateModule,
 } from 'devextreme-angular';
 import { Subscription } from 'rxjs';
+import { DxSortableTypes } from 'devextreme-angular/ui/sortable';
 
 @Component({
   selector: 'app-side-nav-outer-toolbar',
@@ -128,23 +129,24 @@ export class SideNavOuterToolbarComponent implements OnInit, OnDestroy {
   navigationChanged(event: DxTreeViewTypes.ItemClickEvent) {
     const path = (event.itemData as any).path;
     const pointerEvent = event.event;
-    // console.log(pointerEvent)
-    
-    if (path && this.menuOpened) {   
-      //  this.router.navigate([path])
+
+    if (path && this.menuOpened) {
       const tabExists = this.tabs.some((tab) => tab.path === path);
       if (!tabExists) {
         this.tabs.push({
           title: event.itemData.text,
           path: path,
-          content: `Content for ${event.itemData.text}`,
         });
-        this.selectedIndex = this.tabs.length - 1;
-        // this.router.navigate([path]);
+        this.selectedIndex = this.tabs.findIndex((tab) => tab.path === path);
+        this.router.navigate([path]);
+        console.log('not exist tab :', this.tabs, this.selectedIndex);
+        console.log('selected index :', this.selectedIndex);
       } else {
         this.selectedIndex = this.tabs.findIndex((tab) => tab.path === path);
+        this.router.navigate([path]);
+        console.log('exist tab :', this.tabs);
+        console.log('selected index :', this.selectedIndex);
       }
-      
       if (this.menuOpened) {
         pointerEvent?.preventDefault();
       }
@@ -164,14 +166,18 @@ export class SideNavOuterToolbarComponent implements OnInit, OnDestroy {
       this.menuOpened = true;
     }
   }
-
+  TabItemClick(tab: any) {
+    const path=tab.path
+    this.selectedIndex = this.tabs.findIndex((tab) => tab.path === path);
+    this.router.navigate([path]);
+  }
   disableButton() {
     // Disable Add Tab button if needed
     return false;
   }
 
-  onTabDragStart(event) {
-    // Logic for tab drag start
+  onTabDragStart(e: DxSortableTypes.DragStartEvent) {
+    e.itemData = e.fromData[e.fromIndex];
   }
 
   onTabDrop(event) {
@@ -183,15 +189,24 @@ export class SideNavOuterToolbarComponent implements OnInit, OnDestroy {
     return true;
   }
 
-  closeButtonHandler(tab:any) {
-    // Logic to handle tab close
-    this.tabs = this.tabs.filter((t) => t !== tab);
-    if (this.selectedIndex >= this.tabs.length) {
-      this.selectedIndex = this.tabs.length - 1;
+  closeButtonHandler(tab: any) {
+    const index = this.tabs.indexOf(tab);
+    if (index > -1) {
+      this.tabs.splice(index, 1);
+      if (this.selectedIndex >= this.tabs.length) {
+        this.selectedIndex = this.tabs.length - 1;
+      }
+    }
+    console.log('closed', this.tabs);
+    if (this.selectedIndex >= 0) {
+      const selectedTab = this.tabs[this.selectedIndex];
+      let path = selectedTab.path;
+      this.router.navigate([path]);
+      console.log('selected tab path:', selectedTab.path);
+    } else {
+      console.log('No tabs are open');
     }
   }
-
- 
 }
 
 @NgModule({
