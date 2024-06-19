@@ -145,7 +145,12 @@ export class ClaimSummaryComponent implements AfterViewInit {
   years: number[] = [];
   selectedmonth: any;
   selectedYear: number | null = null;
-
+  columnChooserConfig = {
+    enabled: true,
+    height: 400, // Set your desired height here
+    width: 250, // Set your desired width here
+    
+  };
   //=======================Constructor==================
   constructor(
     private service: ReportService,

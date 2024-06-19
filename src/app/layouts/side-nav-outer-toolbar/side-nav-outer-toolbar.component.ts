@@ -72,8 +72,21 @@ export class SideNavOuterToolbarComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.menuOpened = this.screen.sizes['screen-large'];
+    const initalpage = this.router.url;
+    let path = '/analytics-dashboard';
+    let title= 'Home';
+    this.tabs.push({
+      title: title,
+      path: path,
+    });
+    this.selectedIndex = this.tabs.findIndex((tab) => tab.path === path);
+    this.router.navigate([path]);
 
+
+
+    console.log('inital loaded page :');
+
+    this.menuOpened = this.screen.sizes['screen-large'];
     this.screenSubscription = this.screen.changed.subscribe(() =>
       this.updateDrawer()
     );
@@ -103,27 +116,6 @@ export class SideNavOuterToolbarComponent implements OnInit, OnDestroy {
   get showMenuAfterClick() {
     return !this.menuOpened;
   }
-
-  // navigationChanged(event: DxTreeViewTypes.ItemClickEvent) {
-  //   const path = (event.itemData as any).path;
-  //   const pointerEvent = event.event;
-
-  //   if (path && this.menuOpened) {
-  //     if (event.node?.selected) {
-  //       pointerEvent?.preventDefault();
-  //     } else {
-  //       this.router.navigate([path]);
-  //     }
-
-  //     if (this.hideMenuAfterNavigation) {
-  //       this.temporaryMenuOpened = false;
-  //       this.menuOpened = false;
-  //       pointerEvent?.stopPropagation();
-  //     }
-  //   } else {
-  //     pointerEvent?.preventDefault();
-  //   }
-  // }
 
   //===================================================================
   navigationChanged(event: DxTreeViewTypes.ItemClickEvent) {
@@ -167,7 +159,7 @@ export class SideNavOuterToolbarComponent implements OnInit, OnDestroy {
     }
   }
   TabItemClick(tab: any) {
-    const path=tab.path
+    const path = tab.path;
     this.selectedIndex = this.tabs.findIndex((tab) => tab.path === path);
     this.router.navigate([path]);
   }
@@ -197,14 +189,14 @@ export class SideNavOuterToolbarComponent implements OnInit, OnDestroy {
         this.selectedIndex = this.tabs.length - 1;
       }
     }
-    console.log('closed', this.tabs);
+    // console.log('closed', this.tabs);
     if (this.selectedIndex >= 0) {
       const selectedTab = this.tabs[this.selectedIndex];
       let path = selectedTab.path;
       this.router.navigate([path]);
-      console.log('selected tab path:', selectedTab.path);
+      // console.log('selected tab path:', selectedTab.path);
     } else {
-      console.log('No tabs are open');
+      // console.log('No tabs are open');
     }
   }
 }
