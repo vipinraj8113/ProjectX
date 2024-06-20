@@ -53,7 +53,7 @@
         [repaintChangesOnly]="true"
         [selectedIndex]="selectedIndex"
       >
-        <div *dxTemplate="let tab of 'title'" (click)="TabItemClick(tab)">
+        <div class="tabItems" *dxTemplate="let tab of 'title'" (click)="TabItemClick(tab)">
           <span>{{ tab.title }}</span>
           <i
             *ngIf="showCloseButton()"

@@ -14,16 +14,13 @@ import {
 import { AuthService, ScreenService, AppInfoService } from './services';
 import { UnauthenticatedContentModule } from './layouts/unauthenticated-content/unauthenticated-content';
 import { AppRoutingModule } from './app-routing.module';
-import { DenialListModule } from './pages/Denial-list/denial-list.component';
+import { DenialListModule } from '../app/pages/MASTER PAGES/Denial-list/denial-list.component';
 import { AnalyticsDashboardModule } from './pages/analytics-dashboard/analytics-dashboard.component';
 import { ThemeService } from './services';
 import { DxFormModule } from 'devextreme-angular';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TaskListModule } from 'src/app/components/library/task-list-grid/task-list-grid.component';
-import {
-  ClaimSummaryComponent,
-  ClaimSummaryModule,
-} from './pages/REPORT PAGES/claim-summary/claim-summary.component';
+import { ClaimSummaryModule } from './pages/REPORT PAGES/claim-summary/claim-summary.component';
 import { ClaimSummaryMonthWiseComponent } from './pages/REPORT PAGES/claim-summary-month-wise/claim-summary-month-wise.component';
 import { ClaimSummaryPayerWiseComponent } from './pages/REPORT PAGES/claim-summary-payer-wise/claim-summary-payer-wise.component';
 import { DoctorWithHighIncomeComponent } from './pages/REPORT PAGES/doctor-with-high-income/doctor-with-high-income.component';
@@ -31,7 +28,6 @@ import { DoctorWithHighDenialsComponent } from './pages/REPORT PAGES/doctor-with
 import { RejectedClaimsComponent } from './pages/REPORT PAGES/rejected-claims/rejected-claims.component';
 import { BalanceAmountToBeReceivedComponent } from './pages/REPORT PAGES/balance-amount-to-be-received/balance-amount-to-be-received.component';
 import { ResubmissionSummaryComponent } from './pages/REPORT PAGES/resubmission-summary/resubmission-summary.component';
-
 @NgModule({
   declarations: [
     AppComponent,

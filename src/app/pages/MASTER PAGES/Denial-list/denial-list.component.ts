@@ -25,6 +25,7 @@ import {
 } from 'src/app/components/library/denial-new-form/denial-new-form.component';
 import { DxLookupModule } from 'devextreme-angular';
 import { Router, ActivatedRoute } from '@angular/router';
+import { ReportService } from 'src/app/services/Report-data.service';
 
 interface dropdownData {
   ID: number;
@@ -34,7 +35,7 @@ interface dropdownData {
 @Component({
   templateUrl: './denial-list.component.html',
   styleUrls: ['./denial-list.component.scss'],
-  providers: [DataService],
+  providers: [DataService,ReportService],
 })
 export class DenialListComponent {
   @ViewChild(DxDataGridComponent, { static: true })
@@ -72,7 +73,8 @@ export class DenialListComponent {
   constructor(
     private service: DataService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private reportservice: ReportService
   ) {
     this.getDenial_Type_DropDown();
     this.getDenial_Category_DropDown();
@@ -87,33 +89,9 @@ export class DenialListComponent {
   };
 
   //================Exporting Function=====================
-  onExporting(e) {
-    if (e.format === 'pdf') {
-      const doc = new jsPDF();
-      exportDataGridToPdf({
-        jsPDFDocument: doc,
-        component: e.component,
-      }).then(() => {
-        doc.save('Denials.pdf');
-      });
-    } else {
-      const workbook = new Workbook();
-      const worksheet = workbook.addWorksheet('Denials');
-
-      exportDataGridToXLSX({
-        component: e.component,
-        worksheet,
-        autoFilterEnabled: true,
-      }).then(() => {
-        workbook.xlsx.writeBuffer().then((buffer) => {
-          saveAs(
-            new Blob([buffer], { type: 'application/octet-stream' }),
-            'Denials.xlsx'
-          );
-        });
-      });
-      e.cancel = true;
-    }
+  onExporting(e:any) {
+    this.reportservice.exportDataGrid(e)
+    
   }
 
   //============ADD NEW DENIALS======================
@@ -121,13 +99,6 @@ export class DenialListComponent {
   onClickSaveNewDenial = () => {
     const { DenialCode, Description, DenialTypeID, DenialCategoryID } =
       this.denialComponent.getNewDenialData();
-    console.log(
-      'data kittiiiiiii',
-      DenialCode,
-      Description,
-      DenialTypeID,
-      DenialCategoryID
-    );
     this.service
       .addDenial(DenialCode, Description, DenialTypeID, DenialCategoryID)
       .subscribe((result: any) => {
@@ -136,10 +107,11 @@ export class DenialListComponent {
           notify(
             {
               message: `New Denial "${DenialCode} ${Description} ${DenialTypeID} ${DenialCategoryID}" saved Successfully`,
-              position: { at: 'top center', my: 'top center' },
+              position: { at: 'top right', my: 'top right' },
             },
             'success'
           );
+         
         } else {
           notify(
             {
@@ -150,6 +122,7 @@ export class DenialListComponent {
           );
         }
       });
+      
   };
 
   //====================Update Denial Row Data==============
@@ -197,6 +170,7 @@ export class DenialListComponent {
 
   // =================Remove Denial=========================
   onRowRemoving(event: any) {
+    event.cancel = true;
     var SelectedRow = event.key;
     console.log('selected row data :', SelectedRow);
     this.service.removeDenial(SelectedRow.ID).subscribe(() => {
@@ -208,8 +182,8 @@ export class DenialListComponent {
           },
           'success'
         );
-        this.dataGrid.instance.refresh();
-        window.location.reload();
+
+        // window.location.reload();
       } catch (error) {
         notify(
           {
@@ -220,6 +194,9 @@ export class DenialListComponent {
         );
       }
     });
+
+    event.component.refresh();
+    this.dataGrid.instance.refresh();
   }
 
   //=============Get Denial Type Drop dwn Data==============================
