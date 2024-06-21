@@ -62,6 +62,12 @@ export class ReportService {
     const reqBody = {};
     return this.http.post(url, reqBody);
   }
+  //===============Fetch all search parametrs dropdown values===========
+  getSearchParametrsData() {
+    const url = `${BASE_URL}/reports/parametervalues`;
+    const reqBody = { userid: '1', apitoken: '121221212' };
+    return this.http.post(url,reqBody)
+  }
   //=========================Fetch System Currency Format==================
   getSystemCurrencyCode(): string {
     return new Intl.NumberFormat(navigator.language, {

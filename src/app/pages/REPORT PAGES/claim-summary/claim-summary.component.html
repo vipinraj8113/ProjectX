@@ -6,12 +6,7 @@
       <dxi-item itemType="group" cssClass="form-group" class="rowGroup" [colCount]="8"
         [colCountByScreen]="{ xs: 8, sm: 8, md: 8, lg: 8 }">
 
-        <dxi-item class="formSubitem" [colSpan]="2">
-          <div class="">Facility Group</div>
-          <dx-text-box value=""></dx-text-box>
-        </dxi-item>
-
-        <dxi-item [colSpan]="6">
+        <dxi-item [colSpan]="8">
           <div class="">Facility</div>
           <div class="">
             <dx-drop-down-box [(value)]="Facility_Value" valueExpr="ID" displayExpr="Name"
@@ -79,18 +74,27 @@
 
         <dxi-item [colSpan]="2">
           <div class="">Receiver ID</div>
-          <dx-text-box value=""></dx-text-box>
+          <dx-select-box [dataSource]="SearchOn_DataSource" displayExpr="Name" valueExpr="ID"
+              [(value)]="ReceiverID_Value" placeholder="select receiver" required
+              (valueChanged)="onDropdownValueChanged()">
+            </dx-select-box>
         </dxi-item>
 
 
         <dxi-item [colSpan]="2">
           <div class="">Payer ID</div>
-          <dx-text-box value=""></dx-text-box>
+          <dx-select-box [dataSource]="SearchOn_DataSource" displayExpr="Name" valueExpr="ID"
+          [(value)]="PayerID_Value" placeholder="select payer ID" required
+          (valueChanged)="onDropdownValueChanged()">
+        </dx-select-box>
         </dxi-item>
 
         <dxi-item [colSpan]="2">
           <div class="">Payer</div>
-          <dx-text-box value=""></dx-text-box>
+          <dx-select-box [dataSource]="SearchOn_DataSource" displayExpr="Name" valueExpr="ID"
+          [(value)]="Payer_Value" placeholder="select payer" required
+          (valueChanged)="onDropdownValueChanged()">
+        </dx-select-box>
         </dxi-item>
 
         <dxi-item [colSpan]="2">
@@ -108,12 +112,18 @@
 
         <dxi-item [colSpan]="2">
           <div class="">Clinican</div>
-          <dx-text-box value=""></dx-text-box>
+          <dx-select-box [dataSource]="SearchOn_DataSource" displayExpr="Name" valueExpr="ID"
+          [(value)]="Clinician_Value" placeholder="select Clinician" required
+          (valueChanged)="onDropdownValueChanged()">
+        </dx-select-box>
         </dxi-item>
 
         <dxi-item [colSpan]="2">
           <div class="">Oredering Clinician</div>
-          <dx-text-box value=""></dx-text-box>
+          <dx-select-box [dataSource]="SearchOn_DataSource" displayExpr="Name" valueExpr="ID"
+          [(value)]="OrderingClinician_Value" placeholder="select Clinician" required
+          (valueChanged)="onDropdownValueChanged()">
+        </dx-select-box>
         </dxi-item>
 
 

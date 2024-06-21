@@ -35,7 +35,7 @@
   </div> -->
    <!-- Content Area -->
    <div class="content">
-    <dx-sortable
+    <dx-sortable 
       filter=".dx-tab"
       [data]="tabs"
       itemOrientation="horizontal"
@@ -53,8 +53,8 @@
         [repaintChangesOnly]="true"
         [selectedIndex]="selectedIndex"
       >
-        <div class="tabItems" *dxTemplate="let tab of 'title'" (click)="TabItemClick(tab)">
-          <span>{{ tab.title }}</span>
+        <div class="tabItems" height=100% *dxTemplate="let tab of 'title'" (click)="TabItemClick(tab)">
+          <span class="me-1 ms-1">{{ tab.title }}</span>
           <i
             *ngIf="showCloseButton()"
             class="dx-icon dx-icon-close"

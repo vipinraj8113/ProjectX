@@ -112,11 +112,16 @@ export class ClaimSummaryComponent implements AfterViewInit {
   From_Date_Value: any = new Date();
   To_Date_Value: any = new Date();
   AsOnDate: any;
-
+  ReceiverID_Value:any
+  PayerID_Value:any
+  Payer_Value:any
+  Clinician_Value:any
+  OrderingClinician_Value:any
   //===========Variables For DataSource Of Multiple DropDowns=========
   SearchOn_DataSource: any;
   Facility_DataSource: any;
   EncounterType_DataSource: any;
+  RecieverID_DataSource:any
 
   dataSource: any; //storing data from api
   columnsConfig: any; // used to store all column name
@@ -181,11 +186,6 @@ export class ClaimSummaryComponent implements AfterViewInit {
       this.DataSorce_After_reload_Page();
     }
   }
-  onResize(event: any): void {
-    // Handle resize event
-    console.log('Resized', event);
-  }
-
   ngAfterViewInit() {
     if (this.dataGrid) {
       const columns = this.dataGrid.instance.getVisibleColumns();
@@ -259,6 +259,28 @@ export class ClaimSummaryComponent implements AfterViewInit {
       this.Facility_Value = selectedItems.filter((id) => id !== allItem.ID);
     }
   }
+
+  //============Fetching DropDown Init Data==============
+  fetch_Dropdown_InitData() {
+    this.service.get_Init_Data().subscribe((response: any) => {
+      this.SearchOn_DataSource = response.SearchOn;
+      this.Facility_DataSource = response.Facility.filter(
+        (item) => item.Name !== 'All'
+      );
+      this.EncounterType_DataSource = response.EncountrType;
+    });
+  }
+
+  //============Get search parameters dropdown values=======
+  // get_searchParameters_Dropdown_Values(){
+  //   this.service.getSearchParametrsData().subscribe((response: any) => {
+  //     this.SearchOn_DataSource = response.SearchOn;
+  //     this.Facility_DataSource = response.facility.filter(
+  //       (item) => item.Name !== 'All'
+  //     );
+  //     this.EncounterType_DataSource = response.EncountrType;
+  //   });
+  // }
 
   //============Fetch DataSource For Reporting Grid======
   loadData(
@@ -339,16 +361,6 @@ export class ClaimSummaryComponent implements AfterViewInit {
               error: ({ message }) => reject(message),
             });
         }),
-    });
-  }
-  //============Fetching DropDown Init Data==============
-  fetch_Dropdown_InitData() {
-    this.service.get_Init_Data().subscribe((response: any) => {
-      this.SearchOn_DataSource = response.SearchOn;
-      this.Facility_DataSource = response.Facility.filter(
-        (item) => item.Name !== 'All'
-      );
-      this.EncounterType_DataSource = response.EncountrType;
     });
   }
   //============Call DataSource Using Selected Values====
