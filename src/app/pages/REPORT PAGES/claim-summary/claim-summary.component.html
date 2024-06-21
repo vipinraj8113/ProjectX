@@ -9,11 +9,11 @@
         <dxi-item [colSpan]="8">
           <div class="">Facility</div>
           <div class="">
-            <dx-drop-down-box [(value)]="Facility_Value" valueExpr="ID" displayExpr="Name"
+            <dx-drop-down-box [(value)]="Facility_Value" valueExpr="Code" displayExpr="Name"
               placeholder="select Facility value" [showClearButton]="true" [dataSource]="Facility_DataSource"
-              (onValueChanged)="onDropDownBoxValueChanged()">
+              (onValueChanged)="onDropDownBoxValueChanged()" [dropDownOptions]="{ width: 'auto' }">
               <div>
-                <dx-tree-view [dataSource]="Facility_DataSource" keyExpr="ID" dataStructure="plain"
+                <dx-tree-view [dataSource]="Facility_DataSource" keyExpr="Code" dataStructure="plain"
                   selectionMode="multiple" showCheckBoxesMode="normal" [selectNodesRecursive]="false" displayExpr="Name"
                   [selectByClick]="true" (onContentReady)="onTreeViewReady($event)"
                   (onItemSelectionChanged)="onTreeViewSelectionChanged($event)">
@@ -33,7 +33,7 @@
           <div>
             <dx-select-box [dataSource]="SearchOn_DataSource" displayExpr="Name" valueExpr="ID"
               [(value)]="SearchOn_Value" placeholder="select searchOn value" required
-              (valueChanged)="onDropdownValueChanged()">
+              (valueChanged)="onDropdownValueChanged()" [dropDownOptions]="{ width: 'auto' }">
             </dx-select-box>
           </div>
         </dxi-item>
@@ -41,14 +41,14 @@
         <dxi-item [colSpan]="1">
           <div class="">Year</div>
           <dx-select-box [(value)]="selectedYear" [dataSource]="years" (onValueChanged)="onYearChanged($event)"
-            placeholder="Year"></dx-select-box>
+            placeholder="Year" ></dx-select-box>
         </dxi-item>
 
         <dxi-item [colSpan]="1">
           <div class="">Month</div>
           <div>
             <dx-select-box [dataSource]="monthDataSource" displayExpr="name" valueExpr="value" [(value)]="selectedmonth"
-              placeholder="Month" required (onValueChanged)="onMonthValueChanged($event)">
+              placeholder="Month" required (onValueChanged)="onMonthValueChanged($event)" [dropDownOptions]="{ width: 'auto' }">
             </dx-select-box>
           </div>
         </dxi-item>
@@ -74,24 +74,24 @@
 
         <dxi-item [colSpan]="2">
           <div class="">Receiver ID</div>
-          <dx-select-box [dataSource]="SearchOn_DataSource" displayExpr="Name" valueExpr="ID"
+          <dx-select-box [dataSource]="RecieverID_DataSource" displayExpr="Name" valueExpr="ID"
               [(value)]="ReceiverID_Value" placeholder="select receiver" required
-              (valueChanged)="onDropdownValueChanged()">
+              (valueChanged)="onDropdownValueChanged()" [dropDownOptions]="{ width: 'auto' }" >
             </dx-select-box>
         </dxi-item>
 
 
         <dxi-item [colSpan]="2">
           <div class="">Payer ID</div>
-          <dx-select-box [dataSource]="SearchOn_DataSource" displayExpr="Name" valueExpr="ID"
+          <dx-select-box [dataSource]="PayerID_DataSource" displayExpr="Name" valueExpr="ID"
           [(value)]="PayerID_Value" placeholder="select payer ID" required
-          (valueChanged)="onDropdownValueChanged()">
+          (valueChanged)="onDropdownValueChanged()" [dropDownOptions]="{ width: 'auto' }">
         </dx-select-box>
         </dxi-item>
 
         <dxi-item [colSpan]="2">
           <div class="">Payer</div>
-          <dx-select-box [dataSource]="SearchOn_DataSource" displayExpr="Name" valueExpr="ID"
+          <dx-select-box [dataSource]="Payer_DataSource" displayExpr="Name" valueExpr="ID"
           [(value)]="Payer_Value" placeholder="select payer" required
           (valueChanged)="onDropdownValueChanged()">
         </dx-select-box>
@@ -112,17 +112,17 @@
 
         <dxi-item [colSpan]="2">
           <div class="">Clinican</div>
-          <dx-select-box [dataSource]="SearchOn_DataSource" displayExpr="Name" valueExpr="ID"
+          <dx-select-box [dataSource]="Clinician_DataSource" displayExpr="Name" valueExpr="ID"
           [(value)]="Clinician_Value" placeholder="select Clinician" required
-          (valueChanged)="onDropdownValueChanged()">
+          (valueChanged)="onDropdownValueChanged()" [dropDownOptions]="{ width: 'auto' }">
         </dx-select-box>
         </dxi-item>
 
         <dxi-item [colSpan]="2">
-          <div class="">Oredering Clinician</div>
-          <dx-select-box [dataSource]="SearchOn_DataSource" displayExpr="Name" valueExpr="ID"
+          <div class="">Ordering Clinician</div>
+          <dx-select-box [dataSource]="OrderingClinician_DataSource" displayExpr="Name" valueExpr="ID"
           [(value)]="OrderingClinician_Value" placeholder="select Clinician" required
-          (valueChanged)="onDropdownValueChanged()">
+          (valueChanged)="onDropdownValueChanged()" [dropDownOptions]="{ width: 'auto' }">
         </dx-select-box>
         </dxi-item>
 
@@ -132,7 +132,7 @@
           <div>
             <dx-select-box [dataSource]="EncounterType_DataSource" displayExpr="Name" valueExpr="ID"
               [(value)]="EncounterType_Value" placeholder="select encounter Type value"
-              (valueChanged)="onDropdownValueChanged()">
+              (valueChanged)="onDropdownValueChanged()" >
             </dx-select-box>
           </div>
         </dxi-item>
@@ -140,7 +140,7 @@
         <dxi-item [colSpan]="1" class="mt-3">
           <!-- <div class="">based on initial net amount</div> -->
           <div>
-            <dx-check-box [value]="true" text="based on initial net amount"></dx-check-box>
+            <dx-check-box [value]="initial_net_amount" text="based on initial net amount"></dx-check-box>
           </div>
         </dxi-item>
 

@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BaseURL, InitData_URL } from '../services/constant-url.service';
 import { exportDataGrid as exportDataGridToPdf } from 'devextreme/pdf_exporter';
@@ -63,10 +63,13 @@ export class ReportService {
     return this.http.post(url, reqBody);
   }
   //===============Fetch all search parametrs dropdown values===========
-  getSearchParametrsData() {
+  get_SearchParametrs_Data() {
     const url = `${BASE_URL}/reports/parametervalues`;
-    const reqBody = { userid: '1', apitoken: '121221212' };
-    return this.http.post(url,reqBody)
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'dXNlcmlkPTEmdGltZT0yMDI0MDYyMTExMDk=',
+    });
+    return this.http.post(url, headers);
   }
   //=========================Fetch System Currency Format==================
   getSystemCurrencyCode(): string {

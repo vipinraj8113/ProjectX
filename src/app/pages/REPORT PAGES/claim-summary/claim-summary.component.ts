@@ -111,17 +111,22 @@ export class ClaimSummaryComponent implements AfterViewInit {
   EncounterType_Value: any;
   From_Date_Value: any = new Date();
   To_Date_Value: any = new Date();
-  AsOnDate: any;
-  ReceiverID_Value:any
-  PayerID_Value:any
-  Payer_Value:any
-  Clinician_Value:any
-  OrderingClinician_Value:any
+  AsOnDate: any = new Date();
+  ReceiverID_Value: any;
+  PayerID_Value: any;
+  Payer_Value: any;
+  Clinician_Value: any;
+  OrderingClinician_Value: any;
+  initial_net_amount: any;
   //===========Variables For DataSource Of Multiple DropDowns=========
   SearchOn_DataSource: any;
   Facility_DataSource: any;
   EncounterType_DataSource: any;
-  RecieverID_DataSource:any
+  RecieverID_DataSource: any;
+  PayerID_DataSource: any;
+  Payer_DataSource: any;
+  Clinician_DataSource: any;
+  OrderingClinician_DataSource: any;
 
   dataSource: any; //storing data from api
   columnsConfig: any; // used to store all column name
@@ -154,7 +159,6 @@ export class ClaimSummaryComponent implements AfterViewInit {
     enabled: true,
     height: 400, // Set your desired height here
     width: 250, // Set your desired width here
-    
   };
   //=======================Constructor==================
   constructor(
@@ -165,10 +169,11 @@ export class ClaimSummaryComponent implements AfterViewInit {
   ) {
     this.minDate = new Date(2000, 1, 1); // Set the minimum date
     this.maxDate = new Date(); // Set the maximum date
-    this.fetch_Dropdown_InitData();
+    // this.fetch_Dropdown_InitData();
+    this.get_searchParameters_Dropdown_Values();
     //============Year field dataSource===============
     const currentYear = new Date().getFullYear();
-    for (let year = currentYear; year >= currentYear - 50; year--) {
+    for (let year = currentYear; year >= 1950; year--) {
       this.years.push(year);
     }
     //=============month field datasource============
@@ -272,15 +277,20 @@ export class ClaimSummaryComponent implements AfterViewInit {
   }
 
   //============Get search parameters dropdown values=======
-  // get_searchParameters_Dropdown_Values(){
-  //   this.service.getSearchParametrsData().subscribe((response: any) => {
-  //     this.SearchOn_DataSource = response.SearchOn;
-  //     this.Facility_DataSource = response.facility.filter(
-  //       (item) => item.Name !== 'All'
-  //     );
-  //     this.EncounterType_DataSource = response.EncountrType;
-  //   });
-  // }
+  get_searchParameters_Dropdown_Values() {
+    this.service.get_SearchParametrs_Data().subscribe((response: any) => {
+      this.SearchOn_DataSource = response.SearchOn;
+      this.Facility_DataSource = response.facility.filter(
+        (item: any) => item.Name !== 'All'
+      );
+      this.EncounterType_DataSource = response.EncounterType;
+      this.RecieverID_DataSource = response.ReceiverID;
+      this.PayerID_DataSource = response.PayerID;
+      this.Payer_DataSource = response.Payer;
+      this.Clinician_DataSource = response.Clinician;
+      this.OrderingClinician_DataSource = response.OrderingClinician;
+    });
+  }
 
   //============Fetch DataSource For Reporting Grid======
   loadData(
@@ -289,7 +299,12 @@ export class ClaimSummaryComponent implements AfterViewInit {
     Facility: any,
     encounterType: any,
     fromData: any,
-    toDate: any
+    toDate: any,
+    receiverId:any,
+    payerId:any,
+    payer:any,
+    Clinician:any,
+    OrderingClinician:any
   ) {
     this.dataSource = new DataSource<any>({
       load: () =>
@@ -371,6 +386,11 @@ export class ClaimSummaryComponent implements AfterViewInit {
     var EncounterType = this.EncounterType_Value;
     var fromDate = this.formatDate(this.From_Date_Value);
     var toDate = this.formatDate(this.To_Date_Value);
+    var receiverId = this.ReceiverID_Value;
+    var payerId = this.PayerID_Value;
+    var payer = this.Payer_Value;
+    var Clinician = this.Clinician_Value;
+    var OrderingClinician = this.OrderingClinician_Value;
 
     // Create an object with the variables
     var reportData = {
@@ -379,10 +399,27 @@ export class ClaimSummaryComponent implements AfterViewInit {
       ENCOUNTER_TYPE: EncounterType,
       START_DATE: fromDate,
       END_DATE: toDate,
+      RECEIVER_ID: receiverId,
+      PAYER_ID: payerId,
+      PAYER: payer,
+      CLINICIAN: Clinician,
+      ORDERING_CLINICIAN: OrderingClinician,
     };
     // Store the object in session storage
     sessionStorage.setItem('reportData', JSON.stringify(reportData));
-    this.loadData(userId, searchOn, Facility, EncounterType, fromDate, toDate);
+    this.loadData(
+      userId,
+      searchOn,
+      Facility,
+      EncounterType,
+      fromDate,
+      toDate,
+      receiverId,
+      payerId,
+      payer,
+      Clinician,
+      OrderingClinician
+    );
     sessionStorage.setItem('loadedFlag', JSON.stringify('true'));
     this.show_Parameter_Div();
   }
@@ -394,13 +431,23 @@ export class ClaimSummaryComponent implements AfterViewInit {
     this.EncounterType_Value = report_Parameters.ENCOUNTER_TYPE;
     this.From_Date_Value = report_Parameters.START_DATE;
     this.To_Date_Value = report_Parameters.END_DATE;
+    this.ReceiverID_Value=report_Parameters.RECEIVER_ID
+    this.PayerID_Value=report_Parameters.PAYER_ID
+    this.Payer_Value=report_Parameters.PAYER
+    this.Clinician_Value=report_Parameters.CLINICIAN
+    this.OrderingClinician_Value=report_Parameters.ORDERING_CLINICIAN
     this.loadData(
       this.user_Id,
       this.SearchOn_Value,
       this.Facility_Value,
       this.EncounterType_Value,
       this.From_Date_Value,
-      this.To_Date_Value
+      this.To_Date_Value,
+      this.ReceiverID_Value,
+      this.PayerID_Value,
+      this.Payer_Value,
+      this.Clinician_Value,
+      this.OrderingClinician_Value
     );
     this.isParamsOpend = false;
   }
