@@ -1,21 +1,19 @@
 import { Component, NgModule, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  DxTextBoxModule,
-  DxFormModule,
-  DxValidatorModule,
-} from 'devextreme-angular';
+import { DxFormModule, DxValidatorModule } from 'devextreme-angular';
 import { FormTextboxModule, FormPhotoUploaderModule } from 'src/app/components';
 import { getSizeQualifier } from 'src/app/services/screen.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DataService } from 'src/app/services';
-import { DxSelectBoxModule, DxTemplateModule } from 'devextreme-angular';
-
-interface dropdownData {
-  ID: number;
-  DESCRIPTION: string;
-}
+import { DxSelectBoxModule } from 'devextreme-angular';
+import {
+  DxTextBoxModule,
+  DxTextBoxTypes,
+} from 'devextreme-angular/ui/text-box';
+// interface dropdownData {
+//   ID: string;
+//   DESCRIPTION: string;
+// }
 
 @Component({
   selector: 'contact-denial-form',
@@ -35,18 +33,14 @@ export class DenialNewFormComponent {
   };
 
   newDenial = this.newDenialData;
-  Denial_Type_DropDownData: dropdownData[];
-  Denial_Category_DropDownData: dropdownData[];
+  Denial_Type_DropDownData: any;
+  Denial_Category_DropDownData: any;
   getSizeQualifier = getSizeQualifier;
 
   constructor(private service: DataService) {
     this.getDenial_Type_DropDown();
-    this.getDenial_Category_DropDown()
+    this.getDenial_Category_DropDown();
   }
-
-  // ngOnInit(): void {
-  //   this.getDenial_Type_DropDown();
-  // }
 
   getNewDenialData = () => ({ ...this.newDenial });
 
@@ -57,7 +51,6 @@ export class DenialNewFormComponent {
       .get_Denial_Dropdown_Data(dropdownType)
       .subscribe((data: any) => {
         this.Denial_Type_DropDownData = data;
-        // console.log('drop down dataaaaaaaaa', this.Denial_Type_DropDownData);
       });
   }
 
@@ -68,14 +61,8 @@ export class DenialNewFormComponent {
       .get_Denial_Dropdown_Data(dropdowncategory)
       .subscribe((data: any) => {
         this.Denial_Category_DropDownData = data;
-        // console.log(
-        //   'drop down category dataaaaaaaaa',
-        //   this.Denial_Category_DropDownData
-        // );
       });
   }
-
-  
 }
 
 @NgModule({

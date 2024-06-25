@@ -22,20 +22,20 @@ import { ContactPanelModule } from 'src/app/components/library/contact-panel/con
 import {
   DenialNewFormComponent,
   DenialNewFormModule,
-} from 'src/app/components/library/denial-new-form/denial-new-form.component';
+} from 'src/app/pages/POP-UP_PAGES/denial-new-form/denial-new-form.component';
 import { DxLookupModule } from 'devextreme-angular';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ReportService } from 'src/app/services/Report-data.service';
 
 interface dropdownData {
-  ID: number;
+  ID: string;
   Description: string;
 }
 
 @Component({
   templateUrl: './denial-list.component.html',
   styleUrls: ['./denial-list.component.scss'],
-  providers: [DataService,ReportService],
+  providers: [DataService, ReportService],
 })
 export class DenialListComponent {
   @ViewChild(DxDataGridComponent, { static: true })
@@ -89,9 +89,8 @@ export class DenialListComponent {
   };
 
   //================Exporting Function=====================
-  onExporting(e:any) {
-    this.reportservice.exportDataGrid(e)
-    
+  onExporting(e: any) {
+    this.reportservice.exportDataGrid(e);
   }
 
   //============ADD NEW DENIALS======================
@@ -111,7 +110,6 @@ export class DenialListComponent {
             },
             'success'
           );
-         
         } else {
           notify(
             {
@@ -122,47 +120,46 @@ export class DenialListComponent {
           );
         }
       });
-      
   };
 
   //====================Update Denial Row Data==============
 
-  onRowUpdating(event) {
+  onRowUpdating(event: any) {
     const updataDate = event.newData;
     const oldData = event.oldData;
     const combinedData = { ...oldData, ...updataDate };
     console.log('onrowUpdated Data getting ', combinedData);
-
+    let id = combinedData.ID;
     let code = combinedData.DenialCode;
     let Description = combinedData.Description;
     let DenialTypeID = combinedData.DenialTypeID;
     let DenialCategoryID = combinedData.DenialCategoryID;
 
     this.service
-      .updateDenial(code, Description, DenialTypeID, DenialCategoryID)
+      .updateDenial(id, code, Description, DenialTypeID, DenialCategoryID)
       .subscribe((data: any) => {
         if (data) {
           notify(
             {
               message: `New Denial updated Successfully`,
               position: { at: 'top center', my: 'top center' },
+              displayTime: 500,
             },
             'success'
           );
-          this.router
-            .navigateByUrl('/', { skipLocationChange: true })
-            .then(() => {
-              this.router.navigate([this.route.snapshot.url.join('/')]);
-            });
         } else {
           notify(
             {
               message: `Your Data Not Saved`,
               position: { at: 'top right', my: 'top right' },
+              displayTime: 500,
             },
             'error'
           );
         }
+        // event.component.refresh();
+        event.component.cancelEditData(); // Close the popup
+        this.dataGrid.instance.refresh();
       });
 
     event.cancel = true; // Prevent the default update operation
@@ -179,6 +176,7 @@ export class DenialListComponent {
           {
             message: 'Delete operation successful',
             position: { at: 'top right', my: 'top right' },
+            displayTime: 500,
           },
           'success'
         );
@@ -189,14 +187,14 @@ export class DenialListComponent {
           {
             message: 'Delete operation failed',
             position: { at: 'top right', my: 'top right' },
+            displayTime: 500,
           },
           'error'
         );
       }
+      event.component.refresh();
+      this.dataGrid.instance.refresh();
     });
-
-    event.component.refresh();
-    this.dataGrid.instance.refresh();
   }
 
   //=============Get Denial Type Drop dwn Data==============================
@@ -206,7 +204,7 @@ export class DenialListComponent {
       .get_Denial_Dropdown_Data(dropdownType)
       .subscribe((data: any) => {
         this.Denial_Type_DropDownData = data;
-        console.log('drop down dataaaaaaaaa', this.Denial_Type_DropDownData);
+        // console.log('drop down dataaaaaaaaa', this.Denial_Type_DropDownData);
       });
   }
 
@@ -217,10 +215,6 @@ export class DenialListComponent {
       .get_Denial_Dropdown_Data(dropdownType)
       .subscribe((data: any) => {
         this.Denial_category_DropDownData = data;
-        console.log(
-          'drop down dataaaaaaaaa',
-          this.Denial_category_DropDownData
-        );
       });
   }
 }

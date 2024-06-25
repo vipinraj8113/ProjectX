@@ -1,11 +1,10 @@
 <div class="view-wrapper list-page">
-    <dx-data-grid class="grid theme-dependent" noDataText="" height="600" [dataSource]="dataSource"
-        [showBorders]="true" [allowColumnResizing]="true" [allowColumnReordering]="true" [rowAlternationEnabled]="true"
+    <dx-data-grid class="grid theme-dependent" noDataText="" height="600" [dataSource]="dataSource" [showBorders]="true"
+        [allowColumnResizing]="true" [allowColumnReordering]="true" [rowAlternationEnabled]="true"
         rowAlternationInterval="2" (onExporting)="onExporting($event)" (onRowRemoving)="onRowRemoving($event)"
         (onRowUpdating)="onRowUpdating($event)">
         <dxo-paging [pageSize]="10"></dxo-paging>
-        <dxo-editing mode="popup" [allowUpdating]="true" [allowDeleting]="true"
-            [popup]="{ width: '40%', height: '60vh' }">
+        <dxo-editing mode="popup" [allowUpdating]="true" [popup]="{ width: '40%', height: '60vh' }">
         </dxo-editing>
         <dxo-pager [visible]="true" [allowedPageSizes]="allowedPageSizes" [displayMode]="displayMode"
             [showPageSizeSelector]="showPageSizeSelector" [showInfo]="showInfo"
@@ -43,9 +42,13 @@
         <dxo-selection mode="multiple"></dxo-selection>
         <dxo-header-filter [visible]="true"></dxo-header-filter>
 
-        <dxi-column dataField="DenialCode" caption="CODE"></dxi-column>
-        <dxi-column dataField="Description"></dxi-column>
-        <dxi-column dataField="DenialTypeID" caption="TYPE"></dxi-column>
+        <dxi-column dataField="FacilityLicense" caption="Facility License"></dxi-column>
+        <dxi-column dataField="FacilityName"></dxi-column>
+        <dxi-column dataField="Region" caption="Region"></dxi-column>
+        <dxi-column dataField="FacilityType" caption="Facility Type"></dxi-column>
+        <dxi-column dataField="FacilityGroupName" caption="Facility Group Name"></dxi-column>
+        <dxi-column dataField="FacilityAddress" caption="Facility Address"></dxi-column>
+        <dxi-column dataField="Postoffice" caption="Post office"></dxi-column>
     </dx-data-grid>
 
 </div>

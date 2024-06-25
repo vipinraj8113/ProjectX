@@ -32,7 +32,7 @@ import { ContactPanelModule } from 'src/app/components/library/contact-panel/con
 import {
   DenialNewFormComponent,
   DenialNewFormModule,
-} from 'src/app/components/library/denial-new-form/denial-new-form.component';
+} from 'src/app/pages/POP-UP_PAGES/denial-new-form/denial-new-form.component';
 import {
   DxLookupModule,
   DxDropDownBoxModule,
@@ -300,11 +300,11 @@ export class ClaimSummaryComponent implements AfterViewInit {
     encounterType: any,
     fromData: any,
     toDate: any,
-    receiverId:any,
-    payerId:any,
-    payer:any,
-    Clinician:any,
-    OrderingClinician:any
+    receiverId: any,
+    payerId: any,
+    payer: any,
+    Clinician: any,
+    OrderingClinician: any
   ) {
     this.dataSource = new DataSource<any>({
       load: () =>
@@ -431,11 +431,11 @@ export class ClaimSummaryComponent implements AfterViewInit {
     this.EncounterType_Value = report_Parameters.ENCOUNTER_TYPE;
     this.From_Date_Value = report_Parameters.START_DATE;
     this.To_Date_Value = report_Parameters.END_DATE;
-    this.ReceiverID_Value=report_Parameters.RECEIVER_ID
-    this.PayerID_Value=report_Parameters.PAYER_ID
-    this.Payer_Value=report_Parameters.PAYER
-    this.Clinician_Value=report_Parameters.CLINICIAN
-    this.OrderingClinician_Value=report_Parameters.ORDERING_CLINICIAN
+    this.ReceiverID_Value = report_Parameters.RECEIVER_ID;
+    this.PayerID_Value = report_Parameters.PAYER_ID;
+    this.Payer_Value = report_Parameters.PAYER;
+    this.Clinician_Value = report_Parameters.CLINICIAN;
+    this.OrderingClinician_Value = report_Parameters.ORDERING_CLINICIAN;
     this.loadData(
       this.user_Id,
       this.SearchOn_Value,

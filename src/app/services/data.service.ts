@@ -37,12 +37,13 @@ export class DataService {
 
   //------------update Denial--------------------------
   updateDenial(
+    ID:any,
     DenialCode: any,
     Description: any,
     DenialTypeID: any,
     DenialCategoryID: any
   ) {
-    const UpdateData = { DenialCode, Description, DenialTypeID, DenialCategoryID };
+    const UpdateData = {ID, DenialCode, Description, DenialTypeID, DenialCategoryID };
     return this.http.post(`${BASE_URL}DenialMaster/Update`, UpdateData);
   }
 
