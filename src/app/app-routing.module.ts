@@ -30,6 +30,12 @@ import { DoctorWithHighIncomeComponent } from './pages/REPORT PAGES/doctor-with-
 import { ClaimSummaryPayerWiseComponent } from './pages/REPORT PAGES/claim-summary-payer-wise/claim-summary-payer-wise.component';
 import { FacilityListComponent } from './pages/MASTER PAGES/facility/facility-list.component';
 import { FacilityGroupListComponent } from './pages/MASTER PAGES/facility-group/facility-group-list.component';
+import { CPTMasterComponent } from './pages/MASTER PAGES/cpt-master/cpt-master.component';
+import { SpecialityComponent } from './pages/MASTER PAGES/speciality/speciality.component';
+import { CPTTypeComponent } from './pages/MASTER PAGES/cpt-type/cpt-type.component';
+import { DenialCategoryComponent } from './pages/MASTER PAGES/denial-category/denial-category.component';
+import { DenialTypeComponent } from './pages/MASTER PAGES/denial-type/denial-type.component';
+import { FacilityTypeComponent } from './pages/MASTER PAGES/facility-type/facility-type.component';
 const routes: Routes = [
   {
     path: '',
@@ -72,8 +78,33 @@ const routes: Routes = [
     component: SideNavOuterToolbarComponent,
     children: [
       {
+        path: 'ctp-master-page',
+        component: CPTMasterComponent,
+        canActivate: [AuthGuardService],
+      },
+      {
+        path: 'ctp-type-page',
+        component: CPTTypeComponent,
+        canActivate: [AuthGuardService],
+      },
+      {
+        path:'speciality-master',
+        component:SpecialityComponent,
+        canActivate: [AuthGuardService],
+      },
+      {
         path: 'denial-list-page',
         component: DenialListComponent,
+        canActivate: [AuthGuardService],
+      },
+      {
+        path: 'denial-type-page',
+        component: DenialTypeComponent,
+        canActivate: [AuthGuardService],
+      },
+      {
+        path: 'denial-category-page',
+        component: DenialCategoryComponent,
         canActivate: [AuthGuardService],
       },
       {
@@ -84,6 +115,11 @@ const routes: Routes = [
       {
         path: 'facility-group-page',
         component: FacilityGroupListComponent,
+        canActivate: [AuthGuardService],
+      },
+      {
+        path: 'facility-type-page',
+        component: FacilityTypeComponent,
         canActivate: [AuthGuardService],
       },
       {

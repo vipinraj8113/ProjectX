@@ -8,7 +8,7 @@ const BASE_URL = BaseURL;
 })
 export class MasterReportService {
   constructor(private http: HttpClient) {}
-//==============Fetch all Facility group data================
+  //==============Fetch all Facility group data================
   Get_Facility_Group_Data() {
     const Url = `${BASE_URL}/facilitygROUP/list`;
     const reqBody = {
@@ -16,19 +16,22 @@ export class MasterReportService {
     };
     return this.http.post(Url, reqBody);
   }
-//=============Fetch All facility data=======================
-Get_Facility_List_Data() {
-  const Url = `${BASE_URL}/facility/list`;
-  const reqBody = {
-    list: [],
-  };
-  return this.http.post(Url, reqBody);
-}
-//==============Facility Drop down data=====================
-Get_GropDown(dropDownField:any){
-  const Url = `${BASE_URL}/dropdown`;
-  const reqBody = {"name":dropDownField}
-  return this.http.post(Url, reqBody);
-}
-
+  //====================Remove Facility Data================
+  Remove_Facility_Row_Data(id: any) {
+    return this.http.post(`${BASE_URL}facilitygroup/delete/${id}`, {});
+  }
+  //=============Fetch All facility data=======================
+  Get_Facility_List_Data() {
+    const Url = `${BASE_URL}/facility/list`;
+    const reqBody = {
+      list: [],
+    };
+    return this.http.post(Url, reqBody);
+  }
+  //==============Facility Drop down data=====================
+  Get_GropDown(dropDownField: any) {
+    const Url = `${BASE_URL}/dropdown`;
+    const reqBody = { name: dropDownField };
+    return this.http.post(Url, reqBody);
+  }
 }

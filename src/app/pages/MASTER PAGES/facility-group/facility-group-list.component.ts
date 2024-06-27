@@ -12,6 +12,7 @@ import {
 import { DataService } from 'src/app/services';
 import { ReportService } from 'src/app/services/Report-data.service';
 import { MasterReportService } from '../master-report.service';
+import notify from 'devextreme/ui/notify';
 @Component({
   selector: 'app-facility-group-list',
   templateUrl: './facility-group-list.component.html',
@@ -42,7 +43,7 @@ export class FacilityGroupListComponent implements OnInit {
   //========================Get Datasource =======================
   get_Facility_Group_dataSource() {
     this.masterService.Get_Facility_Group_Data().subscribe((response: any) => {
-      this.dataSource = response;
+      this.dataSource = response.FacilityGroups;
     });
   }
   //========================Export data ==========================
@@ -52,7 +53,37 @@ export class FacilityGroupListComponent implements OnInit {
   //====================Add data ================================
   addFacilityGroup() {}
   //====================Row Data Deleting========================
-  onRowRemoving(event: any) {}
+  onRowRemoving(event: any) {
+    event.cancel = true;
+    let SelectedRow = event.key;
+    console.log('selected row data :', SelectedRow);
+    this.masterService
+      .Remove_Facility_Row_Data(SelectedRow.ID)
+      .subscribe(() => {
+        try {
+          notify(
+            {
+              message: 'Delete operation successful',
+              position: { at: 'top right', my: 'top right' },
+              displayTime: 500,
+            },
+            'success'
+          );
+        } catch (error) {
+          notify(
+            {
+              message: 'Delete operation failed',
+              position: { at: 'top right', my: 'top right' },
+              displayTime: 500,
+            },
+            'error'
+          );
+        }
+        event.component.refresh();
+        this.dataGrid.instance.refresh();
+        this. get_Facility_Group_dataSource()
+      });
+  }
   //===================RTow Data Update==========================
   onRowUpdating(event: any) {}
   //=================== Page refreshing==========================

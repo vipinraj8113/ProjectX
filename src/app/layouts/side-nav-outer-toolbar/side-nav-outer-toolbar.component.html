@@ -22,17 +22,8 @@
     *dxTemplate="let dataMenu of 'panel'"
     (selectedItemChanged)="navigationChanged($event)"
     (openMenu)="navigationClick()"
-
   >
-    <!-- <app-footer
-      >Project-X @ {{ appInfo.currentYear }} <br />
-      Developer : Nithin Azentia</app-footer
-    > -->
   </side-navigation-menu>
-
-  <!-- <div class="content">
-    <router-outlet></router-outlet>
-  </div> -->
    <!-- Content Area -->
    <div class="content">
     <dx-sortable 
@@ -43,18 +34,18 @@
       (onDragStart)="onTabDragStart($event)"
       (onReorder)="onTabDrop($event)"
     >
-   
       <dx-tab-panel class="tabPanelDiv mt-1"
         [dataSource]="tabs"
         itemTitleTemplate="title"
         itemTemplate="item"
+        [animationEnabled]="true"
         [deferRendering]="false"
         [showNavButtons]="true"
         [repaintChangesOnly]="true"
         [selectedIndex]="selectedIndex"
       >
         <div class="tabItems" height=100% *dxTemplate="let tab of 'title'" (click)="TabItemClick(tab)">
-          <span class="me-1 ms-1">{{ tab.title }}</span>
+          <span  class="tabSubItems ms-1">{{ tab.title }}</span>
           <i
             *ngIf="showCloseButton()"
             class="dx-icon dx-icon-close"

@@ -4,7 +4,7 @@
         rowAlternationInterval="2" (onExporting)="onExporting($event)" (onRowRemoving)="onRowRemoving($event)"
         (onRowUpdating)="onRowUpdating($event)" height="84vh">
         <dxo-paging [pageSize]="10"></dxo-paging>
-        <dxo-editing mode="popup" [allowUpdating]="true" [allowDeleting]="true"
+        <dxo-editing mode="popup" [allowUpdating]="true" [allowDeleting]="true" [allowAdding]="true"
             [popup]="{ width: '40%', height: '60vh' }">
         </dxo-editing>
         <dxo-pager [visible]="true" [allowedPageSizes]="allowedPageSizes" [displayMode]="displayMode"
@@ -47,8 +47,8 @@
         <dxo-selection mode="multiple"></dxo-selection>
         <dxo-header-filter [visible]="true"></dxo-header-filter>
 
-        <dxi-column dataField="FacilityGroupName" caption="Group Name"></dxi-column>
-        <dxi-column dataField="FacilityGroupDescription" Caption="Group Description"></dxi-column>
+        <dxi-column dataField="FacilityGroup" caption="Group Name"></dxi-column>
+        <dxi-column dataField="Description" Caption="Group Description"></dxi-column>
     </dx-data-grid>
 
 </div>
