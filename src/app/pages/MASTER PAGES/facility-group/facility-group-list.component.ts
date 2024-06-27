@@ -1,3 +1,4 @@
+import { Message } from 'src/app/types/messages';
 import { CommonModule } from '@angular/common';
 import { Component, NgModule, OnInit, ViewChild } from '@angular/core';
 import {
@@ -13,7 +14,12 @@ import { DataService } from 'src/app/services';
 import { ReportService } from 'src/app/services/Report-data.service';
 import { MasterReportService } from '../master-report.service';
 import notify from 'devextreme/ui/notify';
-import {FacilityGroupNewFormModule} from '../../POP-UP_PAGES/facility-group-new-form/facility-group-new-form.component'
+import {
+  FacilityGroupNewFormComponent,
+  FacilityGroupNewFormModule,
+} from '../../POP-UP_PAGES/facility-group-new-form/facility-group-new-form.component';
+import { FormPopupModule } from 'src/app/components';
+
 @Component({
   selector: 'app-facility-group-list',
   templateUrl: './facility-group-list.component.html',
@@ -23,7 +29,10 @@ import {FacilityGroupNewFormModule} from '../../POP-UP_PAGES/facility-group-new-
 export class FacilityGroupListComponent implements OnInit {
   @ViewChild(DxDataGridComponent, { static: true })
   dataGrid: DxDataGridComponent;
+  @ViewChild(FacilityGroupNewFormComponent, { static: false })
+  facilityGroupComponent: FacilityGroupNewFormComponent;
 
+  isAddContactPopupOpened: any = false;
   dataSource: any;
   //========Variables for Pagination ====================
   readonly allowedPageSizes: any = [5, 10, 'all'];
@@ -31,6 +40,7 @@ export class FacilityGroupListComponent implements OnInit {
   showPageSizeSelector = true;
   showInfo = true;
   showNavButtons = true;
+  facilityGroupDatasource: any;
 
   constructor(
     private service: ReportService,
@@ -38,14 +48,22 @@ export class FacilityGroupListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.get_Facility_Group_dataSource();
+    this.get_Facility_Group_Data_List();
   }
-  isAddContactPopupOpened=true
-  onClickSaveNewDenial(){
-
+  //=============Showing the new Facility Form===================
+  show_new_FacilityGroup_Form() {
+    this.isAddContactPopupOpened = true;
+  }
+  //====================get Facility group dropdown ==============
+  get_FacilityGroup_DropDown() {
+    this.masterService
+      .Get_GropDown('FACILITYGROUP')
+      .subscribe((response: any) => {
+        this.facilityGroupDatasource = response;
+      });
   }
   //========================Get Datasource =======================
-  get_Facility_Group_dataSource() {
+  get_Facility_Group_Data_List() {
     this.masterService.Get_Facility_Group_Data().subscribe((response: any) => {
       this.dataSource = response.FacilityGroups;
     });
@@ -55,7 +73,34 @@ export class FacilityGroupListComponent implements OnInit {
     this.service.exportDataGrid(event);
   }
   //====================Add data ================================
-  addFacilityGroup() {}
+  onClickSaveNewFacilityGroup = () => {
+    const { FacilityGroupValue, DescriptionValue } =
+      this.facilityGroupComponent.getNewFacilityGroupData();
+    this.masterService
+      .add_FacilityGroup_Data(FacilityGroupValue, DescriptionValue)
+      .subscribe((response: any) => {
+        if (response) {
+          this.dataGrid.instance.refresh();
+          this.get_Facility_Group_Data_List();
+          notify(
+            {
+              message: `New Denial "${FacilityGroupValue} ${DescriptionValue}" saved Successfully`,
+              position: { at: 'top right', my: 'top right' },
+            },
+            'success'
+          );
+        } else {
+          notify(
+            {
+              message: `Your Data Not Saved`,
+              position: { at: 'top right', my: 'top right' },
+            },
+            'error'
+          );
+        }
+      });
+  };
+
   //====================Row Data Deleting========================
   onRowRemoving(event: any) {
     event.cancel = true;
@@ -85,11 +130,50 @@ export class FacilityGroupListComponent implements OnInit {
         }
         event.component.refresh();
         this.dataGrid.instance.refresh();
-        this. get_Facility_Group_dataSource()
+        this.get_Facility_Group_Data_List();
       });
   }
   //===================RTow Data Update==========================
-  onRowUpdating(event: any) {}
+  onRowUpdating(event: any) {
+    const updataDate = event.newData;
+    const oldData = event.oldData;
+    const combinedData = { ...oldData, ...updataDate };
+    // console.log('onrowUpdated Data getting ', combinedData);
+    let id = combinedData.ID;
+    let facilityGroup = combinedData.FacilityGroup;
+    let Description = combinedData.Description;
+
+    this.masterService
+      .update_facilityGroup_data(id, facilityGroup, Description)
+      .subscribe((data: any) => {
+        if (data) {
+          this.dataGrid.instance.refresh();
+          this.get_Facility_Group_Data_List();
+          notify(
+            {
+              message: `New Denial updated Successfully`,
+              position: { at: 'top right', my: 'top right' },
+              displayTime: 500,
+            },
+            'success'
+          );
+        } else {
+          notify(
+            {
+              message: `Your Data Not Saved`,
+              position: { at: 'top right', my: 'top right' },
+              displayTime: 500,
+            },
+            'error'
+          );
+        }
+        // event.component.refresh();
+        event.component.cancelEditData(); // Close the popup
+        this.dataGrid.instance.refresh();
+      });
+
+    event.cancel = true; // Prevent the default update operation
+  }
   //=================== Page refreshing==========================
   refresh = () => {
     this.dataGrid.instance.refresh();
@@ -105,8 +189,8 @@ export class FacilityGroupListComponent implements OnInit {
     DxSelectBoxModule,
     DxTextBoxModule,
     DxLookupModule,
-    FacilityGroupNewFormModule
-    
+    FormPopupModule,
+    FacilityGroupNewFormModule,
   ],
   providers: [],
   exports: [],
