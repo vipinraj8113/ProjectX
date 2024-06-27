@@ -22,9 +22,9 @@ export class FacilityListComponent implements OnInit {
   @ViewChild(DxDataGridComponent, { static: true })
   dataGrid: DxDataGridComponent;
   dataSource: any;
-  FacilityType_DataSource:any
-  Facilitygroup_DataSource:any
-  postOffice_DataSource:any
+  FacilityType_DataSource: any;
+  Facilitygroup_DataSource: any;
+  postOffice_DataSource: any;
   //========Variables for Pagination ====================
   readonly allowedPageSizes: any = [5, 10, 'all'];
   displayMode: any = 'full';
@@ -36,12 +36,27 @@ export class FacilityListComponent implements OnInit {
     private masterService: MasterReportService
   ) {}
   ngOnInit(): void {
+    this.get_All_DropDown_Data();
     this.get_Facility_List();
   }
-  get_All_DropDown_Data(){
-    this.FacilityType_DataSource = this.masterService.Get_GropDown("FACILITYTYPE")
-    this.Facilitygroup_DataSource = this.masterService.Get_GropDown("FACILITYGROUP")
-    this.postOffice_DataSource = this.masterService.Get_GropDown("POSTOFFICE")
+  get_All_DropDown_Data() {
+    this.masterService.Get_GropDown("FACILITYTYPE").subscribe((response: any) => {
+      if(response){
+        this.FacilityType_DataSource = response;
+      }  
+      });
+
+    this.masterService.Get_GropDown("FACILITYGROUP").subscribe((response: any) => {
+      if(response){
+        this.Facilitygroup_DataSource = response;
+      }
+      });
+
+    this.masterService.Get_GropDown("POSTOFFICE").subscribe((response: any) => {
+      if(response){
+        this.postOffice_DataSource = response;
+      }  
+    });
   }
   //====================Get Facility List Datasource==============
   get_Facility_List() {

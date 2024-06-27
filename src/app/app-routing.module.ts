@@ -14,7 +14,7 @@ import {
   UnauthenticatedContentComponent,
 } from './layouts';
 
-import { DenialListComponent } from './pages/MASTER PAGES/Denial-list/denial-list.component';
+import { DenialListComponent } from './pages/MASTER PAGES/denial/denial-list.component';
 import { AnalyticsDashboardComponent } from './pages/analytics-dashboard/analytics-dashboard.component';
 import { AppSignInComponent } from './pages/sign-in-form/sign-in-form.component';
 import { AppSignUpComponent } from './pages/sign-up-form/sign-up-form.component';
@@ -28,8 +28,8 @@ import { RejectedClaimsComponent } from './pages/REPORT PAGES/rejected-claims/re
 import { DoctorWithHighDenialsComponent } from './pages/REPORT PAGES/doctor-with-high-denials/doctor-with-high-denials.component';
 import { DoctorWithHighIncomeComponent } from './pages/REPORT PAGES/doctor-with-high-income/doctor-with-high-income.component';
 import { ClaimSummaryPayerWiseComponent } from './pages/REPORT PAGES/claim-summary-payer-wise/claim-summary-payer-wise.component';
-import {FacilityListComponent} from './pages/MASTER PAGES/facility-list/facility-list.component'
-import { FacilityGroupListComponent } from './pages/MASTER PAGES/facility-group-list/facility-group-list.component';
+import { FacilityListComponent } from './pages/MASTER PAGES/facility/facility-list.component';
+import { FacilityGroupListComponent } from './pages/MASTER PAGES/facility-group/facility-group-list.component';
 const routes: Routes = [
   {
     path: '',
@@ -77,13 +77,13 @@ const routes: Routes = [
         canActivate: [AuthGuardService],
       },
       {
-        path:'facilities-page',
-        component:FacilityListComponent,
+        path: 'facilities-page',
+        component: FacilityListComponent,
         canActivate: [AuthGuardService],
       },
       {
-        path:'facility-group-page',
-        component:FacilityGroupListComponent,
+        path: 'facility-group-page',
+        component: FacilityGroupListComponent,
         canActivate: [AuthGuardService],
       },
       {

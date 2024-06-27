@@ -14,7 +14,7 @@ import {
 import { AuthService, ScreenService, AppInfoService } from './services';
 import { UnauthenticatedContentModule } from './layouts/unauthenticated-content/unauthenticated-content';
 import { AppRoutingModule } from './app-routing.module';
-import { DenialListModule } from '../app/pages/MASTER PAGES/Denial-list/denial-list.component';
+import { DenialListModule } from './pages/MASTER PAGES/denial/denial-list.component';
 import { AnalyticsDashboardModule } from './pages/analytics-dashboard/analytics-dashboard.component';
 import { ThemeService } from './services';
 import { DxFormModule } from 'devextreme-angular';
@@ -28,6 +28,12 @@ import { DoctorWithHighDenialsComponent } from './pages/REPORT PAGES/doctor-with
 import { RejectedClaimsComponent } from './pages/REPORT PAGES/rejected-claims/rejected-claims.component';
 import { BalanceAmountToBeReceivedComponent } from './pages/REPORT PAGES/balance-amount-to-be-received/balance-amount-to-be-received.component';
 import { ResubmissionSummaryComponent } from './pages/REPORT PAGES/resubmission-summary/resubmission-summary.component';
+import { FacilityTypeComponent } from './pages/MASTER PAGES/facility-type/facility-type.component';
+import { CPTTypeComponent } from './pages/MASTER PAGES/cpt-type/cpt-type.component';
+import { CPTMasterComponent } from './pages/MASTER PAGES/cpt-master/cpt-master.component';
+import { SpecialityComponent } from './pages/MASTER PAGES/speciality/speciality.component';
+import { DenialTypeComponent } from './pages/MASTER PAGES/denial-type/denial-type.component';
+import { DenialCategoryComponent } from './pages/MASTER PAGES/denial-category/denial-category.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,6 +44,12 @@ import { ResubmissionSummaryComponent } from './pages/REPORT PAGES/resubmission-
     RejectedClaimsComponent,
     BalanceAmountToBeReceivedComponent,
     ResubmissionSummaryComponent,
+    FacilityTypeComponent,
+    CPTTypeComponent,
+    CPTMasterComponent,
+    SpecialityComponent,
+    DenialTypeComponent,
+    DenialCategoryComponent,
   ],
   imports: [
     TaskListModule,
