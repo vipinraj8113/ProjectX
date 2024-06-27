@@ -6,17 +6,10 @@ import { getSizeQualifier } from 'src/app/services/screen.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DataService } from 'src/app/services';
 import { DxSelectBoxModule } from 'devextreme-angular';
-import {
-  DxTextBoxModule,
-  DxTextBoxTypes,
-} from 'devextreme-angular/ui/text-box';
-// interface dropdownData {
-//   ID: string;
-//   DESCRIPTION: string;
-// }
+import { DxTextBoxModule } from 'devextreme-angular/ui/text-box';
 
 @Component({
-  selector: 'contact-denial-form',
+  selector: 'denial-new-form',
   templateUrl: './denial-new-form.component.html',
   styleUrls: ['./denial-new-form.component.scss'],
   providers: [DataService],

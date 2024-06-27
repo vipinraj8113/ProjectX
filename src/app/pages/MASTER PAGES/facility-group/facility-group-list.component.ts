@@ -13,6 +13,7 @@ import { DataService } from 'src/app/services';
 import { ReportService } from 'src/app/services/Report-data.service';
 import { MasterReportService } from '../master-report.service';
 import notify from 'devextreme/ui/notify';
+import {FacilityGroupNewFormModule} from '../../POP-UP_PAGES/facility-group-new-form/facility-group-new-form.component'
 @Component({
   selector: 'app-facility-group-list',
   templateUrl: './facility-group-list.component.html',
@@ -39,7 +40,10 @@ export class FacilityGroupListComponent implements OnInit {
   ngOnInit(): void {
     this.get_Facility_Group_dataSource();
   }
+  isAddContactPopupOpened=true
+  onClickSaveNewDenial(){
 
+  }
   //========================Get Datasource =======================
   get_Facility_Group_dataSource() {
     this.masterService.Get_Facility_Group_Data().subscribe((response: any) => {
@@ -101,6 +105,8 @@ export class FacilityGroupListComponent implements OnInit {
     DxSelectBoxModule,
     DxTextBoxModule,
     DxLookupModule,
+    FacilityGroupNewFormModule
+    
   ],
   providers: [],
   exports: [],

@@ -34,6 +34,7 @@ import { CPTMasterComponent } from './pages/MASTER PAGES/cpt-master/cpt-master.c
 import { SpecialityComponent } from './pages/MASTER PAGES/speciality/speciality.component';
 import { DenialTypeComponent } from './pages/MASTER PAGES/denial-type/denial-type.component';
 import { DenialCategoryComponent } from './pages/MASTER PAGES/denial-category/denial-category.component';
+import { FacilityGroupNewFormComponent } from './pages/POP-UP_PAGES/facility-group-new-form/facility-group-new-form.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -50,6 +51,7 @@ import { DenialCategoryComponent } from './pages/MASTER PAGES/denial-category/de
     SpecialityComponent,
     DenialTypeComponent,
     DenialCategoryComponent,
+  
   ],
   imports: [
     TaskListModule,

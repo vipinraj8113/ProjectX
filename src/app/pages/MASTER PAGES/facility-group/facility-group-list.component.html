@@ -50,5 +50,13 @@
         <dxi-column dataField="FacilityGroup" caption="Group Name"></dxi-column>
         <dxi-column dataField="Description" Caption="Group Description"></dxi-column>
     </dx-data-grid>
+    <form-popup class="formPopupClass"
+    [(visible)]="isAddContactPopupOpened"
+    (save)="onClickSaveNewDenial()"
+    titleText="New Denial"
+    height="70vh"
+  >
+    <app-facility-group-new-form></app-facility-group-new-form>
+  </form-popup>
 
 </div>
