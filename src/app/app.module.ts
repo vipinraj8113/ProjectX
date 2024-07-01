@@ -28,14 +28,14 @@ import { DoctorWithHighDenialsComponent } from './pages/REPORT PAGES/doctor-with
 import { RejectedClaimsComponent } from './pages/REPORT PAGES/rejected-claims/rejected-claims.component';
 import { BalanceAmountToBeReceivedComponent } from './pages/REPORT PAGES/balance-amount-to-be-received/balance-amount-to-be-received.component';
 import { ResubmissionSummaryComponent } from './pages/REPORT PAGES/resubmission-summary/resubmission-summary.component';
-import { FacilityTypeComponent } from './pages/MASTER PAGES/facility-type/facility-type.component';
+// import { FacilityTypeComponent } from './pages/MASTER PAGES/facility-type/facility-type.component';
 import { CPTTypeComponent } from './pages/MASTER PAGES/cpt-type/cpt-type.component';
 import { CPTMasterComponent } from './pages/MASTER PAGES/cpt-master/cpt-master.component';
 import { SpecialityComponent } from './pages/MASTER PAGES/speciality/speciality.component';
 import { DenialTypeComponent } from './pages/MASTER PAGES/denial-type/denial-type.component';
 import { DenialCategoryComponent } from './pages/MASTER PAGES/denial-category/denial-category.component';
 import { FacilityGroupNewFormComponent } from './pages/POP-UP_PAGES/facility-group-new-form/facility-group-new-form.component';
-import { ClinicianComponent } from './pages/MASTER PAGES/clinician/clinician.component';
+// import { ClinicianComponent } from './pages/MASTER PAGES/clinician/clinician.component';
 import { InsuranceCompaniesComponent } from './pages/MASTER PAGES/insurance-companies/insurance-companies.component';
 import { BankMasterComponent } from './pages/MASTER PAGES/bank-master/bank-master.component';
 @NgModule({
@@ -48,13 +48,12 @@ import { BankMasterComponent } from './pages/MASTER PAGES/bank-master/bank-maste
     RejectedClaimsComponent,
     BalanceAmountToBeReceivedComponent,
     ResubmissionSummaryComponent,
-    FacilityTypeComponent,
     CPTTypeComponent,
     CPTMasterComponent,
     SpecialityComponent,
     DenialTypeComponent,
     DenialCategoryComponent,
-    ClinicianComponent,
+    // ClinicianComponent,
     InsuranceCompaniesComponent,
     BankMasterComponent,
   

@@ -36,6 +36,7 @@ import { CPTTypeComponent } from './pages/MASTER PAGES/cpt-type/cpt-type.compone
 import { DenialCategoryComponent } from './pages/MASTER PAGES/denial-category/denial-category.component';
 import { DenialTypeComponent } from './pages/MASTER PAGES/denial-type/denial-type.component';
 import { FacilityTypeComponent } from './pages/MASTER PAGES/facility-type/facility-type.component';
+import { ClinicianComponent } from './pages/MASTER PAGES/clinician/clinician.component';
 const routes: Routes = [
   {
     path: '',
@@ -78,6 +79,11 @@ const routes: Routes = [
     component: SideNavOuterToolbarComponent,
     children: [
       {
+        path: 'clinicial-page',
+        component: ClinicianComponent,
+        canActivate: [AuthGuardService],
+      },
+      {
         path: 'ctp-master-page',
         component: CPTMasterComponent,
         canActivate: [AuthGuardService],
@@ -88,8 +94,8 @@ const routes: Routes = [
         canActivate: [AuthGuardService],
       },
       {
-        path:'speciality-master',
-        component:SpecialityComponent,
+        path: 'speciality-master',
+        component: SpecialityComponent,
         canActivate: [AuthGuardService],
       },
       {
