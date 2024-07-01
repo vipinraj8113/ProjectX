@@ -69,7 +69,8 @@ export class AuthService {
       DOMAIN_NAME:"Domain1",
       COMPUTER_USER:"User1",
       INTERNET_IP:"192.158.1.38",
-      SYSTEM_TIME_UTC:"2020-09-07T00:08:09"
+      SYSTEM_TIME_UTC:"2020-09-07T00:08:09",
+      FORCE_LOGIN:"7"
     };
     return this.http.post<any>(API_URL, ReqBody);
   }

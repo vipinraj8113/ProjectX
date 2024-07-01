@@ -20,8 +20,8 @@ export class MasterReportService {
   add_FacilityGroup_Data(facilitygroup: any, description: any) {
     const url = `${BASE_URL}/facilitygroup/insert`;
     const reqBody = {
-      "FacilityGroup": facilitygroup,
-      "Description": description,
+      FacilityGroup: facilitygroup,
+      Description: description,
     };
     return this.http.post(url, reqBody);
   }
@@ -29,11 +29,11 @@ export class MasterReportService {
   update_facilityGroup_data(id: any, facilitygroup: any, description: any) {
     const url = `${BASE_URL}/facilitygROUP/update`;
     const reqBody = {
-      "ID": id,
-      "FacilityGroup": facilitygroup,
-      "Description": description,
+      ID: id,
+      FacilityGroup: facilitygroup,
+      Description: description,
     };
-    return this.http.post(url,reqBody)
+    return this.http.post(url, reqBody);
   }
   //====================Remove Facility Data==================
   Remove_Facility_Row_Data(id: any) {
@@ -50,7 +50,42 @@ export class MasterReportService {
   //==============Facility Drop down data=====================
   Get_GropDown(dropDownField: any) {
     const Url = `${BASE_URL}/dropdown`;
-    const reqBody = { "name": dropDownField };
+    const reqBody = { name: dropDownField };
     return this.http.post(Url, reqBody);
+  }
+  //=================================================CPT MASTER====================================================
+  //======================Cpt Master List===============================
+  get_CptMaster_List() {
+    const Url = `${BASE_URL}/CPTtype/list`;
+    const reqBody = {
+      list: [],
+    };
+    return this.http.post(Url, reqBody);
+  }
+
+  //====================Add facility group data===============
+  Insert_CptType_Data(CptType: any, description: any) {
+    const url = `${BASE_URL}/facilitygroup/insert`;
+    const reqBody = {
+      CptType: CptType,
+      Description: description,
+    };
+    return this.http.post(url, reqBody);
+  }
+
+  //====================Update Facility Group data============
+  update_CptType_data(id: any, CptType: any, Description: any) {
+    const url = `${BASE_URL}/CPTtype/update`;
+    const reqBody = {
+      ID: id,
+      CptType: CptType,
+      Description: Description,
+    };
+    return this.http.post(url, reqBody);
+  }
+
+  //====================Remove Facility Data==================
+  Remove_CPTType_Row_Data(id: any) {
+    return this.http.post(`${BASE_URL}CPTtype/delete/${id}`, {});
   }
 }

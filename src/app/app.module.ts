@@ -35,6 +35,9 @@ import { SpecialityComponent } from './pages/MASTER PAGES/speciality/speciality.
 import { DenialTypeComponent } from './pages/MASTER PAGES/denial-type/denial-type.component';
 import { DenialCategoryComponent } from './pages/MASTER PAGES/denial-category/denial-category.component';
 import { FacilityGroupNewFormComponent } from './pages/POP-UP_PAGES/facility-group-new-form/facility-group-new-form.component';
+import { ClinicianComponent } from './pages/MASTER PAGES/clinician/clinician.component';
+import { InsuranceCompaniesComponent } from './pages/MASTER PAGES/insurance-companies/insurance-companies.component';
+import { BankMasterComponent } from './pages/MASTER PAGES/bank-master/bank-master.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -51,6 +54,9 @@ import { FacilityGroupNewFormComponent } from './pages/POP-UP_PAGES/facility-gro
     SpecialityComponent,
     DenialTypeComponent,
     DenialCategoryComponent,
+    ClinicianComponent,
+    InsuranceCompaniesComponent,
+    BankMasterComponent,
   
   ],
   imports: [
