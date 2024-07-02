@@ -68,7 +68,7 @@ export class ClinicianComponent implements OnInit {
     //       this.get_Clinician_Data_List();
     //       notify(
     //         {
-    //           message: `New Denial "${FacilityGroupValue} ${DescriptionValue}" saved Successfully`,
+    //           message: `New Clinician "${FacilityGroupValue} ${DescriptionValue}" saved Successfully`,
     //           position: { at: 'top right', my: 'top right' },
     //         },
     //         'success'
@@ -140,7 +140,7 @@ export class ClinicianComponent implements OnInit {
           this.get_Clinician_Data_List();
           notify(
             {
-              message: `New Denial updated Successfully`,
+              message: `New Clinician updated Successfully`,
               position: { at: 'top right', my: 'top right' },
               displayTime: 500,
             },

@@ -22,7 +22,6 @@ export class FacilityTypeComponent {
   @ViewChild(FacilityTypeNewFormComponent, { static: false })
   facilityTypeComponent: FacilityTypeNewFormComponent;
 
-  isAddContactPopupOpened: any = false;
   dataSource: any;
   //========Variables for Pagination ====================
   readonly allowedPageSizes: any = [5, 10, 'all'];
@@ -39,7 +38,7 @@ export class FacilityTypeComponent {
   ) {}
 
   ngOnInit(): void {
-    this.get_Clinician_Data_List();
+    this.get_FacilityType_Data_List();
   }
 //=========================show new popup=========================
   show_new_Form(){
@@ -47,7 +46,7 @@ export class FacilityTypeComponent {
   }
 
   //========================Get Datasource =======================
-  get_Clinician_Data_List() {
+  get_FacilityType_Data_List() {
     this.masterService.Get_Facility_Type_Data().subscribe((response: any) => {
       this.dataSource = response.FacilityTypes
     });
@@ -62,10 +61,10 @@ export class FacilityTypeComponent {
       .subscribe((response: any) => {
         if (response) {
           this.dataGrid.instance.refresh();
-          this.get_Clinician_Data_List();
+          this.get_FacilityType_Data_List();
           notify(
             {
-              message: `New Denial "${FacilityTypeValue} ${DescriptionValue}" saved Successfully`,
+              message: `New Facility type "${FacilityTypeValue} ${DescriptionValue}" saved Successfully`,
               position: { at: 'top right', my: 'top right' },
             },
             'success'
@@ -116,7 +115,7 @@ export class FacilityTypeComponent {
         }
         event.component.refresh();
         this.dataGrid.instance.refresh();
-        this.get_Clinician_Data_List();
+        this.get_FacilityType_Data_List();
       });
   }
   //===================RTow Data Update==========================
@@ -134,10 +133,10 @@ export class FacilityTypeComponent {
       .subscribe((data: any) => {
         if (data) {
           this.dataGrid.instance.refresh();
-          this.get_Clinician_Data_List();
+          this.get_FacilityType_Data_List();
           notify(
             {
-              message: `New Denial updated Successfully`,
+              message: `New Facility type updated Successfully`,
               position: { at: 'top right', my: 'top right' },
               displayTime: 500,
             },

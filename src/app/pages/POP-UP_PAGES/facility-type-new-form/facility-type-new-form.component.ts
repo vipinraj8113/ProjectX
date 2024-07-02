@@ -25,13 +25,13 @@ export class FacilityTypeNewFormComponent {
   getNewFacilityTypeData = () => ({ ...this.newFacilityTypeData });
 
   //==================== Facility group dropdown data loading ========================
-  // get_FacilityType_DropDown() {
-  //   this.masterService
-  //     .Get_GropDown('FACILITYTYPE')
-  //     .subscribe((response: any) => {
-  //       this.facilityGroupDatasource = response;
-  //     });
-  // }
+  get_FacilityType_DropDown() {
+    this.masterService
+      .Get_GropDown('FACILITYTYPE')
+      .subscribe((response: any) => {
+        this.facilityTypeDatasource = response;
+      });
+  }
 
 }
 @NgModule({

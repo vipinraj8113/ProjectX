@@ -29,8 +29,8 @@ import { RejectedClaimsComponent } from './pages/REPORT PAGES/rejected-claims/re
 import { BalanceAmountToBeReceivedComponent } from './pages/REPORT PAGES/balance-amount-to-be-received/balance-amount-to-be-received.component';
 import { ResubmissionSummaryComponent } from './pages/REPORT PAGES/resubmission-summary/resubmission-summary.component';
 // import { FacilityTypeComponent } from './pages/MASTER PAGES/facility-type/facility-type.component';
-import { CPTTypeComponent } from './pages/MASTER PAGES/cpt-type/cpt-type.component';
-import { CPTMasterComponent } from './pages/MASTER PAGES/cpt-master/cpt-master.component';
+// import { CPTTypeComponent } from './pages/MASTER PAGES/cpt-type/cpt-type.component';
+// import { CPTMasterComponent } from './pages/MASTER PAGES/cpt-master/cpt-master.component';
 import { SpecialityComponent } from './pages/MASTER PAGES/speciality/speciality.component';
 import { DenialTypeComponent } from './pages/MASTER PAGES/denial-type/denial-type.component';
 import { DenialCategoryComponent } from './pages/MASTER PAGES/denial-category/denial-category.component';
@@ -38,7 +38,10 @@ import { FacilityGroupNewFormComponent } from './pages/POP-UP_PAGES/facility-gro
 // import { ClinicianComponent } from './pages/MASTER PAGES/clinician/clinician.component';
 // import { InsuranceCompaniesComponent } from './pages/MASTER PAGES/insurance-companies/insurance-companies.component';
 import { BankMasterComponent } from './pages/MASTER PAGES/bank-master/bank-master.component';
-import { InsuranceComponent } from './pages/MASTER PAGES/insurance/insurance.component';
+// import { CptMasterNewFormComponent } from './pages/POP-UP_PAGES/cpt-master-new-form/cpt-master-new-form.component';
+// import { InsuranceComponent } from './pages/MASTER PAGES/insurance/insurance.component';
+// import { InsuranceNewFormComponent } from './pages/POP-UP_PAGES/insurance-new-form/insurance-new-form.component';
+// import { CptTypeNewFormComponent } from './pages/POP-UP_PAGES/cpt-type-new-form/cpt-type-new-form.component';
 // import { FacilityTypeNewFormComponent } from './pages/POP-UP_PAGES/facility-type-new-form/facility-type-new-form.component';
 @NgModule({
   declarations: [
@@ -50,15 +53,18 @@ import { InsuranceComponent } from './pages/MASTER PAGES/insurance/insurance.com
     RejectedClaimsComponent,
     BalanceAmountToBeReceivedComponent,
     ResubmissionSummaryComponent,
-    CPTTypeComponent,
-    CPTMasterComponent,
+    // CPTTypeComponent,
+    // CPTMasterComponent,
     SpecialityComponent,
     DenialTypeComponent,
     DenialCategoryComponent,
     // ClinicianComponent,
     // InsuranceCompaniesComponent,
     BankMasterComponent,
-    InsuranceComponent,
+    // CptMasterNewFormComponent,
+    // InsuranceComponent,
+    // InsuranceNewFormComponent,
+    // CptTypeNewFormComponent,
     // FacilityTypeNewFormComponent,
   
   ],
