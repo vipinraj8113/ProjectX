@@ -32,7 +32,7 @@ export class FacilityGroupListComponent implements OnInit {
   @ViewChild(FacilityGroupNewFormComponent, { static: false })
   facilityGroupComponent: FacilityGroupNewFormComponent;
 
-  isAddContactPopupOpened: any = false;
+  isAddFormPopupOpened: any = false;
   dataSource: any;
   //========Variables for Pagination ====================
   readonly allowedPageSizes: any = [5, 10, 'all'];
@@ -52,7 +52,7 @@ export class FacilityGroupListComponent implements OnInit {
   }
   //=============Showing the new Facility Form===================
   show_new_FacilityGroup_Form() {
-    this.isAddContactPopupOpened = true;
+    this.isAddFormPopupOpened = true;
   }
   //====================get Facility group dropdown ==============
   get_FacilityGroup_DropDown() {
@@ -77,7 +77,7 @@ export class FacilityGroupListComponent implements OnInit {
     const { FacilityGroupValue, DescriptionValue } =
       this.facilityGroupComponent.getNewFacilityGroupData();
     this.masterService
-      .add_FacilityGroup_Data(FacilityGroupValue, DescriptionValue)
+      .Insert_FacilityGroup_Data(FacilityGroupValue, DescriptionValue)
       .subscribe((response: any) => {
         if (response) {
           this.dataGrid.instance.refresh();

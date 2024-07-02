@@ -2,18 +2,25 @@ import { CommonModule } from '@angular/common';
 import { Component, NgModule, ViewChild } from '@angular/core';
 import { DxButtonModule, DxDataGridComponent, DxDataGridModule, DxDropDownButtonModule, DxLookupModule, DxSelectBoxModule, DxTextBoxModule } from 'devextreme-angular';
 import { FormPopupModule } from 'src/app/components';
-import { FacilityGroupNewFormModule } from '../../POP-UP_PAGES/facility-group-new-form/facility-group-new-form.component';
 import notify from 'devextreme/ui/notify';
 import { ReportService } from 'src/app/services/Report-data.service';
 import { MasterReportService } from '../master-report.service';
+import { DataService } from 'src/app/services';
+import {
+  FacilityTypeNewFormComponent,
+  FacilityTypeNewFormModule,
+} from '../../POP-UP_PAGES/facility-type-new-form/facility-type-new-form.component';
 @Component({
   selector: 'app-facility-type',
   templateUrl: './facility-type.component.html',
-  styleUrls: ['./facility-type.component.scss']
+  styleUrls: ['./facility-type.component.scss'],
+  providers: [DataService, ReportService],
 })
 export class FacilityTypeComponent {
   @ViewChild(DxDataGridComponent, { static: true })
   dataGrid: DxDataGridComponent;
+  @ViewChild(FacilityTypeNewFormComponent, { static: false })
+  facilityTypeComponent: FacilityTypeNewFormComponent;
 
   isAddContactPopupOpened: any = false;
   dataSource: any;
@@ -24,6 +31,7 @@ export class FacilityTypeComponent {
   showInfo = true;
   showNavButtons = true;
   facilityGroupDatasource: any;
+  isAddFormPopupOpened: boolean=false;
 
   constructor(
     private service: ReportService,
@@ -34,44 +42,44 @@ export class FacilityTypeComponent {
     this.get_Clinician_Data_List();
   }
 //=========================show new popup=========================
-  show_new__Form(){
-
+  show_new_Form(){
+    this.isAddFormPopupOpened = true;
   }
 
   //========================Get Datasource =======================
   get_Clinician_Data_List() {
-    this.masterService.get_Clinian_Table_Data().subscribe((response: any) => {
-      this.dataSource = response
+    this.masterService.Get_Facility_Type_Data().subscribe((response: any) => {
+      this.dataSource = response.FacilityTypes
     });
   }
 
   //====================Add data ================================
-  onClickSaveNewFacilityGroup = () => {
-    // const { FacilityGroupValue, DescriptionValue } =
-    //   this.facilityGroupComponent.getNewFacilityGroupData();
-    // this.masterService
-    //   .add_FacilityGroup_Data(FacilityGroupValue, DescriptionValue)
-    //   .subscribe((response: any) => {
-    //     if (response) {
-    //       this.dataGrid.instance.refresh();
-    //       this.get_Clinician_Data_List();
-    //       notify(
-    //         {
-    //           message: `New Denial "${FacilityGroupValue} ${DescriptionValue}" saved Successfully`,
-    //           position: { at: 'top right', my: 'top right' },
-    //         },
-    //         'success'
-    //       );
-    //     } else {
-    //       notify(
-    //         {
-    //           message: `Your Data Not Saved`,
-    //           position: { at: 'top right', my: 'top right' },
-    //         },
-    //         'error'
-    //       );
-    //     }
-    //   });
+  onClickSaveNewFacilityType = () => {
+    const { FacilityTypeValue, DescriptionValue } =
+      this.facilityTypeComponent.getNewFacilityTypeData();
+    this.masterService
+      .Insert_FacilityType_Data(FacilityTypeValue, DescriptionValue)
+      .subscribe((response: any) => {
+        if (response) {
+          this.dataGrid.instance.refresh();
+          this.get_Clinician_Data_List();
+          notify(
+            {
+              message: `New Denial "${FacilityTypeValue} ${DescriptionValue}" saved Successfully`,
+              position: { at: 'top right', my: 'top right' },
+            },
+            'success'
+          );
+        } else {
+          notify(
+            {
+              message: `Your Data Not Saved`,
+              position: { at: 'top right', my: 'top right' },
+            },
+            'error'
+          );
+        }
+      });
   };
 
   //========================Export data ==========================
@@ -85,7 +93,7 @@ export class FacilityTypeComponent {
     let SelectedRow = event.key;
     console.log('selected row data :', SelectedRow);
     this.masterService
-      .Remove_Facility_Row_Data(SelectedRow.ID)
+      .Remove_FacilityType_Row_Data(SelectedRow.ID)
       .subscribe(() => {
         try {
           notify(
@@ -118,11 +126,11 @@ export class FacilityTypeComponent {
     const combinedData = { ...oldData, ...updataDate };
     // console.log('onrowUpdated Data getting ', combinedData);
     let id = combinedData.ID;
-    let facilityGroup = combinedData.FacilityGroup;
+    let FacilityType = combinedData.FacilityType;
     let Description = combinedData.Description;
 
     this.masterService
-      .update_facilityGroup_data(id, facilityGroup, Description)
+      .update_facilityTYPE_data(id, FacilityType, Description)
       .subscribe((data: any) => {
         if (data) {
           this.dataGrid.instance.refresh();
@@ -168,7 +176,7 @@ export class FacilityTypeComponent {
     DxTextBoxModule,
     DxLookupModule,
     FormPopupModule,
-    FacilityGroupNewFormModule,
+    FacilityTypeNewFormModule,
   ],
   providers: [],
   exports: [],

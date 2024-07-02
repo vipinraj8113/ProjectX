@@ -37,6 +37,7 @@ import { DenialCategoryComponent } from './pages/MASTER PAGES/denial-category/de
 import { DenialTypeComponent } from './pages/MASTER PAGES/denial-type/denial-type.component';
 import { FacilityTypeComponent } from './pages/MASTER PAGES/facility-type/facility-type.component';
 import { ClinicianComponent } from './pages/MASTER PAGES/clinician/clinician.component';
+import { InsuranceComponent } from './pages/MASTER PAGES/insurance/insurance.component';
 const routes: Routes = [
   {
     path: '',
@@ -79,7 +80,12 @@ const routes: Routes = [
     component: SideNavOuterToolbarComponent,
     children: [
       {
-        path: 'clinicial-page',
+        path: 'insurance',
+        component: InsuranceComponent,
+        canActivate: [AuthGuardService],
+      },
+      {
+        path: 'clinicians',
         component: ClinicianComponent,
         canActivate: [AuthGuardService],
       },
@@ -89,27 +95,27 @@ const routes: Routes = [
         canActivate: [AuthGuardService],
       },
       {
-        path: 'ctp-type-page',
+        path: 'cpt-type',
         component: CPTTypeComponent,
         canActivate: [AuthGuardService],
       },
       {
-        path: 'speciality-master',
+        path: 'speciality',
         component: SpecialityComponent,
         canActivate: [AuthGuardService],
       },
       {
-        path: 'denial-list-page',
+        path: 'denials',
         component: DenialListComponent,
         canActivate: [AuthGuardService],
       },
       {
-        path: 'denial-type-page',
+        path: 'denial-list-page',
         component: DenialTypeComponent,
         canActivate: [AuthGuardService],
       },
       {
-        path: 'denial-category-page',
+        path: 'denial-category',
         component: DenialCategoryComponent,
         canActivate: [AuthGuardService],
       },
@@ -124,7 +130,7 @@ const routes: Routes = [
         canActivate: [AuthGuardService],
       },
       {
-        path: 'facility-type-page',
+        path: 'facility-type',
         component: FacilityTypeComponent,
         canActivate: [AuthGuardService],
       },

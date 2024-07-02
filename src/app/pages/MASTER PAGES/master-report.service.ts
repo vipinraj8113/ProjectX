@@ -24,7 +24,6 @@ export class MasterReportService {
     };
     return this.http.post(Url, reqBody);
   }
-
   //================================================FACILITY TYPE=================================================
   //========Fetch all Facility group data======
   Get_Facility_Type_Data() {
@@ -53,7 +52,7 @@ export class MasterReportService {
     };
     return this.http.post(url, reqBody);
   }
-  //===========Remove Facility Data=======
+  //===========Remove Facility Data=========
   Remove_FacilityType_Row_Data(id: any) {
     return this.http.post(`${BASE_URL}facilitytype/delete/${id}`, {});
   }
@@ -66,8 +65,8 @@ export class MasterReportService {
     };
     return this.http.post(Url, reqBody);
   }
-  //=============Add facility group data=======
-  add_FacilityGroup_Data(facilitygroup: any, description: any) {
+  //===========Add facility group data=====
+  Insert_FacilityGroup_Data(facilitygroup: any, description: any) {
     const url = `${BASE_URL}/facilitygroup/insert`;
     const reqBody = {
       FacilityGroup: facilitygroup,
