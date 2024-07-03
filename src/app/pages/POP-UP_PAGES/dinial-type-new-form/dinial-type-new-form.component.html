@@ -1,0 +1,22 @@
+<dx-form class="plain-styled-form">
+  <dxi-item itemType="group">
+      <dxo-col-count-by-screen [xs]="1" [sm]="1" [md]="1" [lg]="1"></dxo-col-count-by-screen>
+
+      <dxi-item>
+          <div *dxTemplate>
+              <form-textbox label="CPT Type" [(value)]="newDenialTypeData.DenialTypeValue"
+                  [isEditing]="true">
+              </form-textbox>
+          </div>
+      </dxi-item>
+      <dxi-item height="30px">
+          <div *dxTemplate>
+              <dx-text-area label="Description" [(value)]="newDenialTypeData.DescriptionValue" [height]="100"
+                  [width]="'100%'" [maxHeight]="200" [minHeight]="50" [autoResizeEnabled]="true">
+              </dx-text-area>
+          </div>
+      </dxi-item>
+
+  </dxi-item>
+</dx-form>
+

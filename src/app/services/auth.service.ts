@@ -58,6 +58,9 @@ export class AuthService {
     return this.http.get('https://api.ipify.org/?format=json');
   }
 
+  initializeProject(){
+    return this.http.get('http://103.180.120.134/projectx/api/initialize')
+  }
   //================Log In function===============================
   logIn(username: any, password: any) {
     const API_URL =` ${BaseURL}user/LOGIN`;

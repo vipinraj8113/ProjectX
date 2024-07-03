@@ -1,0 +1,54 @@
+<dx-form class="plain-styled-form">
+  <dxi-item itemType="group">
+    <dxo-col-count-by-screen
+      [xs]="1"
+      [sm]="1"
+      [md]="1"
+      [lg]="1"
+    ></dxo-col-count-by-screen>
+
+    <dxi-item>
+      <div *dxTemplate>
+        <form-textbox
+          label="Insurance ID"
+          [(value)]="newSpecialityData.SpecialityCode"
+          [isEditing]="true"
+        >
+        </form-textbox>
+      </div>
+    </dxi-item>
+
+    <dxi-item>
+      <div *dxTemplate>
+        <form-textbox
+          label="Insurance Name"
+          [(value)]="newSpecialityData.SpecialityName"
+          [isEditing]="true"
+        >
+        </form-textbox>
+      </div>
+    </dxi-item>
+
+    <dxi-item>
+      <div *dxTemplate>
+        <form-textbox
+          label="Insurance ShortName"
+          [(value)]="newSpecialityData.SpecialityShortName"
+          [isEditing]="true"
+        >
+        </form-textbox>
+      </div>
+    </dxi-item>
+
+    <dxi-item>
+      <div *dxTemplate>
+        <form-textbox
+          label="Insurance ShortName"
+          [(value)]="newSpecialityData.Description"
+          [isEditing]="true"
+        >
+        </form-textbox>
+      </div>
+    </dxi-item>
+  </dxi-item>
+</dx-form>

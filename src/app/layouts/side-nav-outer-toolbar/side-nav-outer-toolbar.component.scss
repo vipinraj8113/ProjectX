@@ -11,23 +11,35 @@
   min-height: 0;
   background-color: var(--background-color);
 }
-.tabPanelDiv{
+
+
+.tabPanelDiv {
   height: 93vh;
 }
-.tabItems{
+.tabItems {
+  width: 150px;
   height: 25px;
-  border-top-left-radius: 7px; /* Radius for the top-left corner */
-  border-top-right-radius: 7px; /* Radius for the top-right corner */
-  padding: 0px;
+  border-radius: 8px; /* Radius for the top-left corner */
+  // border-top-right-radius: 7px; /* Radius for the top-right corner */
+  padding-left: 5px;
   margin: 0px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
-.tabItems:hover{
+.tabItems:hover {
   cursor: pointer;
   background-color: rgb(49, 149, 211);
-
 }
-.tabSubItems{
-  width: auto;
+.tabSubItems {
+  // width: auto;
+  flex-grow: 1;
+}
+.close-icon {
+  margin-left: auto;
+}
+.close-icon:hover {
+  color: aliceblue;
 }
 
 // ========================================================================================================

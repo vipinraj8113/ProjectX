@@ -24,9 +24,10 @@
     (openMenu)="navigationClick()"
   >
   </side-navigation-menu>
-   <!-- Content Area -->
-   <div class="content">
-    <dx-sortable 
+  <!-- Content Area -->
+  <div class="content">
+    <dx-sortable
+      class="custom-tab"
       filter=".dx-tab"
       [data]="tabs"
       itemOrientation="horizontal"
@@ -34,7 +35,8 @@
       (onDragStart)="onTabDragStart($event)"
       (onReorder)="onTabDrop($event)"
     >
-      <dx-tab-panel class="tabPanelDiv mt-1"
+      <dx-tab-panel
+        class="tabPanelDiv mt-1"
         [dataSource]="tabs"
         itemTitleTemplate="title"
         itemTemplate="item"
@@ -44,11 +46,16 @@
         [repaintChangesOnly]="true"
         [selectedIndex]="selectedIndex"
       >
-        <div class="tabItems" height=100% *dxTemplate="let tab of 'title'" (click)="TabItemClick(tab)">
-          <span  class="tabSubItems ms-1">{{ tab.title }}</span>
+        <div
+          class="tabItems"
+          height="100%"
+          *dxTemplate="let tab of 'title'"
+          (click)="TabItemClick(tab)"
+        >
+          <span class="tabSubItems ms-2">{{ tab.title }}</span>
           <i
             *ngIf="showCloseButton()"
-            class="dx-icon dx-icon-close"
+            class="dx-icon dx-icon-close close-icon"
             (click)="closeButtonHandler(tab)"
           ></i>
         </div>
@@ -57,9 +64,7 @@
             <router-outlet></router-outlet>
           </ng-container>
         </div>
-       
       </dx-tab-panel>
-   
     </dx-sortable>
   </div>
 </dx-drawer>

@@ -31,13 +31,15 @@ import { ResubmissionSummaryComponent } from './pages/REPORT PAGES/resubmission-
 // import { FacilityTypeComponent } from './pages/MASTER PAGES/facility-type/facility-type.component';
 // import { CPTTypeComponent } from './pages/MASTER PAGES/cpt-type/cpt-type.component';
 // import { CPTMasterComponent } from './pages/MASTER PAGES/cpt-master/cpt-master.component';
-import { SpecialityComponent } from './pages/MASTER PAGES/speciality/speciality.component';
-import { DenialTypeComponent } from './pages/MASTER PAGES/denial-type/denial-type.component';
+// import { SpecialityComponent } from './pages/MASTER PAGES/speciality/speciality.component';
+// import { DenialTypeComponent } from './pages/MASTER PAGES/denial-type/denial-type.component';
 import { DenialCategoryComponent } from './pages/MASTER PAGES/denial-category/denial-category.component';
 import { FacilityGroupNewFormComponent } from './pages/POP-UP_PAGES/facility-group-new-form/facility-group-new-form.component';
 // import { ClinicianComponent } from './pages/MASTER PAGES/clinician/clinician.component';
 // import { InsuranceCompaniesComponent } from './pages/MASTER PAGES/insurance-companies/insurance-companies.component';
 import { BankMasterComponent } from './pages/MASTER PAGES/bank-master/bank-master.component';
+// import { SpecialityNewFormComponent } from './pages/POP-UP_PAGES/speciality-new-form/speciality-new-form.component';
+// import { DinialTypeNewFormComponent } from './pages/POP-UP_PAGES/dinial-type-new-form/dinial-type-new-form.component';
 // import { CptMasterNewFormComponent } from './pages/POP-UP_PAGES/cpt-master-new-form/cpt-master-new-form.component';
 // import { InsuranceComponent } from './pages/MASTER PAGES/insurance/insurance.component';
 // import { InsuranceNewFormComponent } from './pages/POP-UP_PAGES/insurance-new-form/insurance-new-form.component';
@@ -55,18 +57,20 @@ import { BankMasterComponent } from './pages/MASTER PAGES/bank-master/bank-maste
     ResubmissionSummaryComponent,
     // CPTTypeComponent,
     // CPTMasterComponent,
-    SpecialityComponent,
-    DenialTypeComponent,
+    // SpecialityComponent,
+    // DenialTypeComponent,
     DenialCategoryComponent,
     // ClinicianComponent,
     // InsuranceCompaniesComponent,
     BankMasterComponent,
+    // SpecialityNewFormComponent,
+    // DinialTypeNewFormComponent,
     // CptMasterNewFormComponent,
     // InsuranceComponent,
     // InsuranceNewFormComponent,
     // CptTypeNewFormComponent,
     // FacilityTypeNewFormComponent,
-  
+
   ],
   imports: [
     TaskListModule,

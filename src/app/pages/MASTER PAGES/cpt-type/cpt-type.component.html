@@ -1,7 +1,7 @@
 <div class="view-wrapper list-page">
     <dx-data-grid class="grid theme-dependent" noDataText="" height="600" [dataSource]="dataSource" [showBorders]="true"
         [allowColumnResizing]="true" [allowColumnReordering]="true" [rowAlternationEnabled]="true"
-        rowAlternationInterval="2" (onExporting)="onExporting($event)" (onRowRemoving)="onRowRemoving($event)"
+        rowAlternationInterval="2" rowHeight="10px" (onExporting)="onExporting($event)" (onRowRemoving)="onRowRemoving($event)"
         (onRowUpdating)="onRowUpdating($event)" height="84vh">
         <dxo-paging [pageSize]="10"></dxo-paging>
         <dxo-editing mode="form" [allowUpdating]="true" [allowDeleting]="true" [allowAdding]="true"

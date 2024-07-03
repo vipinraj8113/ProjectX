@@ -47,7 +47,9 @@ export class LoginFormComponent implements OnInit {
   async onSubmit(e: Event) {
     e.preventDefault();
     const { username, password } = this.formData;
-    console.log('log data :', username, password);
+    // console.log('log data :', username, password);
+this.authService.initializeProject().subscribe((response:any)=>{
+  if(response){
     this.authService.logIn(username, password).subscribe((response: any) => {
       if (response.flag == 1) {
         localStorage.setItem('logData', JSON.stringify(response.data));
@@ -63,6 +65,9 @@ export class LoginFormComponent implements OnInit {
         );
       }
     });
+  }
+})
+
   }
 
   onCreateAccountClick = () => {

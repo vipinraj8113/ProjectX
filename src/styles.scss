@@ -41,6 +41,17 @@ body {
   }
 }
 
+
+
+
+
+
+
+
+
+
+
+
 .responsive-paddings {
   padding: 20px;
 
@@ -132,8 +143,19 @@ body {
   position: relative;
   display: flex;
   width: 100%;
-  margin-bottom: 3px;
+  // margin-bottom: 3px;
   border: none;
+}
+.dx-tabpanel .dx-tabpanel-tab {
+  flex-basis: unset;
+  flex-grow: 0;
+  flex-shrink: 0;
+  // height: 25px;
+  // padding: 0px;
+  // padding-bottom: 10px;
+  // margin: 2px;
+  // margin-bottom: 6px;
+  margin-left: 3px;
 }
 .dx-tabpanel .dx-tabpanel-tab {
   flex-basis: unset;
@@ -141,11 +163,25 @@ body {
   flex-shrink: 0;
   height: 25px;
   padding: 0px;
-  padding-bottom: 10px;
-  margin: 2px;
-  margin-bottom: 6px;
-  margin-left: 3px;
+  margin-bottom: 15px;
 }
+.dx-tab.dx-tab-selected {
+  color: rgb(24, 219, 14);
+}
+.dx-tabpanel .dx-tabpanel-tab .dx-tab.dx-tab-selected .dx-icon {
+   color: rgb(252, 254, 255);
+}
+.dx-datagrid .dx-datagrid-content .dx-datagrid-table .dx-row > td:not(.dx-validation-pending){
+  vertical-align: middle;
+  //  height: 10px;
+  padding: 10px;
+}
+
+
+
+
+
+
 
 .dx-card.details-card {
   border: none;

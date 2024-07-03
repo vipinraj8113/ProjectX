@@ -18,6 +18,56 @@ export class MasterReportService {
 
   //==========================================INSURANCE MASTER==========================================================
   //====Insurance List===========
+  get_Speciality_List() {
+    const Url = `${BASE_URL}/speciality/list`;
+    const reqBody = {
+      list: [],
+    };
+    return this.http.post(Url, reqBody);
+  }
+  //=====Add Insurance data========
+  Insert_Speciality_Data(
+    SpecialityCode: any,
+    SpecialityName: any,
+    SpecialityShortName: any,
+    Description: any
+  ) {
+    const url = `${BASE_URL}/speciality/insert`;
+    const reqBody = {
+      SpecialityCode: SpecialityCode,
+      SpecialityName: SpecialityName,
+      SpecialityShortName: SpecialityShortName,
+      Description: Description,
+    };
+    return this.http.post(url, reqBody);
+  }
+
+  //=====Update Insurance data======
+  update_Speciality_data(
+    id: any,
+    SpecialityCode: any,
+    SpecialityName: any,
+    SpecialityShortName: any,
+    Description: any
+  ) {
+    const url = `${BASE_URL}speciality/update`;
+    const reqBody = {
+      ID: id,
+      SpecialityCode: SpecialityCode,
+      SpecialityName: SpecialityName,
+      SpecialityShortName: SpecialityShortName,
+      Description: Description,
+    };
+    return this.http.post(url, reqBody);
+  }
+
+  //=====Remove Insurance Data=====
+  Remove_Speciality_Row_Data(id: any) {
+    return this.http.post(`${BASE_URL}speciality/delete/${id}`, {});
+  }
+
+  //==========================================INSURANCE MASTER==========================================================
+  //====Insurance List===========
   get_Insurance_List() {
     const Url = `${BASE_URL}/insurancecompany/list`;
     const reqBody = {
@@ -221,6 +271,41 @@ export class MasterReportService {
   //=====Remove Cpt type Data==========
   Remove_CPTType_Row_Data(id: any) {
     return this.http.post(`${BASE_URL}CPTtype/delete/${id}`, {});
+  }
+
+  //==========================================Denial TYPE MASTER==========================================================
+  //======Denial type List===========
+  get_DenialType_List() {
+    const Url = `${BASE_URL}/denialtype/list`;
+    const reqBody = {
+      list: [],
+    };
+    return this.http.post(Url, reqBody);
+  }
+  //======Add Denial type data========
+  Insert_DenialType_Data(DenialType: any, description: any) {
+    const url = `${BASE_URL}/denialtype/insert`;
+    const reqBody = {
+      DenialType: DenialType,
+      Description: description,
+    };
+    return this.http.post(url, reqBody);
+  }
+
+  //=====Update Denial type data======
+  update_DenialType_data(id: any, DenialType: any, Description: any) {
+    const url = `${BASE_URL}/denialtype/update`;
+    const reqBody = {
+      ID: id,
+      DenialType: DenialType,
+      Description: Description,
+    };
+    return this.http.post(url, reqBody);
+  }
+
+  //=====Remove Denial type Data==========
+  Remove_DenialType_Row_Data(id: any) {
+    return this.http.post(`${BASE_URL}denialtype/delete/${id}`, {});
   }
 
   //========================================================CLINICIAN=========================================================
