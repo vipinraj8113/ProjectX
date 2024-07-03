@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, NgModule, ViewChild } from '@angular/core';
+import { Component, NgModule, OnInit, ViewChild } from '@angular/core';
 import { DxButtonModule, DxDataGridComponent, DxDataGridModule, DxDropDownButtonModule, DxLookupModule, DxSelectBoxModule, DxTextBoxModule } from 'devextreme-angular';
 import { FormPopupModule } from 'src/app/components';
 import { CptTypeNewFormModule } from '../../POP-UP_PAGES/cpt-type-new-form/cpt-type-new-form.component';
@@ -13,7 +13,7 @@ import { CptTypeNewFormComponent,} from '../../POP-UP_PAGES/cpt-type-new-form/cp
   styleUrls: ['./cpt-type.component.scss'],
   providers: [ ReportService],
 })
-export class CPTTypeComponent {
+export class CPTTypeComponent implements OnInit {
   @ViewChild(DxDataGridComponent, { static: true })
   dataGrid: DxDataGridComponent;
   @ViewChild(CptTypeNewFormComponent, { static: false })

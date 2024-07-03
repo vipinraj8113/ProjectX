@@ -1,6 +1,14 @@
 import { CommonModule } from '@angular/common';
-import { Component, NgModule, ViewChild } from '@angular/core';
-import { DxDataGridModule, DxButtonModule, DxDropDownButtonModule, DxSelectBoxModule, DxTextBoxModule, DxLookupModule, DxDataGridComponent } from 'devextreme-angular';
+import { Component, NgModule, OnInit, ViewChild } from '@angular/core';
+import {
+  DxDataGridModule,
+  DxButtonModule,
+  DxDropDownButtonModule,
+  DxSelectBoxModule,
+  DxTextBoxModule,
+  DxLookupModule,
+  DxDataGridComponent,
+} from 'devextreme-angular';
 import { FormPopupModule } from 'src/app/components';
 import { InsuranceNewFormComponent } from '../../POP-UP_PAGES/insurance-new-form/insurance-new-form.component';
 import notify from 'devextreme/ui/notify';
@@ -12,10 +20,9 @@ import { InsuranceNewFormModule } from '../../POP-UP_PAGES/insurance-new-form/in
   selector: 'app-insurance',
   templateUrl: './insurance.component.html',
   styleUrls: ['./insurance.component.scss'],
-  providers: [ ReportService],
-
+  providers: [ReportService],
 })
-export class InsuranceComponent {
+export class InsuranceComponent implements OnInit {
   @ViewChild(DxDataGridComponent, { static: true })
   dataGrid: DxDataGridComponent;
   @ViewChild(InsuranceNewFormComponent, { static: false })
@@ -29,7 +36,7 @@ export class InsuranceComponent {
   showInfo = true;
   showNavButtons = true;
   facilityGroupDatasource: any;
-  isAddFormPopupOpened: boolean=false;
+  isAddFormPopupOpened: boolean = false;
 
   constructor(
     private service: ReportService,
@@ -39,24 +46,24 @@ export class InsuranceComponent {
   ngOnInit(): void {
     this.get_Insurance_Data_List();
   }
-//=========================show new popup=========================
-  show_new_Form(){
+  //=========================show new popup=========================
+  show_new_Form() {
     this.isAddFormPopupOpened = true;
   }
 
   //========================Get Datasource =======================
   get_Insurance_Data_List() {
     this.masterService.get_Insurance_List().subscribe((response: any) => {
-      this.dataSource = response
+      this.dataSource = response;
     });
   }
 
   //====================Add data ================================
   onClickSaveNewData = () => {
-    const { InsuranceID, InsuranceName,InsuranceShortName } =
+    const { InsuranceID, InsuranceName, InsuranceShortName } =
       this.InsuranceNewForm.getNewInsuranceData();
     this.masterService
-      .Insert_Insurance_Data(InsuranceID, InsuranceName,InsuranceShortName)
+      .Insert_Insurance_Data(InsuranceID, InsuranceName, InsuranceShortName)
       .subscribe((response: any) => {
         if (response) {
           this.dataGrid.instance.refresh();
@@ -114,40 +121,10 @@ export class InsuranceComponent {
         }
         event.component.refresh();
         this.dataGrid.instance.refresh();
-        this.get_Insurance_Data_List();;
+        this.get_Insurance_Data_List();
       });
   }
-  // onRowRemoving(event: any) {
-  //   event.cancel = true;
-  //   let SelectedRow = event.key;
-  //   console.log('selected row data :', SelectedRow);
-  //   this.masterService
-  //     .Remove_Insurance_Row_Data(SelectedRow.InsuranceID)
-  //     .subscribe(() => {
-  //       try {
-  //         notify(
-  //           {
-  //             message: 'Delete operation successful',
-  //             position: { at: 'top right', my: 'top right' },
-  //             displayTime: 500,
-  //           },
-  //           'success'
-  //         );
-  //       } catch (error) {
-  //         notify(
-  //           {
-  //             message: 'Delete operation failed',
-  //             position: { at: 'top right', my: 'top right' },
-  //             displayTime: 500,
-  //           },
-  //           'error'
-  //         );
-  //       }
-  //       event.component.refresh();
-  //       this.dataGrid.instance.refresh();
-  //       this.get_Insurance_Data_List();
-  //     });
-  // }
+
   //===================RTow Data Update==========================
   onRowUpdating(event: any) {
     const updataDate = event.newData;
@@ -156,7 +133,7 @@ export class InsuranceComponent {
     // console.log('onrowUpdated Data getting ', combinedData);
     let Insuranceid = combinedData.InsuranceID;
     let InsuranceName = combinedData.InsuranceName;
-    let InsuranceShortName= combinedData.InsuranceShortName
+    let InsuranceShortName = combinedData.InsuranceShortName;
 
     this.masterService
       .update_Insurance_data(Insuranceid, InsuranceName, InsuranceShortName)
@@ -193,7 +170,6 @@ export class InsuranceComponent {
   refresh = () => {
     this.dataGrid.instance.refresh();
   };
-
 }
 
 @NgModule({
@@ -207,8 +183,7 @@ export class InsuranceComponent {
     DxTextBoxModule,
     DxLookupModule,
     FormPopupModule,
-    InsuranceNewFormModule
-    
+    InsuranceNewFormModule,
   ],
   providers: [],
   exports: [],

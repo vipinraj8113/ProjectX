@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, NgModule, ViewChild } from '@angular/core';
+import { Component, NgModule, OnInit, ViewChild } from '@angular/core';
 import { DxButtonModule, DxDataGridComponent, DxDataGridModule, DxDropDownButtonModule, DxLookupModule, DxSelectBoxModule, DxTextBoxModule } from 'devextreme-angular';
 import { FormPopupModule } from 'src/app/components';
 import notify from 'devextreme/ui/notify';
@@ -16,7 +16,7 @@ import {
   styleUrls: ['./facility-type.component.scss'],
   providers: [DataService, ReportService],
 })
-export class FacilityTypeComponent {
+export class FacilityTypeComponent implements OnInit {
   @ViewChild(DxDataGridComponent, { static: true })
   dataGrid: DxDataGridComponent;
   @ViewChild(FacilityTypeNewFormComponent, { static: false })

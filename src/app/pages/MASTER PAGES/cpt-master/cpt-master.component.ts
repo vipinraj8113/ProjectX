@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, NgModule, ViewChild } from '@angular/core';
+import { Component, NgModule, OnInit, ViewChild } from '@angular/core';
 import { DxDataGridModule, DxButtonModule, DxDropDownButtonModule, DxSelectBoxModule, DxTextBoxModule, DxLookupModule, DxDataGridComponent } from 'devextreme-angular';
 import { FormPopupModule } from 'src/app/components';
 import { CptMasterNewFormComponent } from '../../POP-UP_PAGES/cpt-master-new-form/cpt-master-new-form.component';
@@ -14,7 +14,7 @@ import { MasterReportService } from '../master-report.service';
   styleUrls: ['./cpt-master.component.scss'],
   providers: [ ReportService],
 })
-export class CPTMasterComponent {
+export class CPTMasterComponent implements OnInit {
   @ViewChild(DxDataGridComponent, { static: true })
   dataGrid: DxDataGridComponent;
   @ViewChild(CptMasterNewFormComponent, { static: false })
@@ -157,8 +157,8 @@ export class CPTMasterComponent {
         this.get_CptTMaster_Data_List();
       });
   }
-  
-  
+
+
   //========================Export data ==========================
   onExporting(event: any) {
     this.service.exportDataGrid(event);
