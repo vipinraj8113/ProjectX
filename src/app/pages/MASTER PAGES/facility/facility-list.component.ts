@@ -12,6 +12,8 @@ import {
 import { DataService } from 'src/app/services';
 import { ReportService } from 'src/app/services/Report-data.service';
 import { MasterReportService } from '../master-report.service';
+import notify from 'devextreme/ui/notify';
+
 @Component({
   selector: 'app-facility-list',
   templateUrl: './facility-list.component.html',
@@ -40,24 +42,33 @@ export class FacilityListComponent implements OnInit {
     this.get_Facility_List();
   }
   get_All_DropDown_Data() {
-    this.masterService.Get_GropDown("FACILITYTYPE").subscribe((response: any) => {
-      if(response){
-        this.FacilityType_DataSource = response;
-      }  
+    this.masterService
+      .Get_GropDown('FACILITYTYPE')
+      .subscribe((response: any) => {
+        if (response) {
+          this.FacilityType_DataSource = response;
+        }
       });
 
-    this.masterService.Get_GropDown("FACILITYGROUP").subscribe((response: any) => {
-      if(response){
-        this.Facilitygroup_DataSource = response;
-      }
+    this.masterService.Get_GropDown('FACILITYGROUP')
+      .subscribe((response: any) => {
+        if (response) {
+          this.Facilitygroup_DataSource = response;
+        }
       });
 
-    this.masterService.Get_GropDown("POSTOFFICE").subscribe((response: any) => {
-      if(response){
+    this.masterService.Get_GropDown('POSTOFFICE').subscribe((response: any) => {
+      if (response) {
         this.postOffice_DataSource = response;
-      }  
+      }
     });
   }
+
+  //========================Export data ==========================
+  onExporting(event: any) {
+    this.service.exportDataGrid(event);
+  }
+
   //====================Get Facility List Datasource==============
   get_Facility_List() {
     this.masterService.Get_Facility_List_Data().subscribe((response: any) => {
@@ -66,14 +77,93 @@ export class FacilityListComponent implements OnInit {
       }
     });
   }
-  //========================Export data ==========================
-  onExporting(event: any) {
-    this.service.exportDataGrid(event);
+
+  //===================Row Data Update==========================
+  onRowUpdating(event: any) {
+    const updataDate = event.newData;
+    const oldData = event.oldData;
+    const combinedData = { ...oldData, ...updataDate };
+    let id = combinedData.ID;
+    let FacilityLicense = combinedData.FacilityLicense;
+    let FacilityName = combinedData.FacilityName;
+    let Region = combinedData.Region;
+    let FacilityTypeID = combinedData.FacilityTypeID;
+    let FacilityGroupID = combinedData.FacilityGroupID;
+    let FacilityAddress = combinedData.FacilityAddress;
+    let PostOfficeID = combinedData.PostOfficeID;
+
+    this.masterService
+      .update_facility_data(
+        id,
+        FacilityLicense,
+        FacilityName,
+        Region,
+        FacilityTypeID,
+        FacilityGroupID,
+        FacilityAddress,
+        PostOfficeID
+      )
+      .subscribe((data: any) => {
+        if (data) {
+          this.dataGrid.instance.refresh();
+          this.get_Facility_List();
+          notify(
+            {
+              message: `New Facility Group updated Successfully`,
+              position: { at: 'top right', my: 'top right' },
+              displayTime: 500,
+            },
+            'success'
+          );
+        } else {
+          notify(
+            {
+              message: `Your Data Not Saved`,
+              position: { at: 'top right', my: 'top right' },
+              displayTime: 500,
+            },
+            'error'
+          );
+        }
+        // event.component.refresh();
+        event.component.cancelEditData(); // Close the popup
+        this.dataGrid.instance.refresh();
+      });
+
+    event.cancel = true; // Prevent the default update operation
   }
+
   //====================Row Data Deleting=========================
-  onRowRemoving(event: any) {}
-  //===================RTow Data Update==========================
-  onRowUpdating(event: any) {}
+  onRowRemoving(event: any) {
+    event.cancel = true;
+    let SelectedRow = event.key;
+    this.masterService
+      .Remove_Facility_Row_Data(SelectedRow.ID)
+      .subscribe(() => {
+        try {
+          notify(
+            {
+              message: 'Delete operation successful',
+              position: { at: 'top right', my: 'top right' },
+              displayTime: 500,
+            },
+            'success'
+          );
+        } catch (error) {
+          notify(
+            {
+              message: 'Delete operation failed',
+              position: { at: 'top right', my: 'top right' },
+              displayTime: 500,
+            },
+            'error'
+          );
+        }
+        event.component.refresh();
+        this.dataGrid.instance.refresh();
+        this.get_Facility_List();
+      });
+  }
   //=================== Page refreshing==========================
   refresh = () => {
     this.dataGrid.instance.refresh();

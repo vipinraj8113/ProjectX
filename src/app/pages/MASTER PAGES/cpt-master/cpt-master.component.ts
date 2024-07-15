@@ -1,6 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component, NgModule, OnInit, ViewChild } from '@angular/core';
-import { DxDataGridModule, DxButtonModule, DxDropDownButtonModule, DxSelectBoxModule, DxTextBoxModule, DxLookupModule, DxDataGridComponent } from 'devextreme-angular';
+import {
+  DxDataGridModule,
+  DxButtonModule,
+  DxDropDownButtonModule,
+  DxSelectBoxModule,
+  DxTextBoxModule,
+  DxLookupModule,
+  DxDataGridComponent,
+} from 'devextreme-angular';
 import { FormPopupModule } from 'src/app/components';
 import { CptMasterNewFormComponent } from '../../POP-UP_PAGES/cpt-master-new-form/cpt-master-new-form.component';
 import { CptMasterNewFormModule } from '../../POP-UP_PAGES/cpt-master-new-form/cpt-master-new-form.component';
@@ -12,7 +20,7 @@ import { MasterReportService } from '../master-report.service';
   selector: 'app-cpt-master',
   templateUrl: './cpt-master.component.html',
   styleUrls: ['./cpt-master.component.scss'],
-  providers: [ ReportService],
+  providers: [ReportService],
 })
 export class CPTMasterComponent implements OnInit {
   @ViewChild(DxDataGridComponent, { static: true })
@@ -28,7 +36,7 @@ export class CPTMasterComponent implements OnInit {
   showInfo = true;
   showNavButtons = true;
   facilityGroupDatasource: any;
-  isAddFormPopupOpened: boolean=false;
+  isAddFormPopupOpened: boolean = false;
 
   constructor(
     private service: ReportService,
@@ -38,24 +46,30 @@ export class CPTMasterComponent implements OnInit {
   ngOnInit(): void {
     this.get_CptTMaster_Data_List();
   }
-//=========================show new popup=========================
-  show_new_Form(){
+  //=========================show new popup=========================
+  show_new_Form() {
     this.isAddFormPopupOpened = true;
   }
 
   //========================Get Datasource =======================
   get_CptTMaster_Data_List() {
     this.masterService.get_CptMaster_List().subscribe((response: any) => {
-      this.dataSource = response.CptMaster
+      this.dataSource = response.CptMaster;
     });
   }
 
   //====================Add data ================================
   onClickSaveNewCptType = () => {
-    const { CPTTypeID, CPTCode,CPTShortName,CPTName,Description } =
+    const { CPTTypeID, CPTCode, CPTShortName, CPTName, Description } =
       this.CptNewFormComponent.getNewCptMasterData();
     this.masterService
-      .Insert_CptMaster_Data(CPTTypeID, CPTCode,CPTShortName,CPTName,Description)
+      .Insert_CptMaster_Data(
+        CPTTypeID,
+        CPTCode,
+        CPTShortName,
+        CPTName,
+        Description
+      )
       .subscribe((response: any) => {
         if (response) {
           this.dataGrid.instance.refresh();
@@ -93,7 +107,14 @@ export class CPTMasterComponent implements OnInit {
     let Description = combinedData.Description;
 
     this.masterService
-      .update_CptMaster_data(id, CPTTypeID,CPTCode,CPTShortName,CPTName, Description)
+      .update_CptMaster_data(
+        id,
+        CPTTypeID,
+        CPTCode,
+        CPTShortName,
+        CPTName,
+        Description
+      )
       .subscribe((data: any) => {
         if (data) {
           this.dataGrid.instance.refresh();
@@ -123,7 +144,6 @@ export class CPTMasterComponent implements OnInit {
 
     event.cancel = true; // Prevent the default update operation
   }
-
 
   //====================Row Data Deleting========================
   onRowRemoving(event: any) {
@@ -158,7 +178,6 @@ export class CPTMasterComponent implements OnInit {
       });
   }
 
-
   //========================Export data ==========================
   onExporting(event: any) {
     this.service.exportDataGrid(event);
@@ -168,9 +187,6 @@ export class CPTMasterComponent implements OnInit {
   refresh = () => {
     this.dataGrid.instance.refresh();
   };
-
-
-
 }
 @NgModule({
   imports: [

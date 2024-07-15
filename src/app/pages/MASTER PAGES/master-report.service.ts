@@ -119,6 +119,28 @@ export class MasterReportService {
     };
     return this.http.post(Url, reqBody);
   }
+
+  //=====Update Facility data====
+  update_facility_data(id: any, FacilityLicense: any, FacilityName: any,Region:any,FacilityTypeID:any,FacilityGroupID:any,FacilityAddress:any,PostOfficeID:any) {
+    const url = `${BASE_URL}/facility/update`;
+    const reqBody = {
+      ID: id,
+      FacilityLicense: FacilityLicense,
+      FacilityName: FacilityName,
+      Region:Region,
+      FacilityTypeID:FacilityTypeID,
+      FacilityGroupID:FacilityGroupID,
+      FacilityAddress:FacilityAddress,
+      PostOfficeID:PostOfficeID
+    };
+    return this.http.post(url, reqBody);
+  }
+
+   //=====Remove Facility Data=====
+   Remove_Facility_Row_Data(id: any) {
+    return this.http.post(`${BASE_URL}speciality/delete/${id}`, {});
+  }
+
   //================================================FACILITY TYPE=================================================
   //=====Fetch all Facility Type data======
   Get_Facility_Type_Data() {
@@ -180,11 +202,11 @@ export class MasterReportService {
     return this.http.post(url, reqBody);
   }
   //===Remove Facility Data==========
-  Remove_Facility_Row_Data(id: any) {
+  Remove_Facility_Group_Data(id: any) {
     return this.http.post(`${BASE_URL}facilitygroup/delete/${id}`, {});
   }
 
-  //==========================================CPY MASTER==========================================================
+  //==========================================CPT MASTER==========================================================
   //======Cpt Master List===========
   get_CptMaster_List() {
     const Url = `${BASE_URL}/cptmaster/list`;

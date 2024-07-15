@@ -37,6 +37,13 @@ export class DenialNewFormComponent {
 
   getNewDenialData = () => ({ ...this.newDenial });
 
+
+  reset_NewDenialFormData() {
+    this.newDenial.DenialCode = '';
+    this.newDenial.Description = '';
+    this.newDenial.DenialTypeID = '';
+    this.newDenial.DenialCategoryID = '';
+  }
   //=============Get Denial Type Drop dwn Data==============================
   getDenial_Type_DropDown() {
     let dropdownType = 'DENIALTYPE';

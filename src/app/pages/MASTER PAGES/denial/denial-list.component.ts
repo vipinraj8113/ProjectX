@@ -64,7 +64,7 @@ export class DenialListComponent {
     load: () =>
       new Promise((resolve, reject) => {
         this.service.getDenialsData().subscribe({
-          next: (data: any) => resolve(data),
+          next: (data: any) => resolve(data.DenialMaster),
           error: ({ message }) => reject(message),
         });
       }),
@@ -110,6 +110,7 @@ export class DenialListComponent {
             },
             'success'
           );
+          this.denialComponent.reset_NewDenialFormData()
         } else {
           notify(
             {
