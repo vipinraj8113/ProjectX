@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, NgModule, Input } from '@angular/core';
+import { DxLoadIndicatorModule } from 'devextreme-angular/ui/load-indicator';
 
 @Component({
   selector: 'app-card-auth',
@@ -17,6 +18,7 @@ export class CardAuthComponent {
 @NgModule({
   imports: [
     CommonModule,
+    DxLoadIndicatorModule
   ],
   declarations: [CardAuthComponent],
   exports: [CardAuthComponent],

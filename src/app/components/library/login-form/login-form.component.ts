@@ -8,6 +8,7 @@ import { DxLoadIndicatorModule } from 'devextreme-angular/ui/load-indicator';
 import { DxButtonModule, DxButtonTypes } from 'devextreme-angular/ui/button';
 import notify from 'devextreme/ui/notify';
 import { AuthService, IResponse, ThemeService } from 'src/app/services';
+import { SharedServiceService } from 'src/app/services/shared-service.service';
 
 @Component({
   selector: 'app-login-form',
@@ -31,7 +32,8 @@ export class LoginFormComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private themeService: ThemeService
+    private themeService: ThemeService,
+    private sharedService: SharedServiceService
   ) {
     this.themeService.isDark.subscribe((value: boolean) => {
       this.btnStylingMode = value ? 'outlined' : 'contained';
@@ -47,27 +49,32 @@ export class LoginFormComponent implements OnInit {
   async onSubmit(e: Event) {
     e.preventDefault();
     const { username, password } = this.formData;
-    // console.log('log data :', username, password);
-this.authService.initializeProject().subscribe((response:any)=>{
-  if(response){
-    this.authService.logIn(username, password).subscribe((response: any) => {
-      if (response.flag == 1) {
-        localStorage.setItem('logData', JSON.stringify(response.data));
-        localStorage.setItem('sidemenuItems', JSON.stringify(response.menus));
-        this.router.navigateByUrl('/analytics-dashboard');
-      } else {
-        notify(
-          {
-            message: `invalid username or password...!!!`,
-            position: { at: 'top right', my: 'top right' },
-          },
-          'error'
-        );
+    this.sharedService.triggerLoadComponent(true);
+    this.authService.initializeProject().subscribe((response: any) => {
+      if (response) {
+        this.sharedService.triggerLoadComponent(false);
+        this.authService
+          .logIn(username, password)
+          .subscribe((response: any) => {
+            if (response.flag == 1) {
+              localStorage.setItem('logData', JSON.stringify(response.data));
+              localStorage.setItem(
+                'sidemenuItems',
+                JSON.stringify(response.menus)
+              );
+              this.router.navigateByUrl('/analytics-dashboard');
+            } else {
+              notify(
+                {
+                  message: `invalid username or password...!!!`,
+                  position: { at: 'top right', my: 'top right' },
+                },
+                'error'
+              );
+            }
+          });
       }
     });
-  }
-})
-
   }
 
   onCreateAccountClick = () => {
@@ -75,7 +82,7 @@ this.authService.initializeProject().subscribe((response:any)=>{
   };
 
   async ngOnInit(): Promise<void> {
-    console.log()
+    console.log();
     // this.defaultAuthData = await this.authService.getUser();
   }
 }
