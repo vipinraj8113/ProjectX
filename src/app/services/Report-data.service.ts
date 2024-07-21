@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BaseURL, InitData_URL } from '../services/constant-url.service';
+import { BaseURL } from '../services/constant-url.service';
 import { exportDataGrid as exportDataGridToPdf } from 'devextreme/pdf_exporter';
 import { exportDataGrid as exportDataGridToXLSX } from 'devextreme/excel_exporter';
 import { jsPDF } from 'jspdf';
@@ -9,7 +9,7 @@ import { saveAs } from 'file-saver-es';
 // const BASE_URL = 'http://localhost/projectx/api/';
 // const baseURL2 = 'http://localhost/crsdashboard/api/initdata';
 const BASE_URL = BaseURL;
-const baseURL2 = InitData_URL;
+// const baseURL2 = InitData_URL;
 
 @Injectable()
 export class ReportService {
@@ -58,7 +58,7 @@ export class ReportService {
 
   //==================Fetch DropDown Data ==============================
   get_Init_Data() {
-    const url = `${baseURL2}/initdata`;
+    const url = `${BASE_URL}/reports/parametervalues`;
     const reqBody = {};
     return this.http.post(url, reqBody);
   }

@@ -269,10 +269,10 @@ export class ClaimSummaryComponent implements AfterViewInit {
   fetch_Dropdown_InitData() {
     this.service.get_Init_Data().subscribe((response: any) => {
       this.SearchOn_DataSource = response.SearchOn;
-      this.Facility_DataSource = response.Facility.filter(
+      this.Facility_DataSource = response.facility.filter(
         (item) => item.Name !== 'All'
       );
-      this.EncounterType_DataSource = response.EncountrType;
+      this.EncounterType_DataSource = response.EncounterType;
     });
   }
 
