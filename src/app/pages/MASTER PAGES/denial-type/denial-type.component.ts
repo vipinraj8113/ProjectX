@@ -58,7 +58,7 @@ export class DenialTypeComponent implements OnInit{
       .subscribe((response: any) => {
         if (response) {
           this.dataGrid.instance.refresh();
-          this.DenialTypeNewForm.resetFacilityTypeData()
+          this.DenialTypeNewForm.resetDenialTypeData()
           this.get_DenialType_Data_List();
           notify(
             {

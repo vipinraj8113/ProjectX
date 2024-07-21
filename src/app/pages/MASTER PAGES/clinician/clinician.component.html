@@ -1,59 +1,105 @@
 <div class="view-wrapper list-page">
-    <dx-data-grid class="grid theme-dependent" noDataText="" height="600" [dataSource]="dataSource" [showBorders]="true"
-        [allowColumnResizing]="true" [allowColumnReordering]="true" [rowAlternationEnabled]="true"
-        rowAlternationInterval="2" (onExporting)="onExporting($event)" (onRowRemoving)="onRowRemoving($event)"
-        (onRowUpdating)="onRowUpdating($event)" height="84vh">
-        <dxo-paging [pageSize]="10"></dxo-paging>
-        <dxo-editing mode="form" [allowUpdating]="true" [allowDeleting]="true" [allowAdding]="true"
-            [popup]="{ width: '40%', height: '60vh' }">
-        </dxo-editing>
-        <dxo-pager [visible]="true" [allowedPageSizes]="allowedPageSizes" [displayMode]="displayMode"
-            [showPageSizeSelector]="showPageSizeSelector" [showInfo]="showInfo"
-            [showNavigationButtons]="showNavButtons">
-        </dxo-pager>
-        <dxo-load-panel [showPane]="false"></dxo-load-panel>
-        <dxo-scrolling mode="virtual"></dxo-scrolling>
-        <dxo-sorting mode="multiple"></dxo-sorting>
-        <dxo-header-filter [visible]="true"></dxo-header-filter>
-        <!-- <dxo-column-chooser [enabled]="true" [height]="400"></dxo-column-chooser> -->
-        <dxo-search-panel [visible]="true" placeholder=" Search"></dxo-search-panel>
-        <dxo-export [enabled]="true" [allowExportSelectedData]="true" [formats]="['xlsx', 'pdf']">
-        </dxo-export>
-        <dxo-toolbar>
-            <dxi-item location="before">
-                <div class="grid-header">Clinician</div>
-            </dxi-item>
-            <dxi-item location="after" locateInMenu="auto">
-                <dx-button text="Add " icon="plus" type="default" stylingMode="contained"
-                    (onClick)="show_new__Form()"></dx-button>
-            </dxi-item>
-            <dxi-item location="after" locateInMenu="auto" showText="inMenu" widget="dxButton" [options]="{
-            text: 'Refresh',
-            icon: 'refresh',
-            onClick: refresh,
-            stylingMode: 'text'
-          }"></dxi-item>
-            <dxi-item location="after" locateInMenu="auto">
-                <div class="separator"></div>
-            </dxi-item>
-            <dxi-item name="exportButton"></dxi-item>
-            <dxi-item location="after" locateInMenu="auto">
-                <div class="separator"></div>
-            </dxi-item>
-            <!-- <dxi-item name="columnChooserButton" locateInMenu="auto"></dxi-item> -->
-            <dxi-item name="searchPanel" locateInMenu="auto"></dxi-item>
-        </dxo-toolbar>
+  <dx-data-grid
+    class="grid theme-dependent"
+    noDataText=""
+    height="600"
+    [dataSource]="dataSource"
+    [showBorders]="true"
+    [allowColumnResizing]="true"
+    [allowColumnReordering]="true"
+    [rowAlternationEnabled]="true"
+    rowAlternationInterval="2"
+    (onExporting)="onExporting($event)"
+    (onRowRemoving)="onRowRemoving($event)"
+    (onRowUpdating)="onRowUpdating($event)"
+    height="84vh"
+  >
+    <dxo-paging [pageSize]="10"></dxo-paging>
+    <dxo-editing
+      mode="form"
+      [allowUpdating]="true"
+      [allowDeleting]="true"
+      [allowAdding]="true"
+      [popup]="{ width: '40%', height: '60vh' }"
+    >
+    </dxo-editing>
+    <dxo-pager
+      [visible]="true"
+      [allowedPageSizes]="allowedPageSizes"
+      [displayMode]="displayMode"
+      [showPageSizeSelector]="showPageSizeSelector"
+      [showInfo]="showInfo"
+      [showNavigationButtons]="showNavButtons"
+    >
+    </dxo-pager>
+    <dxo-load-panel [showPane]="false"></dxo-load-panel>
+    <dxo-scrolling mode="virtual"></dxo-scrolling>
+    <dxo-sorting mode="multiple"></dxo-sorting>
+    <dxo-header-filter [visible]="true"></dxo-header-filter>
+    <dxo-filter-row [visible]="true"></dxo-filter-row>
 
-        <dxo-selection mode="multiple"></dxo-selection>
-        <dxo-header-filter [visible]="true"></dxo-header-filter>
+    <!-- <dxo-column-chooser [enabled]="true" [height]="400"></dxo-column-chooser> -->
+    <dxo-search-panel [visible]="true" placeholder=" Search"></dxo-search-panel>
+    <dxo-export
+      [enabled]="true"
+      [allowExportSelectedData]="true"
+      [formats]="['xlsx', 'pdf']"
+    >
+    </dxo-export>
+    <dxo-toolbar>
+      <dxi-item location="before">
+        <div class="grid-header">Clinician</div>
+      </dxi-item>
+      <dxi-item location="after" locateInMenu="auto">
+        <dx-button
+          text="Add "
+          icon="plus"
+          type="default"
+          stylingMode="contained"
+          (onClick)="show_new__Form()"
+        ></dx-button>
+      </dxi-item>
+      <dxi-item
+        location="after"
+        locateInMenu="auto"
+        showText="inMenu"
+        widget="dxButton"
+        [options]="{
+          text: 'Refresh',
+          icon: 'refresh',
+          onClick: refresh,
+          stylingMode: 'text'
+        }"
+      ></dxi-item>
+      <dxi-item location="after" locateInMenu="auto">
+        <div class="separator"></div>
+      </dxi-item>
+      <dxi-item name="exportButton"></dxi-item>
+      <dxi-item location="after" locateInMenu="auto">
+        <div class="separator"></div>
+      </dxi-item>
+      <!-- <dxi-item name="columnChooserButton" locateInMenu="auto"></dxi-item> -->
+      <dxi-item name="searchPanel" locateInMenu="auto"></dxi-item>
+    </dxo-toolbar>
 
-        <dxi-column dataField="ClinicianLicense" caption="ClinicianLicense "></dxi-column>
-        <dxi-column dataField="ClinicianName" Caption="ClinicianName"></dxi-column>
-        <dxi-column dataField="ClinicianShortName" Caption="ClinicianShortName"></dxi-column>
-        <dxi-column dataField="SpecialityCode" Caption="SpecialityCode"></dxi-column>
+    <dxo-selection mode="multiple"></dxo-selection>
+    <dxo-header-filter [visible]="true"></dxo-header-filter>
 
-    </dx-data-grid>
-    <!-- <form-popup
+    <dxi-column
+      dataField="ClinicianLicense"
+      caption="ClinicianLicense "
+    ></dxi-column>
+    <dxi-column dataField="ClinicianName" Caption="ClinicianName"></dxi-column>
+    <dxi-column
+      dataField="ClinicianShortName"
+      Caption="ClinicianShortName"
+    ></dxi-column>
+    <dxi-column
+      dataField="SpecialityCode"
+      Caption="SpecialityCode"
+    ></dxi-column>
+  </dx-data-grid>
+  <!-- <form-popup
       class="formPopupClass"
       [(visible)]="isAddContactPopupOpened"
       (save)="onClickSaveNewFacilityGroup()"

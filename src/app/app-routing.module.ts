@@ -38,6 +38,7 @@ import { DenialTypeComponent } from './pages/MASTER PAGES/denial-type/denial-typ
 import { FacilityTypeComponent } from './pages/MASTER PAGES/facility-type/facility-type.component';
 import { ClinicianComponent } from './pages/MASTER PAGES/clinician/clinician.component';
 import { InsuranceComponent } from './pages/MASTER PAGES/insurance/insurance.component';
+import { PostOfficeCredentialsComponent } from './pages/SYSTEM PAGES/post-office-credentials/post-office-credentials.component';
 const routes: Routes = [
   {
     path: '',
@@ -79,6 +80,11 @@ const routes: Routes = [
     path: '',
     component: SideNavOuterToolbarComponent,
     children: [
+      {
+        path: 'post-office-credentials',
+        component: PostOfficeCredentialsComponent,
+        canActivate: [AuthGuardService],
+      },
       {
         path: 'insurance',
         component: InsuranceComponent,

@@ -10,8 +10,8 @@
     <dxi-item>
       <div *dxTemplate>
         <form-textbox
-          label="CPT Type"
-          [(value)]="newDenialTypeData.DenialTypeValue"
+          label="Denial Category"
+          [(value)]="newDenialCategoryData.DenialCategoryValue"
           [isEditing]="true"
         >
         </form-textbox>
@@ -21,7 +21,7 @@
       <div *dxTemplate>
         <dx-text-area
           label="Description"
-          [(value)]="newDenialTypeData.DescriptionValue"
+          [(value)]="newDenialCategoryData.DescriptionValue"
           [height]="100"
           [width]="'100%'"
           [maxHeight]="200"
@@ -33,3 +33,4 @@
     </dxi-item>
   </dxi-item>
 </dx-form>
+

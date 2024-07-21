@@ -18,7 +18,7 @@ import notify from 'devextreme/ui/notify';
   selector: 'app-facility-list',
   templateUrl: './facility-list.component.html',
   styleUrls: ['./facility-list.component.scss'],
-  providers: [DataService, ReportService],
+  providers: [ReportService],
 })
 export class FacilityListComponent implements OnInit {
   @ViewChild(DxDataGridComponent, { static: true })
@@ -73,7 +73,7 @@ export class FacilityListComponent implements OnInit {
   get_Facility_List() {
     this.masterService.Get_Facility_List_Data().subscribe((response: any) => {
       if (response) {
-        this.dataSource = response;
+        this.dataSource = response.FacilityMaster;
       }
     });
   }

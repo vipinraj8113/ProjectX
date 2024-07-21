@@ -52,7 +52,7 @@ export class DenialListComponent {
   Denial_Type_DropDownData: dropdownData[];
   Denial_category_DropDownData: dropdownData[];
   ID: any;
-
+  isFilterOpened=true
   //========Variables for Pagination ====================
   readonly allowedPageSizes: any = [5, 10, 'all'];
   displayMode: any = 'full';
@@ -69,6 +69,7 @@ export class DenialListComponent {
         });
       }),
   });
+  GridSource: any;
 
   constructor(
     private service: DataService,
@@ -78,6 +79,11 @@ export class DenialListComponent {
   ) {
     this.getDenial_Type_DropDown();
     this.getDenial_Category_DropDown();
+  }
+
+  //=====================Search on Each Column===========
+  applyFilter() {
+    this.GridSource.filter();
   }
 
   addDenial() {

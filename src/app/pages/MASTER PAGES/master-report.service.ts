@@ -92,12 +92,14 @@ export class MasterReportService {
 
   //=====Update Insurance data======
   update_Insurance_data(
+    id:any,
     InsuranceID: any,
     InsuranceName: any,
     InsuranceShortName: any
   ) {
     const url = `${BASE_URL}insurancecompany/update`;
     const reqBody = {
+      ID:id,
       InsuranceID: InsuranceID,
       InsuranceName: InsuranceName,
       InsuranceShortName: InsuranceShortName,
@@ -330,6 +332,42 @@ export class MasterReportService {
     return this.http.post(`${BASE_URL}denialtype/delete/${id}`, {});
   }
 
+
+
+    //==========================================Denial TYPE MASTER==========================================================
+  //======Denial category List===========
+  get_DenialCategory_List() {
+    const Url = `${BASE_URL}/denialcategory/list`;
+    const reqBody = {
+      list: [],
+    };
+    return this.http.post(Url, reqBody);
+  }
+  //======Add Denial category data========
+  Insert_DenialCategory_Data(DenialCategory: any, description: any) {
+    const url = `${BASE_URL}/denialcategory/insert`;
+    const reqBody = {
+      DenialCategorys: DenialCategory,
+      Description: description,
+    };
+    return this.http.post(url, reqBody);
+  }
+
+  //=====Update Denial category data======
+  update_DenialCategory_data(id: any, DenialCategory: any, Description: any) {
+    const url = `${BASE_URL}/denialcategory/update`;
+    const reqBody = {
+      ID: id,
+      DenialCategorys: DenialCategory,
+      Description: Description,
+    };
+    return this.http.post(url, reqBody);
+  }
+
+  //=====Remove Denial category Data==========
+  Remove_DenialCategory_Row_Data(id: any) {
+    return this.http.post(`${BASE_URL}denialcategory/delete/${id}`, {});
+  }
   //========================================================CLINICIAN=========================================================
   get_Clinian_Table_Data() {
     const Url = `${BASE_URL}/clinician/list`;

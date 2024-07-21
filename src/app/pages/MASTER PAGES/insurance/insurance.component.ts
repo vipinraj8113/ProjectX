@@ -44,7 +44,7 @@ export class InsuranceComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.get_Insurance_Data_List();
+    this.get_InsuranceCompany_Data_List();
   }
   //=========================show new popup=========================
   show_new_Form() {
@@ -52,9 +52,9 @@ export class InsuranceComponent implements OnInit {
   }
 
   //========================Get Datasource =======================
-  get_Insurance_Data_List() {
+  get_InsuranceCompany_Data_List() {
     this.masterService.get_Insurance_List().subscribe((response: any) => {
-      this.dataSource = response;
+      this.dataSource = response.InsuranceCompany;
     });
   }
 
@@ -67,7 +67,7 @@ export class InsuranceComponent implements OnInit {
       .subscribe((response: any) => {
         if (response) {
           this.dataGrid.instance.refresh();
-          this.get_Insurance_Data_List();
+          this.get_InsuranceCompany_Data_List();
           notify(
             {
               message: `New Insurance "${InsuranceID} ${InsuranceName} ${InsuranceShortName}" saved Successfully`,
@@ -121,7 +121,7 @@ export class InsuranceComponent implements OnInit {
         }
         event.component.refresh();
         this.dataGrid.instance.refresh();
-        this.get_Insurance_Data_List();
+        this.get_InsuranceCompany_Data_List();
       });
   }
 
@@ -130,17 +130,18 @@ export class InsuranceComponent implements OnInit {
     const updataDate = event.newData;
     const oldData = event.oldData;
     const combinedData = { ...oldData, ...updataDate };
-    // console.log('onrowUpdated Data getting ', combinedData);
+    console.log(combinedData)
+    let id = combinedData.ID;
     let Insuranceid = combinedData.InsuranceID;
     let InsuranceName = combinedData.InsuranceName;
     let InsuranceShortName = combinedData.InsuranceShortName;
 
     this.masterService
-      .update_Insurance_data(Insuranceid, InsuranceName, InsuranceShortName)
+      .update_Insurance_data(id,Insuranceid, InsuranceName, InsuranceShortName)
       .subscribe((data: any) => {
         if (data) {
           this.dataGrid.instance.refresh();
-          this.get_Insurance_Data_List();
+          this.get_InsuranceCompany_Data_List();
           notify(
             {
               message: `New Insurance updated Successfully`,

@@ -27,7 +27,7 @@ export class DinialTypeNewFormComponent {
 
   getNewDenialTypeData = () => ({ ...this.newDenialTypeData });
 
-  resetFacilityTypeData() {
+  resetDenialTypeData() {
     this.newDenialTypeData.DenialTypeValue = '';
     this.newDenialTypeData.DescriptionValue = '';
   }

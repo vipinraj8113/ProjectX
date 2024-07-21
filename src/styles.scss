@@ -41,17 +41,6 @@ body {
   }
 }
 
-
-
-
-
-
-
-
-
-
-
-
 .responsive-paddings {
   padding: 20px;
 
@@ -123,7 +112,7 @@ body {
   margin-bottom: 25px;
 }
 
-.paramsDiv  {
+.paramsDiv {
   margin-bottom: 0px;
   // height: 25vh;
 }
@@ -169,11 +158,14 @@ body {
   color: rgb(24, 219, 14);
 }
 .dx-tabpanel .dx-tabpanel-tab .dx-tab.dx-tab-selected .dx-icon {
-   color: rgb(252, 254, 255);
+  color: rgb(252, 254, 255);
 }
-.dx-datagrid .dx-datagrid-content .dx-datagrid-table .dx-row > td:not(.dx-validation-pending){
+.dx-datagrid
+  .dx-datagrid-content
+  .dx-datagrid-table
+  .dx-row
+  > td:not(.dx-validation-pending) {
   vertical-align: middle;
-  //  height: 10px;
   padding: 10px;
 }
 
@@ -181,10 +173,6 @@ body {
   height: 100%;
   background-color: rgba(62, 62, 62, 0.512);
 }
-
-
-
-
 
 .dx-card.details-card {
   border: none;
@@ -477,7 +465,6 @@ body {
     .dx-gridbase-container {
       > .dx-bordered-bottom-view {
         border-radius: 0 0 8px 8px;
-
       }
     }
   }
@@ -495,6 +482,6 @@ body {
   }
 }
 
-.highlighted-column{
+.highlighted-column {
   background-color: rgba(8, 8, 8, 0.211);
 }
