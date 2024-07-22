@@ -1,0 +1,113 @@
+<dx-form class="plain-styled-form">
+    <dxi-item itemType="group">
+      <dxo-col-count-by-screen
+        [xs]="1"
+        [sm]="1"
+        [md]="2"
+        [lg]="2"
+      ></dxo-col-count-by-screen>
+      <dxi-item>
+        <div *dxTemplate>
+          <form-textbox
+            label="Clinician License"
+            [(value)]="newClinician.ClinicianLicense"
+            [isEditing]="true"
+          >
+          </form-textbox>
+        </div>
+      </dxi-item>
+  
+      <dxi-item>
+        <div *dxTemplate>
+          <form-textbox
+            label="Clinician Name"
+            [(value)]="newClinician.ClinicianName"
+            [isEditing]="true"
+          >
+          </form-textbox>
+        </div>
+      </dxi-item>
+
+      <dxi-item>
+        <div *dxTemplate>
+          <form-textbox
+            label="Clinician Short Name"
+            [(value)]="newClinician.ClinicianShortName"
+            [isEditing]="true"
+          >
+          </form-textbox>
+        </div>
+      </dxi-item>
+  
+      <dxi-item>
+        <div *dxTemplate>
+          <div>Speciality</div>
+          <dx-select-box
+            class="inputBox"
+            [items]="specialityDatasource"
+            displayExpr="DESCRIPTION"
+            valueExpr="ID"
+            placeholder="Select a speciality"
+            [(value)]="newClinician.SpecialityID"
+          ></dx-select-box>
+        </div>
+      </dxi-item>
+  
+      <dxi-item>
+        <div *dxTemplate>
+          <div>Major</div>
+          <dx-select-box
+            class="inputBox"
+            [items]="clinicianMajorDatasource"
+            displayExpr="DESCRIPTION"
+            valueExpr="ID"
+            placeholder="Select a value"
+            [(value)]="newClinician.MajorID"
+          ></dx-select-box>
+        </div>
+      </dxi-item>
+
+      <dxi-item>
+        <div *dxTemplate>
+          <div>Profession</div>
+          <dx-select-box
+            class="inputBox"
+            [items]="clinicianProfessionDatasource"
+            displayExpr="DESCRIPTION"
+            valueExpr="ID"
+            placeholder="Select a value"
+            [(value)]="newClinician.ProfessionID"
+          ></dx-select-box>
+        </div>
+      </dxi-item>
+
+      <dxi-item>
+        <div *dxTemplate>
+          <div>Category</div>
+          <dx-select-box
+            class="inputBox"
+            [items]="clinicianCategoryDatasource"
+            displayExpr="DESCRIPTION"
+            valueExpr="ID"
+            placeholder="Select a value"
+            [(value)]="newClinician.CategoryID"
+          ></dx-select-box>
+        </div>
+      </dxi-item>
+
+      <dxi-item>
+        <div *dxTemplate>
+          <div>Gender</div>
+          <dx-select-box
+            class="inputBox"
+            [items]="genderDatasource"
+            displayExpr="DESCRIPTION"
+            valueExpr="DESCRIPTION"
+            placeholder="Select a value"
+            [(value)]="newClinician.Gender"
+          ></dx-select-box>
+        </div>
+      </dxi-item>
+    </dxi-item>
+  </dx-form>
+  

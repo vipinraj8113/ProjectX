@@ -92,14 +92,14 @@ export class MasterReportService {
 
   //=====Update Insurance data======
   update_Insurance_data(
-    id:any,
+    id: any,
     InsuranceID: any,
     InsuranceName: any,
     InsuranceShortName: any
   ) {
     const url = `${BASE_URL}insurancecompany/update`;
     const reqBody = {
-      ID:id,
+      ID: id,
       InsuranceID: InsuranceID,
       InsuranceName: InsuranceName,
       InsuranceShortName: InsuranceShortName,
@@ -123,23 +123,32 @@ export class MasterReportService {
   }
 
   //=====Update Facility data====
-  update_facility_data(id: any, FacilityLicense: any, FacilityName: any,Region:any,FacilityTypeID:any,FacilityGroupID:any,FacilityAddress:any,PostOfficeID:any) {
+  update_facility_data(
+    id: any,
+    FacilityLicense: any,
+    FacilityName: any,
+    Region: any,
+    FacilityTypeID: any,
+    FacilityGroupID: any,
+    FacilityAddress: any,
+    PostOfficeID: any
+  ) {
     const url = `${BASE_URL}/facility/update`;
     const reqBody = {
       ID: id,
       FacilityLicense: FacilityLicense,
       FacilityName: FacilityName,
-      Region:Region,
-      FacilityTypeID:FacilityTypeID,
-      FacilityGroupID:FacilityGroupID,
-      FacilityAddress:FacilityAddress,
-      PostOfficeID:PostOfficeID
+      Region: Region,
+      FacilityTypeID: FacilityTypeID,
+      FacilityGroupID: FacilityGroupID,
+      FacilityAddress: FacilityAddress,
+      PostOfficeID: PostOfficeID,
     };
     return this.http.post(url, reqBody);
   }
 
-   //=====Remove Facility Data=====
-   Remove_Facility_Row_Data(id: any) {
+  //=====Remove Facility Data=====
+  Remove_Facility_Row_Data(id: any) {
     return this.http.post(`${BASE_URL}speciality/delete/${id}`, {});
   }
 
@@ -332,9 +341,7 @@ export class MasterReportService {
     return this.http.post(`${BASE_URL}denialtype/delete/${id}`, {});
   }
 
-
-
-    //==========================================Denial TYPE MASTER==========================================================
+  //==========================================Denial TYPE MASTER==========================================================
   //======Denial category List===========
   get_DenialCategory_List() {
     const Url = `${BASE_URL}/denialcategory/list`;
@@ -369,6 +376,7 @@ export class MasterReportService {
     return this.http.post(`${BASE_URL}denialcategory/delete/${id}`, {});
   }
   //========================================================CLINICIAN=========================================================
+  //===========Get all data list========
   get_Clinian_Table_Data() {
     const Url = `${BASE_URL}/clinician/list`;
     const reqBody = {
@@ -376,4 +384,35 @@ export class MasterReportService {
     };
     return this.http.post(Url, reqBody);
   }
+
+  //=======insert data ==========
+  Insert_Clinician_Data(
+    ClinicianLicense: any,
+    ClinicianName: any,
+    ClinicianShortName: any,
+    SpecialityID: any,
+    MajorID: any,
+    ProfessionID: any,
+    CategoryID: any,
+    Gender: any
+  ) {
+    const url = `${BASE_URL}/clinician/insert`;
+    const reqBody = {
+      ClinicianLicense: ClinicianLicense,
+      ClinicianName: ClinicianName,
+      ClinicianShortName: ClinicianShortName,
+      SpecialityID: SpecialityID,
+      MajorID: MajorID,
+      ProfessionID: ProfessionID,
+      CategoryID: CategoryID,
+      Gender: Gender,
+    };
+    return this.http.post(url, reqBody);
+  }
+
+
+    //=====Remove Denial category Data==========
+    Remove_Clinician_Row_Data(id: any) {
+      return this.http.post(`${BASE_URL}clinician/delete/${id}`, {});
+    }
 }

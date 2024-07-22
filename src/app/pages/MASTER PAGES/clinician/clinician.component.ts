@@ -10,12 +10,12 @@ import {
   DxTextBoxModule,
 } from 'devextreme-angular';
 import { FormPopupModule } from 'src/app/components';
-import { FacilityGroupNewFormModule } from '../../POP-UP_PAGES/facility-group-new-form/facility-group-new-form.component';
 import { ReportService } from 'src/app/services/Report-data.service';
 import { MasterReportService } from '../master-report.service';
 import notify from 'devextreme/ui/notify';
 import { DataService } from 'src/app/services';
-
+import { ClinicianNewFormModule } from '../../POP-UP_PAGES/clinician-new-form/clinician-new-form.component';
+import { ClinicianNewFormComponent } from '../../POP-UP_PAGES/clinician-new-form/clinician-new-form.component';
 @Component({
   selector: 'app-clinician',
   templateUrl: './clinician.component.html',
@@ -26,7 +26,10 @@ export class ClinicianComponent implements OnInit {
   @ViewChild(DxDataGridComponent, { static: true })
   dataGrid: DxDataGridComponent;
 
-  isAddContactPopupOpened: any = false;
+  @ViewChild(ClinicianNewFormComponent, { static: false })
+  clinicianComponent: ClinicianNewFormComponent;
+
+  isAddClinicianPopupOpened: any = false;
   dataSource: any;
   //========Variables for Pagination ====================
   readonly allowedPageSizes: any = [5, 10, 'all'];
@@ -35,6 +38,11 @@ export class ClinicianComponent implements OnInit {
   showInfo = true;
   showNavButtons = true;
   facilityGroupDatasource: any;
+  specialityDatasource: any;
+  clinicianMajorDatasource: any;
+  clinicianProfessionDatasource: any;
+  clinicianCategoryDatasource: any;
+  genderDatasource: any;
 
   constructor(
     private service: ReportService,
@@ -42,47 +50,77 @@ export class ClinicianComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.get_DropDown_Data();
     this.get_Clinician_Data_List();
   }
-//=========================show new popup=========================
-  show_new__Form(){
+  //=========================show new popup=========================
+  show_new__Form() {
+    this.isAddClinicianPopupOpened = true;
+  }
 
+  //=============Get Denial Type Drop dwn Data==============================
+  get_DropDown_Data() {
+    this.masterService.Get_GropDown('SPECIALITY').subscribe((response: any) => {
+      this.specialityDatasource = response;
+    });
+
+    this.masterService
+      .Get_GropDown('CLINICIANMAJOR')
+      .subscribe((response: any) => {
+        this.clinicianMajorDatasource = response;
+      });
+
+    this.masterService
+      .Get_GropDown('CLINICIANPROFESSION')
+      .subscribe((response: any) => {
+        this.clinicianProfessionDatasource = response;
+      });
+
+    this.masterService
+      .Get_GropDown('CLINICIANCATEGORY')
+      .subscribe((response: any) => {
+        this.clinicianCategoryDatasource = response;
+      });
+
+    this.masterService.Get_GropDown('GENDER').subscribe((response: any) => {
+      this.genderDatasource = response;
+    });
   }
 
   //========================Get Datasource =======================
   get_Clinician_Data_List() {
     this.masterService.get_Clinian_Table_Data().subscribe((response: any) => {
-      this.dataSource = response
+      this.dataSource = response.Clinician;
     });
   }
 
   //====================Add data ================================
-  onClickSaveNewFacilityGroup = () => {
-    // const { FacilityGroupValue, DescriptionValue } =
-    //   this.facilityGroupComponent.getNewFacilityGroupData();
-    // this.masterService
-    //   .add_FacilityGroup_Data(FacilityGroupValue, DescriptionValue)
-    //   .subscribe((response: any) => {
-    //     if (response) {
-    //       this.dataGrid.instance.refresh();
-    //       this.get_Clinician_Data_List();
-    //       notify(
-    //         {
-    //           message: `New Clinician "${FacilityGroupValue} ${DescriptionValue}" saved Successfully`,
-    //           position: { at: 'top right', my: 'top right' },
-    //         },
-    //         'success'
-    //       );
-    //     } else {
-    //       notify(
-    //         {
-    //           message: `Your Data Not Saved`,
-    //           position: { at: 'top right', my: 'top right' },
-    //         },
-    //         'error'
-    //       );
-    //     }
-    //   });
+  onClickSaveNewClinician = () => {
+    const { ClinicianLicense, ClinicianName ,ClinicianShortName,SpecialityID,MajorID,ProfessionID,CategoryID,Gender} =
+      this.clinicianComponent.getnewClinicianData();
+    this.masterService
+      .Insert_Clinician_Data(ClinicianLicense, ClinicianName ,ClinicianShortName,SpecialityID,MajorID,ProfessionID,CategoryID,Gender)
+      .subscribe((response: any) => {
+        if (response) {
+          this.dataGrid.instance.refresh();
+          this.get_Clinician_Data_List();
+          notify(
+            {
+              message: `New Clinician saved Successfully`,
+              position: { at: 'top right', my: 'top right' },
+            },
+            'success'
+          );
+        } else {
+          notify(
+            {
+              message: `Your Data Not Saved`,
+              position: { at: 'top right', my: 'top right' },
+            },
+            'error'
+          );
+        }
+      });
   };
 
   //========================Export data ==========================
@@ -96,7 +134,7 @@ export class ClinicianComponent implements OnInit {
     let SelectedRow = event.key;
     console.log('selected row data :', SelectedRow);
     this.masterService
-      .Remove_Facility_Row_Data(SelectedRow.ID)
+      .Remove_Clinician_Row_Data(SelectedRow.ID)
       .subscribe(() => {
         try {
           notify(
@@ -179,7 +217,7 @@ export class ClinicianComponent implements OnInit {
     DxTextBoxModule,
     DxLookupModule,
     FormPopupModule,
-    FacilityGroupNewFormModule,
+    ClinicianNewFormModule,
   ],
   providers: [],
   exports: [],

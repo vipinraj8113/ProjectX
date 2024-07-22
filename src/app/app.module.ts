@@ -40,6 +40,7 @@ import { FacilityGroupNewFormComponent } from './pages/POP-UP_PAGES/facility-gro
 import { BankMasterComponent } from './pages/MASTER PAGES/bank-master/bank-master.component';
 // import { PostOfficeCredentialsComponent } from './pages/SYSTEM PAGES/post-office-credentials/post-office-credentials.component';
 import { ConfigurationComponent } from './pages/SYSTEM PAGES/configuration/configuration.component';
+// import { ClinicianNewFormComponent } from './pages/POP-UP_PAGES/clinician-new-form/clinician-new-form.component';
 // import { DenialCategoryNewFormComponent } from './pages/POP-UP_PAGES/denial-category-new-form/denial-category-new-form.component';
 // import { SpecialityNewFormComponent } from './pages/POP-UP_PAGES/speciality-new-form/speciality-new-form.component';
 // import { DinialTypeNewFormComponent } from './pages/POP-UP_PAGES/dinial-type-new-form/dinial-type-new-form.component';
@@ -68,6 +69,7 @@ import { ConfigurationComponent } from './pages/SYSTEM PAGES/configuration/confi
     BankMasterComponent,
     // PostOfficeCredentialsComponent,
     ConfigurationComponent,
+    // ClinicianNewFormComponent,
     // DenialCategoryNewFormComponent,
     // SpecialityNewFormComponent,
     // DinialTypeNewFormComponent,

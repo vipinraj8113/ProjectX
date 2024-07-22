@@ -86,7 +86,7 @@ const routes: Routes = [
         canActivate: [AuthGuardService],
       },
       {
-        path: 'insurance',
+        path: 'insurance-company',
         component: InsuranceComponent,
         canActivate: [AuthGuardService],
       },
