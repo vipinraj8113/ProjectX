@@ -96,10 +96,27 @@ export class ClinicianComponent implements OnInit {
 
   //====================Add data ================================
   onClickSaveNewClinician = () => {
-    const { ClinicianLicense, ClinicianName ,ClinicianShortName,SpecialityID,MajorID,ProfessionID,CategoryID,Gender} =
-      this.clinicianComponent.getnewClinicianData();
+    const {
+      ClinicianLicense,
+      ClinicianName,
+      ClinicianShortName,
+      SpecialityID,
+      MajorID,
+      ProfessionID,
+      CategoryID,
+      Gender,
+    } = this.clinicianComponent.getnewClinicianData();
     this.masterService
-      .Insert_Clinician_Data(ClinicianLicense, ClinicianName ,ClinicianShortName,SpecialityID,MajorID,ProfessionID,CategoryID,Gender)
+      .Insert_Clinician_Data(
+        ClinicianLicense,
+        ClinicianName,
+        ClinicianShortName,
+        SpecialityID,
+        MajorID,
+        ProfessionID,
+        CategoryID,
+        Gender
+      )
       .subscribe((response: any) => {
         if (response) {
           this.dataGrid.instance.refresh();
@@ -122,11 +139,6 @@ export class ClinicianComponent implements OnInit {
         }
       });
   };
-
-  //========================Export data ==========================
-  onExporting(event: any) {
-    this.service.exportDataGrid(event);
-  }
 
   //====================Row Data Deleting========================
   onRowRemoving(event: any) {
@@ -165,13 +177,29 @@ export class ClinicianComponent implements OnInit {
     const updataDate = event.newData;
     const oldData = event.oldData;
     const combinedData = { ...oldData, ...updataDate };
-    // console.log('onrowUpdated Data getting ', combinedData);
+    console.log(combinedData)
     let id = combinedData.ID;
-    let facilityGroup = combinedData.FacilityGroup;
-    let Description = combinedData.Description;
+    let ClinicianLicense = combinedData.ClinicianLicense;
+    let ClinicianName = combinedData.ClinicianName;
+    let ClinicianShortName = combinedData.ClinicianShortName;
+    let SpecialityID = combinedData.SpecialityID;
+    let MajorID = combinedData.MajorID;
+    let ProfessionID = combinedData.ProfessionID;
+    let CategoryID = combinedData.CategoryID;
+    let Gender = combinedData.Gender;
 
     this.masterService
-      .update_facilityGroup_data(id, facilityGroup, Description)
+      .update_Clinician_data(
+        id,
+        ClinicianLicense,
+        ClinicianName,
+        ClinicianShortName,
+        SpecialityID,
+        MajorID,
+        ProfessionID,
+        CategoryID,
+        Gender
+      )
       .subscribe((data: any) => {
         if (data) {
           this.dataGrid.instance.refresh();
@@ -200,6 +228,11 @@ export class ClinicianComponent implements OnInit {
       });
 
     event.cancel = true; // Prevent the default update operation
+  }
+
+  //========================Export data ==========================
+  onExporting(event: any) {
+    this.service.exportDataGrid(event);
   }
   //=================== Page refreshing==========================
   refresh = () => {

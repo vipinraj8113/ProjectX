@@ -411,6 +411,33 @@ export class MasterReportService {
   }
 
 
+  
+  //=====Update Denial category data======
+  update_Clinician_data(  
+    id:any,
+    ClinicianLicense: any,
+    ClinicianName: any,
+    ClinicianShortName: any,
+    SpecialityID: any,
+    MajorID: any,
+    ProfessionID: any,
+    CategoryID: any,
+    Gender: any) {
+    const url = `${BASE_URL}/clinician/update`;
+    const reqBody = {
+      ID: id,
+      ClinicianLicense: ClinicianLicense,
+      ClinicianName: ClinicianName,
+      ClinicianShortName: ClinicianShortName,
+      SpecialityID: SpecialityID,
+      MajorID: MajorID,
+      ProfessionID: ProfessionID,
+      CategoryID: CategoryID,
+      Gender: Gender,
+    };
+    return this.http.post(url, reqBody);
+  }
+
     //=====Remove Denial category Data==========
     Remove_Clinician_Row_Data(id: any) {
       return this.http.post(`${BASE_URL}clinician/delete/${id}`, {});
