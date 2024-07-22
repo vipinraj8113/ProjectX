@@ -39,6 +39,10 @@ import { FacilityTypeComponent } from './pages/MASTER PAGES/facility-type/facili
 import { ClinicianComponent } from './pages/MASTER PAGES/clinician/clinician.component';
 import { InsuranceComponent } from './pages/MASTER PAGES/insurance/insurance.component';
 import { PostOfficeCredentialsComponent } from './pages/SYSTEM PAGES/post-office-credentials/post-office-credentials.component';
+import { InsuranceClassificationComponent } from './pages/MASTER PAGES/insurance-classification/insurance-classification.component';
+import { ClinicianMajorComponent } from './pages/MASTER PAGES/clinician-major/clinician-major.component';
+import { ClinicianProfessionComponent } from './pages/MASTER PAGES/clinician-profession/clinician-profession.component';
+import { ClinicianCategoryComponent } from './pages/MASTER PAGES/clinician-category/clinician-category.component';
 const routes: Routes = [
   {
     path: '',
@@ -88,6 +92,26 @@ const routes: Routes = [
       {
         path: 'insurance-company',
         component: InsuranceComponent,
+        canActivate: [AuthGuardService],
+      },
+      {
+        path: 'insurance-classification',
+        component: InsuranceClassificationComponent,
+        canActivate: [AuthGuardService],
+      },
+      {
+        path: 'clinician-major',
+        component: ClinicianMajorComponent,
+        canActivate: [AuthGuardService],
+      },
+      {
+        path: 'clinician-profession',
+        component: ClinicianProfessionComponent,
+        canActivate: [AuthGuardService],
+      },
+      {
+        path: 'clinician-category',
+        component: ClinicianCategoryComponent,
         canActivate: [AuthGuardService],
       },
       {
