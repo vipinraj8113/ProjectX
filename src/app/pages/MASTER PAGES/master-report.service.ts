@@ -3,12 +3,22 @@ import { HttpClient } from '@angular/common/http';
 import { BaseURL } from '../../services/constant-url.service';
 
 const BASE_URL = BaseURL;
+
+ const gender: any = [
+  { description: 'Male' },
+  { description: 'Female' },
+  { description: 'Others' },
+];
 @Injectable({
   providedIn: 'root',
 })
 export class MasterReportService {
   constructor(private http: HttpClient) {}
 
+  //======FEtch gender data======
+  get_gender_Data():any {
+    return gender;
+  }
   //======Facility Drop down data=====================
   Get_GropDown(dropDownField: any) {
     const Url = `${BASE_URL}/dropdown`;
@@ -410,11 +420,9 @@ export class MasterReportService {
     return this.http.post(url, reqBody);
   }
 
-
-  
   //=====Update Denial category data======
-  update_Clinician_data(  
-    id:any,
+  update_Clinician_data(
+    id: any,
     ClinicianLicense: any,
     ClinicianName: any,
     ClinicianShortName: any,
@@ -422,7 +430,8 @@ export class MasterReportService {
     MajorID: any,
     ProfessionID: any,
     CategoryID: any,
-    Gender: any) {
+    Gender: any
+  ) {
     const url = `${BASE_URL}/clinician/update`;
     const reqBody = {
       ID: id,
@@ -438,8 +447,143 @@ export class MasterReportService {
     return this.http.post(url, reqBody);
   }
 
-    //=====Remove Denial category Data==========
-    Remove_Clinician_Row_Data(id: any) {
-      return this.http.post(`${BASE_URL}clinician/delete/${id}`, {});
-    }
+  //=====Remove Denial category Data==========
+  Remove_Clinician_Row_Data(id: any) {
+    return this.http.post(`${BASE_URL}clinician/delete/${id}`, {});
+  }
+
+  //===================================================INSURANCE CLASSIFICATION============================================
+  Get_InsuranceClassification_Data() {
+    const Url = `${BASE_URL}/insuranceclassification/list`;
+    const reqBody = {
+      list: [],
+    };
+    return this.http.post(Url, reqBody);
+  }
+  //=====Add CLASSIFICATION data=====
+  Insert_InsuranceClassification_Data(Classification: any, description: any) {
+    const url = `${BASE_URL}/insuranceclassification/insert`;
+    const reqBody = {
+      Classification: Classification,
+      Description: description,
+    };
+    return this.http.post(url, reqBody);
+  }
+  //=====Update CLASSIFICATION data====
+  update_InsuranceClassification_data(
+    id: any,
+    Classification: any,
+    description: any
+  ) {
+    const url = `${BASE_URL}/insuranceclassification/update`;
+    const reqBody = {
+      ID: id,
+      Classification: Classification,
+      Description: description,
+    };
+    return this.http.post(url, reqBody);
+  }
+  //===Remove CLASSIFICATION Data==========
+  Remove_InsuranceClassification_Data(id: any) {
+    return this.http.post(
+      `${BASE_URL}insuranceclassification/delete/${id}`,
+      {}
+    );
+  }
+
+  //===================================================clinician profession============================================
+  Get_ClinicianProfession_Data() {
+    const Url = `${BASE_URL}/clinicianprofession/list`;
+    const reqBody = {
+      list: [],
+    };
+    return this.http.post(Url, reqBody);
+  }
+  //=====Add clinicianprofession data=====
+  Insert_ClinicianProfession_Data(Profession: any, description: any) {
+    const url = `${BASE_URL}/clinicianprofession/insert`;
+    const reqBody = {
+      Profession: Profession,
+      Description: description,
+    };
+    return this.http.post(url, reqBody);
+  }
+  //=====Update clinicianprofession data====
+  update_ClinicianProfession_data(id: any, Profession: any, description: any) {
+    const url = `${BASE_URL}/clinicianprofession/update`;
+    const reqBody = {
+      ID: id,
+      Profession: Profession,
+      Description: description,
+    };
+    return this.http.post(url, reqBody);
+  }
+  //===Remove clinician profession Data==========
+  remove_ClinicianProfession(id: any) {
+    return this.http.post(`${BASE_URL}clinicianprofession/delete/${id}`, {});
+  }
+
+  //===================================================clinician Major============================================
+  Get_ClinicianMajor_Data() {
+    const Url = `${BASE_URL}/clinicianmajor/list`;
+    const reqBody = {
+      list: [],
+    };
+    return this.http.post(Url, reqBody);
+  }
+  //=====Add clinician Major data=====
+  Insert_ClinicianMajor_Data(Major: any, description: any) {
+    const url = `${BASE_URL}/clinicianmajor/insert`;
+    const reqBody = {
+      Major: Major,
+      Description: description,
+    };
+    return this.http.post(url, reqBody);
+  }
+  //=====Update clinician Major data====
+  update_ClinicianMajor_data(id: any, Major: any, description: any) {
+    const url = `${BASE_URL}/clinicianmajor/update`;
+    const reqBody = {
+      ID: id,
+      Major: Major,
+      Description: description,
+    };
+    return this.http.post(url, reqBody);
+  }
+  //===Remove clinicianMajor Data==========
+  remove_ClinicianMajor(id: any) {
+    return this.http.post(`${BASE_URL}clinicianmajor/delete/${id}`, {});
+  }
+
+  //===================================================clinician Category============================================
+  Get_ClinicianCategory_Data() {
+    const Url = `${BASE_URL}/cliniciancategory/list`;
+    const reqBody = {
+      list: [],
+    };
+    return this.http.post(Url, reqBody);
+  }
+  //=====Add clinician Category data=====
+  Insert_ClinicianCategory_Data(Category: any, description: any) {
+    const url = `${BASE_URL}/cliniciancategory/insert`;
+    const reqBody = {
+      Category: Category,
+      Description: description,
+    };
+    return this.http.post(url, reqBody);
+  }
+  //=====Update clinician category data====
+  update_ClinicianCategory_data(id: any, Category: any, description: any) {
+    const url = `${BASE_URL}/cliniciancategory/update`;
+    const reqBody = {
+      ID: id,
+      Category: Category,
+      Description: description,
+    };
+    return this.http.post(url, reqBody);
+  }
+  //===Remove cliniciancategory Data==========
+  remove_ClinicianCategory(id: any) {
+    return this.http.post(`${BASE_URL}cliniciancategory/delete/${id}`, {});
+  }
 }

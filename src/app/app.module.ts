@@ -29,6 +29,7 @@ import { RejectedClaimsComponent } from './pages/REPORT PAGES/rejected-claims/re
 import { BalanceAmountToBeReceivedComponent } from './pages/REPORT PAGES/balance-amount-to-be-received/balance-amount-to-be-received.component';
 import { ResubmissionSummaryComponent } from './pages/REPORT PAGES/resubmission-summary/resubmission-summary.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,

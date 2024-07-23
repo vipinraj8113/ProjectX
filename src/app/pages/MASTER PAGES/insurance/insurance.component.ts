@@ -1,5 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, NgModule, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  NgModule,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import {
   DxDataGridModule,
   DxButtonModule,
@@ -29,6 +35,8 @@ export class InsuranceComponent implements OnInit {
   InsuranceNewForm: InsuranceNewFormComponent;
 
   dataSource: any;
+  showSearchBox = false;
+  showSearchIcon = true;
   //========Variables for Pagination ====================
   readonly allowedPageSizes: any = [5, 10, 'all'];
   displayMode: any = 'full';
@@ -46,6 +54,12 @@ export class InsuranceComponent implements OnInit {
   ngOnInit(): void {
     this.get_InsuranceCompany_Data_List();
   }
+
+  ShowSearch = () => {
+    this.showSearchIcon = false;
+    this.showSearchBox = true;
+  };
+
   //=========================show new popup=========================
   show_new_Form() {
     this.isAddFormPopupOpened = true;
@@ -98,7 +112,7 @@ export class InsuranceComponent implements OnInit {
     let SelectedRow = event.key;
     // console.log('selected row data :', SelectedRow);
     this.masterService
-      .Remove_Insurance_Row_Data(SelectedRow.InsuranceID)
+      .Remove_Insurance_Row_Data(SelectedRow.ID)
       .subscribe(() => {
         try {
           notify(
@@ -130,14 +144,14 @@ export class InsuranceComponent implements OnInit {
     const updataDate = event.newData;
     const oldData = event.oldData;
     const combinedData = { ...oldData, ...updataDate };
-    console.log(combinedData)
+    console.log(combinedData);
     let id = combinedData.ID;
     let Insuranceid = combinedData.InsuranceID;
     let InsuranceName = combinedData.InsuranceName;
     let InsuranceShortName = combinedData.InsuranceShortName;
 
     this.masterService
-      .update_Insurance_data(id,Insuranceid, InsuranceName, InsuranceShortName)
+      .update_Insurance_data(id, Insuranceid, InsuranceName, InsuranceShortName)
       .subscribe((data: any) => {
         if (data) {
           this.dataGrid.instance.refresh();

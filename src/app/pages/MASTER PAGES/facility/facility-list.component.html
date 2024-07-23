@@ -1,34 +1,15 @@
 <div class="view-wrapper list-page">
-  <dx-data-grid
-    class="grid theme-dependent"
-    noDataText=""
-    height="84vh"
-    [dataSource]="dataSource"
-    [showBorders]="true"
-    [allowColumnResizing]="true"
-    [allowColumnReordering]="true"
-    [rowAlternationEnabled]="true"
-    rowAlternationInterval="2"
-    (onExporting)="onExporting($event)"
-    (onRowUpdating)="onRowUpdating($event)"
-    (onRowRemoving)="onRowRemoving($event)"
-  >
+  <dx-data-grid class="grid theme-dependent" noDataText="" height="84vh" [dataSource]="dataSource" [showBorders]="true"
+    [allowColumnResizing]="true" [allowColumnReordering]="true" [rowAlternationEnabled]="true"
+    rowAlternationInterval="2" (onExporting)="onExporting($event)" (onRowUpdating)="onRowUpdating($event)"
+    (onRowRemoving)="onRowRemoving($event)">
     <dxo-paging [pageSize]="10"></dxo-paging>
-    <dxo-editing
-      mode="popup"
-      [allowUpdating]="true"
-      [allowDeleting]="true"
-      [popup]="{ width: '40%', height: '60vh' }"
-    >
+    <dxo-editing mode="popup" [allowUpdating]="true" [allowDeleting]="true" [popup]="{ width: '40%', height: '60vh' }">
+      <dxo-popup title="Edit facility" [showTitle]="true">
+      </dxo-popup>
     </dxo-editing>
-    <dxo-pager
-      [visible]="true"
-      [allowedPageSizes]="allowedPageSizes"
-      [displayMode]="displayMode"
-      [showPageSizeSelector]="showPageSizeSelector"
-      [showInfo]="showInfo"
-      [showNavigationButtons]="showNavButtons"
-    >
+    <dxo-pager [visible]="true" [allowedPageSizes]="allowedPageSizes" [displayMode]="displayMode"
+      [showPageSizeSelector]="showPageSizeSelector" [showInfo]="showInfo" [showNavigationButtons]="showNavButtons">
     </dxo-pager>
     <dxo-load-panel [showPane]="false"></dxo-load-panel>
     <dxo-scrolling mode="virtual"></dxo-scrolling>
@@ -37,28 +18,18 @@
     <dxo-filter-row [visible]="true"></dxo-filter-row>
     <!-- <dxo-column-chooser [enabled]="true" [height]="400"></dxo-column-chooser> -->
     <dxo-search-panel [visible]="true" placeholder=" Search"></dxo-search-panel>
-    <dxo-export
-      [enabled]="true"
-      [allowExportSelectedData]="true"
-      [formats]="['xlsx', 'pdf']"
-    >
+    <dxo-export [enabled]="true" [allowExportSelectedData]="true" [formats]="['xlsx', 'pdf']">
     </dxo-export>
     <dxo-toolbar>
       <dxi-item location="before">
         <div class="grid-header">Facility</div>
       </dxi-item>
-      <dxi-item
-        location="after"
-        locateInMenu="auto"
-        showText="inMenu"
-        widget="dxButton"
-        [options]="{
+      <dxi-item location="after" locateInMenu="auto" showText="inMenu" widget="dxButton" [options]="{
           text: 'Refresh',
           icon: 'refresh',
           onClick: refresh,
           stylingMode: 'text'
-        }"
-      ></dxi-item>
+        }"></dxi-item>
       <dxi-item location="after" locateInMenu="auto">
         <div class="separator"></div>
       </dxi-item>
@@ -70,41 +41,21 @@
       <dxi-item name="searchPanel" locateInMenu="auto"></dxi-item>
     </dxo-toolbar>
 
-    <dxo-selection mode="multiple"></dxo-selection>
+    <!-- <dxo-selection mode="multiple"></dxo-selection> -->
     <dxo-header-filter [visible]="true"></dxo-header-filter>
-    <dxi-column
-      dataField="FacilityLicense"
-      caption="Facility License"
-      [allowEditing]="false"
-      
-      
-    ></dxi-column>
+    <dxi-column dataField="FacilityLicense" caption="Facility License" [allowEditing]="false"
+      readOnly="true"></dxi-column>
     <dxi-column dataField="FacilityName"></dxi-column>
     <dxi-column dataField="Region" caption="Region"></dxi-column>
     <dxi-column dataField="FacilityTypeID" caption="Facility Type">
-      <dxo-lookup
-        [dataSource]="FacilityType_DataSource"
-        displayExpr="DESCRIPTION"
-        valueExpr="ID"
-      >
+      <dxo-lookup [dataSource]="FacilityType_DataSource" displayExpr="DESCRIPTION" valueExpr="ID">
       </dxo-lookup>
     </dxi-column>
     <dxi-column dataField="FacilityGroupID" caption="Facility Group Name">
-      <dxo-lookup
-        [dataSource]="Facilitygroup_DataSource"
-        displayExpr="DESCRIPTION"
-        valueExpr="ID"
-      >
+      <dxo-lookup [dataSource]="Facilitygroup_DataSource" displayExpr="DESCRIPTION" valueExpr="ID">
       </dxo-lookup>
     </dxi-column>
-    <dxi-column
-      dataField="FacilityAddress"
-      caption="Facility Address"
-    ></dxi-column>
-    <dxi-column
-      dataField="Postoffice"
-      caption="Post office"
-      [allowEditing]="false"
-    ></dxi-column>
+    <dxi-column dataField="FacilityAddress" caption="Facility Address"></dxi-column>
+    <dxi-column dataField="Postoffice" caption="Post office" [allowEditing]="false"></dxi-column>
   </dx-data-grid>
 </div>

@@ -4,8 +4,10 @@
         rowAlternationInterval="2" (onExporting)="onExporting($event)" (onRowRemoving)="onRowRemoving($event)"
         (onRowUpdating)="onRowUpdating($event)" height="84vh">
         <dxo-paging [pageSize]="10"></dxo-paging>
-        <dxo-editing mode="form" [allowUpdating]="true" [allowDeleting]="true" [allowAdding]="true"
+        <dxo-editing mode="popup" [allowUpdating]="true" [allowDeleting]="true" [allowAdding]="true"
             [popup]="{ width: '40%', height: '60vh' }">
+            <dxo-popup title="Edit Facility Type" [showTitle]="true"></dxo-popup>
+
         </dxo-editing>
         <dxo-pager [visible]="true" [allowedPageSizes]="allowedPageSizes" [displayMode]="displayMode"
             [showPageSizeSelector]="showPageSizeSelector" [showInfo]="showInfo"
@@ -45,19 +47,14 @@
             <dxi-item name="searchPanel" locateInMenu="auto"></dxi-item>
         </dxo-toolbar>
 
-        <dxo-selection mode="multiple"></dxo-selection>
+        <!-- <dxo-selection mode="multiple"></dxo-selection> -->
         <dxo-header-filter [visible]="true"></dxo-header-filter>
 
         <dxi-column dataField="FacilityType" caption="Facility Type"></dxi-column>
         <dxi-column dataField="Description" Caption="Description"></dxi-column>
     </dx-data-grid>
-    <form-popup
-      class="formPopupClass"
-      [(visible)]="isAddFormPopupOpened"
-      (save)="onClickSaveNewFacilityType()"
-      titleText="New Facility Type"
-      height="70vh"
-    >
-      <app-facility-type-new-form></app-facility-type-new-form>
+    <form-popup class="formPopupClass" [(visible)]="isAddFormPopupOpened" (save)="onClickSaveNewFacilityType()"
+        titleText="New Facility Type" height="70vh">
+        <app-facility-type-new-form></app-facility-type-new-form>
     </form-popup>
 </div>

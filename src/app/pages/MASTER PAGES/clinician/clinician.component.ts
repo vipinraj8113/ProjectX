@@ -51,6 +51,7 @@ export class ClinicianComponent implements OnInit {
 
   ngOnInit(): void {
     this.get_DropDown_Data();
+
     this.get_Clinician_Data_List();
   }
   //=========================show new popup=========================
@@ -58,6 +59,11 @@ export class ClinicianComponent implements OnInit {
     this.isAddClinicianPopupOpened = true;
   }
 
+  get_gender_dropDown() {
+    this.masterService.get_gender_Data().subscribe((res: any) => {
+      this.genderDatasource = res;
+    });
+  }
   //=============Get Denial Type Drop dwn Data==============================
   get_DropDown_Data() {
     this.masterService.Get_GropDown('SPECIALITY').subscribe((response: any) => {
@@ -82,9 +88,9 @@ export class ClinicianComponent implements OnInit {
         this.clinicianCategoryDatasource = response;
       });
 
-    this.masterService.Get_GropDown('GENDER').subscribe((response: any) => {
-      this.genderDatasource = response;
-    });
+    // this.masterService.Get_GropDown('GENDER').subscribe((response: any) => {
+    //   this.genderDatasource = response;
+    // });
   }
 
   //========================Get Datasource =======================
@@ -177,7 +183,7 @@ export class ClinicianComponent implements OnInit {
     const updataDate = event.newData;
     const oldData = event.oldData;
     const combinedData = { ...oldData, ...updataDate };
-    console.log(combinedData)
+    console.log(combinedData);
     let id = combinedData.ID;
     let ClinicianLicense = combinedData.ClinicianLicense;
     let ClinicianName = combinedData.ClinicianName;
