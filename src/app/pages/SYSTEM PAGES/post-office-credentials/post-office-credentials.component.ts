@@ -57,13 +57,34 @@ export class PostOfficeCredentialsComponent implements OnInit {
       .get_PostOfficeCredencial_List()
       .subscribe((response: any) => {
         if (response) {
-          this.dataSource = response;
+          this.dataSource = this.transformData(response);
+          response;
         }
       });
   }
-  //===============================================
-  onClickSaveNewDenial(event: any) {
-    console.log(event);
+
+  //===============Change the last modified data format =============
+  formatDateTime(dateTimeString) {
+    const date = new Date(dateTimeString);
+    date.setHours(date.getHours() + 5);
+    date.setMinutes(date.getMinutes() + 30);
+    return date
+      .toLocaleString('en-GB', {
+        day: '2-digit',
+        month: 'short',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: true,
+      })
+      .replace(',', '');
+  }
+
+  transformData(data: any) {
+    return data.map((item: any) => ({
+      ...item,
+      LastModified_Time: this.formatDateTime(item.LastModified_Time),
+    }));
   }
 
   //==================update data===================
@@ -115,7 +136,7 @@ export class PostOfficeCredentialsComponent implements OnInit {
     event.cancel = true; // Prevent the default update operation
   }
 
-  onRowRemoving(event: any) {}
+  // onRowRemoving(event: any) {}
   //=================== Page refreshing==========================
   refresh = () => {
     this.dataGrid.instance.refresh();
