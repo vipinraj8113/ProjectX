@@ -47,7 +47,9 @@
         </dxo-toolbar>
 
         <!-- <dxo-selection mode="multiple"></dxo-selection> -->
-        <dxo-header-filter [visible]="true"></dxo-header-filter>
+        <dxo-header-filter [visible]="true">
+            <dxo-search [enabled]="true"></dxo-search>
+        </dxo-header-filter>
 
         <dxi-column dataField="Profession" caption="Profession">
         </dxi-column>

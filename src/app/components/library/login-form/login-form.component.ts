@@ -58,6 +58,7 @@ export class LoginFormComponent implements OnInit {
           .subscribe((response: any) => {
             if (response.flag == 1) {
               localStorage.setItem('logData', JSON.stringify(response.data));
+              localStorage.setItem('Token',JSON.stringify(response.token))
               localStorage.setItem(
                 'sidemenuItems',
                 JSON.stringify(response.menus)

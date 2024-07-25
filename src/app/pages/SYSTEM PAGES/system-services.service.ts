@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BaseURL } from '../../services/constant-url.service';
 
 const BASE_URL = BaseURL;
+const Token = JSON.parse(localStorage.getItem('Token'));
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SystemServicesService {
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
   //======Facility Drop down data=====================
   Get_GropDown(dropDownField: any) {
     const Url = `${BASE_URL}/dropdown`;
@@ -16,13 +16,17 @@ export class SystemServicesService {
     return this.http.post(Url, reqBody);
   }
   //====================Post office credentials======================
-   //===========List===========
-   get_PostOfficeCredencial_List() {
+  //===========List===========
+  get_PostOfficeCredencial_List() {
     const Url = `${BASE_URL}/facilitycredentials/list`;
     const reqBody = {
       list: [],
     };
-    return this.http.post(Url, reqBody);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'x-api-key': Token,
+    });
+    return this.http.post(Url, reqBody, { headers });
   }
   //=====Add or update data========
   update_PostOfficeCredencial_Data(
@@ -38,6 +42,10 @@ export class SystemServicesService {
       LoginName: LoginName,
       Password: Password,
     };
-    return this.http.post(url, reqBody);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'x-api-key': Token,
+    });
+    return this.http.post(url, reqBody, { headers });
   }
 }

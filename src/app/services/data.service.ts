@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, from } from 'rxjs';
 import { DateTime } from 'luxon';
 import { map, groupBy, mergeMap, toArray } from 'rxjs/operators';
@@ -11,7 +11,8 @@ import {BaseURL} from '../services/constant-url.service'
 const API_URL = 'https://js.devexpress.com/Demos/RwaService/api';
 
 const BASE_URL = BaseURL;
-// const BASE_URL = 'http://localhost/projectx/api/';
+const Token = JSON.parse(localStorage.getItem('Token'));
+
 
 @Injectable()
 export class DataService {
@@ -19,7 +20,11 @@ export class DataService {
 
   //====================denials Fetching==================
   public getDenialsData() {
-    return this.http.post<any>(`${BASE_URL}DenialMaster/List`, {});
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'x-api-key': Token,
+    });
+    return this.http.post<any>(`${BASE_URL}DenialMaster/List`, {},{headers});
   }
 
   //------------------- denials Type Dropdown Fetching -----------
@@ -32,7 +37,11 @@ export class DataService {
   //====================Add Denials========================
   addDenial(DenialCode: any, Description: any, DenialTypeID: any, DenialCategoryID: any) {
     const DenialAddData = { DenialCode, Description, DenialTypeID, DenialCategoryID };
-    return this.http.post(`${BASE_URL}DenialMaster/Insert`, DenialAddData);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'x-api-key': Token,
+    });
+    return this.http.post(`${BASE_URL}DenialMaster/Insert`, DenialAddData,{headers});
   }
 
   //------------update Denial--------------------------
@@ -44,12 +53,20 @@ export class DataService {
     DenialCategoryID: any
   ) {
     const UpdateData = {ID, DenialCode, Description, DenialTypeID, DenialCategoryID };
-    return this.http.post(`${BASE_URL}DenialMaster/Update`, UpdateData);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'x-api-key': Token,
+    });
+    return this.http.post(`${BASE_URL}DenialMaster/Update`, UpdateData,{headers});
   }
 
   //================REmove Denial=========================
   removeDenial(id: any) {
-    return this.http.post(`${BASE_URL}DenialMaster/delete/${id}`,{});
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'x-api-key': Token,
+    });
+    return this.http.post(`${BASE_URL}DenialMaster/delete/${id}`,{},{headers});
   }
 
   // ===========================================================================

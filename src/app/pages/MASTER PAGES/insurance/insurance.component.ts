@@ -56,8 +56,8 @@ export class InsuranceComponent implements OnInit {
   }
 
   ShowSearch = () => {
-    this.showSearchIcon = false;
-    this.showSearchBox = true;
+    this.showSearchIcon = !this.showSearchIcon;
+    this.showSearchBox = !this.showSearchBox;
   };
 
   //=========================show new popup=========================

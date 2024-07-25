@@ -59,7 +59,7 @@ export class AuthService {
   }
 
   initializeProject(){
-    return this.http.get('http://103.180.120.134/projectx/api/initialize')
+    return this.http.post(`${BaseURL}CustomerInfo/getinfo`,{})
   }
   //================Log In function===============================
   logIn(username: any, password: any) {

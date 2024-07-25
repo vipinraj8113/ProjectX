@@ -43,6 +43,7 @@ import { InsuranceClassificationComponent } from './pages/MASTER PAGES/insurance
 import { ClinicianMajorComponent } from './pages/MASTER PAGES/clinician-major/clinician-major.component';
 import { ClinicianProfessionComponent } from './pages/MASTER PAGES/clinician-profession/clinician-profession.component';
 import { ClinicianCategoryComponent } from './pages/MASTER PAGES/clinician-category/clinician-category.component';
+import { SecurityPolicyComponent } from './pages/SYSTEM PAGES/security-policy/security-policy.component';
 const routes: Routes = [
   {
     path: '',
@@ -87,6 +88,11 @@ const routes: Routes = [
       {
         path: 'post-office-credentials',
         component: PostOfficeCredentialsComponent,
+        canActivate: [AuthGuardService],
+      },
+      {
+        path: 'security-policy',
+        component: SecurityPolicyComponent,
         canActivate: [AuthGuardService],
       },
       {
