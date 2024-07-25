@@ -116,12 +116,19 @@ body {
   margin-bottom: 0px;
   // height: 25vh;
 }
-// .form-group{
-//   height: 5px;
-//   padding-bottom: 1px;
-//   padding-top: 1px;
-//   margin: 4px;
-// }
+
+
+.dx-datagrid-headers .dx-datagrid-table .dx-row > td {
+  border-bottom: 1px solid rgb(97, 97, 97);
+  line-height: 40px;
+  font-weight: 1000;
+  font-size: 14px;
+}
+
+.dx-datagrid .dx-datagrid-content .dx-datagrid-table .dx-row > td:not(.dx-validation-pending):not(.dx-datagrid-select-all).dx-editor-cell:not(.dx-command-select), .dx-datagrid .dx-datagrid-content .dx-datagrid-table .dx-row > td.dx-cell-modified:not(.dx-field-item-content):not(.dx-validation-pending).dx-editor-cell:not(.dx-command-select), .dx-datagrid .dx-datagrid-content .dx-datagrid-table .dx-row > td.dx-datagrid-invalid:not(.dx-field-item-content):not(.dx-validation-pending):not(.dx-datagrid-select-all).dx-editor-cell:not(.dx-command-select) {
+  padding: 0px;
+}
+
 
 .dx-tabpanel .dx-tabpanel-tabs .dx-tabs {
   height: 100%;
