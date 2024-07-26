@@ -7,7 +7,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { DataService } from 'src/app/services';
 import { DxSelectBoxModule } from 'devextreme-angular';
 import { DxTextBoxModule } from 'devextreme-angular/ui/text-box';
-
+import { MasterReportService } from '../../MASTER PAGES/master-report.service';
 @Component({
   selector: 'denial-new-form',
   templateUrl: './denial-new-form.component.html',
@@ -30,13 +30,11 @@ export class DenialNewFormComponent {
   Denial_Category_DropDownData: any;
   getSizeQualifier = getSizeQualifier;
 
-  constructor(private service: DataService) {
-    this.getDenial_Type_DropDown();
-    this.getDenial_Category_DropDown();
+  constructor(private service: MasterReportService) {
+    this.getDenial_DropDown();
   }
 
   getNewDenialData = () => ({ ...this.newDenial });
-
 
   reset_NewDenialFormData() {
     this.newDenial.DenialCode = '';
@@ -45,23 +43,14 @@ export class DenialNewFormComponent {
     this.newDenial.DenialCategoryID = '';
   }
   //=============Get Denial Type Drop dwn Data==============================
-  getDenial_Type_DropDown() {
-    let dropdownType = 'DENIALTYPE';
-    this.service
-      .get_Denial_Dropdown_Data(dropdownType)
-      .subscribe((data: any) => {
-        this.Denial_Type_DropDownData = data;
-      });
-  }
+  getDenial_DropDown() {
+    this.service.Get_GropDown('DENIALTYPE').subscribe((data: any) => {
+      this.Denial_Type_DropDownData = data;
+    });
 
-  //=============Get Denial Type Drop dwn Data==============================
-  getDenial_Category_DropDown() {
-    const dropdowncategory = 'DENIALCATEGORY';
-    this.service
-      .get_Denial_Dropdown_Data(dropdowncategory)
-      .subscribe((data: any) => {
-        this.Denial_Category_DropDownData = data;
-      });
+    this.service.Get_GropDown('DENIALCATEGORY').subscribe((data: any) => {
+      this.Denial_Category_DropDownData = data;
+    });
   }
 }
 

@@ -19,55 +19,55 @@ export class DataService {
   constructor(private http: HttpClient) {}
 
   //====================denials Fetching==================
-  public getDenialsData() {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'x-api-key': Token,
-    });
-    return this.http.post<any>(`${BASE_URL}DenialMaster/List`, {},{headers});
-  }
+  // public getDenialsData() {
+  //   const headers = new HttpHeaders({
+  //     'Content-Type': 'application/json',
+  //     'x-api-key': Token,
+  //   });
+  //   return this.http.post<any>(`${BASE_URL}DenialMaster/List`, {},{headers});
+  // }
 
-  //------------------- denials Type Dropdown Fetching -----------
-  get_Denial_Dropdown_Data(type: any) {
-    const url = `${BASE_URL}dropdown/List`;
-    const reqBodyData = { name: type };
-    return this.http.post(url, reqBodyData);
-  }
+  // //------------------- denials Type Dropdown Fetching -----------
+  // get_Denial_Dropdown_Data(type: any) {
+  //   const url = `${BASE_URL}dropdown/List`;
+  //   const reqBodyData = { name: type };
+  //   return this.http.post(url, reqBodyData);
+  // }
 
-  //====================Add Denials========================
-  addDenial(DenialCode: any, Description: any, DenialTypeID: any, DenialCategoryID: any) {
-    const DenialAddData = { DenialCode, Description, DenialTypeID, DenialCategoryID };
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'x-api-key': Token,
-    });
-    return this.http.post(`${BASE_URL}DenialMaster/Insert`, DenialAddData,{headers});
-  }
+  // //====================Add Denials========================
+  // addDenial(DenialCode: any, Description: any, DenialTypeID: any, DenialCategoryID: any) {
+  //   const DenialAddData = { DenialCode, Description, DenialTypeID, DenialCategoryID };
+  //   const headers = new HttpHeaders({
+  //     'Content-Type': 'application/json',
+  //     'x-api-key': Token,
+  //   });
+  //   return this.http.post(`${BASE_URL}DenialMaster/Insert`, DenialAddData,{headers});
+  // }
 
-  //------------update Denial--------------------------
-  updateDenial(
-    ID:any,
-    DenialCode: any,
-    Description: any,
-    DenialTypeID: any,
-    DenialCategoryID: any
-  ) {
-    const UpdateData = {ID, DenialCode, Description, DenialTypeID, DenialCategoryID };
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'x-api-key': Token,
-    });
-    return this.http.post(`${BASE_URL}DenialMaster/Update`, UpdateData,{headers});
-  }
+  // //------------update Denial--------------------------
+  // updateDenial(
+  //   ID:any,
+  //   DenialCode: any,
+  //   Description: any,
+  //   DenialTypeID: any,
+  //   DenialCategoryID: any
+  // ) {
+  //   const UpdateData = {ID, DenialCode, Description, DenialTypeID, DenialCategoryID };
+  //   const headers = new HttpHeaders({
+  //     'Content-Type': 'application/json',
+  //     'x-api-key': Token,
+  //   });
+  //   return this.http.post(`${BASE_URL}DenialMaster/Update`, UpdateData,{headers});
+  // }
 
-  //================REmove Denial=========================
-  removeDenial(id: any) {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'x-api-key': Token,
-    });
-    return this.http.post(`${BASE_URL}DenialMaster/delete/${id}`,{},{headers});
-  }
+  // //================REmove Denial=========================
+  // removeDenial(id: any) {
+  //   const headers = new HttpHeaders({
+  //     'Content-Type': 'application/json',
+  //     'x-api-key': Token,
+  //   });
+  //   return this.http.post(`${BASE_URL}DenialMaster/delete/${id}`,{},{headers});
+  // }
 
   // ===========================================================================
 

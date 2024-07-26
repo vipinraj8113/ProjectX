@@ -5,7 +5,7 @@ import { BaseURL } from '../../services/constant-url.service';
 const BASE_URL = BaseURL;
 const Token = JSON.parse(localStorage.getItem('Token'));
 
- const gender: any = [
+const gender: any = [
   { description: 'Male' },
   { description: 'Female' },
   { description: 'Others' },
@@ -17,7 +17,7 @@ export class MasterReportService {
   constructor(private http: HttpClient) {}
 
   //======FEtch gender data======
-  get_gender_Data():any {
+  get_gender_Data(): any {
     return gender;
   }
   //======Facility Drop down data=====================
@@ -38,7 +38,7 @@ export class MasterReportService {
       'Content-Type': 'application/json',
       'x-api-key': Token,
     });
-    return this.http.post(Url, reqBody,{headers});
+    return this.http.post(Url, reqBody, { headers });
   }
   //=====Add Insurance data========
   Insert_Speciality_Data(
@@ -58,7 +58,7 @@ export class MasterReportService {
       'Content-Type': 'application/json',
       'x-api-key': Token,
     });
-    return this.http.post(url, reqBody,{headers});
+    return this.http.post(url, reqBody, { headers });
   }
 
   //=====Update Insurance data======
@@ -81,7 +81,7 @@ export class MasterReportService {
       'Content-Type': 'application/json',
       'x-api-key': Token,
     });
-    return this.http.post(url, reqBody,{headers});
+    return this.http.post(url, reqBody, { headers });
   }
 
   //=====Remove Insurance Data=====
@@ -90,7 +90,11 @@ export class MasterReportService {
       'Content-Type': 'application/json',
       'x-api-key': Token,
     });
-    return this.http.post(`${BASE_URL}speciality/delete/${id}`, {},{headers});
+    return this.http.post(
+      `${BASE_URL}speciality/delete/${id}`,
+      {},
+      { headers }
+    );
   }
 
   //==========================================INSURANCE MASTER==========================================================
@@ -104,7 +108,7 @@ export class MasterReportService {
       'Content-Type': 'application/json',
       'x-api-key': Token,
     });
-    return this.http.post(Url, reqBody,{headers});
+    return this.http.post(Url, reqBody, { headers });
   }
   //=====Add Insurance data========
   Insert_Insurance_Data(
@@ -122,7 +126,7 @@ export class MasterReportService {
       'Content-Type': 'application/json',
       'x-api-key': Token,
     });
-    return this.http.post(url, reqBody,{headers});
+    return this.http.post(url, reqBody, { headers });
   }
 
   //=====Update Insurance data======
@@ -143,7 +147,7 @@ export class MasterReportService {
       'Content-Type': 'application/json',
       'x-api-key': Token,
     });
-    return this.http.post(url, reqBody,{headers});
+    return this.http.post(url, reqBody, { headers });
   }
 
   //=====Remove Insurance Data=====
@@ -152,7 +156,11 @@ export class MasterReportService {
       'Content-Type': 'application/json',
       'x-api-key': Token,
     });
-    return this.http.post(`${BASE_URL}insurancecompany/delete/${id}`, {},{headers});
+    return this.http.post(
+      `${BASE_URL}insurancecompany/delete/${id}`,
+      {},
+      { headers }
+    );
   }
 
   //===================================================FACILITY====================================================
@@ -166,7 +174,7 @@ export class MasterReportService {
       'Content-Type': 'application/json',
       'x-api-key': Token,
     });
-    return this.http.post(Url, reqBody,{headers});
+    return this.http.post(Url, reqBody, { headers });
   }
 
   //=====Update Facility data====
@@ -195,7 +203,7 @@ export class MasterReportService {
       'Content-Type': 'application/json',
       'x-api-key': Token,
     });
-    return this.http.post(url, reqBody,{headers});
+    return this.http.post(url, reqBody, { headers });
   }
 
   //=====Remove Facility Data=====
@@ -204,7 +212,11 @@ export class MasterReportService {
       'Content-Type': 'application/json',
       'x-api-key': Token,
     });
-    return this.http.post(`${BASE_URL}speciality/delete/${id}`, {},{headers});
+    return this.http.post(
+      `${BASE_URL}speciality/delete/${id}`,
+      {},
+      { headers }
+    );
   }
 
   //================================================FACILITY TYPE=================================================
@@ -218,7 +230,7 @@ export class MasterReportService {
       'Content-Type': 'application/json',
       'x-api-key': Token,
     });
-    return this.http.post(Url, reqBody,{headers});
+    return this.http.post(Url, reqBody, { headers });
   }
   //====Add facility Type data=======
   Insert_FacilityType_Data(FacilityType: any, description: any) {
@@ -231,7 +243,7 @@ export class MasterReportService {
       'Content-Type': 'application/json',
       'x-api-key': Token,
     });
-    return this.http.post(url, reqBody,{headers});
+    return this.http.post(url, reqBody, { headers });
   }
   //====Update Facility Type data====
   update_facilityTYPE_data(id: any, FacilityType: any, description: any) {
@@ -245,7 +257,7 @@ export class MasterReportService {
       'Content-Type': 'application/json',
       'x-api-key': Token,
     });
-    return this.http.post(url, reqBody,{headers});
+    return this.http.post(url, reqBody, { headers });
   }
   //====Remove Facility Type Data=========
   Remove_FacilityType_Row_Data(id: any) {
@@ -253,7 +265,11 @@ export class MasterReportService {
       'Content-Type': 'application/json',
       'x-api-key': Token,
     });
-    return this.http.post(`${BASE_URL}facilitytype/delete/${id}`, {},{headers});
+    return this.http.post(
+      `${BASE_URL}facilitytype/delete/${id}`,
+      {},
+      { headers }
+    );
   }
 
   //===================================================FACILITY GROUP============================================
@@ -266,7 +282,7 @@ export class MasterReportService {
       'Content-Type': 'application/json',
       'x-api-key': Token,
     });
-    return this.http.post(Url, reqBody,{headers});
+    return this.http.post(Url, reqBody, { headers });
   }
   //=====Add facility group data=====
   Insert_FacilityGroup_Data(facilitygroup: any, description: any) {
@@ -279,7 +295,7 @@ export class MasterReportService {
       'Content-Type': 'application/json',
       'x-api-key': Token,
     });
-    return this.http.post(url, reqBody,{headers});
+    return this.http.post(url, reqBody, { headers });
   }
   //=====Update Facility Group data====
   update_facilityGroup_data(id: any, facilitygroup: any, description: any) {
@@ -293,7 +309,7 @@ export class MasterReportService {
       'Content-Type': 'application/json',
       'x-api-key': Token,
     });
-    return this.http.post(url, reqBody,{headers});
+    return this.http.post(url, reqBody, { headers });
   }
   //===Remove Facility Data==========
   Remove_Facility_Group_Data(id: any) {
@@ -301,7 +317,11 @@ export class MasterReportService {
       'Content-Type': 'application/json',
       'x-api-key': Token,
     });
-    return this.http.post(`${BASE_URL}facilitygroup/delete/${id}`, {},{headers});
+    return this.http.post(
+      `${BASE_URL}facilitygroup/delete/${id}`,
+      {},
+      { headers }
+    );
   }
 
   //==========================================CPT MASTER==========================================================
@@ -315,7 +335,7 @@ export class MasterReportService {
       'Content-Type': 'application/json',
       'x-api-key': Token,
     });
-    return this.http.post(Url, reqBody,{headers});
+    return this.http.post(Url, reqBody, { headers });
   }
   //======Add Cpt Master data========
   Insert_CptMaster_Data(
@@ -337,7 +357,7 @@ export class MasterReportService {
       'Content-Type': 'application/json',
       'x-api-key': Token,
     });
-    return this.http.post(url, reqBody,{headers});
+    return this.http.post(url, reqBody, { headers });
   }
 
   //=====Update Cpt Master data======
@@ -362,7 +382,7 @@ export class MasterReportService {
       'Content-Type': 'application/json',
       'x-api-key': Token,
     });
-    return this.http.post(url, reqBody,{headers});
+    return this.http.post(url, reqBody, { headers });
   }
 
   //=====Remove Cpt Master Data==========
@@ -371,7 +391,7 @@ export class MasterReportService {
       'Content-Type': 'application/json',
       'x-api-key': Token,
     });
-    return this.http.post(`${BASE_URL}cptmaster/delete/${id}`, {},{headers});
+    return this.http.post(`${BASE_URL}cptmaster/delete/${id}`, {}, { headers });
   }
 
   //==========================================CPY TYPE MASTER==========================================================
@@ -385,7 +405,7 @@ export class MasterReportService {
       'Content-Type': 'application/json',
       'x-api-key': Token,
     });
-    return this.http.post(Url, reqBody,{headers});
+    return this.http.post(Url, reqBody, { headers });
   }
   //======Add Cpt type data========
   Insert_CptType_Data(CptType: any, description: any) {
@@ -398,7 +418,7 @@ export class MasterReportService {
       'Content-Type': 'application/json',
       'x-api-key': Token,
     });
-    return this.http.post(url, reqBody,{headers});
+    return this.http.post(url, reqBody, { headers });
   }
 
   //=====Update Cpt type data======
@@ -413,7 +433,7 @@ export class MasterReportService {
       'Content-Type': 'application/json',
       'x-api-key': Token,
     });
-    return this.http.post(url, reqBody,{headers});
+    return this.http.post(url, reqBody, { headers });
   }
 
   //=====Remove Cpt type Data==========
@@ -422,9 +442,77 @@ export class MasterReportService {
       'Content-Type': 'application/json',
       'x-api-key': Token,
     });
-    return this.http.post(`${BASE_URL}CPTtype/delete/${id}`, {},{headers});
+    return this.http.post(`${BASE_URL}CPTtype/delete/${id}`, {}, { headers });
+  }
+  //==========================================Denia MASTER==========================================================
+
+  //====================denials Fetching==================
+  getDenialsData() {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'x-api-key': Token,
+    });
+    return this.http.post<any>(`${BASE_URL}DenialMaster/List`, {}, { headers });
   }
 
+  //====================Add Denials========================
+  addDenial(
+    DenialCode: any,
+    Description: any,
+    DenialTypeID: any,
+    DenialCategoryID: any
+  ) {
+    const DenialAddData = {
+      DenialCode,
+      Description,
+      DenialTypeID,
+      DenialCategoryID,
+    };
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'x-api-key': Token,
+    });
+    return this.http.post(`${BASE_URL}DenialMaster/Insert`, DenialAddData, {
+      headers,
+    });
+  }
+
+  //------------update Denial--------------------------
+  updateDenial(
+    ID: any,
+    DenialCode: any,
+    Description: any,
+    DenialTypeID: any,
+    DenialCategoryID: any
+  ) {
+    const UpdateData = {
+      ID,
+      DenialCode,
+      Description,
+      DenialTypeID,
+      DenialCategoryID,
+    };
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'x-api-key': Token,
+    });
+    return this.http.post(`${BASE_URL}DenialMaster/Update`, UpdateData, {
+      headers,
+    });
+  }
+
+  //================REmove Denial=========================
+  removeDenial(id: any) {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'x-api-key': Token,
+    });
+    return this.http.post(
+      `${BASE_URL}DenialMaster/delete/${id}`,
+      {},
+      { headers }
+    );
+  }
   //==========================================Denial TYPE MASTER==========================================================
   //======Denial type List===========
   get_DenialType_List() {
@@ -436,7 +524,7 @@ export class MasterReportService {
       'Content-Type': 'application/json',
       'x-api-key': Token,
     });
-    return this.http.post(Url, reqBody,{headers});
+    return this.http.post(Url, reqBody, { headers });
   }
   //======Add Denial type data========
   Insert_DenialType_Data(DenialType: any, description: any) {
@@ -449,7 +537,7 @@ export class MasterReportService {
       'Content-Type': 'application/json',
       'x-api-key': Token,
     });
-    return this.http.post(url, reqBody,{headers});
+    return this.http.post(url, reqBody, { headers });
   }
 
   //=====Update Denial type data======
@@ -464,7 +552,7 @@ export class MasterReportService {
       'Content-Type': 'application/json',
       'x-api-key': Token,
     });
-    return this.http.post(url, reqBody,{headers});
+    return this.http.post(url, reqBody, { headers });
   }
 
   //=====Remove Denial type Data==========
@@ -473,7 +561,11 @@ export class MasterReportService {
       'Content-Type': 'application/json',
       'x-api-key': Token,
     });
-    return this.http.post(`${BASE_URL}denialtype/delete/${id}`, {},{headers});
+    return this.http.post(
+      `${BASE_URL}denialtype/delete/${id}`,
+      {},
+      { headers }
+    );
   }
 
   //==========================================Denial TYPE MASTER==========================================================
@@ -487,7 +579,7 @@ export class MasterReportService {
       'Content-Type': 'application/json',
       'x-api-key': Token,
     });
-    return this.http.post(Url, reqBody,{headers});
+    return this.http.post(Url, reqBody, { headers });
   }
   //======Add Denial category data========
   Insert_DenialCategory_Data(DenialCategory: any, description: any) {
@@ -500,7 +592,7 @@ export class MasterReportService {
       'Content-Type': 'application/json',
       'x-api-key': Token,
     });
-    return this.http.post(url, reqBody,{headers});
+    return this.http.post(url, reqBody, { headers });
   }
 
   //=====Update Denial category data======
@@ -515,7 +607,7 @@ export class MasterReportService {
       'Content-Type': 'application/json',
       'x-api-key': Token,
     });
-    return this.http.post(url, reqBody,{headers});
+    return this.http.post(url, reqBody, { headers });
   }
 
   //=====Remove Denial category Data==========
@@ -524,7 +616,11 @@ export class MasterReportService {
       'Content-Type': 'application/json',
       'x-api-key': Token,
     });
-    return this.http.post(`${BASE_URL}denialcategory/delete/${id}`, {},{headers});
+    return this.http.post(
+      `${BASE_URL}denialcategory/delete/${id}`,
+      {},
+      { headers }
+    );
   }
   //========================================================CLINICIAN=========================================================
   //===========Get all data list========
@@ -537,7 +633,7 @@ export class MasterReportService {
       'Content-Type': 'application/json',
       'x-api-key': Token,
     });
-    return this.http.post(Url, reqBody,{headers});
+    return this.http.post(Url, reqBody, { headers });
   }
 
   //=======insert data ==========
@@ -566,7 +662,7 @@ export class MasterReportService {
       'Content-Type': 'application/json',
       'x-api-key': Token,
     });
-    return this.http.post(url, reqBody,{headers});
+    return this.http.post(url, reqBody, { headers });
   }
 
   //=====Update Denial category data======
@@ -597,7 +693,7 @@ export class MasterReportService {
       'Content-Type': 'application/json',
       'x-api-key': Token,
     });
-    return this.http.post(url, reqBody,{headers});
+    return this.http.post(url, reqBody, { headers });
   }
 
   //=====Remove Denial category Data==========
@@ -606,7 +702,7 @@ export class MasterReportService {
       'Content-Type': 'application/json',
       'x-api-key': Token,
     });
-    return this.http.post(`${BASE_URL}clinician/delete/${id}`, {},{headers});
+    return this.http.post(`${BASE_URL}clinician/delete/${id}`, {}, { headers });
   }
 
   //===================================================INSURANCE CLASSIFICATION============================================
@@ -619,7 +715,7 @@ export class MasterReportService {
       'Content-Type': 'application/json',
       'x-api-key': Token,
     });
-    return this.http.post(Url, reqBody,{headers});
+    return this.http.post(Url, reqBody, { headers });
   }
   //=====Add CLASSIFICATION data=====
   Insert_InsuranceClassification_Data(Classification: any, description: any) {
@@ -632,7 +728,7 @@ export class MasterReportService {
       'Content-Type': 'application/json',
       'x-api-key': Token,
     });
-    return this.http.post(url, reqBody,{headers});
+    return this.http.post(url, reqBody, { headers });
   }
   //=====Update CLASSIFICATION data====
   update_InsuranceClassification_data(
@@ -650,7 +746,7 @@ export class MasterReportService {
       'Content-Type': 'application/json',
       'x-api-key': Token,
     });
-    return this.http.post(url, reqBody,{headers});
+    return this.http.post(url, reqBody, { headers });
   }
   //===Remove CLASSIFICATION Data==========
   Remove_InsuranceClassification_Data(id: any) {
@@ -660,7 +756,8 @@ export class MasterReportService {
     });
     return this.http.post(
       `${BASE_URL}insuranceclassification/delete/${id}`,
-      {},{headers}
+      {},
+      { headers }
     );
   }
 
@@ -674,7 +771,7 @@ export class MasterReportService {
       'Content-Type': 'application/json',
       'x-api-key': Token,
     });
-    return this.http.post(Url, reqBody,{headers});
+    return this.http.post(Url, reqBody, { headers });
   }
   //=====Add clinicianprofession data=====
   Insert_ClinicianProfession_Data(Profession: any, description: any) {
@@ -687,7 +784,7 @@ export class MasterReportService {
       'Content-Type': 'application/json',
       'x-api-key': Token,
     });
-    return this.http.post(url, reqBody,{headers});
+    return this.http.post(url, reqBody, { headers });
   }
   //=====Update clinicianprofession data====
   update_ClinicianProfession_data(id: any, Profession: any, description: any) {
@@ -701,7 +798,7 @@ export class MasterReportService {
       'Content-Type': 'application/json',
       'x-api-key': Token,
     });
-    return this.http.post(url, reqBody,{headers});
+    return this.http.post(url, reqBody, { headers });
   }
   //===Remove clinician profession Data==========
   remove_ClinicianProfession(id: any) {
@@ -722,7 +819,7 @@ export class MasterReportService {
       'Content-Type': 'application/json',
       'x-api-key': Token,
     });
-    return this.http.post(Url, reqBody,{headers});
+    return this.http.post(Url, reqBody, { headers });
   }
   //=====Add clinician Major data=====
   Insert_ClinicianMajor_Data(Major: any, description: any) {
@@ -735,7 +832,7 @@ export class MasterReportService {
       'Content-Type': 'application/json',
       'x-api-key': Token,
     });
-    return this.http.post(url, reqBody,{headers});
+    return this.http.post(url, reqBody, { headers });
   }
   //=====Update clinician Major data====
   update_ClinicianMajor_data(id: any, Major: any, description: any) {
@@ -749,7 +846,7 @@ export class MasterReportService {
       'Content-Type': 'application/json',
       'x-api-key': Token,
     });
-    return this.http.post(url, reqBody,{headers});
+    return this.http.post(url, reqBody, { headers });
   }
   //===Remove clinicianMajor Data==========
   remove_ClinicianMajor(id: any) {
@@ -770,7 +867,7 @@ export class MasterReportService {
       'Content-Type': 'application/json',
       'x-api-key': Token,
     });
-    return this.http.post(Url, reqBody,{headers});
+    return this.http.post(Url, reqBody, { headers });
   }
   //=====Add clinician Category data=====
   Insert_ClinicianCategory_Data(Category: any, description: any) {
@@ -783,7 +880,7 @@ export class MasterReportService {
       'Content-Type': 'application/json',
       'x-api-key': Token,
     });
-    return this.http.post(url, reqBody,{headers});
+    return this.http.post(url, reqBody, { headers });
   }
   //=====Update clinician category data====
   update_ClinicianCategory_data(id: any, Category: any, description: any) {
@@ -797,7 +894,7 @@ export class MasterReportService {
       'Content-Type': 'application/json',
       'x-api-key': Token,
     });
-    return this.http.post(url, reqBody,{headers});
+    return this.http.post(url, reqBody, { headers });
   }
   //===Remove cliniciancategory Data==========
   remove_ClinicianCategory(id: any) {

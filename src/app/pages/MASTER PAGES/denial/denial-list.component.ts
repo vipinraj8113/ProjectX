@@ -26,7 +26,7 @@ import {
 import { DxLookupModule } from 'devextreme-angular';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ReportService } from 'src/app/services/Report-data.service';
-
+import { MasterReportService } from '../master-report.service';
 interface dropdownData {
   ID: string;
   Description: string;
@@ -52,7 +52,7 @@ export class DenialListComponent {
   Denial_Type_DropDownData: dropdownData[];
   Denial_category_DropDownData: dropdownData[];
   ID: any;
-  isFilterOpened=true
+  isFilterOpened = true;
   //========Variables for Pagination ====================
   readonly allowedPageSizes: any = [5, 10, 'all'];
   displayMode: any = 'full';
@@ -72,13 +72,12 @@ export class DenialListComponent {
   GridSource: any;
 
   constructor(
-    private service: DataService,
+    private service: MasterReportService,
     private router: Router,
     private route: ActivatedRoute,
     private reportservice: ReportService
   ) {
-    this.getDenial_Type_DropDown();
-    this.getDenial_Category_DropDown();
+    this.getDenial_DropDown();
   }
 
   //=====================Search on Each Column===========
@@ -99,6 +98,25 @@ export class DenialListComponent {
     this.reportservice.exportDataGrid(e);
   }
 
+  //=============Get Denial Type Drop dwn Data==============================
+  getDenial_DropDown() {
+    this.service.Get_GropDown('DENIALTYPE').subscribe((data: any) => {
+      this.Denial_Type_DropDownData = data;
+    });
+
+    this.service.Get_GropDown('DENIALCATEGORY').subscribe((data: any) => {
+      this.Denial_category_DropDownData = data;
+    });
+  }
+
+  // //=============Get Denial Type Drop dwn Data==============================
+  // getDenial_Category_DropDown() {
+  //   let dropdownType = 'DENIALCATEGORY';
+  //   this.service.Get_GropDown(dropdownType).subscribe((data: any) => {
+  //     this.Denial_category_DropDownData = data;
+  //   });
+  // }
+
   //============ADD NEW DENIALS======================
 
   onClickSaveNewDenial = () => {
@@ -116,7 +134,7 @@ export class DenialListComponent {
             },
             'success'
           );
-          this.denialComponent.reset_NewDenialFormData()
+          this.denialComponent.reset_NewDenialFormData();
         } else {
           notify(
             {
@@ -202,27 +220,6 @@ export class DenialListComponent {
       event.component.refresh();
       this.dataGrid.instance.refresh();
     });
-  }
-
-  //=============Get Denial Type Drop dwn Data==============================
-  getDenial_Type_DropDown() {
-    let dropdownType = 'DENIALTYPE';
-    this.service
-      .get_Denial_Dropdown_Data(dropdownType)
-      .subscribe((data: any) => {
-        this.Denial_Type_DropDownData = data;
-        // console.log('drop down dataaaaaaaaa', this.Denial_Type_DropDownData);
-      });
-  }
-
-  //=============Get Denial Type Drop dwn Data==============================
-  getDenial_Category_DropDown() {
-    let dropdownType = 'DENIALCATEGORY';
-    this.service
-      .get_Denial_Dropdown_Data(dropdownType)
-      .subscribe((data: any) => {
-        this.Denial_category_DropDownData = data;
-      });
   }
 }
 

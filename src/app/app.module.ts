@@ -10,7 +10,7 @@ import {
   ChangePasswordFormModule,
   LoginFormModule,
 } from './components';
-
+import { HttpClientModule } from '@angular/common/http';
 import { AuthService, ScreenService, AppInfoService } from './services';
 import { UnauthenticatedContentModule } from './layouts/unauthenticated-content/unauthenticated-content';
 import { AppRoutingModule } from './app-routing.module';
@@ -59,6 +59,7 @@ import { ResubmissionSummaryComponent } from './pages/REPORT PAGES/resubmission-
     DxFormModule,
     ReactiveFormsModule,
     AppRoutingModule,
+    HttpClientModule
   ],
   providers: [AuthService, ScreenService, AppInfoService, ThemeService],
   bootstrap: [AppComponent],
