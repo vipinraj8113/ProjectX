@@ -34,11 +34,11 @@ export class MasterReportService {
     const reqBody = {
       list: [],
     };
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'x-api-key': Token,
-    });
-    return this.http.post(Url, reqBody, { headers });
+    // const headers = new HttpHeaders({
+    //   'Content-Type': 'application/json',
+    //   'x-api-key': Token,
+    // });
+    return this.http.post(Url, reqBody);
   }
   //=====Add Insurance data========
   Insert_Speciality_Data(
@@ -54,11 +54,11 @@ export class MasterReportService {
       SpecialityShortName: SpecialityShortName,
       Description: Description,
     };
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'x-api-key': Token,
-    });
-    return this.http.post(url, reqBody, { headers });
+    // const headers = new HttpHeaders({
+    //   'Content-Type': 'application/json',
+    //   'x-api-key': Token,
+    // });
+    return this.http.post(url, reqBody);
   }
 
   //=====Update Insurance data======
@@ -77,24 +77,20 @@ export class MasterReportService {
       SpecialityShortName: SpecialityShortName,
       Description: Description,
     };
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'x-api-key': Token,
-    });
-    return this.http.post(url, reqBody, { headers });
+    // const headers = new HttpHeaders({
+    //   'Content-Type': 'application/json',
+    //   'x-api-key': Token,
+    // });
+    return this.http.post(url, reqBody);
   }
 
   //=====Remove Insurance Data=====
   Remove_Speciality_Row_Data(id: any) {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'x-api-key': Token,
-    });
-    return this.http.post(
-      `${BASE_URL}speciality/delete/${id}`,
-      {},
-      { headers }
-    );
+    // const headers = new HttpHeaders({
+    //   'Content-Type': 'application/json',
+    //   'x-api-key': Token,
+    // });
+    return this.http.post(`${BASE_URL}speciality/delete/${id}`, {});
   }
 
   //==========================================INSURANCE MASTER==========================================================
@@ -104,11 +100,11 @@ export class MasterReportService {
     const reqBody = {
       list: [],
     };
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'x-api-key': Token,
-    });
-    return this.http.post(Url, reqBody, { headers });
+    // const headers = new HttpHeaders({
+    //   'Content-Type': 'application/json',
+    //   'x-api-key': Token,
+    // });
+    return this.http.post(Url, reqBody);
   }
   //=====Add Insurance data========
   Insert_Insurance_Data(
@@ -122,11 +118,11 @@ export class MasterReportService {
       InsuranceName: InsuranceName,
       InsuranceShortName: InsuranceShortName,
     };
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'x-api-key': Token,
-    });
-    return this.http.post(url, reqBody, { headers });
+    // const headers = new HttpHeaders({
+    //   'Content-Type': 'application/json',
+    //   'x-api-key': Token,
+    // });
+    return this.http.post(url, reqBody);
   }
 
   //=====Update Insurance data======
@@ -143,24 +139,20 @@ export class MasterReportService {
       InsuranceName: InsuranceName,
       InsuranceShortName: InsuranceShortName,
     };
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'x-api-key': Token,
-    });
-    return this.http.post(url, reqBody, { headers });
+    // const headers = new HttpHeaders({
+    //   'Content-Type': 'application/json',
+    //   'x-api-key': Token,
+    // });
+    return this.http.post(url, reqBody);
   }
 
   //=====Remove Insurance Data=====
   Remove_Insurance_Row_Data(id: any) {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'x-api-key': Token,
-    });
-    return this.http.post(
-      `${BASE_URL}insurancecompany/delete/${id}`,
-      {},
-      { headers }
-    );
+    // const headers = new HttpHeaders({
+    //   'Content-Type': 'application/json',
+    //   'x-api-key': Token,
+    // });
+    return this.http.post(`${BASE_URL}insurancecompany/delete/${id}`, {});
   }
 
   //===================================================FACILITY====================================================
@@ -170,11 +162,11 @@ export class MasterReportService {
     const reqBody = {
       list: [],
     };
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'x-api-key': Token,
-    });
-    return this.http.post(Url, reqBody, { headers });
+    // const headers = new HttpHeaders({
+    //   'Content-Type': 'application/json',
+    //   'x-api-key': Token,
+    // });
+    return this.http.post(Url, reqBody);
   }
 
   //=====Update Facility data====
@@ -199,24 +191,20 @@ export class MasterReportService {
       FacilityAddress: FacilityAddress,
       PostOfficeID: PostOfficeID,
     };
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'x-api-key': Token,
-    });
-    return this.http.post(url, reqBody, { headers });
+    // const headers = new HttpHeaders({
+    //   'Content-Type': 'application/json',
+    //   'x-api-key': Token,
+    // });
+    return this.http.post(url, reqBody);
   }
 
   //=====Remove Facility Data=====
   Remove_Facility_Row_Data(id: any) {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'x-api-key': Token,
-    });
-    return this.http.post(
-      `${BASE_URL}speciality/delete/${id}`,
-      {},
-      { headers }
-    );
+    // const headers = new HttpHeaders({
+    //   'Content-Type': 'application/json',
+    //   'x-api-key': Token,
+    // });
+    return this.http.post(`${BASE_URL}speciality/delete/${id}`, {});
   }
 
   //================================================FACILITY TYPE=================================================
@@ -226,11 +214,11 @@ export class MasterReportService {
     const reqBody = {
       list: [],
     };
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'x-api-key': Token,
-    });
-    return this.http.post(Url, reqBody, { headers });
+    // const headers = new HttpHeaders({
+    //   'Content-Type': 'application/json',
+    //   'x-api-key': Token,
+    // });
+    return this.http.post(Url, reqBody);
   }
   //====Add facility Type data=======
   Insert_FacilityType_Data(FacilityType: any, description: any) {
@@ -239,11 +227,11 @@ export class MasterReportService {
       FacilityType: FacilityType,
       Description: description,
     };
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'x-api-key': Token,
-    });
-    return this.http.post(url, reqBody, { headers });
+    // const headers = new HttpHeaders({
+    //   'Content-Type': 'application/json',
+    //   'x-api-key': Token,
+    // });
+    return this.http.post(url, reqBody);
   }
   //====Update Facility Type data====
   update_facilityTYPE_data(id: any, FacilityType: any, description: any) {
@@ -253,23 +241,19 @@ export class MasterReportService {
       FacilityType: FacilityType,
       Description: description,
     };
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'x-api-key': Token,
-    });
-    return this.http.post(url, reqBody, { headers });
+    // const headers = new HttpHeaders({
+    //   'Content-Type': 'application/json',
+    //   'x-api-key': Token,
+    // });
+    return this.http.post(url, reqBody);
   }
   //====Remove Facility Type Data=========
   Remove_FacilityType_Row_Data(id: any) {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'x-api-key': Token,
-    });
-    return this.http.post(
-      `${BASE_URL}facilitytype/delete/${id}`,
-      {},
-      { headers }
-    );
+    // const headers = new HttpHeaders({
+    //   'Content-Type': 'application/json',
+    //   'x-api-key': Token,
+    // });
+    return this.http.post(`${BASE_URL}facilitytype/delete/${id}`, {});
   }
 
   //===================================================FACILITY GROUP============================================
@@ -278,11 +262,11 @@ export class MasterReportService {
     const reqBody = {
       list: [],
     };
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'x-api-key': Token,
-    });
-    return this.http.post(Url, reqBody, { headers });
+    // const headers = new HttpHeaders({
+    //   'Content-Type': 'application/json',
+    //   'x-api-key': Token,
+    // });
+    return this.http.post(Url, reqBody);
   }
   //=====Add facility group data=====
   Insert_FacilityGroup_Data(facilitygroup: any, description: any) {
@@ -291,11 +275,11 @@ export class MasterReportService {
       FacilityGroup: facilitygroup,
       Description: description,
     };
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'x-api-key': Token,
-    });
-    return this.http.post(url, reqBody, { headers });
+    // const headers = new HttpHeaders({
+    //   'Content-Type': 'application/json',
+    //   'x-api-key': Token,
+    // });
+    return this.http.post(url, reqBody);
   }
   //=====Update Facility Group data====
   update_facilityGroup_data(id: any, facilitygroup: any, description: any) {
@@ -305,23 +289,19 @@ export class MasterReportService {
       FacilityGroup: facilitygroup,
       Description: description,
     };
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'x-api-key': Token,
-    });
-    return this.http.post(url, reqBody, { headers });
+    // const headers = new HttpHeaders({
+    //   'Content-Type': 'application/json',
+    //   'x-api-key': Token,
+    // });
+    return this.http.post(url, reqBody);
   }
   //===Remove Facility Data==========
   Remove_Facility_Group_Data(id: any) {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'x-api-key': Token,
-    });
-    return this.http.post(
-      `${BASE_URL}facilitygroup/delete/${id}`,
-      {},
-      { headers }
-    );
+    // const headers = new HttpHeaders({
+    //   'Content-Type': 'application/json',
+    //   'x-api-key': Token,
+    // });
+    return this.http.post(`${BASE_URL}facilitygroup/delete/${id}`, {});
   }
 
   //==========================================CPT MASTER==========================================================
@@ -331,11 +311,11 @@ export class MasterReportService {
     const reqBody = {
       list: [],
     };
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'x-api-key': Token,
-    });
-    return this.http.post(Url, reqBody, { headers });
+    // const headers = new HttpHeaders({
+    //   'Content-Type': 'application/json',
+    //   'x-api-key': Token,
+    // });
+    return this.http.post(Url, reqBody);
   }
   //======Add Cpt Master data========
   Insert_CptMaster_Data(
@@ -353,11 +333,11 @@ export class MasterReportService {
       CPTName: CPTName,
       Description: description,
     };
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'x-api-key': Token,
-    });
-    return this.http.post(url, reqBody, { headers });
+    // const headers = new HttpHeaders({
+    //   'Content-Type': 'application/json',
+    //   'x-api-key': Token,
+    // });
+    return this.http.post(url, reqBody);
   }
 
   //=====Update Cpt Master data======
@@ -378,20 +358,20 @@ export class MasterReportService {
       CPTName: CPTName,
       Description: description,
     };
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'x-api-key': Token,
-    });
-    return this.http.post(url, reqBody, { headers });
+    // const headers = new HttpHeaders({
+    //   'Content-Type': 'application/json',
+    //   'x-api-key': Token,
+    // });
+    return this.http.post(url, reqBody);
   }
 
   //=====Remove Cpt Master Data==========
   Remove_CptMaster_Row_Data(id: any) {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'x-api-key': Token,
-    });
-    return this.http.post(`${BASE_URL}cptmaster/delete/${id}`, {}, { headers });
+    // const headers = new HttpHeaders({
+    //   'Content-Type': 'application/json',
+    //   'x-api-key': Token,
+    // });
+    return this.http.post(`${BASE_URL}cptmaster/delete/${id}`, {});
   }
 
   //==========================================CPY TYPE MASTER==========================================================
@@ -401,11 +381,11 @@ export class MasterReportService {
     const reqBody = {
       list: [],
     };
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'x-api-key': Token,
-    });
-    return this.http.post(Url, reqBody, { headers });
+    // const headers = new HttpHeaders({
+    //   'Content-Type': 'application/json',
+    //   'x-api-key': Token,
+    // });
+    return this.http.post(Url, reqBody);
   }
   //======Add Cpt type data========
   Insert_CptType_Data(CptType: any, description: any) {
@@ -414,11 +394,11 @@ export class MasterReportService {
       CptType: CptType,
       Description: description,
     };
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'x-api-key': Token,
-    });
-    return this.http.post(url, reqBody, { headers });
+    // const headers = new HttpHeaders({
+    //   'Content-Type': 'application/json',
+    //   'x-api-key': Token,
+    // });
+    return this.http.post(url, reqBody);
   }
 
   //=====Update Cpt type data======
@@ -429,30 +409,30 @@ export class MasterReportService {
       CptType: CptType,
       Description: Description,
     };
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'x-api-key': Token,
-    });
-    return this.http.post(url, reqBody, { headers });
+    // const headers = new HttpHeaders({
+    //   'Content-Type': 'application/json',
+    //   'x-api-key': Token,
+    // });
+    return this.http.post(url, reqBody);
   }
 
   //=====Remove Cpt type Data==========
   Remove_CPTType_Row_Data(id: any) {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'x-api-key': Token,
-    });
-    return this.http.post(`${BASE_URL}CPTtype/delete/${id}`, {}, { headers });
+    // const headers = new HttpHeaders({
+    //   'Content-Type': 'application/json',
+    //   'x-api-key': Token,
+    // });
+    return this.http.post(`${BASE_URL}CPTtype/delete/${id}`, {});
   }
   //==========================================Denia MASTER==========================================================
 
   //====================denials Fetching==================
   getDenialsData() {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'x-api-key': Token,
-    });
-    return this.http.post<any>(`${BASE_URL}DenialMaster/List`, {}, { headers });
+    // const headers = new HttpHeaders({
+    //   'Content-Type': 'application/json',
+    //   'x-api-key': Token,
+    // });
+    return this.http.post<any>(`${BASE_URL}DenialMaster/List`, {});
   }
 
   //====================Add Denials========================
@@ -468,13 +448,11 @@ export class MasterReportService {
       DenialTypeID,
       DenialCategoryID,
     };
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'x-api-key': Token,
-    });
-    return this.http.post(`${BASE_URL}DenialMaster/Insert`, DenialAddData, {
-      headers,
-    });
+    // const headers = new HttpHeaders({
+    //   'Content-Type': 'application/json',
+    //   'x-api-key': Token,
+    // });
+    return this.http.post(`${BASE_URL}DenialMaster/Insert`, DenialAddData);
   }
 
   //------------update Denial--------------------------
@@ -492,26 +470,20 @@ export class MasterReportService {
       DenialTypeID,
       DenialCategoryID,
     };
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'x-api-key': Token,
-    });
-    return this.http.post(`${BASE_URL}DenialMaster/Update`, UpdateData, {
-      headers,
-    });
+    // const headers = new HttpHeaders({
+    //   'Content-Type': 'application/json',
+    //   'x-api-key': Token,
+    // });
+    return this.http.post(`${BASE_URL}DenialMaster/Update`, UpdateData);
   }
 
   //================REmove Denial=========================
   removeDenial(id: any) {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'x-api-key': Token,
-    });
-    return this.http.post(
-      `${BASE_URL}DenialMaster/delete/${id}`,
-      {},
-      { headers }
-    );
+    // const headers = new HttpHeaders({
+    //   'Content-Type': 'application/json',
+    //   'x-api-key': Token,
+    // });
+    return this.http.post(`${BASE_URL}DenialMaster/delete/${id}`, {});
   }
   //==========================================Denial TYPE MASTER==========================================================
   //======Denial type List===========
@@ -520,11 +492,11 @@ export class MasterReportService {
     const reqBody = {
       list: [],
     };
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'x-api-key': Token,
-    });
-    return this.http.post(Url, reqBody, { headers });
+    // const headers = new HttpHeaders({
+    //   'Content-Type': 'application/json',
+    //   'x-api-key': Token,
+    // });
+    return this.http.post(Url, reqBody);
   }
   //======Add Denial type data========
   Insert_DenialType_Data(DenialType: any, description: any) {
@@ -533,11 +505,11 @@ export class MasterReportService {
       DenialType: DenialType,
       Description: description,
     };
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'x-api-key': Token,
-    });
-    return this.http.post(url, reqBody, { headers });
+    // const headers = new HttpHeaders({
+    //   'Content-Type': 'application/json',
+    //   'x-api-key': Token,
+    // });
+    return this.http.post(url, reqBody);
   }
 
   //=====Update Denial type data======
@@ -548,24 +520,20 @@ export class MasterReportService {
       DenialType: DenialType,
       Description: Description,
     };
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'x-api-key': Token,
-    });
-    return this.http.post(url, reqBody, { headers });
+    // const headers = new HttpHeaders({
+    //   'Content-Type': 'application/json',
+    //   'x-api-key': Token,
+    // });
+    return this.http.post(url, reqBody);
   }
 
   //=====Remove Denial type Data==========
   Remove_DenialType_Row_Data(id: any) {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'x-api-key': Token,
-    });
-    return this.http.post(
-      `${BASE_URL}denialtype/delete/${id}`,
-      {},
-      { headers }
-    );
+    // const headers = new HttpHeaders({
+    //   'Content-Type': 'application/json',
+    //   'x-api-key': Token,
+    // });
+    return this.http.post(`${BASE_URL}denialtype/delete/${id}`, {});
   }
 
   //==========================================Denial TYPE MASTER==========================================================
@@ -575,11 +543,11 @@ export class MasterReportService {
     const reqBody = {
       list: [],
     };
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'x-api-key': Token,
-    });
-    return this.http.post(Url, reqBody, { headers });
+    // const headers = new HttpHeaders({
+    //   'Content-Type': 'application/json',
+    //   'x-api-key': Token,
+    // });
+    return this.http.post(Url, reqBody);
   }
   //======Add Denial category data========
   Insert_DenialCategory_Data(DenialCategory: any, description: any) {
@@ -588,11 +556,11 @@ export class MasterReportService {
       DenialCategorys: DenialCategory,
       Description: description,
     };
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'x-api-key': Token,
-    });
-    return this.http.post(url, reqBody, { headers });
+    // const headers = new HttpHeaders({
+    //   'Content-Type': 'application/json',
+    //   'x-api-key': Token,
+    // });
+    return this.http.post(url, reqBody);
   }
 
   //=====Update Denial category data======
@@ -603,24 +571,20 @@ export class MasterReportService {
       DenialCategorys: DenialCategory,
       Description: Description,
     };
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'x-api-key': Token,
-    });
-    return this.http.post(url, reqBody, { headers });
+    // const headers = new HttpHeaders({
+    //   'Content-Type': 'application/json',
+    //   'x-api-key': Token,
+    // });
+    return this.http.post(url, reqBody);
   }
 
   //=====Remove Denial category Data==========
   Remove_DenialCategory_Row_Data(id: any) {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'x-api-key': Token,
-    });
-    return this.http.post(
-      `${BASE_URL}denialcategory/delete/${id}`,
-      {},
-      { headers }
-    );
+    // const headers = new HttpHeaders({
+    //   'Content-Type': 'application/json',
+    //   'x-api-key': Token,
+    // });
+    return this.http.post(`${BASE_URL}denialcategory/delete/${id}`, {});
   }
   //========================================================CLINICIAN=========================================================
   //===========Get all data list========
@@ -629,11 +593,7 @@ export class MasterReportService {
     const reqBody = {
       list: [],
     };
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'x-api-key': Token,
-    });
-    return this.http.post(Url, reqBody, { headers });
+    return this.http.post(Url, reqBody);
   }
 
   //=======insert data ==========
@@ -658,11 +618,11 @@ export class MasterReportService {
       CategoryID: CategoryID,
       Gender: Gender,
     };
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'x-api-key': Token,
-    });
-    return this.http.post(url, reqBody, { headers });
+    // const headers = new HttpHeaders({
+    //   'Content-Type': 'application/json',
+    //   'x-api-key': Token,
+    // });
+    return this.http.post(url, reqBody);
   }
 
   //=====Update Denial category data======
@@ -689,20 +649,20 @@ export class MasterReportService {
       CategoryID: CategoryID,
       Gender: Gender,
     };
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'x-api-key': Token,
-    });
-    return this.http.post(url, reqBody, { headers });
+    // const headers = new HttpHeaders({
+    //   'Content-Type': 'application/json',
+    //   'x-api-key': Token,
+    // });
+    return this.http.post(url, reqBody);
   }
 
   //=====Remove Denial category Data==========
   Remove_Clinician_Row_Data(id: any) {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'x-api-key': Token,
-    });
-    return this.http.post(`${BASE_URL}clinician/delete/${id}`, {}, { headers });
+    // const headers = new HttpHeaders({
+    //   'Content-Type': 'application/json',
+    //   'x-api-key': Token,
+    // });
+    return this.http.post(`${BASE_URL}clinician/delete/${id}`, {});
   }
 
   //===================================================INSURANCE CLASSIFICATION============================================
@@ -711,11 +671,11 @@ export class MasterReportService {
     const reqBody = {
       list: [],
     };
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'x-api-key': Token,
-    });
-    return this.http.post(Url, reqBody, { headers });
+    // const headers = new HttpHeaders({
+    //   'Content-Type': 'application/json',
+    //   'x-api-key': Token,
+    // });
+    return this.http.post(Url, reqBody);
   }
   //=====Add CLASSIFICATION data=====
   Insert_InsuranceClassification_Data(Classification: any, description: any) {
@@ -724,11 +684,11 @@ export class MasterReportService {
       Classification: Classification,
       Description: description,
     };
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'x-api-key': Token,
-    });
-    return this.http.post(url, reqBody, { headers });
+    // const headers = new HttpHeaders({
+    //   'Content-Type': 'application/json',
+    //   'x-api-key': Token,
+    // });
+    return this.http.post(url, reqBody);
   }
   //=====Update CLASSIFICATION data====
   update_InsuranceClassification_data(
@@ -742,22 +702,21 @@ export class MasterReportService {
       Classification: Classification,
       Description: description,
     };
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'x-api-key': Token,
-    });
-    return this.http.post(url, reqBody, { headers });
+    // const headers = new HttpHeaders({
+    //   'Content-Type': 'application/json',
+    //   'x-api-key': Token,
+    // });
+    return this.http.post(url, reqBody);
   }
   //===Remove CLASSIFICATION Data==========
   Remove_InsuranceClassification_Data(id: any) {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'x-api-key': Token,
-    });
+    // const headers = new HttpHeaders({
+    //   'Content-Type': 'application/json',
+    //   'x-api-key': Token,
+    // });
     return this.http.post(
       `${BASE_URL}insuranceclassification/delete/${id}`,
-      {},
-      { headers }
+      {}
     );
   }
 
@@ -767,11 +726,11 @@ export class MasterReportService {
     const reqBody = {
       list: [],
     };
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'x-api-key': Token,
-    });
-    return this.http.post(Url, reqBody, { headers });
+    // const headers = new HttpHeaders({
+    //   'Content-Type': 'application/json',
+    //   'x-api-key': Token,
+    // });
+    return this.http.post(Url, reqBody);
   }
   //=====Add clinicianprofession data=====
   Insert_ClinicianProfession_Data(Profession: any, description: any) {
@@ -780,11 +739,11 @@ export class MasterReportService {
       Profession: Profession,
       Description: description,
     };
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'x-api-key': Token,
-    });
-    return this.http.post(url, reqBody, { headers });
+    // const headers = new HttpHeaders({
+    //   'Content-Type': 'application/json',
+    //   'x-api-key': Token,
+    // });
+    return this.http.post(url, reqBody);
   }
   //=====Update clinicianprofession data====
   update_ClinicianProfession_data(id: any, Profession: any, description: any) {
@@ -794,18 +753,18 @@ export class MasterReportService {
       Profession: Profession,
       Description: description,
     };
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'x-api-key': Token,
-    });
-    return this.http.post(url, reqBody, { headers });
+    // const headers = new HttpHeaders({
+    //   'Content-Type': 'application/json',
+    //   'x-api-key': Token,
+    // });
+    return this.http.post(url, reqBody);
   }
   //===Remove clinician profession Data==========
   remove_ClinicianProfession(id: any) {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'x-api-key': Token,
-    });
+    // const headers = new HttpHeaders({
+    //   'Content-Type': 'application/json',
+    //   'x-api-key': Token,
+    // });
     return this.http.post(`${BASE_URL}clinicianprofession/delete/${id}`, {});
   }
 
@@ -815,11 +774,11 @@ export class MasterReportService {
     const reqBody = {
       list: [],
     };
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'x-api-key': Token,
-    });
-    return this.http.post(Url, reqBody, { headers });
+    // const headers = new HttpHeaders({
+    //   'Content-Type': 'application/json',
+    //   'x-api-key': Token,
+    // });
+    return this.http.post(Url, reqBody);
   }
   //=====Add clinician Major data=====
   Insert_ClinicianMajor_Data(Major: any, description: any) {
@@ -828,11 +787,11 @@ export class MasterReportService {
       Major: Major,
       Description: description,
     };
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'x-api-key': Token,
-    });
-    return this.http.post(url, reqBody, { headers });
+    // const headers = new HttpHeaders({
+    //   'Content-Type': 'application/json',
+    //   'x-api-key': Token,
+    // });
+    return this.http.post(url, reqBody);
   }
   //=====Update clinician Major data====
   update_ClinicianMajor_data(id: any, Major: any, description: any) {
@@ -842,18 +801,18 @@ export class MasterReportService {
       Major: Major,
       Description: description,
     };
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'x-api-key': Token,
-    });
-    return this.http.post(url, reqBody, { headers });
+    // const headers = new HttpHeaders({
+    //   'Content-Type': 'application/json',
+    //   'x-api-key': Token,
+    // });
+    return this.http.post(url, reqBody);
   }
   //===Remove clinicianMajor Data==========
   remove_ClinicianMajor(id: any) {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'x-api-key': Token,
-    });
+    // const headers = new HttpHeaders({
+    //   'Content-Type': 'application/json',
+    //   'x-api-key': Token,
+    // });
     return this.http.post(`${BASE_URL}clinicianmajor/delete/${id}`, {});
   }
 
@@ -863,11 +822,11 @@ export class MasterReportService {
     const reqBody = {
       list: [],
     };
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'x-api-key': Token,
-    });
-    return this.http.post(Url, reqBody, { headers });
+    // const headers = new HttpHeaders({
+    //   'Content-Type': 'application/json',
+    //   'x-api-key': Token,
+    // });
+    return this.http.post(Url, reqBody);
   }
   //=====Add clinician Category data=====
   Insert_ClinicianCategory_Data(Category: any, description: any) {
@@ -876,11 +835,11 @@ export class MasterReportService {
       Category: Category,
       Description: description,
     };
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'x-api-key': Token,
-    });
-    return this.http.post(url, reqBody, { headers });
+    // const headers = new HttpHeaders({
+    //   'Content-Type': 'application/json',
+    //   'x-api-key': Token,
+    // });
+    return this.http.post(url, reqBody);
   }
   //=====Update clinician category data====
   update_ClinicianCategory_data(id: any, Category: any, description: any) {
@@ -890,18 +849,18 @@ export class MasterReportService {
       Category: Category,
       Description: description,
     };
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'x-api-key': Token,
-    });
-    return this.http.post(url, reqBody, { headers });
+    // const headers = new HttpHeaders({
+    //   'Content-Type': 'application/json',
+    //   'x-api-key': Token,
+    // });
+    return this.http.post(url, reqBody);
   }
   //===Remove cliniciancategory Data==========
   remove_ClinicianCategory(id: any) {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'x-api-key': Token,
-    });
+    // const headers = new HttpHeaders({
+    //   'Content-Type': 'application/json',
+    //   'x-api-key': Token,
+    // });
     return this.http.post(`${BASE_URL}cliniciancategory/delete/${id}`, {});
   }
 }

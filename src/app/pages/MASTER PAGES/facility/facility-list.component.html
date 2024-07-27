@@ -4,7 +4,7 @@
     rowAlternationInterval="2" (onExporting)="onExporting($event)" (onRowUpdating)="onRowUpdating($event)"
     (onRowRemoving)="onRowRemoving($event)">
     <dxo-paging [pageSize]="10"></dxo-paging>
-    <dxo-editing mode="popup" [allowUpdating]="true" [allowDeleting]="true" [popup]="{ width: '40%', height: '60vh' }">
+    <dxo-editing mode="popup" [allowUpdating]="true" [allowDeleting]="true" [popup]="{ width: '40%', height: 'auto' }">
       <dxo-popup title="Edit facility" [showTitle]="true">
       </dxo-popup>
     </dxo-editing>

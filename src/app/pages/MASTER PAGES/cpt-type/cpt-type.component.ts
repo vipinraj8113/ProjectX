@@ -45,7 +45,7 @@ export class CPTTypeComponent implements OnInit {
   //========================Get Datasource =======================
   get_CptTypes_Data_List() {
     this.masterService.get_CptType_List().subscribe((response: any) => {
-      this.dataSource = response.CptTypes
+      this.dataSource = response.data
     });
   }
 

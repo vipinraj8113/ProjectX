@@ -65,7 +65,7 @@ export class FacilityGroupListComponent implements OnInit {
   //========================Get Datasource =======================
   get_Facility_Group_Data_List() {
     this.masterService.Get_Facility_Group_Data().subscribe((response: any) => {
-      this.dataSource = response.FacilityGroups;
+      this.dataSource = response.data;
     });
   }
   //========================Export data ==========================

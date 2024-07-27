@@ -68,7 +68,7 @@ export class InsuranceComponent implements OnInit {
   //========================Get Datasource =======================
   get_InsuranceCompany_Data_List() {
     this.masterService.get_Insurance_List().subscribe((response: any) => {
-      this.dataSource = response.InsuranceCompany;
+      this.dataSource = response.data;
     });
   }
 

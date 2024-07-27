@@ -54,7 +54,7 @@ export class CPTMasterComponent implements OnInit {
   //========================Get Datasource =======================
   get_CptTMaster_Data_List() {
     this.masterService.get_CptMaster_List().subscribe((response: any) => {
-      this.dataSource = response.CptMaster;
+      this.dataSource = response.data;
     });
   }
 

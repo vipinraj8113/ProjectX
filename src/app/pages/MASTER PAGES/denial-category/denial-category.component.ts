@@ -46,7 +46,7 @@ export class DenialCategoryComponent implements OnInit {
   //========================Get Datasource =======================
   DenialCategory_Data_List() {
     this.masterService.get_DenialCategory_List().subscribe((response: any) => {
-      this.dataSource = response.DenialCategorys
+      this.dataSource = response.data
     });
   }
 

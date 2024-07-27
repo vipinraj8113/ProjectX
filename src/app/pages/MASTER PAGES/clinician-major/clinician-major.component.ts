@@ -52,7 +52,7 @@ export class ClinicianMajorComponent {
   //========================Get Datasource =======================
   get_clinicianMajor_List() {
     this.masterService.Get_ClinicianMajor_Data().subscribe((response: any) => {
-      this.dataSource = response.ClinicianMajor;
+      this.dataSource = response.data;
     });
   }
   //========================Export data ==========================

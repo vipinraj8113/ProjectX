@@ -55,7 +55,7 @@ export class ClinicianProfessionComponent {
     this.masterService
       .Get_ClinicianProfession_Data()
       .subscribe((response: any) => {
-        this.dataSource = response.ClinicianProfession;
+        this.dataSource = response.data;
       });
   }
   //========================Export data ==========================

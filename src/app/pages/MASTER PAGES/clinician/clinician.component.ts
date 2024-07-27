@@ -96,7 +96,7 @@ export class ClinicianComponent implements OnInit {
   //========================Get Datasource =======================
   get_Clinician_Data_List() {
     this.masterService.get_Clinian_Table_Data().subscribe((response: any) => {
-      this.dataSource = response.Clinician;
+      this.dataSource = response.data;
     });
   }
 

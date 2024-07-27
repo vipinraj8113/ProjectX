@@ -54,7 +54,7 @@ export class SpecialityComponent implements OnInit {
   //========================Get Datasource =======================
   get_Speciality_Data_List() {
     this.masterService.get_Speciality_List().subscribe((response: any) => {
-      this.dataSource = response.Speciality;
+      this.dataSource = response.data;
     });
   }
 

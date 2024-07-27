@@ -55,7 +55,7 @@ export class InsuranceClassificationComponent {
     this.masterService
       .Get_InsuranceClassification_Data()
       .subscribe((response: any) => {
-        this.dataSource = response.InsuranceClassification;
+        this.dataSource = response.data;
       });
   }
   //========================Export data ==========================

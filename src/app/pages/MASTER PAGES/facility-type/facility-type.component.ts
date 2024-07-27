@@ -48,7 +48,7 @@ export class FacilityTypeComponent implements OnInit {
   //========================Get Datasource =======================
   get_FacilityType_Data_List() {
     this.masterService.Get_Facility_Type_Data().subscribe((response: any) => {
-      this.dataSource = response.FacilityTypes
+      this.dataSource = response.data
     });
   }
 

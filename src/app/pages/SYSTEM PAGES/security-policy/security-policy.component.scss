@@ -1,0 +1,68 @@
+
+.BorderBox {
+    position: relative; 
+    // border-left: 1px solid black; 
+    // border-right: 1px solid black  ;
+    // border-bottom: 1px solid black ;
+    margin-top: 10px;
+    padding: 10px;
+    z-index: 1;
+    box-shadow: -2px 2px 2px rgba(0, 0, 0, 0.1), 
+    2px 2px 2px rgba(0, 0, 0, 0.1), 
+    0 2px 2px rgba(0, 0, 0, 0.1); 
+    
+}
+
+.top-border-checkbox {
+    position: absolute; 
+    top: -25px; 
+    left: 10px; 
+    padding: 5px; 
+    border-radius: 5px;
+     z-index: 2;
+}
+.conditionDiv{
+    width: 80%;
+}
+.RadioGrp{
+    position: absolute; 
+    top: -25px; 
+    left: 10px; 
+    padding: 0px;
+    border: 1px solid;
+    border-radius: 5px;
+    height: 30px;
+    margin-bottom: 5px;
+}
+.RagioDiv{
+    border: 1px solid;
+    border-radius: 5px;
+    height: 30px;
+    padding: 0px;
+    margin: 0px;
+}
+.dx-field{
+    margin: 0px;
+
+}
+.leftDiv{
+    width: 50%;
+    box-shadow: -2px 2px 2px rgba(0, 0, 0, 0.1), 
+    2px 2px 2px rgba(0, 0, 0, 0.1), 
+    0 2px 2px rgba(0, 0, 0, 0.1); 
+}
+.rightDiv{
+    width: 50%;
+    box-shadow: -2px 2px 2px rgba(0, 0, 0, 0.1), 
+    2px 2px 2px rgba(0, 0, 0, 0.1), 
+    0 2px 2px rgba(0, 0, 0, 0.1); 
+}
+.headingText{
+    position: absolute; 
+    top: -20px; 
+    left: 10px; 
+    margin-bottom: 5px;
+    text-decoration: underline;
+    font-size: larger;
+    font-weight: bold;
+}

@@ -74,7 +74,7 @@ export class FacilityListComponent implements OnInit {
   get_Facility_List() {
     this.masterService.Get_Facility_List_Data().subscribe((response: any) => {
       if (response) {
-        this.dataSource = response.FacilityMaster;
+        this.dataSource = response.data;
       }
     });
   }

@@ -1,1 +1,72 @@
-<p>security-policy works!</p>
+<div class="p-3">
+    <div class="BorderBox">
+        <div class="dx-field m-4">
+            <dx-check-box class="top-border-checkbox" [value]="null" [iconSize]="30"
+                text="Password Validation Required"></dx-check-box>
+        </div>
+        <div class="m-0">
+            <dx-number-box [value]="null" labelMode="floating" labelLocation="left" label="Minimum Password Length"
+                [showSpinButtons]="true" [width]="'50%'">
+                <dxi-button name="spins"></dxi-button>
+            </dx-number-box>
+        </div>
+
+        <div class="BorderBox conditionDiv mt-5">
+            <div class="dx-field RadioGrp d-flex align-items-center mb-5">
+                <div class="me-3">Maximum Condition Required</div>
+                <div class="">
+                    <dx-radio-group [items]="priorities" [value]="priorities[0]" layout="horizontal">
+                    </dx-radio-group>
+                </div>
+            </div>
+
+            <div class="dx-field m-1 mt-3">
+                <dx-check-box class="" [value]="null" text="Numbers"></dx-check-box>
+            </div>
+
+            <div class="dx-field m-1">
+                <dx-check-box class="" [value]="null" text="Uppercase Characters"></dx-check-box>
+            </div>
+
+            <div class="dx-field m-1">
+                <dx-check-box class="" [value]="null" text="Lowercase Characters"></dx-check-box>
+            </div>
+
+            <div class="dx-field m-1">
+                <dx-check-box class="" [value]="null" text="Special Characters"></dx-check-box>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex align-items-center mt-3 p-1">
+        <div class="leftDiv BorderBox me-2">
+            <div class="headingText">Sent OTP on Password Change</div>
+            <div class="dx-field m-1 mt-3">
+                <dx-check-box class="" [value]="null" text="E-mail (e-mail otp verification  on forgot/change password)"></dx-check-box>
+            </div>
+
+            <div class="dx-field m-1">
+                <dx-check-box class="" [value]="null" text="SMS (SMS otp verification  on forgot/change password)"></dx-check-box>
+            </div>
+
+            <div class="dx-field m-1">
+                <dx-check-box class="" [value]="null" text="WhatsApp (WhatsApp otp verification  on forgot/change password)"></dx-check-box>
+            </div>
+
+        </div>
+        <div class="rightDiv BorderBox">
+            <div class="headingText">Sent Alert on Password Change</div>
+            <div class="dx-field m-1 mt-3">
+                <dx-check-box class="" [value]="null" text="Email (Email alert on successful pasword change)"></dx-check-box>
+            </div>
+
+            <div class="dx-field m-1">
+                <dx-check-box class="" [value]="null" text="SMS (SMS alert on successful pasword change)"></dx-check-box>
+            </div>
+
+            <div class="dx-field m-1">
+                <dx-check-box class="" [value]="null" text="WhatsApp (WhatsApp alert on successful pasword change)"></dx-check-box>
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -146,11 +146,6 @@ body {
   flex-basis: unset;
   flex-grow: 0;
   flex-shrink: 0;
-  // height: 25px;
-  // padding: 0px;
-  // padding-bottom: 10px;
-  // margin: 2px;
-  // margin-bottom: 6px;
   margin-left: 3px;
 }
 .dx-tabpanel .dx-tabpanel-tab {
@@ -322,6 +317,8 @@ body {
   .layout-body .menu-container.theme-dependent,
   app-footer {
     background-color: var(--base-bg);
+    // background-color: var(--bg-side-panel);
+
   }
 
   .layout-body .menu-container.theme-dependent {

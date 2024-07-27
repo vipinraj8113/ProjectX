@@ -54,7 +54,7 @@ export class ClinicianCategoryComponent {
     this.masterService
       .Get_ClinicianCategory_Data()
       .subscribe((response: any) => {
-        this.dataSource = response.ClinicianCategory;
+        this.dataSource = response.data;
       });
   }
   //========================Export data ==========================

@@ -64,7 +64,7 @@ export class DenialListComponent {
     load: () =>
       new Promise((resolve, reject) => {
         this.service.getDenialsData().subscribe({
-          next: (data: any) => resolve(data.DenialMaster),
+          next: (res: any) => resolve(res.DenialMaster),
           error: ({ message }) => reject(message),
         });
       }),
@@ -108,15 +108,6 @@ export class DenialListComponent {
       this.Denial_category_DropDownData = data;
     });
   }
-
-  // //=============Get Denial Type Drop dwn Data==============================
-  // getDenial_Category_DropDown() {
-  //   let dropdownType = 'DENIALCATEGORY';
-  //   this.service.Get_GropDown(dropdownType).subscribe((data: any) => {
-  //     this.Denial_category_DropDownData = data;
-  //   });
-  // }
-
   //============ADD NEW DENIALS======================
 
   onClickSaveNewDenial = () => {
