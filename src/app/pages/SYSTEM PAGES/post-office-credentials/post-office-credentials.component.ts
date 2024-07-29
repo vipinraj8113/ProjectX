@@ -58,7 +58,6 @@ export class PostOfficeCredentialsComponent implements OnInit {
       .subscribe((response: any) => {
         if (response) {
           this.dataSource = this.transformData(response);
-          response;
         }
       });
   }

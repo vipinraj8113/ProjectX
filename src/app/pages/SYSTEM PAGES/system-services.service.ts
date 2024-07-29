@@ -22,11 +22,11 @@ export class SystemServicesService {
     const reqBody = {
       list: [],
     };
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'x-api-key': Token,
-    });
-    return this.http.post(Url, reqBody, { headers });
+    // const headers = new HttpHeaders({
+    //   'Content-Type': 'application/json',
+    //   'x-api-key': Token,
+    // });
+    return this.http.post(Url, reqBody);
   }
   //=====Add or update data========
   update_PostOfficeCredencial_Data(
@@ -42,10 +42,10 @@ export class SystemServicesService {
       LoginName: LoginName,
       Password: Password,
     };
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'x-api-key': Token,
-    });
-    return this.http.post(url, reqBody, { headers });
+    // const headers = new HttpHeaders({
+    //   'Content-Type': 'application/json',
+    //   'x-api-key': Token,
+    // });
+    return this.http.post(url, reqBody);
   }
 }
