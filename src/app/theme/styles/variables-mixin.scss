@@ -38,7 +38,7 @@ $theme-mode: null !default;
   --side-panel-background: var(--base-bg-darken-5);
   --card-background: var(--base-bg);
   --calendar-width: 292px;
-  --bg-side-panel:rgb(72, 192, 236);
+  --bg-side-panel:#00A3EE;
 
   @if $theme-mode == dark {
     --card-background: var(--base-bg-darken-5);

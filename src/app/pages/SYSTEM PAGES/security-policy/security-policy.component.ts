@@ -1,20 +1,77 @@
 import { CommonModule } from '@angular/common';
 import { Component, NgModule } from '@angular/core';
 import { DxCheckBoxModule } from 'devextreme-angular';
-import {
-  DxTextBoxModule,
-  DxTextBoxTypes,
-} from 'devextreme-angular/ui/text-box';
+import { DxTextBoxModule } from 'devextreme-angular/ui/text-box';
 import { DxNumberBoxModule } from 'devextreme-angular';
 import { DxRadioGroupModule, DxTemplateModule } from 'devextreme-angular';
-import { DxRadioGroupTypes } from 'devextreme-angular/ui/radio-group';
+import { DxFormModule } from 'devextreme-angular';
 @Component({
   selector: 'app-security-policy',
   templateUrl: './security-policy.component.html',
   styleUrls: ['./security-policy.component.scss'],
 })
 export class SecurityPolicyComponent {
-  priorities = ['None', '1', '2', '3','All'];
+  validationRequired: boolean = false;
+  conditionRequired = ['None', '1', '2', '3', 'All'];
+  readOnlyValue: boolean = true;
+  minPasswordLength: number | null = null;
+  conditionRequiredValue: any;
+
+  isNumberChecked: boolean = false;
+  isUppercaseChecked: boolean = false;
+  isLowercaseChecked: boolean = false;
+  isSpecialCharactersChecked: boolean = false;
+
+  emailOtp: boolean = false;
+  smsOtp: boolean = false;
+  whatsAppOtp: boolean = false;
+
+  emailAlert: boolean = false;
+  smsAlert: boolean = false;
+  whatsAppAlert: boolean = false;
+
+  checkboxStateMap: {
+    [key: string]: {
+      numbers: boolean;
+      uppercase: boolean;
+      lowercase: boolean;
+      special: boolean;
+    };
+  } = {
+    None: {
+      numbers: false,
+      uppercase: false,
+      lowercase: false,
+      special: false,
+    },
+    '1': { numbers: true, uppercase: false, lowercase: false, special: false },
+    '2': { numbers: true, uppercase: true, lowercase: false, special: false },
+    '3': { numbers: true, uppercase: true, lowercase: true, special: false },
+    All: { numbers: true, uppercase: true, lowercase: true, special: true },
+  };
+  //===========Change validation enable or not=====================
+  onValidationEnableChange(newValue: boolean): void {
+    this.validationRequired = newValue;
+    this.readOnlyValue = !this.readOnlyValue;
+    // console.log('security policy values', this.readOnlyValue);
+  }
+
+  //============Condition select depends radio button value========
+  onConditionRequiredChange(newValue: string): void {
+    const checkboxState =
+      this.checkboxStateMap[newValue] || this.checkboxStateMap['Default'];
+    this.isNumberChecked = checkboxState.numbers;
+    this.isUppercaseChecked = checkboxState.uppercase;
+    this.isLowercaseChecked = checkboxState.lowercase;
+    this.isSpecialCharactersChecked = checkboxState.special;
+    console.log(
+      'values of the check boxes',
+      this.isNumberChecked,
+      this.isLowercaseChecked,
+      this.isUppercaseChecked,
+      this.isSpecialCharactersChecked
+    );
+  }
 }
 @NgModule({
   imports: [
@@ -24,6 +81,7 @@ export class SecurityPolicyComponent {
     DxNumberBoxModule,
     DxRadioGroupModule,
     DxTemplateModule,
+    DxFormModule,
   ],
   providers: [],
   exports: [],

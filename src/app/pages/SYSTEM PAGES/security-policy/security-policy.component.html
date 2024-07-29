@@ -1,72 +1,149 @@
-<div class="p-3">
+<div class="FullBody view-wrapper">
     <div class="BorderBox">
         <div class="dx-field m-4">
-            <dx-check-box class="top-border-checkbox" [value]="null" [iconSize]="30"
-                text="Password Validation Required"></dx-check-box>
+            <dx-check-box class="top-border-checkbox" [value]="validationRequired" [iconSize]="30"
+                text="Password Validation Required" (valueChange)="onValidationEnableChange($event)"></dx-check-box>
         </div>
         <div class="m-0">
-            <dx-number-box [value]="null" labelMode="floating" labelLocation="left" label="Minimum Password Length"
-                [showSpinButtons]="true" [width]="'50%'">
+            <dx-number-box [value]="minPasswordLength" labelMode="floating" labelLocation="left"
+                label="Minimum Password Length" [showSpinButtons]="true" [width]="'50%'" [readOnly]="readOnlyValue">
                 <dxi-button name="spins"></dxi-button>
             </dx-number-box>
         </div>
 
-        <div class="BorderBox conditionDiv mt-5">
-            <div class="dx-field RadioGrp d-flex align-items-center mb-5">
+        <div class="conditionDiv mt-5">
+            <div class="dx-field RadioGrp d-flex align-items-center mb-5 ps-2 pe-2">
                 <div class="me-3">Maximum Condition Required</div>
                 <div class="">
-                    <dx-radio-group [items]="priorities" [value]="priorities[0]" layout="horizontal">
+                    <dx-radio-group [items]="conditionRequired" [value]="conditionRequiredValue" layout="horizontal"
+                        [readOnly]="readOnlyValue" (valueChange)="onConditionRequiredChange($event)">
                     </dx-radio-group>
                 </div>
             </div>
 
             <div class="dx-field m-1 mt-3">
-                <dx-check-box class="" [value]="null" text="Numbers"></dx-check-box>
+                <dx-check-box class="" [value]="isNumberChecked" text="Numbers"
+                    [readOnly]="readOnlyValue"></dx-check-box>
             </div>
 
             <div class="dx-field m-1">
-                <dx-check-box class="" [value]="null" text="Uppercase Characters"></dx-check-box>
+                <dx-check-box class="" [value]="isUppercaseChecked" text="Uppercase Characters"
+                    [readOnly]="readOnlyValue"></dx-check-box>
             </div>
 
             <div class="dx-field m-1">
-                <dx-check-box class="" [value]="null" text="Lowercase Characters"></dx-check-box>
+                <dx-check-box class="" [value]="isLowercaseChecked" text="Lowercase Characters"
+                    [readOnly]="readOnlyValue"></dx-check-box>
             </div>
 
             <div class="dx-field m-1">
-                <dx-check-box class="" [value]="null" text="Special Characters"></dx-check-box>
+                <dx-check-box class="" [value]="isSpecialCharactersChecked" text="Special Characters"
+                    [readOnly]="readOnlyValue"></dx-check-box>
             </div>
         </div>
     </div>
+
     <div class="d-flex align-items-center mt-3 p-1">
+
         <div class="leftDiv BorderBox me-2">
             <div class="headingText">Sent OTP on Password Change</div>
-            <div class="dx-field m-1 mt-3">
-                <dx-check-box class="" [value]="null" text="E-mail (e-mail otp verification  on forgot/change password)"></dx-check-box>
+            <div class="dx-field m-1 mt-4 items">
+                <dx-check-box class="" [value]="emailOtp"
+                    text="E-mail (e-mail otp verification  on forgot/change password)"
+                    [readOnly]="readOnlyValue"></dx-check-box>
             </div>
 
-            <div class="dx-field m-1">
-                <dx-check-box class="" [value]="null" text="SMS (SMS otp verification  on forgot/change password)"></dx-check-box>
+            <div class="dx-field m-1 mt-4  items">
+                <dx-check-box class="" [value]="smsOtp" text="SMS (SMS otp verification  on forgot/change password)"
+                    [readOnly]="readOnlyValue"></dx-check-box>
             </div>
 
-            <div class="dx-field m-1">
-                <dx-check-box class="" [value]="null" text="WhatsApp (WhatsApp otp verification  on forgot/change password)"></dx-check-box>
+            <div class="dx-field m-1 mt-4 ">
+                <dx-check-box class="" [value]="whatsAppOtp"
+                    text="WhatsApp (WhatsApp otp verification  on forgot/change password)"
+                    [readOnly]="readOnlyValue"></dx-check-box>
             </div>
-
         </div>
+
         <div class="rightDiv BorderBox">
             <div class="headingText">Sent Alert on Password Change</div>
             <div class="dx-field m-1 mt-3">
-                <dx-check-box class="" [value]="null" text="Email (Email alert on successful pasword change)"></dx-check-box>
+                <dx-check-box class="" [value]="emailAlert" text="Email (Email alert on successful pasword change)"
+                    [readOnly]="readOnlyValue"></dx-check-box>
             </div>
 
-            <div class="dx-field m-1">
-                <dx-check-box class="" [value]="null" text="SMS (SMS alert on successful pasword change)"></dx-check-box>
+            <div class="dx-field m-1 mt-4 ">
+                <dx-check-box class="" [value]="smsAlert" text="SMS (SMS alert on successful pasword change)"
+                    [readOnly]="readOnlyValue"></dx-check-box>
             </div>
 
-            <div class="dx-field m-1">
-                <dx-check-box class="" [value]="null" text="WhatsApp (WhatsApp alert on successful pasword change)"></dx-check-box>
+            <div class="dx-field m-1 mt-4 ">
+                <dx-check-box class="" [value]="whatsAppAlert"
+                    text="WhatsApp (WhatsApp alert on successful pasword change)"
+                    [readOnly]="readOnlyValue"></dx-check-box>
             </div>
         </div>
 
+    </div>
+
+    <div class="d-flex align-items-center mt-3 p-1">
+
+        <div class="leftDiv BorderBox me-2">
+            <div class="headingText ">Account Lock</div>
+            <div class="mt-3 items">
+                <dx-number-box [value]="" labelMode="floating" labelLocation="left" label="Number Of Login Attempts"
+                    [width]="'75%'" [readOnly]="readOnlyValue">
+                </dx-number-box>
+            </div>
+
+            <div class="mt-3  items">
+                <dx-number-box [value]="" labelMode="floating" labelLocation="left" label="Lock Reset Duration"
+                    [width]="'75%'" [readOnly]="readOnlyValue">
+                </dx-number-box>
+            </div>
+
+            <div class="mt-3 items">
+                <dx-number-box [value]="" labelMode="floating" labelLocation="left" label="Lock Reset Duration"
+                    [width]="'75%'" [readOnly]="readOnlyValue">
+                </dx-number-box>
+            </div>
+        </div>
+
+        <div class="rightDiv BorderBox">
+            <div class="headingText">General</div>
+            <div class="dx-field m-1 mt-3">
+                <dx-check-box class="" [value]="false" text="Change Password On Login"
+                    [readOnly]="readOnlyValue"></dx-check-box>
+            </div>
+
+            <div class="mt-3 items">
+                <dx-number-box [value]="" labelMode="floating" labelLocation="left"
+                    label="How many days until the password expires?" [width]="'75%'" [readOnly]="readOnlyValue">
+                </dx-number-box>
+            </div>
+
+            <div class="mt-3  items">
+                <dx-number-box [value]="" labelMode="floating" labelLocation="left" label="Password Repeat Cycle"
+                    [width]="'75%'" [readOnly]="readOnlyValue">
+                </dx-number-box>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="BorderBox  me-2 mt-4">
+        <div class="headingText ">Others</div>
+        <div class="MessageDiv dx-field mt-3">
+            <div class="dx-field-label custom-label">Unautherized Banner Message</div>
+            <div class="dx-field-value custom-value ">
+                <dx-text-box value="" [readOnly]="readOnlyValue"></dx-text-box>
+            </div>
+        </div>
+
+        <div class="mt-3 ">
+            <dx-number-box [value]="" labelMode="floating" labelLocation="left" label="Disable User On" [width]="'75%'"
+                hint="Enter the number of days to disable the user after inactivity" [readOnly]="readOnlyValue">
+            </dx-number-box>
+        </div>
     </div>
 </div>
