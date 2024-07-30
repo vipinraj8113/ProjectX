@@ -11,9 +11,11 @@ import { DxFormModule } from 'devextreme-angular';
   styleUrls: ['./security-policy.component.scss'],
 })
 export class SecurityPolicyComponent {
-  validationRequired: boolean = false;
   conditionRequired = ['None', '1', '2', '3', 'All'];
+
+  validationRequired: boolean = false;
   readOnlyValue: boolean = true;
+
   minPasswordLength: number | null = null;
   conditionRequiredValue: any;
 
@@ -29,6 +31,17 @@ export class SecurityPolicyComponent {
   emailAlert: boolean = false;
   smsAlert: boolean = false;
   whatsAppAlert: boolean = false;
+
+  LoginAttempts: number | null = null;
+  resetDuration: number | null = null;
+  failedLoginDuration: number | null = null;
+
+  changePasswordOnLogin: boolean = false;
+  passwordExpiryDaysCount: number | null = null;
+  passwordRepeatCycle: number | null = null;
+
+  unautherizedMessage: any;
+  disableUser: number | null = null;
 
   checkboxStateMap: {
     [key: string]: {
@@ -64,13 +77,6 @@ export class SecurityPolicyComponent {
     this.isUppercaseChecked = checkboxState.uppercase;
     this.isLowercaseChecked = checkboxState.lowercase;
     this.isSpecialCharactersChecked = checkboxState.special;
-    console.log(
-      'values of the check boxes',
-      this.isNumberChecked,
-      this.isLowercaseChecked,
-      this.isUppercaseChecked,
-      this.isSpecialCharactersChecked
-    );
   }
 }
 @NgModule({
