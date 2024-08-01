@@ -27,7 +27,7 @@ export class FacilityListComponent implements OnInit {
   FacilityType_DataSource: any;
   Facilitygroup_DataSource: any;
   postOffice_DataSource: any;
-  //========Variables for Pagination ====================
+  //================Variables for Pagination ====================
   readonly allowedPageSizes: any = [5, 10, 'all'];
   displayMode: any = 'full';
   showPageSizeSelector = true;
@@ -41,6 +41,7 @@ export class FacilityListComponent implements OnInit {
     this.get_All_DropDown_Data();
     this.get_Facility_List();
   }
+
   get_All_DropDown_Data() {
     this.masterService
       .Get_GropDown('FACILITYTYPE')

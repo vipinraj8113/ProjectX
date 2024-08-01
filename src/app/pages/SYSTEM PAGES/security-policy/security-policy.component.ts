@@ -72,7 +72,7 @@ export class SecurityPolicyComponent {
   //============Condition select depends radio button value========
   onConditionRequiredChange(newValue: string): void {
     const checkboxState =
-      this.checkboxStateMap[newValue] || this.checkboxStateMap['Default'];
+      this.checkboxStateMap[newValue] || this.checkboxStateMap['None'];
     this.isNumberChecked = checkboxState.numbers;
     this.isUppercaseChecked = checkboxState.uppercase;
     this.isLowercaseChecked = checkboxState.lowercase;
