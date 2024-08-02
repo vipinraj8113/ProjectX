@@ -39,12 +39,6 @@
           (onItemClick)="onTabClick($event)"
         >
         </dx-tabs>
-        <!-- <ng-template #tabTemplate let-tabItem>
-          <div class="dx-tab-text">
-            <i class="dx-icon" [class]="tabItem.icon"></i>
-            {{ tabItem.text }}
-          </div>
-        </ng-template> -->
         <dx-data-grid
           *ngIf="selectedTabData"
           class="grid theme-dependent"
@@ -57,7 +51,7 @@
           rowAlternationInterval="2"
           (onSelectionChanged)="onSelectionChanged($event)"
           [selectedRowKeys]="selectedRows[selectedTab]"
-          
+
         >
           <dxo-selection mode="multiple"></dxo-selection>
         </dx-data-grid>

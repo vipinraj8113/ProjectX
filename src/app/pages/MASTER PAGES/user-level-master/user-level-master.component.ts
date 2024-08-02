@@ -192,15 +192,15 @@ export class UserLevelMasterComponent implements OnInit {
   }
 
   combineSelectedRows(): void {
-    this.allSelectedRows = [];
-    for (const key in this.selectedRows) {
-      if (this.selectedRows.hasOwnProperty(key)) {
-        this.allSelectedRows = this.allSelectedRows.concat(
-          this.selectedRows[key]
-        );
-      }
-    }
-    console.log(this.allSelectedRows);
+    this.allSelectedRows = Object.keys(this.selectedRows)
+      .filter((key) => this.selectedRows[key].length > 0)
+      .map((key) => ({
+        icon: this.tabPanelItems[key].icon,
+        text: this.tabPanelItems[key].text,
+        menus: this.selectedRows[key],
+      }));
+
+    console.log('all selected row data :', this.allSelectedRows);
   }
 
   onClickSaveData() {}
