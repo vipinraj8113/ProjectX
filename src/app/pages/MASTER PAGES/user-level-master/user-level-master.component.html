@@ -6,14 +6,15 @@
         <dx-text-box
           value=""
           [inputAttr]="{ 'aria-label': 'Name' }"
-          placeholder="enter the level"
+          label="User Level"
+          labelMode="floating"
         ></dx-text-box>
       </div>
 
       <dx-button
-        class="ms-auto"
+        class="ms-auto me-5"
         location="after"
-        text="Add "
+        text="Save "
         icon="plus"
         type="default"
         stylingMode="contained"
@@ -51,7 +52,6 @@
           rowAlternationInterval="2"
           (onSelectionChanged)="onSelectionChanged($event)"
           [selectedRowKeys]="selectedRows[selectedTab]"
-
         >
           <dxo-selection mode="multiple"></dxo-selection>
         </dx-data-grid>

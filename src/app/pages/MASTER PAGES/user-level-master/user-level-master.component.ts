@@ -168,7 +168,7 @@ export class UserLevelMasterComponent implements OnInit {
   selectedTabData: any[] = [];
   selectedRows: { [key: number]: any[] } = {};
   selectedTab: number = 0;
-  gridColumns = ['status', 'priority', 'text', 'date', 'assignedBy'];
+  gridColumns = ['status'];
   allSelectedRows: any[] = [];
 
   ngOnInit(): void {
