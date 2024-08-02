@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, NgModule, ViewChild } from '@angular/core';
+import { Component, NgModule, OnInit, ViewChild } from '@angular/core';
 import {
   DxTabPanelModule,
   DxCheckBoxModule,
@@ -20,20 +20,11 @@ import {
   templateUrl: './user-level-master.component.html',
   styleUrls: ['./user-level-master.component.scss'],
 })
-export class UserLevelMasterComponent {
-  @ViewChild('dataGrid', { static: false }) dataGrid: DxDataGridComponent;
-  tabposition: any = 'top';
-  stylingMode: any = 'primary';
-  iconPosition: any = 'left';
-  width: any = 'auto';
-  rtlEnabled = false;
-  showNavButtons = false;
-  scrollByContent = false;
-  orientations: any = 'horizontal';
-
-  selectedRows = {};
-  allTabData = {};
-
+export class UserLevelMasterComponent implements OnInit {
+  width: any = '100%';
+  rtlEnabled: boolean = false;
+  scrollByContent: boolean = true;
+  showNavButtons: boolean = true;
   tabPanelItems = [
     {
       icon: 'description',
@@ -171,45 +162,45 @@ export class UserLevelMasterComponent {
       ],
     },
   ];
-
-  selectedTabData = this.tabPanelItems[0].menus;
+  orientations: any = 'horizontal';
+  stylingMode: any = 'primary';
+  iconPosition: any = 'left';
+  selectedTabData: any[] = [];
+  selectedRows: { [key: number]: any[] } = {};
+  selectedTab: number = 0;
   gridColumns = ['status', 'priority', 'text', 'date', 'assignedBy'];
-  selectedTabIndex: any;
-  selectedTab: any;
+  allSelectedRows: any[] = [];
 
-  // constructor() {
-  //   this.tabPanelItems.forEach((tab, index) => {
-  //     this.selectedRows[index] = [];
-  //     this.allTabData[index] = tab.menus;
-  //   });
-  // }
+  ngOnInit(): void {
+    //========Initialize selectedRows for each tab======
+    this.tabPanelItems.forEach((tab, index) => {
+      this.selectedRows[index] = [];
+    });
 
-  // onContentReady(e:any) {
-  //   this.getAllRows();
-  //   this.getSelectedRows();
-  // }
-
-  // getAllRows() {
-  //   const allRows = this.dataGrid.instance
-  //     .getVisibleRows()
-  //     .map((row) => row.data);
-  //   console.log('All Rows:', allRows);
-  // }
-
-  // getSelectedRows() {
-  //   const selectedRows = this.dataGrid.instance.getSelectedRowKeys();
-  //   console.log('Selected Rows:', selectedRows);
-  // }
-  //================Tab change event for changing datagrid data============
-  onTabClick(e: any) {
-    this.selectedTab = e.itemData;
-    this.selectedTabIndex = e.component.option('selectedIndex');
-    this.selectedTabData = this.selectedTab.menus;
+    //==========Set the data for the initial tab========
+    this.selectedTabData = this.tabPanelItems[0].menus;
   }
-  //===================store selected data of datagrid====================
-  onSelectionChanged(e: any) {
-    this.selectedRows[this.selectedTabIndex] = e.selectedRowKeys;
-    console.log('rows for tab', e);
+
+  onTabClick(event: any): void {
+    this.selectedTab = event.itemIndex;
+    this.selectedTabData = this.tabPanelItems[this.selectedTab].menus;
+  }
+
+  onSelectionChanged(event: any): void {
+    this.selectedRows[this.selectedTab] = event.selectedRowsData;
+    this.combineSelectedRows();
+  }
+
+  combineSelectedRows(): void {
+    this.allSelectedRows = [];
+    for (const key in this.selectedRows) {
+      if (this.selectedRows.hasOwnProperty(key)) {
+        this.allSelectedRows = this.allSelectedRows.concat(
+          this.selectedRows[key]
+        );
+      }
+    }
+    console.log(this.allSelectedRows);
   }
 
   onClickSaveData() {}
