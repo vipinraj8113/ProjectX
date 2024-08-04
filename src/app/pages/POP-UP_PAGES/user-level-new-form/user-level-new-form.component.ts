@@ -1,33 +1,24 @@
 import { CommonModule } from '@angular/common';
-import { Component, NgModule, OnInit, ViewChild } from '@angular/core';
+import { Component, NgModule, OnInit } from '@angular/core';
 import {
   DxTabPanelModule,
   DxCheckBoxModule,
   DxSelectBoxModule,
   DxTemplateModule,
+  DxTabsModule,
+  DxTextBoxModule,
   DxButtonModule,
   DxDataGridModule,
-  DxDataGridComponent,
+  DxTreeViewModule,
 } from 'devextreme-angular';
-import { DxTabsModule } from 'devextreme-angular/ui/tabs';
-import { DxTextBoxModule } from 'devextreme-angular/ui/text-box';
-import { DxTreeViewModule } from 'devextreme-angular';
-import { UserLevelNewFormModule } from '../../POP-UP_PAGES/user-level-new-form/user-level-new-form.component';
-import { UserLevelNewFormComponent } from '../../POP-UP_PAGES/user-level-new-form/user-level-new-form.component';
-import { FormPopupModule } from 'src/app/components';
-
 
 @Component({
-  selector: 'app-user-level-master',
-  templateUrl: './user-level-master.component.html',
-  styleUrls: ['./user-level-master.component.scss'],
+  selector: 'app-user-level-new-form',
+  templateUrl: './user-level-new-form.component.html',
+  styleUrls: ['./user-level-new-form.component.scss'],
+  providers:[]
 })
-export class UserLevelMasterComponent {
-  width: any = '100%';
-  popup_width: any = '70%';
-  rtlEnabled: boolean = false;
-  scrollByContent: boolean = true;
-  showNavButtons: boolean = true;
+export class UserLevelNewFormComponent {
   tabPanelItems = [
     {
       icon: 'description',
@@ -165,73 +156,73 @@ export class UserLevelMasterComponent {
       ],
     },
   ];
-  orientations: any = 'horizontal';
-  stylingMode: any = 'primary';
-  iconPosition: any = 'left';
-  selectedTabData: any[] = [];
-  selectedRows: { [key: number]: any[] } = {};
-  selectedTab: number = 0;
-  gridColumns = ['status'];
-  allSelectedRows: any[] = [];
-  isAddFormVisible: boolean = false;
+  // width: any = '100%';
+  // rtlEnabled: boolean = false;
+  // scrollByContent: boolean = true;
+  // showNavButtons: boolean = true;
+  // orientations: any = 'horizontal';
+  // stylingMode: any = 'primary';
+  // iconPosition: any = 'left';
+  // selectedTabData: any[] = [];
+  // selectedRows: { [key: number]: any[] } = {};
+  // selectedTab: number = 0;
+  // gridColumns = ['status'];
+  // allSelectedRows: any[] = [];
 
-  ngOnInit(): void {
-    //========Initialize selectedRows for each tab======
-    this.tabPanelItems.forEach((tab, index) => {
-      this.selectedRows[index] = [];
-    });
+  // ngOnInit(): void {
+  //   //========Initialize selectedRows for each tab======
+  //   this.tabPanelItems.forEach((tab, index) => {
+  //     this.selectedRows[index] = [];
+  //   });
 
-    //==========Set the data for the initial tab========
-    this.selectedTabData = this.tabPanelItems[0].menus;
-  }
+  //   //==========Set the data for the initial tab========
+  //   this.selectedTabData = this.tabPanelItems[0].menus;
+  // }
 
-  onTabClick(event: any): void {
-    this.selectedTab = event.itemIndex;
-    this.selectedTabData = this.tabPanelItems[this.selectedTab].menus;
-  }
+  // onTabClick(event: any): void {
+  //   this.selectedTab = event.itemIndex;
+  //   this.selectedTabData = this.tabPanelItems[this.selectedTab].menus;
+  // }
 
-  onSelectionChanged(event: any): void {
-    this.selectedRows[this.selectedTab] = event.selectedRowsData;
-    this.combineSelectedRows();
-  }
+  // onSelectionChanged(event: any): void {
+  //   this.selectedRows[this.selectedTab] = event.selectedRowsData;
+  //   this.combineSelectedRows();
+  // }
 
-  combineSelectedRows(): void {
-    this.allSelectedRows = Object.keys(this.selectedRows)
-      .filter((key) => this.selectedRows[key].length > 0)
-      .map((key) => ({
-        icon: this.tabPanelItems[key].icon,
-        text: this.tabPanelItems[key].text,
-        menus: this.selectedRows[key],
-      }));
+  // combineSelectedRows(): void {
+  //   this.allSelectedRows = Object.keys(this.selectedRows)
+  //     .filter((key) => this.selectedRows[key].length > 0)
+  //     .map((key) => ({
+  //       icon: this.tabPanelItems[key].icon,
+  //       text: this.tabPanelItems[key].text,
+  //       menus: this.selectedRows[key],
+  //     }));
 
-    console.log('all selected row data :', this.allSelectedRows);
-  }
-  onClickSaveData() {
-    this.isAddFormVisible = true;
-  }
-
-  //================================Tree view set up========================
-  // treeViewData = this.createTreeViewData(this.tabPanelItems);
+  //   console.log('all selected row data :', this.allSelectedRows);
+  // }
   // onClickSaveData() {}
-  // createTreeViewData(items: any) {
-  //   return items.map((item: any) => ({
-  //     text: item.text,
-  //     icon: item.icon,
-  //     expanded: true,
-  //     items: item.menus.map((menu: any) => ({
-  //       text: menu.text,
-  //       status: menu.status,
-  //       priority: menu.priority,
-  //       date: menu.date,
-  //       assignedBy: menu.assignedBy,
-  //     })),
-  //   }));
-  // }
-  // onSelectionChanged(e: any) {
-  //   const selectedNodes = e.component.getSelectedNodes();
-  //   const selectedItems = selectedNodes.map((node) => node.itemData);
-  //   console.log('Selected Items:', selectedItems);
-  // }
+  //================================Tree view set up========================
+  treeViewData = this.createTreeViewData(this.tabPanelItems);
+  onClickSaveData() {}
+  createTreeViewData(items: any) {
+    return items.map((item: any) => ({
+      text: item.text,
+      icon: item.icon,
+      expanded: true,
+      items: item.menus.map((menu: any) => ({
+        text: menu.text,
+        status: menu.status,
+        priority: menu.priority,
+        date: menu.date,
+        assignedBy: menu.assignedBy,
+      })),
+    }));
+  }
+  onSelectionChanged(e: any) {
+    const selectedNodes = e.component.getSelectedNodes();
+    const selectedItems = selectedNodes.map((node) => node.itemData);
+    console.log('Selected Items:', selectedItems);
+  }
 }
 @NgModule({
   imports: [
@@ -245,11 +236,9 @@ export class UserLevelMasterComponent {
     DxButtonModule,
     DxDataGridModule,
     DxTreeViewModule,
-    FormPopupModule,
-    UserLevelNewFormModule,
   ],
   providers: [],
-  exports: [],
-  declarations: [UserLevelMasterComponent],
+  declarations: [UserLevelNewFormComponent],
+  exports: [UserLevelNewFormComponent],
 })
-export class UserLevelMasterModule {}
+export class UserLevelNewFormModule {}

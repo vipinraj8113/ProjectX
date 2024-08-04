@@ -1,5 +1,5 @@
 <div class="dx-theme-fluent view-wrapper list-page dx-theme-fluent">
-  <div class="view-wrapper topDiv d-flex">
+  <div class="view-wrapper topDiv d-flex mb-5">
     <div class="headDiv d-flex align-items-center">
       <div location="before" class="grid-header">User Level</div>
       <div class="inputBox ms-3">
@@ -11,7 +11,7 @@
         ></dx-text-box>
       </div>
 
-      <dx-button
+      <!-- <dx-button
         class="ms-auto me-5"
         location="after"
         text="Save "
@@ -19,13 +19,13 @@
         type="default"
         stylingMode="contained"
         (onClick)="onClickSaveData()"
-      ></dx-button>
+      ></dx-button> -->
     </div>
   </div>
 
   <div class="tabs-demo view-wrapper">
     <div class="widget-container">
-      <div>
+      <!-- <div>
         <dx-tabs
           #withIconAndText
           [width]="width"
@@ -55,10 +55,10 @@
         >
           <dxo-selection mode="multiple"></dxo-selection>
         </dx-data-grid>
-      </div>
+      </div> -->
 
-<!-- //============================Tree View=====================================// -->
-      <!-- <dx-tree-view
+      <!-- //============================Tree View=====================================// -->
+      <dx-tree-view
         [items]="treeViewData"
         dataStructure="tree"
         displayExpr="text"
@@ -68,14 +68,7 @@
         [selectionMode]="'multiple'"
         (onSelectionChanged)="onSelectionChanged($event)"
       >
-      </dx-tree-view> -->
+      </dx-tree-view>
     </div>
   </div>
-  <form-popup class="formPopupClass" [(visible)]="isAddFormVisible"
-    titleText="New User Level" [height]="'70vh'" [width]="popup_width">
-    <app-user-level-new-form></app-user-level-new-form>
-  </form-popup>
-  <!-- <dxo-popup [visible]="isAddFormVisible">
-    <app-user-level-new-form></app-user-level-new-form>
-  </dxo-popup> -->
 </div>
