@@ -10,17 +10,15 @@ import {
   DxDataGridComponent,
 } from 'devextreme-angular';
 import { DxTabsModule } from 'devextreme-angular/ui/tabs';
-import {
-  DxTextBoxModule,
-  DxTextBoxTypes,
-} from 'devextreme-angular/ui/text-box';
+import { DxTextBoxModule } from 'devextreme-angular/ui/text-box';
+import { DxTreeViewModule } from 'devextreme-angular';
 
 @Component({
   selector: 'app-user-level-master',
   templateUrl: './user-level-master.component.html',
   styleUrls: ['./user-level-master.component.scss'],
 })
-export class UserLevelMasterComponent implements OnInit {
+export class UserLevelMasterComponent { 
   width: any = '100%';
   rtlEnabled: boolean = false;
   scrollByContent: boolean = true;
@@ -202,8 +200,30 @@ export class UserLevelMasterComponent implements OnInit {
 
     console.log('all selected row data :', this.allSelectedRows);
   }
-
   onClickSaveData() {}
+
+  //================================Tree view set up========================
+  // treeViewData = this.createTreeViewData(this.tabPanelItems);
+  // onClickSaveData() {}
+  // createTreeViewData(items: any) {
+  //   return items.map((item: any) => ({
+  //     text: item.text,
+  //     icon: item.icon,
+  //     expanded: true,
+  //     items: item.menus.map((menu: any) => ({
+  //       text: menu.text,
+  //       status: menu.status,
+  //       priority: menu.priority,
+  //       date: menu.date,
+  //       assignedBy: menu.assignedBy,
+  //     })),
+  //   }));
+  // }
+  // onSelectionChanged(e: any) {
+  //   const selectedNodes = e.component.getSelectedNodes();
+  //   const selectedItems = selectedNodes.map((node) => node.itemData);
+  //   console.log('Selected Items:', selectedItems);
+  // }
 }
 @NgModule({
   imports: [
@@ -216,6 +236,7 @@ export class UserLevelMasterComponent implements OnInit {
     DxTextBoxModule,
     DxButtonModule,
     DxDataGridModule,
+    DxTreeViewModule,
   ],
   providers: [],
   exports: [],
