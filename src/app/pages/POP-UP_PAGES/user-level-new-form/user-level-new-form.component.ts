@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, NgModule, OnInit } from '@angular/core';
+import { Component, NgModule, OnChanges, OnInit } from '@angular/core';
 import {
   DxTabPanelModule,
   DxCheckBoxModule,
@@ -11,35 +11,36 @@ import {
   DxDataGridModule,
   DxTreeViewModule,
 } from 'devextreme-angular';
+import { MasterReportService } from '../../MASTER PAGES/master-report.service';
 
 @Component({
   selector: 'app-user-level-new-form',
   templateUrl: './user-level-new-form.component.html',
   styleUrls: ['./user-level-new-form.component.scss'],
-  providers:[]
+  providers: [MasterReportService],
 })
-export class UserLevelNewFormComponent {
-  tabPanelItems = [
+export class UserLevelNewFormComponent implements OnInit {
+  MenuDatasource = [
     {
       icon: 'description',
       text: 'Reports',
-      menus: [
+      Menus: [
         {
-          status: 'Not Started',
+          MenuName: 'Not Started',
           priority: 'medium',
           text: 'Training',
           date: '2023/09/16',
           assignedBy: 'Arthur Miller',
         },
         {
-          status: 'Not Started',
+          MenuName: 'Not Started',
           priority: 'medium',
           text: 'NDA',
           date: '2023/09/16',
           assignedBy: 'Robert Reagan',
         },
         {
-          status: 'Not Started',
+          MenuName: 'Not Started',
           priority: 'low',
           text: 'Health Insurance',
           date: '2023/09/16',
@@ -50,23 +51,23 @@ export class UserLevelNewFormComponent {
     {
       icon: 'taskhelpneeded',
       text: 'Activity',
-      menus: [
+      Menus: [
         {
-          status: 'Help Needed',
+          MenuName: 'Help Needed',
           priority: 'low',
           text: 'Recall and Refund Forms',
           date: '2023/09/16',
           assignedBy: 'Sandra Johnson',
         },
         {
-          status: 'Help Needed',
+          MenuName: 'Help Needed',
           priority: 'high',
           text: 'Shippers',
           date: '2023/09/16',
           assignedBy: 'Ed Holmes',
         },
         {
-          status: 'Help Needed',
+          MenuName: 'Help Needed',
           priority: 'medium',
           text: 'Hardware Upgrade',
           date: '2023/09/16',
@@ -77,23 +78,23 @@ export class UserLevelNewFormComponent {
     {
       icon: 'taskinprogress',
       text: 'Masters',
-      menus: [
+      Menus: [
         {
-          status: 'In Progress',
+          MenuName: 'In Progress',
           priority: 'low',
           text: 'Bandwidth Increase',
           date: '2023/09/16',
           assignedBy: 'Davey Jones',
         },
         {
-          status: 'In Progress',
+          MenuName: 'In Progress',
           priority: 'medium',
           text: 'Support',
           date: '2023/09/16',
           assignedBy: 'Victor Norris',
         },
         {
-          status: 'In Progress',
+          MenuName: 'In Progress',
           priority: 'low',
           text: 'Training Material',
           date: '2023/09/16',
@@ -104,23 +105,23 @@ export class UserLevelNewFormComponent {
     {
       icon: 'taskstop',
       text: 'ERX',
-      menus: [
+      Menus: [
         {
-          status: 'Deferred',
+          MenuName: 'Deferred',
           priority: 'high',
           text: 'Automation Server',
           date: '2023/09/16',
           assignedBy: 'Arthur Miller',
         },
         {
-          status: 'Deferred',
+          MenuName: 'Deferred',
           priority: 'medium',
           text: 'Retail Sales',
           date: '2023/09/16',
           assignedBy: 'Robert Reagan',
         },
         {
-          status: 'Deferred',
+          MenuName: 'Deferred',
           priority: 'medium',
           text: 'Shipping Labels',
           date: '2023/09/16',
@@ -131,23 +132,23 @@ export class UserLevelNewFormComponent {
     {
       icon: 'taskrejected',
       text: 'System',
-      menus: [
+      Menus: [
         {
-          status: 'Rejected',
+          MenuName: 'Rejected',
           priority: 'high',
           text: 'Schedule Meeting with Sales Team',
           date: '2023/09/16',
           assignedBy: 'Sandra Johnson',
         },
         {
-          status: 'Rejected',
+          MenuName: 'Rejected',
           priority: 'medium',
           text: 'Confirm Availability for Sales Meeting',
           date: '2023/09/16',
           assignedBy: 'Ed Holmes',
         },
         {
-          status: 'Rejected',
+          MenuName: 'Rejected',
           priority: 'medium',
           text: 'Reschedule Sales Team Meeting',
           date: '2023/09/16',
@@ -156,72 +157,71 @@ export class UserLevelNewFormComponent {
       ],
     },
   ];
-  // width: any = '100%';
-  // rtlEnabled: boolean = false;
-  // scrollByContent: boolean = true;
-  // showNavButtons: boolean = true;
-  // orientations: any = 'horizontal';
-  // stylingMode: any = 'primary';
-  // iconPosition: any = 'left';
-  // selectedTabData: any[] = [];
-  // selectedRows: { [key: number]: any[] } = {};
-  // selectedTab: number = 0;
-  // gridColumns = ['status'];
-  // allSelectedRows: any[] = [];
+  width: any = '100%';
+  rtlEnabled: boolean = false;
+  scrollByContent: boolean = true;
+  showNavButtons: boolean = true;
+  orientations: any = 'horizontal';
+  stylingMode: any = 'primary';
+  iconPosition: any = 'left';
+  selectedTabData: any[] = [];
+  selectedRows: { [key: number]: any[] } = {};
+  selectedTab: number = 0;
+  gridColumns = ['MenuName'];
+  allSelectedRows: any[] = [];
+  // MenuDatasource: any;
 
-  // ngOnInit(): void {
-  //   //========Initialize selectedRows for each tab======
-  //   this.tabPanelItems.forEach((tab, index) => {
-  //     this.selectedRows[index] = [];
-  //   });
+  constructor(private masterservice: MasterReportService) {}
 
-  //   //==========Set the data for the initial tab========
-  //   this.selectedTabData = this.tabPanelItems[0].menus;
-  // }
+  ngOnInit(): void {
+    this.get_All_MenuList();
 
-  // onTabClick(event: any): void {
-  //   this.selectedTab = event.itemIndex;
-  //   this.selectedTabData = this.tabPanelItems[this.selectedTab].menus;
-  // }
+    // //========Initialize selectedRows for each tab======
+    // this.MenuDatasource.forEach((tab, index) => {
+    //   this.selectedRows[index] = [];
+    // });
 
-  // onSelectionChanged(event: any): void {
-  //   this.selectedRows[this.selectedTab] = event.selectedRowsData;
-  //   this.combineSelectedRows();
-  // }
-
-  // combineSelectedRows(): void {
-  //   this.allSelectedRows = Object.keys(this.selectedRows)
-  //     .filter((key) => this.selectedRows[key].length > 0)
-  //     .map((key) => ({
-  //       icon: this.tabPanelItems[key].icon,
-  //       text: this.tabPanelItems[key].text,
-  //       menus: this.selectedRows[key],
-  //     }));
-
-  //   console.log('all selected row data :', this.allSelectedRows);
-  // }
-  // onClickSaveData() {}
-  //================================Tree view set up========================
-  treeViewData = this.createTreeViewData(this.tabPanelItems);
-  onClickSaveData() {}
-  createTreeViewData(items: any) {
-    return items.map((item: any) => ({
-      text: item.text,
-      icon: item.icon,
-      expanded: true,
-      items: item.menus.map((menu: any) => ({
-        text: menu.text,
-        status: menu.status,
-        priority: menu.priority,
-        date: menu.date,
-        assignedBy: menu.assignedBy,
-      })),
-    }));
+    // //==========Set the data for the initial tab========
+    // this.selectedTabData = this.MenuDatasource[0].Menus;
+    // console.log("selected tab is :", this.selectedTabData )
   }
-  onSelectionChanged(e: any) {
-    const selectedNodes = e.component.getSelectedNodes();
-    const selectedItems = selectedNodes.map((node) => node.itemData);
-    console.log('Selected Items:', selectedItems);
+
+  //==============All Menu List========================
+  get_All_MenuList() {
+    // this.masterservice.get_userLevel_menuList().subscribe((response: any) => {
+    //   this.MenuDatasource = response.Data;
+    // });
+       //========Initialize selectedRows for each tab======
+  this.MenuDatasource.forEach((tab, index) => {
+    this.selectedRows[index] = [];
+  });
+
+    //==========Set the data for the initial tab========
+  this.selectedTabData = this.MenuDatasource[0].Menus;
+  console.log("selected tab is :", this.selectedTabData )
+  }
+
+  onTabClick(event: any): void {
+    this.selectedTab = event.itemIndex;
+    this.selectedTabData = this.MenuDatasource[this.selectedTab].Menus;
+    // console.log("selected tab is :", this.selectedTabData )
+  }
+
+  onSelectionChanged(event: any): void {
+    this.selectedRows[this.selectedTab] = event.selectedRowsData;
+    this.combineSelectedRows();
+  }
+
+  combineSelectedRows(): void {
+    this.allSelectedRows = Object.keys(this.selectedRows)
+      .filter((key) => this.selectedRows[key].length > 0)
+      .map((key) => ({
+        icon:this.MenuDatasource[key].icon,
+        text: this.MenuDatasource[key].text,
+        Menus: this.selectedRows[key],
+      }));
+
+    console.log('all selected row data :', this.allSelectedRows);
   }
 }
 @NgModule({

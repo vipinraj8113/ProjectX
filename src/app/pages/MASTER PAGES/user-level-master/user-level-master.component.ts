@@ -15,223 +15,53 @@ import { DxTreeViewModule } from 'devextreme-angular';
 import { UserLevelNewFormModule } from '../../POP-UP_PAGES/user-level-new-form/user-level-new-form.component';
 import { UserLevelNewFormComponent } from '../../POP-UP_PAGES/user-level-new-form/user-level-new-form.component';
 import { FormPopupModule } from 'src/app/components';
-
+import { MasterReportService } from '../master-report.service';
+import { ReportService } from 'src/app/services/Report-data.service';
 
 @Component({
   selector: 'app-user-level-master',
   templateUrl: './user-level-master.component.html',
   styleUrls: ['./user-level-master.component.scss'],
+  providers: [MasterReportService, ReportService],
 })
 export class UserLevelMasterComponent {
-  width: any = '100%';
-  popup_width: any = '70%';
-  rtlEnabled: boolean = false;
-  scrollByContent: boolean = true;
-  showNavButtons: boolean = true;
-  tabPanelItems = [
-    {
-      icon: 'description',
-      text: 'Reports',
-      menus: [
-        {
-          status: 'Not Started',
-          priority: 'medium',
-          text: 'Training',
-          date: '2023/09/16',
-          assignedBy: 'Arthur Miller',
-        },
-        {
-          status: 'Not Started',
-          priority: 'medium',
-          text: 'NDA',
-          date: '2023/09/16',
-          assignedBy: 'Robert Reagan',
-        },
-        {
-          status: 'Not Started',
-          priority: 'low',
-          text: 'Health Insurance',
-          date: '2023/09/16',
-          assignedBy: 'Greta Sims',
-        },
-      ],
-    },
-    {
-      icon: 'taskhelpneeded',
-      text: 'Activity',
-      menus: [
-        {
-          status: 'Help Needed',
-          priority: 'low',
-          text: 'Recall and Refund Forms',
-          date: '2023/09/16',
-          assignedBy: 'Sandra Johnson',
-        },
-        {
-          status: 'Help Needed',
-          priority: 'high',
-          text: 'Shippers',
-          date: '2023/09/16',
-          assignedBy: 'Ed Holmes',
-        },
-        {
-          status: 'Help Needed',
-          priority: 'medium',
-          text: 'Hardware Upgrade',
-          date: '2023/09/16',
-          assignedBy: 'Barb Banks',
-        },
-      ],
-    },
-    {
-      icon: 'taskinprogress',
-      text: 'Masters',
-      menus: [
-        {
-          status: 'In Progress',
-          priority: 'low',
-          text: 'Bandwidth Increase',
-          date: '2023/09/16',
-          assignedBy: 'Davey Jones',
-        },
-        {
-          status: 'In Progress',
-          priority: 'medium',
-          text: 'Support',
-          date: '2023/09/16',
-          assignedBy: 'Victor Norris',
-        },
-        {
-          status: 'In Progress',
-          priority: 'low',
-          text: 'Training Material',
-          date: '2023/09/16',
-          assignedBy: 'John Heart',
-        },
-      ],
-    },
-    {
-      icon: 'taskstop',
-      text: 'ERX',
-      menus: [
-        {
-          status: 'Deferred',
-          priority: 'high',
-          text: 'Automation Server',
-          date: '2023/09/16',
-          assignedBy: 'Arthur Miller',
-        },
-        {
-          status: 'Deferred',
-          priority: 'medium',
-          text: 'Retail Sales',
-          date: '2023/09/16',
-          assignedBy: 'Robert Reagan',
-        },
-        {
-          status: 'Deferred',
-          priority: 'medium',
-          text: 'Shipping Labels',
-          date: '2023/09/16',
-          assignedBy: 'Greta Sims',
-        },
-      ],
-    },
-    {
-      icon: 'taskrejected',
-      text: 'System',
-      menus: [
-        {
-          status: 'Rejected',
-          priority: 'high',
-          text: 'Schedule Meeting with Sales Team',
-          date: '2023/09/16',
-          assignedBy: 'Sandra Johnson',
-        },
-        {
-          status: 'Rejected',
-          priority: 'medium',
-          text: 'Confirm Availability for Sales Meeting',
-          date: '2023/09/16',
-          assignedBy: 'Ed Holmes',
-        },
-        {
-          status: 'Rejected',
-          priority: 'medium',
-          text: 'Reschedule Sales Team Meeting',
-          date: '2023/09/16',
-          assignedBy: 'Barb Banks',
-        },
-      ],
-    },
-  ];
-  orientations: any = 'horizontal';
-  stylingMode: any = 'primary';
-  iconPosition: any = 'left';
-  selectedTabData: any[] = [];
-  selectedRows: { [key: number]: any[] } = {};
-  selectedTab: number = 0;
-  gridColumns = ['status'];
-  allSelectedRows: any[] = [];
+  @ViewChild(DxDataGridComponent, { static: true })
+  dataGrid: DxDataGridComponent;
+
+  popup_width: any = '60%';
   isAddFormVisible: boolean = false;
+  dataSource: any;
+  //========Variables for Pagination ====================
+  readonly allowedPageSizes: any = [5, 10, 'all'];
+  displayMode: any = 'full';
+  showPageSizeSelector = true;
+  showInfo = true;
+  showNavButtons = true;
+  facilityGroupDatasource: any;
+  isAddFormPopupOpened: boolean = false;
 
-  ngOnInit(): void {
-    //========Initialize selectedRows for each tab======
-    this.tabPanelItems.forEach((tab, index) => {
-      this.selectedRows[index] = [];
-    });
+  constructor(
+    private masterService: MasterReportService,
+    private service: ReportService
+  ) {}
 
-    //==========Set the data for the initial tab========
-    this.selectedTabData = this.tabPanelItems[0].menus;
+  //=================== Page refreshing==========================
+  refresh = () => {
+    this.dataGrid.instance.refresh();
+  };
+  //========================Export data ==========================
+  onExporting(event: any) {
+    this.service.exportDataGrid(event);
   }
+  //=======================row data update=======================
+  onRowUpdating(event: any) {}
 
-  onTabClick(event: any): void {
-    this.selectedTab = event.itemIndex;
-    this.selectedTabData = this.tabPanelItems[this.selectedTab].menus;
-  }
+  //=======================row data removing ====================
+  onRowRemoving(event: any) {}
 
-  onSelectionChanged(event: any): void {
-    this.selectedRows[this.selectedTab] = event.selectedRowsData;
-    this.combineSelectedRows();
-  }
-
-  combineSelectedRows(): void {
-    this.allSelectedRows = Object.keys(this.selectedRows)
-      .filter((key) => this.selectedRows[key].length > 0)
-      .map((key) => ({
-        icon: this.tabPanelItems[key].icon,
-        text: this.tabPanelItems[key].text,
-        menus: this.selectedRows[key],
-      }));
-
-    console.log('all selected row data :', this.allSelectedRows);
-  }
-  onClickSaveData() {
+  show_new_Form() {
     this.isAddFormVisible = true;
   }
-
-  //================================Tree view set up========================
-  // treeViewData = this.createTreeViewData(this.tabPanelItems);
-  // onClickSaveData() {}
-  // createTreeViewData(items: any) {
-  //   return items.map((item: any) => ({
-  //     text: item.text,
-  //     icon: item.icon,
-  //     expanded: true,
-  //     items: item.menus.map((menu: any) => ({
-  //       text: menu.text,
-  //       status: menu.status,
-  //       priority: menu.priority,
-  //       date: menu.date,
-  //       assignedBy: menu.assignedBy,
-  //     })),
-  //   }));
-  // }
-  // onSelectionChanged(e: any) {
-  //   const selectedNodes = e.component.getSelectedNodes();
-  //   const selectedItems = selectedNodes.map((node) => node.itemData);
-  //   console.log('Selected Items:', selectedItems);
-  // }
 }
 @NgModule({
   imports: [

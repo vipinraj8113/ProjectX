@@ -1,31 +1,20 @@
 <div class="dx-theme-fluent view-wrapper list-page dx-theme-fluent">
-  <div class="view-wrapper topDiv d-flex mb-5">
-    <div class="headDiv d-flex align-items-center">
-      <div location="before" class="grid-header">User Level</div>
+  <div class="view-wrapper topDiv d-flex mb-1 mt-0">
+    <div class="headDiv d-flex align-items-center m-0 p-0">
       <div class="inputBox ms-3">
         <dx-text-box
           value=""
           [inputAttr]="{ 'aria-label': 'Name' }"
-          label="User Level"
+          label="Enter User Level Name"
           labelMode="floating"
         ></dx-text-box>
       </div>
-
-      <!-- <dx-button
-        class="ms-auto me-5"
-        location="after"
-        text="Save "
-        icon="plus"
-        type="default"
-        stylingMode="contained"
-        (onClick)="onClickSaveData()"
-      ></dx-button> -->
     </div>
   </div>
 
   <div class="tabs-demo view-wrapper">
     <div class="widget-container">
-      <!-- <div>
+      <div>
         <dx-tabs
           #withIconAndText
           [width]="width"
@@ -33,7 +22,7 @@
           [rtlEnabled]="rtlEnabled"
           [scrollByContent]="scrollByContent"
           [showNavButtons]="showNavButtons"
-          [dataSource]="tabPanelItems"
+          [dataSource]="MenuDatasource"
           [orientation]="orientations"
           [stylingMode]="stylingMode"
           [iconPosition]="iconPosition"
@@ -44,6 +33,7 @@
           *ngIf="selectedTabData"
           class="grid theme-dependent"
           noDataText=""
+          [height]="'48vh'"
           [dataSource]="selectedTabData"
           [columns]="gridColumns"
           [allowColumnResizing]="true"
@@ -55,20 +45,7 @@
         >
           <dxo-selection mode="multiple"></dxo-selection>
         </dx-data-grid>
-      </div> -->
-
-      <!-- //============================Tree View=====================================// -->
-      <dx-tree-view
-        [items]="treeViewData"
-        dataStructure="tree"
-        displayExpr="text"
-        [showCheckBoxesMode]="'normal'"
-        [parentIdExpr]="'id'"
-        [keyExpr]="'id'"
-        [selectionMode]="'multiple'"
-        (onSelectionChanged)="onSelectionChanged($event)"
-      >
-      </dx-tree-view>
+      </div>
     </div>
   </div>
 </div>

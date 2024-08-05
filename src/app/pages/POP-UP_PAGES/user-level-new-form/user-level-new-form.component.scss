@@ -2,7 +2,6 @@
 @use "sass:math";
 
 .list-page {
-  height: 100vh;
   width: 100%;
   white-space: nowrap;
   overflow-x: hidden;
@@ -15,8 +14,7 @@
   justify-content: center;
 }
 .inputBox {
-  width: 20%;
-  // margin-left: 10px;
+  width: 40%;
   padding: 0px;
 }
 .topDiv {
@@ -30,11 +28,14 @@
   height: 55px;
 }
 .tabs-demo {
-  height: 75vh;
   background-color: var(--base-bg);
   border-radius: 8px;
 }
 .grid-header {
   @include header();
 }
-
+.dx-datagrid {
+  height: 45vh;
+  padding: 0px;
+  margin: 0px;
+}

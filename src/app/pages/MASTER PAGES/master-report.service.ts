@@ -10,143 +10,7 @@ const gender: any = [
   { description: 'Female' },
   { description: 'Others' },
 ];
-const tabPanelItems: any = [
-  {
-    icon: 'description',
-    text: 'Reports',
-    menus: [
-      {
-        status: 'Not Started',
-        priority: 'medium',
-        text: 'Training',
-        date: '2023/09/16',
-        assignedBy: 'Arthur Miller',
-      },
-      {
-        status: 'Not Started',
-        priority: 'medium',
-        text: 'NDA',
-        date: '2023/09/16',
-        assignedBy: 'Robert Reagan',
-      },
-      {
-        status: 'Not Started',
-        priority: 'low',
-        text: 'Health Insurance',
-        date: '2023/09/16',
-        assignedBy: 'Greta Sims',
-      },
-    ],
-  },
-  {
-    icon: 'taskhelpneeded',
-    text: 'Activity',
-    menus: [
-      {
-        status: 'Help Needed',
-        priority: 'low',
-        text: 'Recall and Refund Forms',
-        date: '2023/09/16',
-        assignedBy: 'Sandra Johnson',
-      },
-      {
-        status: 'Help Needed',
-        priority: 'high',
-        text: 'Shippers',
-        date: '2023/09/16',
-        assignedBy: 'Ed Holmes',
-      },
-      {
-        status: 'Help Needed',
-        priority: 'medium',
-        text: 'Hardware Upgrade',
-        date: '2023/09/16',
-        assignedBy: 'Barb Banks',
-      },
-    ],
-  },
-  {
-    icon: 'taskinprogress',
-    text: 'Masters',
-    menus: [
-      {
-        status: 'In Progress',
-        priority: 'low',
-        text: 'Bandwidth Increase',
-        date: '2023/09/16',
-        assignedBy: 'Davey Jones',
-      },
-      {
-        status: 'In Progress',
-        priority: 'medium',
-        text: 'Support',
-        date: '2023/09/16',
-        assignedBy: 'Victor Norris',
-      },
-      {
-        status: 'In Progress',
-        priority: 'low',
-        text: 'Training Material',
-        date: '2023/09/16',
-        assignedBy: 'John Heart',
-      },
-    ],
-  },
-  {
-    icon: 'taskstop',
-    text: 'ERX',
-    menus: [
-      {
-        status: 'Deferred',
-        priority: 'high',
-        text: 'Automation Server',
-        date: '2023/09/16',
-        assignedBy: 'Arthur Miller',
-      },
-      {
-        status: 'Deferred',
-        priority: 'medium',
-        text: 'Retail Sales',
-        date: '2023/09/16',
-        assignedBy: 'Robert Reagan',
-      },
-      {
-        status: 'Deferred',
-        priority: 'medium',
-        text: 'Shipping Labels',
-        date: '2023/09/16',
-        assignedBy: 'Greta Sims',
-      },
-    ],
-  },
-  {
-    icon: 'taskrejected',
-    text: 'System',
-    menus: [
-      {
-        status: 'Rejected',
-        priority: 'high',
-        text: 'Schedule Meeting with Sales Team',
-        date: '2023/09/16',
-        assignedBy: 'Sandra Johnson',
-      },
-      {
-        status: 'Rejected',
-        priority: 'medium',
-        text: 'Confirm Availability for Sales Meeting',
-        date: '2023/09/16',
-        assignedBy: 'Ed Holmes',
-      },
-      {
-        status: 'Rejected',
-        priority: 'medium',
-        text: 'Reschedule Sales Team Meeting',
-        date: '2023/09/16',
-        assignedBy: 'Barb Banks',
-      },
-    ],
-  },
-];
+
 @Injectable({
   providedIn: 'root',
 })
@@ -154,18 +18,26 @@ export class MasterReportService {
   constructor(private http: HttpClient) {}
 
   //======Fetch gender data======
-  get_gender_Data(): any {
+  get_gender_Data() {
     return gender;
   }
 
-  //======Fetch tabPanelItems data======
-  get_userLevel_Data(): any {
-    return tabPanelItems;
-  }
   //======Facility Drop down data=====================
   Get_GropDown(dropDownField: any) {
     const Url = `${BASE_URL}/dropdown`;
     const reqBody = { name: dropDownField };
+    return this.http.post(Url, reqBody);
+  }
+  //==========================================USER LEVEL MASTER======================================================
+  get_userLevel_menuList() {
+    const Url = `${BASE_URL}/userroles/menulist`;
+    const reqBody = {
+      list: [],
+    };
+    // const headers = new HttpHeaders({
+    //   'Content-Type': 'application/json',
+    //   'x-api-key': Token,
+    // });
     return this.http.post(Url, reqBody);
   }
 
