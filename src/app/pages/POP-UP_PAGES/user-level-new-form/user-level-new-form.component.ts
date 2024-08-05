@@ -175,15 +175,6 @@ export class UserLevelNewFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.get_All_MenuList();
-
-    // //========Initialize selectedRows for each tab======
-    // this.MenuDatasource.forEach((tab, index) => {
-    //   this.selectedRows[index] = [];
-    // });
-
-    // //==========Set the data for the initial tab========
-    // this.selectedTabData = this.MenuDatasource[0].Menus;
-    // console.log("selected tab is :", this.selectedTabData )
   }
 
   //==============All Menu List========================
@@ -191,20 +182,18 @@ export class UserLevelNewFormComponent implements OnInit {
     // this.masterservice.get_userLevel_menuList().subscribe((response: any) => {
     //   this.MenuDatasource = response.Data;
     // });
-       //========Initialize selectedRows for each tab======
-  this.MenuDatasource.forEach((tab, index) => {
-    this.selectedRows[index] = [];
-  });
-
+    //========Initialize selectedRows for each tab======
+    this.MenuDatasource.forEach((tab, index) => {
+      this.selectedRows[index] = [];
+    });
     //==========Set the data for the initial tab========
-  this.selectedTabData = this.MenuDatasource[0].Menus;
-  console.log("selected tab is :", this.selectedTabData )
+    this.selectedTabData = this.MenuDatasource[0].Menus;
+    console.log('selected tab is :', this.selectedTabData);
   }
 
   onTabClick(event: any): void {
     this.selectedTab = event.itemIndex;
     this.selectedTabData = this.MenuDatasource[this.selectedTab].Menus;
-    // console.log("selected tab is :", this.selectedTabData )
   }
 
   onSelectionChanged(event: any): void {
@@ -216,13 +205,17 @@ export class UserLevelNewFormComponent implements OnInit {
     this.allSelectedRows = Object.keys(this.selectedRows)
       .filter((key) => this.selectedRows[key].length > 0)
       .map((key) => ({
-        icon:this.MenuDatasource[key].icon,
+        icon: this.MenuDatasource[key].icon,
         text: this.MenuDatasource[key].text,
         Menus: this.selectedRows[key],
       }));
 
     console.log('all selected row data :', this.allSelectedRows);
   }
+
+  getNewUSerLevelData = () => ({ ...this.allSelectedRows });
+
+  resetNewuserData = () => ({...this.allSelectedRows = []});
 }
 @NgModule({
   imports: [

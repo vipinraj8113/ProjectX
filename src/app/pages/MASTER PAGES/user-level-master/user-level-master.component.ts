@@ -28,6 +28,9 @@ export class UserLevelMasterComponent {
   @ViewChild(DxDataGridComponent, { static: true })
   dataGrid: DxDataGridComponent;
 
+  @ViewChild(UserLevelNewFormComponent, { static: false })
+  userlevelNewForm: UserLevelNewFormComponent;
+
   popup_width: any = '60%';
   isAddFormVisible: boolean = false;
   dataSource: any;
@@ -53,6 +56,13 @@ export class UserLevelMasterComponent {
   onExporting(event: any) {
     this.service.exportDataGrid(event);
   }
+  //=================OnClick save new data=======================
+  onClickSaveNewData() {
+    const menuData = this.userlevelNewForm.getNewUSerLevelData();
+    console.log(menuData);
+    this.userlevelNewForm.resetNewuserData();
+  }
+
   //=======================row data update=======================
   onRowUpdating(event: any) {}
 

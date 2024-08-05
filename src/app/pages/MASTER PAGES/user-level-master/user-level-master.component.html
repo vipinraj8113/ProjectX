@@ -55,7 +55,7 @@
 
   </dx-data-grid>
   <form-popup class="formPopupClass" [(visible)]="isAddFormVisible" titleText="New User Level" [height]="'90vh'"
-    [width]="popup_width">
+    [width]="popup_width" (save)="onClickSaveNewData()">
     <app-user-level-new-form></app-user-level-new-form>
   </form-popup>
 </div>
