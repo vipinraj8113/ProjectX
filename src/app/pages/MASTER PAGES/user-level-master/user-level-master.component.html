@@ -50,12 +50,12 @@
       <dxo-search [enabled]="true"></dxo-search>
     </dxo-header-filter>
 
-    <!-- <dxi-column dataField="SpecialityCode" caption="Speciality Code"></dxi-column>
-    <dxi-column dataField="SpecialityName" Caption="Speciality Name"></dxi-column> -->
+    <dxi-column dataField="UserRoles" caption="User Level"></dxi-column>
+    <dxi-column dataField="LastModifiedTime" Caption="Last Modified Time"></dxi-column>
 
   </dx-data-grid>
-  <form-popup class="formPopupClass" [(visible)]="isAddFormVisible" titleText="New User Level" [height]="'90vh'"
+  <form-popup class="formPopupClass m-2" [(visible)]="isAddFormVisible" titleText="New User Level" [height]="'100vh'"
     [width]="popup_width" (save)="onClickSaveNewData()">
-    <app-user-level-new-form></app-user-level-new-form>
+    <app-user-level-new-form [sharedValue]="isAddFormVisible" ></app-user-level-new-form>
   </form-popup>
 </div>

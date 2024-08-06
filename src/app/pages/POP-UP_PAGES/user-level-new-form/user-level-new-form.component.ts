@@ -1,5 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, NgModule, OnChanges, OnInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  NgModule,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import {
   DxTabPanelModule,
   DxCheckBoxModule,
@@ -10,6 +17,9 @@ import {
   DxButtonModule,
   DxDataGridModule,
   DxTreeViewModule,
+  DxValidatorModule,
+  DxValidatorComponent,
+  DxValidationSummaryModule,
 } from 'devextreme-angular';
 import { MasterReportService } from '../../MASTER PAGES/master-report.service';
 
@@ -20,143 +30,8 @@ import { MasterReportService } from '../../MASTER PAGES/master-report.service';
   providers: [MasterReportService],
 })
 export class UserLevelNewFormComponent implements OnInit {
-  MenuDatasource = [
-    {
-      icon: 'description',
-      text: 'Reports',
-      Menus: [
-        {
-          MenuName: 'Not Started',
-          priority: 'medium',
-          text: 'Training',
-          date: '2023/09/16',
-          assignedBy: 'Arthur Miller',
-        },
-        {
-          MenuName: 'Not Started',
-          priority: 'medium',
-          text: 'NDA',
-          date: '2023/09/16',
-          assignedBy: 'Robert Reagan',
-        },
-        {
-          MenuName: 'Not Started',
-          priority: 'low',
-          text: 'Health Insurance',
-          date: '2023/09/16',
-          assignedBy: 'Greta Sims',
-        },
-      ],
-    },
-    {
-      icon: 'taskhelpneeded',
-      text: 'Activity',
-      Menus: [
-        {
-          MenuName: 'Help Needed',
-          priority: 'low',
-          text: 'Recall and Refund Forms',
-          date: '2023/09/16',
-          assignedBy: 'Sandra Johnson',
-        },
-        {
-          MenuName: 'Help Needed',
-          priority: 'high',
-          text: 'Shippers',
-          date: '2023/09/16',
-          assignedBy: 'Ed Holmes',
-        },
-        {
-          MenuName: 'Help Needed',
-          priority: 'medium',
-          text: 'Hardware Upgrade',
-          date: '2023/09/16',
-          assignedBy: 'Barb Banks',
-        },
-      ],
-    },
-    {
-      icon: 'taskinprogress',
-      text: 'Masters',
-      Menus: [
-        {
-          MenuName: 'In Progress',
-          priority: 'low',
-          text: 'Bandwidth Increase',
-          date: '2023/09/16',
-          assignedBy: 'Davey Jones',
-        },
-        {
-          MenuName: 'In Progress',
-          priority: 'medium',
-          text: 'Support',
-          date: '2023/09/16',
-          assignedBy: 'Victor Norris',
-        },
-        {
-          MenuName: 'In Progress',
-          priority: 'low',
-          text: 'Training Material',
-          date: '2023/09/16',
-          assignedBy: 'John Heart',
-        },
-      ],
-    },
-    {
-      icon: 'taskstop',
-      text: 'ERX',
-      Menus: [
-        {
-          MenuName: 'Deferred',
-          priority: 'high',
-          text: 'Automation Server',
-          date: '2023/09/16',
-          assignedBy: 'Arthur Miller',
-        },
-        {
-          MenuName: 'Deferred',
-          priority: 'medium',
-          text: 'Retail Sales',
-          date: '2023/09/16',
-          assignedBy: 'Robert Reagan',
-        },
-        {
-          MenuName: 'Deferred',
-          priority: 'medium',
-          text: 'Shipping Labels',
-          date: '2023/09/16',
-          assignedBy: 'Greta Sims',
-        },
-      ],
-    },
-    {
-      icon: 'taskrejected',
-      text: 'System',
-      Menus: [
-        {
-          MenuName: 'Rejected',
-          priority: 'high',
-          text: 'Schedule Meeting with Sales Team',
-          date: '2023/09/16',
-          assignedBy: 'Sandra Johnson',
-        },
-        {
-          MenuName: 'Rejected',
-          priority: 'medium',
-          text: 'Confirm Availability for Sales Meeting',
-          date: '2023/09/16',
-          assignedBy: 'Ed Holmes',
-        },
-        {
-          MenuName: 'Rejected',
-          priority: 'medium',
-          text: 'Reschedule Sales Team Meeting',
-          date: '2023/09/16',
-          assignedBy: 'Barb Banks',
-        },
-      ],
-    },
-  ];
+  @Input() sharedValue: any;
+
   width: any = '100%';
   rtlEnabled: boolean = false;
   scrollByContent: boolean = true;
@@ -167,28 +42,33 @@ export class UserLevelNewFormComponent implements OnInit {
   selectedTabData: any[] = [];
   selectedRows: { [key: number]: any[] } = {};
   selectedTab: number = 0;
-  gridColumns = ['MenuName'];
   allSelectedRows: any[] = [];
-  // MenuDatasource: any;
-
+  MenuDatasource: any;
+  UserLevelValue: any = '';
+  isErrorVisible: boolean = false;
   constructor(private masterservice: MasterReportService) {}
 
   ngOnInit(): void {
     this.get_All_MenuList();
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['sharedValue'] && this.sharedValue) {
+      //========Initialize selectedRows for each tab======
+      this.MenuDatasource.forEach((tab, index) => {
+        this.selectedRows[index] = [];
+      });
+      //==========Set the data for the initial tab========
+      this.selectedTabData = this.MenuDatasource[0].Menus;
+      // console.log('selected tab is :', this.selectedTabData);
+    }
+  }
+
   //==============All Menu List========================
   get_All_MenuList() {
-    // this.masterservice.get_userLevel_menuList().subscribe((response: any) => {
-    //   this.MenuDatasource = response.Data;
-    // });
-    //========Initialize selectedRows for each tab======
-    this.MenuDatasource.forEach((tab, index) => {
-      this.selectedRows[index] = [];
+    this.masterservice.get_userLevel_menuList().subscribe((response: any) => {
+      this.MenuDatasource = response.Data;
     });
-    //==========Set the data for the initial tab========
-    this.selectedTabData = this.MenuDatasource[0].Menus;
-    console.log('selected tab is :', this.selectedTabData);
   }
 
   onTabClick(event: any): void {
@@ -197,6 +77,9 @@ export class UserLevelNewFormComponent implements OnInit {
   }
 
   onSelectionChanged(event: any): void {
+    if (this.UserLevelValue == '') {
+      this.isErrorVisible = true;
+    }
     this.selectedRows[this.selectedTab] = event.selectedRowsData;
     this.combineSelectedRows();
   }
@@ -205,6 +88,7 @@ export class UserLevelNewFormComponent implements OnInit {
     this.allSelectedRows = Object.keys(this.selectedRows)
       .filter((key) => this.selectedRows[key].length > 0)
       .map((key) => ({
+        userLevelname: this.UserLevelValue,
         icon: this.MenuDatasource[key].icon,
         text: this.MenuDatasource[key].text,
         Menus: this.selectedRows[key],
@@ -214,8 +98,6 @@ export class UserLevelNewFormComponent implements OnInit {
   }
 
   getNewUSerLevelData = () => ({ ...this.allSelectedRows });
-
-  resetNewuserData = () => ({...this.allSelectedRows = []});
 }
 @NgModule({
   imports: [
@@ -229,6 +111,7 @@ export class UserLevelNewFormComponent implements OnInit {
     DxButtonModule,
     DxDataGridModule,
     DxTreeViewModule,
+    DxValidatorModule,
   ],
   providers: [],
   declarations: [UserLevelNewFormComponent],

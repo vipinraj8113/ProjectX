@@ -29,8 +29,9 @@ export class MasterReportService {
     return this.http.post(Url, reqBody);
   }
   //==========================================USER LEVEL MASTER======================================================
-  get_userLevel_menuList() {
-    const Url = `${BASE_URL}/userroles/menulist`;
+  //============List of User Level==============
+  get_userLevel_List() {
+    const Url = `${BASE_URL}/userroles/list`;
     const reqBody = {
       list: [],
     };
@@ -39,6 +40,27 @@ export class MasterReportService {
     //   'x-api-key': Token,
     // });
     return this.http.post(Url, reqBody);
+  }
+
+  get_userLevel_menuList() {
+    const Url = `${BASE_URL}userroles/menulist`;
+    const reqBody = {
+      list: [],
+    };
+    // const headers = new HttpHeaders({
+    //   'Content-Type': 'application/json',
+    //   'x-api-key': Token,
+    // });
+    return this.http.post(Url, reqBody);
+  }
+
+  //=====Remove Insurance Data=====
+  Remove_userLevel_Row_Data(id: any) {
+    // const headers = new HttpHeaders({
+    //   'Content-Type': 'application/json',
+    //   'x-api-key': Token,
+    // });
+    return this.http.post(`${BASE_URL}userroles/delete/${id}`, {});
   }
 
   //==========================================INSURANCE MASTER==========================================================

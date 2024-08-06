@@ -6,6 +6,11 @@
   white-space: nowrap;
   overflow-x: hidden;
   overflow-y: hidden;
+  margin: 0px;
+}
+.view-wrapper{
+  padding: 0px;
+  margin: 0px;
 }
 
 .dx-tabpanel .dx-tab {
@@ -18,6 +23,7 @@
   padding: 0px;
 }
 .topDiv {
+  height: 25%;
   border-radius: 8px;
   justify-content: center;
   background-color: var(--base-bg);
@@ -28,6 +34,7 @@
   height: 55px;
 }
 .tabs-demo {
+  height: 100%;
   background-color: var(--base-bg);
   border-radius: 8px;
 }
@@ -35,7 +42,7 @@
   @include header();
 }
 .dx-datagrid {
-  height: 45vh;
+  // height: 45vh;
   padding: 0px;
   margin: 0px;
 }

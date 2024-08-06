@@ -323,7 +323,11 @@ body {
   .layout-body .menu-container.theme-dependent {
     padding-top: 0;
   }
-
+  .dx-button.dx-button-default {
+    border-radius: 4px;
+    background-color: #00A1E0;
+    color: #fff;
+}
   .view-wrapper {
     .dx-toolbar.dx-widget.theme-dependent {
       @include toolbar-panel();
