@@ -64,7 +64,7 @@ export class DenialListComponent {
     load: () =>
       new Promise((resolve, reject) => {
         this.service.getDenialsData().subscribe({
-          next: (res: any) => resolve(res.DenialMaster),
+          next: (res: any) => resolve(res.data),
           error: ({ message }) => reject(message),
         });
       }),
