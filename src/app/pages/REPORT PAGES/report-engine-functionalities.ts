@@ -88,12 +88,6 @@ export class ReportDataService {
                 };
               });
               const claimDetails = data.ReportData;
-              console.log('data loaded', claimDetails);
-              console.log('memorise checking', data);
-              console.log(
-                'memorised columns only ',
-                this.MemoriseReportColumns
-              );
               // sessionStorage.setItem('DataSource', JSON.stringify(data));
               resolve(claimDetails);
               this.show_Pagination = true;

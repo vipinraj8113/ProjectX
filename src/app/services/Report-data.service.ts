@@ -6,8 +6,6 @@ import { exportDataGrid as exportDataGridToXLSX } from 'devextreme/excel_exporte
 import { jsPDF } from 'jspdf';
 import { Workbook } from 'exceljs';
 import { saveAs } from 'file-saver-es';
-// const BASE_URL = 'http://localhost/projectx/api/';
-// const baseURL2 = 'http://localhost/crsdashboard/api/initdata';
 const BASE_URL = BaseURL;
 // const baseURL2 = InitData_URL;
 
@@ -67,7 +65,7 @@ export class ReportService {
     const url = `${BASE_URL}/reports/parametervalues`;
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      'Authorization': 'dXNlcmlkPTEmdGltZT0yMDI0MDYyMTExMDk=',
+      Authorization: 'dXNlcmlkPTEmdGltZT0yMDI0MDYyMTExMDk=',
     });
     return this.http.post(url, headers);
   }

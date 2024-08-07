@@ -66,7 +66,7 @@ export class SecurityPolicyComponent {
   onValidationEnableChange(newValue: boolean): void {
     this.validationRequired = newValue;
     this.readOnlyValue = !this.readOnlyValue;
-    // console.log('security policy values', this.readOnlyValue);
+    
   }
 
   //============Condition select depends radio button value========

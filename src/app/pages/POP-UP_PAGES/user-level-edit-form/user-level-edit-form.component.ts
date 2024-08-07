@@ -3,7 +3,6 @@ import {
   Component,
   Input,
   NgModule,
-  OnChanges,
   OnInit,
   SimpleChanges,
 } from '@angular/core';
@@ -18,19 +17,17 @@ import {
   DxDataGridModule,
   DxTreeViewModule,
   DxValidatorModule,
-  DxValidatorComponent,
-  DxValidationSummaryModule,
 } from 'devextreme-angular';
 import { MasterReportService } from '../../MASTER PAGES/master-report.service';
 
 @Component({
-  selector: 'app-user-level-new-form',
-  templateUrl: './user-level-new-form.component.html',
-  styleUrls: ['./user-level-new-form.component.scss'],
+  selector: 'app-user-level-edit-form',
+  templateUrl: './user-level-edit-form.component.html',
+  styleUrls: ['./user-level-edit-form.component.scss'],
   providers: [MasterReportService],
 })
-export class UserLevelNewFormComponent implements OnInit {
-  @Input() sharedValue: any;
+export class UserLevelEditFormComponent implements OnInit {
+  @Input() editValue: any;
 
   width: any = '100%';
   rtlEnabled: boolean = false;
@@ -53,7 +50,10 @@ export class UserLevelNewFormComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['sharedValue'] && this.sharedValue) {
+    if (changes['editValue'] && this.editValue) {
+      this.UserLevelValue = this.editValue.UserRoles;
+      // console.log('edit data received succesfully :', this.editValue);
+      
       //========Initialize selectedRows for each tab======
       this.MenuDatasource.forEach((tab, index) => {
         this.selectedRows[index] = [];
@@ -86,14 +86,12 @@ export class UserLevelNewFormComponent implements OnInit {
 
   combineSelectedRows(): void {
     this.allSelectedRows = [];
-
     Object.keys(this.selectedRows)
       .filter((key) => this.selectedRows[key].length > 0)
       .forEach((key) => {
         const existingEntry = this.allSelectedRows.find(
           (row) => row.userLevelname === this.UserLevelValue
         );
-
         if (existingEntry) {
           existingEntry.Menus = [
             ...existingEntry.Menus,
@@ -108,11 +106,10 @@ export class UserLevelNewFormComponent implements OnInit {
           });
         }
       });
-
     console.log('all selected row data :', this.allSelectedRows);
   }
 
-  getNewUSerLevelData = () => ({ ...this.allSelectedRows });
+  getNewUSerLevelEditedData = () => ({ ...this.allSelectedRows });
 }
 @NgModule({
   imports: [
@@ -129,7 +126,7 @@ export class UserLevelNewFormComponent implements OnInit {
     DxValidatorModule,
   ],
   providers: [],
-  declarations: [UserLevelNewFormComponent],
-  exports: [UserLevelNewFormComponent],
+  declarations: [UserLevelEditFormComponent],
+  exports: [UserLevelEditFormComponent],
 })
-export class UserLevelNewFormModule {}
+export class UserLevelEditFormModule {}

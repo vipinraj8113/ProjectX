@@ -88,11 +88,9 @@ export class PostOfficeCredentialsComponent implements OnInit {
 
   //==================update data===================
   onRowUpdating(event: any) {
-    console.log(event);
     const oldData = event.oldData;
     const newData = event.newData;
     const updatedData = { ...oldData, ...newData };
-    console.log(updatedData);
     let id = updatedData.ID;
     let FacilityID = updatedData.ID;
     let PostOfficeID = updatedData.PostOfficeID;

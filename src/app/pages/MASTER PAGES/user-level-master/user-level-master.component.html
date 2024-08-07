@@ -2,11 +2,9 @@
   <dx-data-grid class="grid theme-dependent" noDataText="no data" height="600" [dataSource]="dataSource"
     [showBorders]="true" [allowColumnResizing]="true" [allowColumnReordering]="true" [rowAlternationEnabled]="true"
     rowAlternationInterval="2" (onExporting)="onExporting($event)" (onRowRemoving)="onRowRemoving($event)"
-    (onRowUpdating)="onRowUpdating($event)" height="84vh">
+    (onEditingStart)="onEditingStart($event)" height="84vh">
     <dxo-paging [pageSize]="10"></dxo-paging>
     <dxo-editing mode="popup" [allowUpdating]="true" [allowDeleting]="true" [allowAdding]="true">
-      <dxo-popup title="Edit Speciality" [showTitle]="true" width="40%" height="60vh">
-      </dxo-popup>
     </dxo-editing>
     <dxo-pager [visible]="true" [allowedPageSizes]="allowedPageSizes" [displayMode]="displayMode"
       [showPageSizeSelector]="showPageSizeSelector" [showInfo]="showInfo" [showNavigationButtons]="showNavButtons">
@@ -56,6 +54,10 @@
   </dx-data-grid>
   <form-popup class="formPopupClass m-2" [(visible)]="isAddFormVisible" titleText="New User Level" [height]="'100vh'"
     [width]="popup_width" (save)="onClickSaveNewData()">
-    <app-user-level-new-form [sharedValue]="isAddFormVisible" ></app-user-level-new-form>
+    <app-user-level-new-form [sharedValue]="isAddFormVisible"></app-user-level-new-form>
+  </form-popup>
+  <form-popup class="formPopupClass m-2" [(visible)]="iseditFormVisible" titleText="Edit User Level" [height]="'100vh'"
+    [width]="popup_width" (save)="onRowUpdating()">
+    <app-user-level-edit-form [editValue]="clickedRowData"></app-user-level-edit-form>
   </form-popup>
 </div>

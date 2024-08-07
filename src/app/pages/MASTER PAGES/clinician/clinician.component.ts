@@ -150,7 +150,7 @@ export class ClinicianComponent implements OnInit {
   onRowRemoving(event: any) {
     event.cancel = true;
     let SelectedRow = event.key;
-    console.log('selected row data :', SelectedRow);
+
     this.masterService
       .Remove_Clinician_Row_Data(SelectedRow.ID)
       .subscribe(() => {
@@ -183,7 +183,6 @@ export class ClinicianComponent implements OnInit {
     const updataDate = event.newData;
     const oldData = event.oldData;
     const combinedData = { ...oldData, ...updataDate };
-    console.log(combinedData);
     let id = combinedData.ID;
     let ClinicianLicense = combinedData.ClinicianLicense;
     let ClinicianName = combinedData.ClinicianName;

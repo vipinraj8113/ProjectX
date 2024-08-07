@@ -84,7 +84,6 @@ export class FacilityListComponent implements OnInit {
   onRowUpdating(event: any) {
     const updataDate = event.newData;
     const oldData = event.oldData;
-    console.log(event);
     const combinedData = { ...oldData, ...updataDate };
     let id = combinedData.ID;
     let FacilityLicense = combinedData.FacilityLicense;

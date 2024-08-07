@@ -21,6 +21,8 @@ import { DxTextBoxModule } from 'devextreme-angular/ui/text-box';
 import { DxTreeViewModule } from 'devextreme-angular';
 import { UserLevelNewFormModule } from '../../POP-UP_PAGES/user-level-new-form/user-level-new-form.component';
 import { UserLevelNewFormComponent } from '../../POP-UP_PAGES/user-level-new-form/user-level-new-form.component';
+import { UserLevelEditFormComponent } from '../../POP-UP_PAGES/user-level-edit-form/user-level-edit-form.component';
+import { UserLevelEditFormModule } from '../../POP-UP_PAGES/user-level-edit-form/user-level-edit-form.component';
 import { FormPopupModule } from 'src/app/components';
 import { MasterReportService } from '../master-report.service';
 import { ReportService } from 'src/app/services/Report-data.service';
@@ -34,9 +36,10 @@ import { ReportService } from 'src/app/services/Report-data.service';
 export class UserLevelMasterComponent implements OnInit {
   @ViewChild(DxDataGridComponent, { static: true })
   dataGrid: DxDataGridComponent;
-
   @ViewChild(UserLevelNewFormComponent, { static: false })
   userlevelNewForm: UserLevelNewFormComponent;
+  @ViewChild(UserLevelEditFormComponent, { static: false })
+  userlevelEditForm: UserLevelEditFormComponent;
 
   popup_width: any = '50%';
   isAddFormVisible: boolean = false;
@@ -49,6 +52,8 @@ export class UserLevelMasterComponent implements OnInit {
   showNavButtons = true;
   facilityGroupDatasource: any;
   isAddFormPopupOpened: boolean = false;
+  iseditFormVisible: boolean = false;
+  clickedRowData: any;
 
   constructor(
     private masterService: MasterReportService,
@@ -77,11 +82,43 @@ export class UserLevelMasterComponent implements OnInit {
   }
   //=================OnClick save new data=======================
   onClickSaveNewData() {
-    const menuData = this.userlevelNewForm.getNewUSerLevelData();
+    const menuData: any = this.userlevelNewForm.getNewUSerLevelData();
+    this.masterService
+      .insert_userLevel_Data(menuData)
+      .subscribe((response: any) => {
+        if (response) {
+          this.dataGrid.instance.refresh();
+          this.fetch_all_UserLevel_list();
+          notify(
+            {
+              message: `New User Level  saved Successfully`,
+              position: { at: 'top right', my: 'top right' },
+            },
+            'success'
+          );
+        } else {
+          notify(
+            {
+              message: `Your Data Not Saved`,
+              position: { at: 'top right', my: 'top right' },
+            },
+            'error'
+          );
+        }
+      });
   }
 
+  onEditingStart(event: any) {
+    event.cancel = true; // Cancel the editing if a certain condition is met
+    this.clickedRowData = event.data;
+    event.cancel = true;
+    this.iseditFormVisible = true;
+  }
   //=======================row data update=======================
-  onRowUpdating(event: any) {}
+  onRowUpdating() {
+    const editedData: any = this.userlevelEditForm.getNewUSerLevelEditedData();
+    console.log('updated value is :', editedData);
+  }
 
   //=======================row data removing ====================
   onRowRemoving(event: any) {
@@ -129,6 +166,7 @@ export class UserLevelMasterComponent implements OnInit {
     DxTreeViewModule,
     FormPopupModule,
     UserLevelNewFormModule,
+    UserLevelEditFormModule,
   ],
   providers: [],
   exports: [],

@@ -54,6 +54,16 @@ export class MasterReportService {
     return this.http.post(Url, reqBody);
   }
 
+  insert_userLevel_Data(ObjData: any) {
+    const Url = `${BASE_URL}/userroles/insert`;
+    const reqBody = {
+      UserRoles: ObjData[0].userLevelname,
+      UserMenuList: ObjData[0].Menus,
+    };
+    console.log('insert data fetched from popup page', reqBody);
+    return this.http.post(Url, reqBody);
+  }
+
   //=====Remove Insurance Data=====
   Remove_userLevel_Row_Data(id: any) {
     // const headers = new HttpHeaders({

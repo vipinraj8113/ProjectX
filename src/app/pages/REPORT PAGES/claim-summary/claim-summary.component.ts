@@ -184,7 +184,6 @@ export class ClaimSummaryComponent implements AfterViewInit {
     this.Report_Page = this.router.url.slice(1);
     const parametrs = JSON.parse(sessionStorage.getItem('reportData'));
     this.Parameters.push(parametrs);
-    console.log('parameters :', this.Parameters);
     this.systemCurrencyCode = this.service.getSystemCurrencyCode();
     const loadedPAgeFlag = JSON.parse(sessionStorage.getItem('loadedFlag'));
     if (loadedPAgeFlag == 'true') {
@@ -206,7 +205,6 @@ export class ClaimSummaryComponent implements AfterViewInit {
   //================Month value change ===========================
   onMonthValueChanged(e: any) {
     this.selectedmonth = e.value;
-    console.log('selected month ', this.selectedmonth);
     this.From_Date_Value = new Date(this.selectedYear, this.selectedmonth, 1); // January 1 of the selected year
     this.To_Date_Value = new Date(this.selectedYear, this.selectedmonth + 1, 0); // December 31 of the selected year
   }
@@ -362,12 +360,6 @@ export class ClaimSummaryComponent implements AfterViewInit {
                   };
                 });
                 const claimDetails = data.ReportData;
-                console.log('data loaded', claimDetails);
-                console.log('memorise checking', data);
-                console.log(
-                  'memorised columns only ',
-                  this.MemoriseReportColumns
-                );
                 // sessionStorage.setItem('DataSource', JSON.stringify(data));
                 resolve(claimDetails);
                 this.show_Pagination = true;
@@ -561,7 +553,6 @@ export class ClaimSummaryComponent implements AfterViewInit {
             },
             'success'
           );
-          console.log(response.message);
         } else {
           notify(
             {
@@ -572,13 +563,6 @@ export class ClaimSummaryComponent implements AfterViewInit {
           );
         }
       });
-    console.log(
-      this.user_Id,
-      this.Report_Page,
-      this.Parameters,
-      memoriseName,
-      memoriseReportColumns
-    );
   }
 }
 

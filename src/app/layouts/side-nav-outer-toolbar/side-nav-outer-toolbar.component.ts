@@ -84,7 +84,7 @@ export class SideNavOuterToolbarComponent implements OnInit, OnDestroy {
 
 
 
-    // console.log('inital loaded page :');
+  
 
     this.menuOpened = this.screen.sizes['screen-large'];
     this.screenSubscription = this.screen.changed.subscribe(() =>
@@ -131,13 +131,11 @@ export class SideNavOuterToolbarComponent implements OnInit, OnDestroy {
         });
         this.selectedIndex = this.tabs.findIndex((tab) => tab.path === path);
         this.router.navigate([path]);
-        // console.log('not exist tab :', this.tabs, this.selectedIndex);
-        // console.log('selected index :', this.selectedIndex);
+        
       } else {
         this.selectedIndex = this.tabs.findIndex((tab) => tab.path === path);
         this.router.navigate([path]);
-        // console.log('exist tab :', this.tabs);
-        // console.log('selected index :', this.selectedIndex);
+        
       }
       if (this.menuOpened) {
         pointerEvent?.preventDefault();
@@ -194,9 +192,9 @@ export class SideNavOuterToolbarComponent implements OnInit, OnDestroy {
       const selectedTab = this.tabs[this.selectedIndex];
       let path = selectedTab.path;
       this.router.navigate([path]);
-      // console.log('selected tab path:', selectedTab.path);
+      
     } else {
-      // console.log('No tabs are open');
+      
     }
   }
 }

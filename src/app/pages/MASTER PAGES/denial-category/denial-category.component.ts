@@ -89,7 +89,6 @@ export class DenialCategoryComponent implements OnInit {
   onRowRemoving(event: any) {
     event.cancel = true;
     let SelectedRow = event.key;
-    console.log('selected row data :', SelectedRow);
     this.masterService
       .Remove_DenialCategory_Row_Data(SelectedRow.ID)
       .subscribe(() => {

@@ -105,7 +105,6 @@ export class FacilityGroupListComponent implements OnInit {
   onRowRemoving(event: any) {
     event.cancel = true;
     let SelectedRow = event.key;
-    console.log('selected row data :', SelectedRow);
     this.masterService
       .Remove_Facility_Group_Data(SelectedRow.ID)
       .subscribe(() => {

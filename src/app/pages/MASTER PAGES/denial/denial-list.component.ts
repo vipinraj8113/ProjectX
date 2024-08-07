@@ -144,7 +144,6 @@ export class DenialListComponent {
     const updataDate = event.newData;
     const oldData = event.oldData;
     const combinedData = { ...oldData, ...updataDate };
-    console.log('onrowUpdated Data getting ', combinedData);
     let id = combinedData.ID;
     let code = combinedData.DenialCode;
     let Description = combinedData.Description;
@@ -185,7 +184,6 @@ export class DenialListComponent {
   onRowRemoving(event: any) {
     event.cancel = true;
     var SelectedRow = event.key;
-    console.log('selected row data :', SelectedRow);
     this.service.removeDenial(SelectedRow.ID).subscribe(() => {
       try {
         notify(

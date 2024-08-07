@@ -22,12 +22,9 @@
         </dx-tabs>
         <dx-data-grid *ngIf="selectedTabData" class="grid theme-dependent" noDataText="" [height]="'61vh'"
           [dataSource]="selectedTabData" [allowColumnResizing]="true" [allowColumnReordering]="true"
-          [rowAlternationEnabled]="true" rowAlternationInterval="2" (onSelectionChanged)="onSelectionChanged($event)"
-          [selectedRowKeys]="selectedRows[selectedTab]">
+          [rowAlternationEnabled]="true" [hoverStateEnabled]="true" rowAlternationInterval="2"
+          (onSelectionChanged)="onSelectionChanged($event)" [selectedRowKeys]="selectedRows[selectedTab]">
           <dxo-selection mode="multiple"></dxo-selection>
-          <!-- <dxo-header-filter [visible]="true">
-            <dxo-search [enabled]="true"></dxo-search>
-          </dxo-header-filter> -->
           <dxi-column dataField="MenuName" caption="Menu List"></dxi-column>
         </dx-data-grid>
       </div>

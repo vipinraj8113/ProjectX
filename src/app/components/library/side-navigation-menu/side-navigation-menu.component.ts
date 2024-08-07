@@ -94,7 +94,7 @@ export class SideNavigationMenuComponent implements AfterViewInit, OnDestroy ,On
   ngOnInit(): void {
       // this.items
        this.navigation =JSON.parse(localStorage.getItem('sidemenuItems'));
-      console.log(this.items)
+      // console.log(this.items)
   }
 
   setSelectedItem() {

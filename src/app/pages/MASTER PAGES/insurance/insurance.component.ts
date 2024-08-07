@@ -144,7 +144,6 @@ export class InsuranceComponent implements OnInit {
     const updataDate = event.newData;
     const oldData = event.oldData;
     const combinedData = { ...oldData, ...updataDate };
-    console.log(combinedData);
     let id = combinedData.ID;
     let Insuranceid = combinedData.InsuranceID;
     let InsuranceName = combinedData.InsuranceName;
