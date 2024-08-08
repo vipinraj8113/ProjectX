@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, NgModule } from '@angular/core';
+import { Component, NgModule, OnInit } from '@angular/core';
 import { DxCheckBoxModule } from 'devextreme-angular';
 import { DxTextBoxModule } from 'devextreme-angular/ui/text-box';
 import { DxNumberBoxModule } from 'devextreme-angular';
@@ -15,7 +15,7 @@ import { SystemServicesService } from '../system-services.service';
   templateUrl: './security-policy.component.html',
   styleUrls: ['./security-policy.component.scss'],
 })
-export class SecurityPolicyComponent {
+export class SecurityPolicyComponent implements OnInit {
   conditionRequired = ['None', '1', '2', '3', 'All'];
 
   validationRequired: boolean = false;
@@ -47,15 +47,9 @@ export class SecurityPolicyComponent {
 
   unautherizedMessage: any = '';
   disableUserOn: number | null = null;
-
-  checkboxStateMap: {
-    [key: string]: {
-      numbers: boolean;
-      uppercase: boolean;
-      lowercase: boolean;
-      special: boolean;
-    };
-  } = {
+  presentSecurityData: any;
+  tooltipData: any;
+  checkboxStateMap: any = {
     None: {
       numbers: false,
       uppercase: false,
@@ -69,6 +63,21 @@ export class SecurityPolicyComponent {
   };
 
   constructor(private systemService: SystemServicesService) {}
+  ngOnInit() {
+    this.get_Present_Security_Policy();
+  }
+
+  get_Present_Security_Policy() {
+    this.systemService.get_securityPolicy_List().subscribe((response: any) => {
+      this.presentSecurityData = response.data;
+      this.tooltipData = response.Tooltip;
+      console.log(
+        'present data loaded',
+        this.presentSecurityData,
+        this.tooltipData
+      );
+    });
+  }
 
   onClickButton(event: any) {
     const formData = {
@@ -94,7 +103,8 @@ export class SecurityPolicyComponent {
       unautherizedMessage: this.unautherizedMessage,
       disableUserOn: this.disableUserOn,
     };
-   
+
+    // this.systemService.save_security_Policy_Data(formData)
   }
   //===========Change validation enable or not=====================
   onValidationEnableChange(newValue: boolean): void {
