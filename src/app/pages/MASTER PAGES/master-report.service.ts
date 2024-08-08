@@ -53,14 +53,23 @@ export class MasterReportService {
     // });
     return this.http.post(Url, reqBody);
   }
-
+  //=============insert user level data=========
   insert_userLevel_Data(ObjData: any) {
     const Url = `${BASE_URL}/userroles/insert`;
     const reqBody = {
       UserRoles: ObjData[0].userLevelname,
       UserMenuList: ObjData[0].Menus,
     };
-    console.log('insert data fetched from popup page', reqBody);
+    return this.http.post(Url, reqBody);
+  }
+  //=============update user level data=========
+  update_userLevel_Data(ObjData: any) {
+    const Url = `${BASE_URL}/userroles/update`;
+    const reqBody = {
+      ID: ObjData[0].userLevelID,
+      UserRoles: ObjData[0].userLevelname,
+      UserMenuList: ObjData[0].Menus,
+    };
     return this.http.post(Url, reqBody);
   }
 

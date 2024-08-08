@@ -85,6 +85,11 @@ export class UserLevelEditFormComponent implements OnInit {
     this.selectedTabData = this.MenuDatasource[this.selectedTab].Menus;
   }
 
+  onUserLevelValueChange(event: any): void {
+    this.UserLevelValue = event.value;
+    this.combineSelectedRows();
+  }
+
   onSelectionChanged(event: any): void {
     if (this.UserLevelValue == '') {
       this.isErrorVisible = true;

@@ -117,7 +117,32 @@ export class UserLevelMasterComponent implements OnInit {
   //=======================row data update=======================
   onRowUpdating() {
     const editedData: any = this.userlevelEditForm.getNewUSerLevelEditedData();
-    console.log('updated value is :', editedData);
+    this.masterService
+      .update_userLevel_Data(editedData)
+      .subscribe((data: any) => {
+        if (data) {
+          this.dataGrid.instance.refresh();
+          this.fetch_all_UserLevel_list();
+          notify(
+            {
+              message: `User Level updated Successfully`,
+              position: { at: 'top right', my: 'top right' },
+              displayTime: 500,
+            },
+            'success'
+          );
+        } else {
+          notify(
+            {
+              message: `Your Data Not Saved`,
+              position: { at: 'top right', my: 'top right' },
+              displayTime: 500,
+            },
+            'error'
+          );
+        }
+        this.dataGrid.instance.refresh();
+      });
   }
 
   //=======================row data removing ====================

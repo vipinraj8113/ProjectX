@@ -3,7 +3,8 @@
         <div class="headDiv d-flex align-items-center m-0 p-0">
             <div class="inputBox ms-3">
                 <dx-text-box [(value)]="UserLevelValue" [inputAttr]="{ 'aria-label': 'Name' }"
-                    label="Enter User Level Name" labelMode="floating" validationMessagePosition="right">
+                    label="Enter User Level Name" labelMode="floating" validationMessagePosition="right"
+                    (onValueChanged)="onUserLevelValueChange($event)">
                     <dx-validator *ngIf="isErrorVisible">
                         <dxi-validation-rule type="required" message="user level is required"></dxi-validation-rule>
                     </dx-validator>
