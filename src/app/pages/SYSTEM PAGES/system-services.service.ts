@@ -15,17 +15,21 @@ export class SystemServicesService {
     const reqBody = { name: dropDownField };
     return this.http.post(Url, reqBody);
   }
-  //====================Post office credentials======================
+  //===================================Security Policy===================================
+  get_securityPolicy_List() {
+    const Url = `${BASE_URL}/securitysettings/list`;
+    return this.http.post(Url, {});
+  }
+  //========================Insert OR Update security policy list==========================
+  save_security_Policy_Data(data: any) {}
+
+  //===============================Post office credentials===============================
   //===========List===========
   get_PostOfficeCredencial_List() {
     const Url = `${BASE_URL}/facilitycredentials/list`;
     const reqBody = {
       list: [],
     };
-    // const headers = new HttpHeaders({
-    //   'Content-Type': 'application/json',
-    //   'x-api-key': Token,
-    // });
     return this.http.post(Url, reqBody);
   }
   //=====Add or update data========

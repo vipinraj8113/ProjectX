@@ -65,6 +65,7 @@ export class UserLevelEditFormComponent implements OnInit {
           selectedMenuIds.includes(menu.MenuId)
         ).map((menu: any) => menu.MenuId);
       });
+      console.log("ihfodshfokjdsfidsh ifnhds iocsdjifdwejif",this.selectedRows)
       // Set the data for the initial tab
       this.selectedTab = 0;
       this.selectedTabData = this.MenuDatasource[this.selectedTab].Menus;

@@ -3,8 +3,13 @@ import { Component, NgModule } from '@angular/core';
 import { DxCheckBoxModule } from 'devextreme-angular';
 import { DxTextBoxModule } from 'devextreme-angular/ui/text-box';
 import { DxNumberBoxModule } from 'devextreme-angular';
-import { DxRadioGroupModule, DxTemplateModule } from 'devextreme-angular';
+import {
+  DxRadioGroupModule,
+  DxTemplateModule,
+  DxButtonModule,
+} from 'devextreme-angular';
 import { DxFormModule } from 'devextreme-angular';
+import { SystemServicesService } from '../system-services.service';
 @Component({
   selector: 'app-security-policy',
   templateUrl: './security-policy.component.html',
@@ -17,7 +22,7 @@ export class SecurityPolicyComponent {
   readOnlyValue: boolean = true;
 
   minPasswordLength: number | null = null;
-  conditionRequiredValue: any;
+  conditionRequiredValue: any = '';
 
   isNumberChecked: boolean = false;
   isUppercaseChecked: boolean = false;
@@ -40,8 +45,8 @@ export class SecurityPolicyComponent {
   passwordExpiryDaysCount: number | null = null;
   passwordRepeatCycle: number | null = null;
 
-  unautherizedMessage: any;
-  disableUser: number | null = null;
+  unautherizedMessage: any = '';
+  disableUserOn: number | null = null;
 
   checkboxStateMap: {
     [key: string]: {
@@ -62,11 +67,39 @@ export class SecurityPolicyComponent {
     '3': { numbers: true, uppercase: true, lowercase: true, special: false },
     All: { numbers: true, uppercase: true, lowercase: true, special: true },
   };
+
+  constructor(private systemService: SystemServicesService) {}
+
+  onClickButton(event: any) {
+    const formData = {
+      validationRequired: this.validationRequired,
+      minPasswordLength: this.minPasswordLength,
+      conditionRequiredValue: this.conditionRequiredValue,
+      isNumberChecked: this.isNumberChecked,
+      isUppercaseChecked: this.isUppercaseChecked,
+      isLowercaseChecked: this.isLowercaseChecked,
+      isSpecialCharactersChecked: this.isSpecialCharactersChecked,
+      emailOtp: this.emailOtp,
+      smsOtp: this.smsOtp,
+      whatsAppOtp: this.whatsAppOtp,
+      emailAlert: this.emailAlert,
+      smsAlert: this.smsAlert,
+      whatsAppAlert: this.whatsAppAlert,
+      loginAttempts: this.LoginAttempts,
+      resetDuration: this.resetDuration,
+      failedLoginDuration: this.failedLoginDuration,
+      changePasswordOnLogin: this.changePasswordOnLogin,
+      passwordExpiryDaysCount: this.passwordExpiryDaysCount,
+      passwordRepeatCycle: this.passwordRepeatCycle,
+      unautherizedMessage: this.unautherizedMessage,
+      disableUserOn: this.disableUserOn,
+    };
+   
+  }
   //===========Change validation enable or not=====================
   onValidationEnableChange(newValue: boolean): void {
     this.validationRequired = newValue;
     this.readOnlyValue = !this.readOnlyValue;
-    
   }
 
   //============Condition select depends radio button value========
@@ -88,6 +121,7 @@ export class SecurityPolicyComponent {
     DxRadioGroupModule,
     DxTemplateModule,
     DxFormModule,
+    DxButtonModule,
   ],
   providers: [],
   exports: [],
