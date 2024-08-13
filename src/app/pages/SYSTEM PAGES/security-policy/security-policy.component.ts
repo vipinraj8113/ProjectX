@@ -16,7 +16,10 @@ import { SystemServicesService } from '../system-services.service';
   styleUrls: ['./security-policy.component.scss'],
 })
 export class SecurityPolicyComponent implements OnInit {
-  conditionRequired = ['None', '1', '2', '3', 'All'];
+  conditionRequired = [
+    { display: 'Yes', value: true },
+    { display: 'No', value: false },
+  ];
 
   validationRequired: boolean = false;
   readOnlyValue: boolean = true;
@@ -49,18 +52,18 @@ export class SecurityPolicyComponent implements OnInit {
   disableUserOn: number | null = null;
   presentSecurityData: any;
   tooltipData: any;
-  checkboxStateMap: any = {
-    None: {
-      numbers: false,
-      uppercase: false,
-      lowercase: false,
-      special: false,
-    },
-    '1': { numbers: true, uppercase: false, lowercase: false, special: false },
-    '2': { numbers: true, uppercase: true, lowercase: false, special: false },
-    '3': { numbers: true, uppercase: true, lowercase: true, special: false },
-    All: { numbers: true, uppercase: true, lowercase: true, special: true },
-  };
+  // checkboxStateMap: any = {
+  //   None: {
+  //     numbers: false,
+  //     uppercase: false,
+  //     lowercase: false,
+  //     special: false,
+  //   },
+  //   '1': { numbers: true, uppercase: false, lowercase: false, special: false },
+  //   '2': { numbers: true, uppercase: true, lowercase: false, special: false },
+  //   '3': { numbers: true, uppercase: true, lowercase: true, special: false },
+  //   All: { numbers: true, uppercase: true, lowercase: true, special: true },
+  // };
 
   constructor(private systemService: SystemServicesService) {}
   ngOnInit() {
@@ -71,15 +74,11 @@ export class SecurityPolicyComponent implements OnInit {
     this.systemService.get_securityPolicy_List().subscribe((response: any) => {
       this.presentSecurityData = response.data;
       this.tooltipData = response.Tooltip;
-      console.log(
-        'present data loaded',
-        this.presentSecurityData,
-        this.tooltipData
-      );
+      console.log('present data loaded', this.presentSecurityData);
     });
   }
 
-  onClickButton(event: any) {
+  onClickButton() {
     const formData = {
       validationRequired: this.validationRequired,
       minPasswordLength: this.minPasswordLength,
@@ -103,9 +102,33 @@ export class SecurityPolicyComponent implements OnInit {
       unautherizedMessage: this.unautherizedMessage,
       disableUserOn: this.disableUserOn,
     };
-
+    console.log(formData);
     // this.systemService.save_security_Policy_Data(formData)
   }
+
+  onClickCancel() {
+    this.validationRequired = false;
+    this.minPasswordLength = null;
+    this.conditionRequiredValue = null;
+    this.isNumberChecked = false;
+    this.isUppercaseChecked = false;
+    this.isLowercaseChecked = false;
+    this.isSpecialCharactersChecked = false;
+    this.emailOtp = false;
+    this.smsOtp = false;
+    this.whatsAppOtp = false;
+    this.emailAlert = false;
+    this.smsAlert = false;
+    this.whatsAppAlert = false;
+    this.LoginAttempts = null;
+    this.resetDuration = null;
+    this.failedLoginDuration = null;
+    this.changePasswordOnLogin = false;
+    this.passwordExpiryDaysCount = null;
+    this.passwordRepeatCycle = null;
+    this.unautherizedMessage = '';
+    this.disableUserOn = null;
+}
   //===========Change validation enable or not=====================
   onValidationEnableChange(newValue: boolean): void {
     this.validationRequired = newValue;
@@ -113,14 +136,14 @@ export class SecurityPolicyComponent implements OnInit {
   }
 
   //============Condition select depends radio button value========
-  onConditionRequiredChange(newValue: string): void {
-    const checkboxState =
-      this.checkboxStateMap[newValue] || this.checkboxStateMap['None'];
-    this.isNumberChecked = checkboxState.numbers;
-    this.isUppercaseChecked = checkboxState.uppercase;
-    this.isLowercaseChecked = checkboxState.lowercase;
-    this.isSpecialCharactersChecked = checkboxState.special;
-  }
+  // onConditionRequiredChange(newValue: string): void {
+  //   const checkboxState =
+  //     this.checkboxStateMap[newValue] || this.checkboxStateMap['None'];
+  //   this.isNumberChecked = checkboxState.numbers;
+  //   this.isUppercaseChecked = checkboxState.uppercase;
+  //   this.isLowercaseChecked = checkboxState.lowercase;
+  //   this.isSpecialCharactersChecked = checkboxState.special;
+  // }
 }
 @NgModule({
   imports: [

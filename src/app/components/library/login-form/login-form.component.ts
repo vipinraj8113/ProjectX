@@ -48,17 +48,17 @@ export class LoginFormComponent implements OnInit {
   //==================Login Function=====================
   async onSubmit(e: Event) {
     e.preventDefault();
-    const { username, password } = this.formData;
+    const { username, password, forceLogin } = this.formData;
     this.sharedService.triggerLoadComponent(true);
     this.authService.initializeProject().subscribe((response: any) => {
       if (response) {
         this.sharedService.triggerLoadComponent(false);
         this.authService
-          .logIn(username, password)
+          .logIn(username, password, forceLogin)
           .subscribe((response: any) => {
             if (response.flag == 1) {
               localStorage.setItem('logData', JSON.stringify(response.data));
-              localStorage.setItem('Token',JSON.stringify(response.token))
+              localStorage.setItem('Token', JSON.stringify(response.data.Token));
               localStorage.setItem(
                 'sidemenuItems',
                 JSON.stringify(response.menus)

@@ -18,7 +18,6 @@
                 <div class="">
                     <dx-radio-group [items]="conditionRequired" [(value)]="conditionRequiredValue" layout="horizontal"
                         [readOnly]="readOnlyValue" [disabled]="readOnlyValue"
-                        (valueChange)="onConditionRequiredChange($event)"
                         hint="Should contain characters from X of the following four categories">
                     </dx-radio-group>
                 </div>
@@ -53,18 +52,18 @@
 
         <div class="leftDiv BorderBox me-2">
             <div class="headingText">Sent OTP on Password Change</div>
-            <div class="dx-field m-1 mt-4 items">
+            <div class="dx-field m-1 mt-3 items">
                 <dx-check-box class="" [(value)]="emailOtp"
                     text="E-mail (e-mail OTP verification  on forgot/change password)"
                     hint="OTP Email On Password Change"></dx-check-box>
             </div>
 
-            <div class="dx-field m-1 mt-4  items">
+            <div class="dx-field m-1 mt-3  items">
                 <dx-check-box class="" [(value)]="smsOtp" text="SMS (SMS OTP verification  on forgot/change password)"
                     hint="OTP SMS On Password Change"></dx-check-box>
             </div>
 
-            <div class="dx-field m-1 mt-4 ">
+            <div class="dx-field m-1 mt-3 ">
                 <dx-check-box class="" [(value)]="whatsAppOtp"
                     text="WhatsApp (WhatsApp OTP verification  on forgot/change password)"
                     hint="WhatsApp OTP On Password Change"></dx-check-box>
@@ -160,11 +159,11 @@
     </div>
     <div class="ms-auto mt-3 me-2 d-flex align-items-center">
         <div class="me-2 cancelbtn">
-            <dx-button  stylingMode="outlined" text="cancel" type="normal">
+            <dx-button stylingMode="outlined" text="cancel" type="normal" (onClick)="onClickCancel()">
             </dx-button>
         </div>
         <div>
-            <dx-button stylingMode="contained" text="save" type="default" (onClick)="onClickButton($event)" >
+            <dx-button stylingMode="contained" text="save" type="default" (onClick)="onClickButton()">
             </dx-button>
         </div>
     </div>

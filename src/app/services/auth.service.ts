@@ -18,8 +18,7 @@ export interface IResponse {
 const defaultPath = '/';
 
 //=============================Base url==============================
-import {BaseURL} from '../services/constant-url.service'
-
+import { BaseURL } from '../services/constant-url.service';
 
 //==================================Default USer Name and details=======================
 export const defaultUser: IUser = {
@@ -58,22 +57,22 @@ export class AuthService {
     return this.http.get('https://api.ipify.org/?format=json');
   }
 
-  initializeProject(){
-    return this.http.post(`${BaseURL}CustomerInfo/getinfo`,{})
+  initializeProject() {
+    return this.http.post(`${BaseURL}CustomerInfo/getinfo`, {});
   }
   //================Log In function===============================
-  logIn(username: any, password: any) {
-    const API_URL =` ${BaseURL}user/LOGIN`;
+  logIn(username: any, password: any, forcelogin: any) {
+    const API_URL = ` ${BaseURL}user/LOGIN`;
     const ReqBody = {
-      LOGIN_NAME: username,
-      PASSWORD: password,
-      LOCAL_IP:"192.168.1.143",
-      COMPUTER_NAME:"System1",
-      DOMAIN_NAME:"Domain1",
-      COMPUTER_USER:"User1",
-      INTERNET_IP:"192.158.1.38",
-      SYSTEM_TIME_UTC:"2020-09-07T00:08:09",
-      FORCE_LOGIN:"7"
+      LoginName: username,
+      Password: password,
+      LocalIP: '192.168.1.143',
+      ComputerName: 'System1',
+      DomainName: 'Domain1',
+      ComputerUser: 'User1',
+      InternetIP: '192.158.1.38',
+      SystemTimeUTC: '2020-09-07T00:08:09',
+      ForceLogin: forcelogin,
     };
     return this.http.post<any>(API_URL, ReqBody);
   }

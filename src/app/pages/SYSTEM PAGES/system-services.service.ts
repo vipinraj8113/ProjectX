@@ -21,7 +21,34 @@ export class SystemServicesService {
     return this.http.post(Url, {});
   }
   //========================Insert OR Update security policy list==========================
-  save_security_Policy_Data(data: any) {}
+  save_security_Policy_Data(data: any) {
+    const Url = `${BASE_URL}/securitysettings/save`;
+    const reqBody = {
+      PasswordValidationRequired: true,
+      MinimumLength: '3',
+      Numbers: true,
+      UppercaseCharacters: true,
+      LowercaseCharacters: true,
+      SpecialCharacters: true,
+      OTPEmailOnPasswordChange: true,
+      OTPSMSOnPasswordChange: true,
+      whatsAppOTPOnPasswordChange: true,
+      AlertEmailOnPasswordChange: true,
+      AlertSMSOnPasswordChange: true,
+      whatsAppAlertOnPasswordChange: true,
+      AccountLockAttempt: '7',
+      AccountLockDuration: '6',
+      AccountLockFailedLogin: '2',
+      UserMustChangePasswordOnLogin: true,
+      PasswordAge: '1',
+      PasswordRepeatCycle: '2',
+      UnauthorizedBannerMessage: 'ADSAD',
+      DisableUserOnInactiveDays: '2',
+
+      MinimumCategoriesRequired: true,
+    };
+    return this.http.post(Url, reqBody);
+  }
 
   //===============================Post office credentials===============================
   //===========List===========
