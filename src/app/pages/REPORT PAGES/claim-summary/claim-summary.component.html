@@ -23,6 +23,13 @@
               (onValueChanged)="onDropDownBoxValueChanged()"
               [dropDownOptions]="{ width: 'auto' }"
             >
+              <dx-validator>
+                <dxi-validation-rule
+                  type="required"
+                  message="Facility is required"
+                ></dxi-validation-rule>
+              </dx-validator>
+
               <div>
                 <dx-tree-view
                   [dataSource]="Facility_DataSource"
@@ -62,6 +69,8 @@
               (valueChanged)="onDropdownValueChanged()"
               [dropDownOptions]="{ width: 'auto' }"
             >
+            <dxi-validation-rule type="required" message="Country is required">
+            </dxi-validation-rule>
             </dx-select-box>
           </div>
         </dxi-item>

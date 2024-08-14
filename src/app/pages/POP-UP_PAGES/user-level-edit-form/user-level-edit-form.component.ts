@@ -3,6 +3,7 @@ import {
   Component,
   Input,
   NgModule,
+  OnChanges,
   OnInit,
   SimpleChanges,
 } from '@angular/core';
@@ -26,7 +27,7 @@ import { MasterReportService } from '../../MASTER PAGES/master-report.service';
   styleUrls: ['./user-level-edit-form.component.scss'],
   providers: [MasterReportService],
 })
-export class UserLevelEditFormComponent implements OnInit {
+export class UserLevelEditFormComponent implements OnInit ,OnChanges{
   @Input() editValue: any;
 
   width: any = '100%';

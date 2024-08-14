@@ -15,6 +15,7 @@ import {
   DxTextBoxModule,
   DxFormModule,
   DxLookupComponent,
+  DxValidatorComponent,
 } from 'devextreme-angular';
 import { DxPopupModule } from 'devextreme-angular/ui/popup';
 import { DxDateBoxModule } from 'devextreme-angular';
@@ -47,6 +48,7 @@ import {
   DxSliderModule,
   DxTagBoxModule,
   DxTemplateModule,
+  DxValidatorModule,
 } from 'devextreme-angular';
 import {
   DxTreeViewComponent,
@@ -72,6 +74,9 @@ interface dropdownData {
   providers: [ReportService],
 })
 export class ClaimSummaryComponent implements AfterViewInit {
+  @ViewChild(DxValidatorComponent, { static: false })
+  validator: DxValidatorComponent;
+
   @ViewChild(DxDataGridComponent, { static: true })
   dataGrid: DxDataGridComponent;
 
@@ -81,6 +86,8 @@ export class ClaimSummaryComponent implements AfterViewInit {
   @ViewChild('lookup', { static: false }) lookup: DxLookupComponent;
   @ViewChild(DxTreeViewComponent, { static: false })
   treeView: DxTreeViewComponent;
+
+  isErrorVisible: boolean = false; //for required error showing
 
   isPanelOpened = false;
 
@@ -106,9 +113,9 @@ export class ClaimSummaryComponent implements AfterViewInit {
   columnsData: any;
 
   //================Variables for Storing selected Parameters========
-  SearchOn_Value: any;
+  SearchOn_Value: any = null;
   Facility_Value: any[];
-  EncounterType_Value: any;
+  EncounterType_Value: any = null;
   From_Date_Value: any = new Date();
   To_Date_Value: any = new Date();
   AsOnDate: any = new Date();
@@ -369,48 +376,52 @@ export class ClaimSummaryComponent implements AfterViewInit {
   }
   //============Call DataSource Using Selected Values====
   get_Report_DataSource() {
-    var userId = this.user_Id;
-    var searchOn = this.SearchOn_Value;
-    var Facility = this.Facility_Value.join(', ');
-    var EncounterType = this.EncounterType_Value;
-    var fromDate = this.formatDate(this.From_Date_Value);
-    var toDate = this.formatDate(this.To_Date_Value);
-    var receiverId = this.ReceiverID_Value;
-    var payerId = this.PayerID_Value;
-    var payer = this.Payer_Value;
-    var Clinician = this.Clinician_Value;
-    var OrderingClinician = this.OrderingClinician_Value;
+    const validationResult = this.validator.instance.validate();
+    if (validationResult.isValid) {
+      var userId = this.user_Id;
+      var searchOn = this.SearchOn_Value;
+      var Facility = this.Facility_Value.join(', ');
+      var EncounterType = this.EncounterType_Value;
+      var fromDate = this.formatDate(this.From_Date_Value);
+      var toDate = this.formatDate(this.To_Date_Value);
+      var receiverId = this.ReceiverID_Value;
+      var payerId = this.PayerID_Value;
+      var payer = this.Payer_Value;
+      var Clinician = this.Clinician_Value;
+      var OrderingClinician = this.OrderingClinician_Value;
 
-    // Create an object with the variables
-    var reportData = {
-      SEARCH_ON: searchOn,
-      FACILITY_ID: Facility,
-      ENCOUNTER_TYPE: EncounterType,
-      START_DATE: fromDate,
-      END_DATE: toDate,
-      RECEIVER_ID: receiverId,
-      PAYER_ID: payerId,
-      PAYER: payer,
-      CLINICIAN: Clinician,
-      ORDERING_CLINICIAN: OrderingClinician,
-    };
-    // Store the object in session storage
-    sessionStorage.setItem('reportData', JSON.stringify(reportData));
-    this.loadData(
-      userId,
-      searchOn,
-      Facility,
-      EncounterType,
-      fromDate,
-      toDate,
-      receiverId,
-      payerId,
-      payer,
-      Clinician,
-      OrderingClinician
-    );
-    sessionStorage.setItem('loadedFlag', JSON.stringify('true'));
-    this.show_Parameter_Div();
+      // Create an object with the variables
+      var reportData = {
+        SEARCH_ON: searchOn,
+        FACILITY_ID: Facility,
+        ENCOUNTER_TYPE: EncounterType,
+        START_DATE: fromDate,
+        END_DATE: toDate,
+        RECEIVER_ID: receiverId,
+        PAYER_ID: payerId,
+        PAYER: payer,
+        CLINICIAN: Clinician,
+        ORDERING_CLINICIAN: OrderingClinician,
+      };
+      // Store the object in session storage
+      sessionStorage.setItem('reportData', JSON.stringify(reportData));
+      this.loadData(
+        userId,
+        searchOn,
+        Facility,
+        EncounterType,
+        fromDate,
+        toDate,
+        receiverId,
+        payerId,
+        payer,
+        Clinician,
+        OrderingClinician
+      );
+      sessionStorage.setItem('loadedFlag', JSON.stringify('true'));
+      this.show_Parameter_Div();
+    } else {
+    }
   }
   //==============DataLoading After Reload Page==========
   DataSorce_After_reload_Page() {
@@ -592,6 +603,7 @@ export class ClaimSummaryComponent implements AfterViewInit {
     DxSortableModule,
     DxTabPanelModule,
     DxListModule,
+    DxValidatorModule,
   ],
   providers: [],
   exports: [],
