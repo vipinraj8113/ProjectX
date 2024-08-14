@@ -151,7 +151,7 @@ export class ClaimSummaryComponent implements AfterViewInit {
   MemoriseReportColumns: any;
   memorise_Dropdown_Data: any;
 
-  monthDataSource: { name: string; value: number }[];
+  monthDataSource: { name: string; value: any }[];
   years: number[] = [];
   selectedmonth: any;
   selectedYear: number | null = null;
