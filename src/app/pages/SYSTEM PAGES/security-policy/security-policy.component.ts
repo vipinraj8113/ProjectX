@@ -17,10 +17,7 @@ import { SystemServicesService } from '../system-services.service';
   styleUrls: ['./security-policy.component.scss'],
 })
 export class SecurityPolicyComponent implements OnInit {
-  conditionRequired = [
-    { display: 'Yes', value: true },
-    { display: 'No', value: false },
-  ];
+  
 
   validationRequired: boolean = false;
   readOnlyValue: boolean = true;
