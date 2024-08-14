@@ -61,7 +61,7 @@ export class AuthService {
     return this.http.post(`${BaseURL}CustomerInfo/getinfo`, {});
   }
   //================Log In function===============================
-  logIn(username: any, password: any, forcelogin: any) {
+  logIn(username: any, password: any) {
     const API_URL = ` ${BaseURL}user/LOGIN`;
     const ReqBody = {
       LoginName: username,
@@ -72,7 +72,7 @@ export class AuthService {
       ComputerUser: 'User1',
       InternetIP: '192.158.1.38',
       SystemTimeUTC: '2020-09-07T00:08:09',
-      ForceLogin: forcelogin,
+      ForceLogin: true,
     };
     return this.http.post<any>(API_URL, ReqBody);
   }

@@ -180,15 +180,15 @@ export class ClaimSummaryComponent implements AfterViewInit {
     this.monthDataSource = this.service.getMonths();
 
     this.logData = JSON.parse(localStorage.getItem('logData'));
-    this.user_Id = this.logData.USER_ID;
+    this.user_Id = this.logData.UserID;
     this.Report_Page = this.router.url.slice(1);
     const parametrs = JSON.parse(sessionStorage.getItem('reportData'));
     this.Parameters.push(parametrs);
     this.systemCurrencyCode = this.service.getSystemCurrencyCode();
     const loadedPAgeFlag = JSON.parse(sessionStorage.getItem('loadedFlag'));
-    if (loadedPAgeFlag == 'true') {
-      this.DataSorce_After_reload_Page();
-    }
+    // if (loadedPAgeFlag == 'true') {
+    //   this.DataSorce_After_reload_Page();
+    // }
   }
   ngAfterViewInit() {
     if (this.dataGrid) {
@@ -304,72 +304,68 @@ export class ClaimSummaryComponent implements AfterViewInit {
     Clinician: any,
     OrderingClinician: any
   ) {
-    this.dataSource = new DataSource<any>({
-      load: () =>
-        new Promise((resolve, reject) => {
-          this.service
-            .get_Claim_Summary_Date_wise(
-              userId,
-              searchOn,
-              Facility,
-              encounterType,
-              fromData,
-              toDate
-            )
-            .subscribe({
-              next: (data: any) => {
-                const personalReportData = data.PersonalReports;
-                this.memorise_Dropdown_Data = personalReportData.map(
-                  (personalReport) => {
-                    return {
-                      name: personalReport.name,
-                    };
+    this.service
+      .get_Claim_Summary_Date_wise(
+        userId,
+        searchOn,
+        Facility,
+        encounterType,
+        fromData,
+        toDate
+      )
+      .subscribe((data: any) => {
+        console.log('report data loaded', data);
+        const personalReportData = data.PersonalReports;
+        console.log('data loaded', personalReportData);
+        this.memorise_Dropdown_Data = personalReportData.map(
+          (personalReport) => {
+            return {
+              name: personalReport.name,
+            };
+          }
+        );
+
+        const personalReport = data.PersonalReports.find(
+          (report) => report.name === this.memoriseDropDownSelectedValue
+        );
+
+        // Extract the columns if the personalReport is found
+        this.MemoriseReportColumns = personalReport
+          ? personalReport.Columns
+          : [];
+        console.log('memo loaded', this.MemoriseReportColumns);
+        this.columnsData =
+          this.memoriseEnable === 'true'
+            ? this.MemoriseReportColumns
+            : data.ReportColumns;
+        console.log('columns are ', this.columnsData);
+        this.ColumnNames = this.columnsData.map((column) => column.Name);
+        // console.log("columns are fetched",this.columnsData)
+
+        // Assuming columnsData is the array of column objects you provided
+        this.columnsConfig = this.columnsData.map((column) => {
+          return {
+            dataField: column.Name,
+            caption: column.Title,
+            visible: column.Visibility === 'true' ? true : false,
+            type: column.Type,
+            format:
+              column.Type === 'Decimal'
+                ? {
+                    type: 'fixedPoint',
+                    precision: 2,
+                    // currency: this.systemCurrencyCode,
                   }
-                );
-                const personalReport = data.PersonalReports.find(
-                  (report) => report.name === this.memoriseDropDownSelectedValue
-                );
-                // Extract the columns if the personalReport is found
-                this.MemoriseReportColumns = personalReport
-                  ? personalReport.Columns
-                  : [];
-
-                this.columnsData =
-                  this.memoriseEnable === 'true'
-                    ? this.MemoriseReportColumns
-                    : data.ReportColumns;
-                this.ColumnNames = this.columnsData.map(
-                  (column) => column.Name
-                );
-
-                // Assuming columnsData is the array of column objects you provided
-                this.columnsConfig = this.columnsData.map((column) => {
-                  return {
-                    dataField: column.Name,
-                    caption: column.Title,
-                    visible: column.Visibility === 'true' ? true : false,
-                    type: column.Type,
-                    format:
-                      column.Type === 'Decimal'
-                        ? {
-                            type: 'fixedPoint',
-                            precision: 2,
-                            // currency: this.systemCurrencyCode,
-                          }
-                        : undefined,
-                  };
-                });
-                console.log(this.columnsConfig)
-                const claimDetails = data.ReportData;
-                // sessionStorage.setItem('DataSource', JSON.stringify(data));
-                resolve(claimDetails);
-                this.show_Pagination = true;
-                this.refresh;
-              },
-              error: ({ message }) => reject(message),
-            });
-        }),
-    });
+                : undefined,
+          };
+        });
+        console.log('testing 1', this.columnsConfig);
+        this.dataSource = data.ReportData;
+        console.log('report data is ', this.dataSource);
+        // sessionStorage.setItem('DataSource', JSON.stringify(data));
+        this.show_Pagination = true;
+        // this.refresh;
+      });
   }
   //============Call DataSource Using Selected Values====
   get_Report_DataSource() {

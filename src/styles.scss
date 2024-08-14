@@ -113,10 +113,11 @@ body {
 }
 
 .paramsDiv {
-  margin-bottom: 0px;
-  // height: 25vh;
+  padding: 5px;
+  margin-bottom: 5px;
+  border-radius: 8px;
+  background-color: var(--base-bg);
 }
-
 
 .dx-datagrid-headers .dx-datagrid-table .dx-row > td {
   border-bottom: 1px solid rgb(97, 97, 97);
@@ -125,10 +126,29 @@ body {
   font-size: 14px;
 }
 
-.dx-datagrid .dx-datagrid-content .dx-datagrid-table .dx-row > td:not(.dx-validation-pending):not(.dx-datagrid-select-all).dx-editor-cell:not(.dx-command-select), .dx-datagrid .dx-datagrid-content .dx-datagrid-table .dx-row > td.dx-cell-modified:not(.dx-field-item-content):not(.dx-validation-pending).dx-editor-cell:not(.dx-command-select), .dx-datagrid .dx-datagrid-content .dx-datagrid-table .dx-row > td.dx-datagrid-invalid:not(.dx-field-item-content):not(.dx-validation-pending):not(.dx-datagrid-select-all).dx-editor-cell:not(.dx-command-select) {
+.dx-datagrid
+  .dx-datagrid-content
+  .dx-datagrid-table
+  .dx-row
+  > td:not(.dx-validation-pending):not(
+    .dx-datagrid-select-all
+  ).dx-editor-cell:not(.dx-command-select),
+.dx-datagrid
+  .dx-datagrid-content
+  .dx-datagrid-table
+  .dx-row
+  > td.dx-cell-modified:not(.dx-field-item-content):not(
+    .dx-validation-pending
+  ).dx-editor-cell:not(.dx-command-select),
+.dx-datagrid
+  .dx-datagrid-content
+  .dx-datagrid-table
+  .dx-row
+  > td.dx-datagrid-invalid:not(.dx-field-item-content):not(
+    .dx-validation-pending
+  ):not(.dx-datagrid-select-all).dx-editor-cell:not(.dx-command-select) {
   padding: 0px;
 }
-
 
 .dx-tabpanel .dx-tabpanel-tabs .dx-tabs {
   height: 100%;
@@ -317,7 +337,6 @@ body {
   app-footer {
     background-color: var(--base-bg);
     background-color: var(--bg-side-panel);
-
   }
 
   .layout-body .menu-container.theme-dependent {
@@ -325,9 +344,9 @@ body {
   }
   .dx-button.dx-button-default {
     border-radius: 4px;
-    background-color: #00A1E0;
+    background-color: #00a1e0;
     color: #fff;
-}
+  }
   .view-wrapper {
     .dx-toolbar.dx-widget.theme-dependent {
       @include toolbar-panel();

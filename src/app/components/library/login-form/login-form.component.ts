@@ -48,13 +48,13 @@ export class LoginFormComponent implements OnInit {
   //==================Login Function=====================
   async onSubmit(e: Event) {
     e.preventDefault();
-    const { username, password, forceLogin } = this.formData;
+    const { username, password } = this.formData;
     this.sharedService.triggerLoadComponent(true);
     this.authService.initializeProject().subscribe((response: any) => {
       if (response) {
         this.sharedService.triggerLoadComponent(false);
         this.authService
-          .logIn(username, password, forceLogin)
+          .logIn(username, password)
           .subscribe((response: any) => {
             if (response.flag == 1) {
               localStorage.setItem('logData', JSON.stringify(response.data));
