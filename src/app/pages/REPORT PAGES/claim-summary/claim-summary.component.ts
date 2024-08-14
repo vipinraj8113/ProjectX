@@ -359,6 +359,7 @@ export class ClaimSummaryComponent implements AfterViewInit {
                         : undefined,
                   };
                 });
+                console.log(this.columnsConfig)
                 const claimDetails = data.ReportData;
                 // sessionStorage.setItem('DataSource', JSON.stringify(data));
                 resolve(claimDetails);

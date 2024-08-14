@@ -17,12 +17,10 @@ import { SystemServicesService } from '../system-services.service';
   styleUrls: ['./security-policy.component.scss'],
 })
 export class SecurityPolicyComponent implements OnInit {
-  
-
   validationRequired: boolean = false;
   readOnlyValue: boolean = true;
 
-  minPasswordLength: number | null = null;
+  minPasswordLength: any | null = null;
   conditionRequiredValue: any = '';
 
   isNumberChecked: boolean = false;
@@ -38,16 +36,16 @@ export class SecurityPolicyComponent implements OnInit {
   smsAlert: boolean = false;
   whatsAppAlert: boolean = false;
 
-  LoginAttempts: number | null = null;
-  resetDuration: number | null = null;
-  failedLoginDuration: number | null = null;
+  LoginAttempts: any | null = null;
+  resetDuration: any | null = null;
+  failedLoginDuration: any | null = null;
 
   changePasswordOnLogin: boolean = false;
-  passwordExpiryDaysCount: number | null = null;
-  passwordRepeatCycle: number | null = null;
+  passwordExpiryDaysCount: any | null = null;
+  passwordRepeatCycle: any | null = null;
 
   unautherizedMessage: any = '';
-  disableUserOn: number | null = null;
+  disableUserOn: any | null = null;
   presentSecurityData: any;
   tooltipData: any;
   conditionEnableValue: boolean = true;
@@ -60,10 +58,10 @@ export class SecurityPolicyComponent implements OnInit {
   get_Present_Security_Policy() {
     this.systemService.get_securityPolicy_List().subscribe((response: any) => {
       if (response) {
-        this.presentSecurityData = response.data;
+        this.presentSecurityData = response.data[0];
         this.tooltipData = response.Tooltip;
 
-        console.log("data received")
+        console.log('data received', this.presentSecurityData);
         this.validationRequired =
           this.presentSecurityData.PasswordValidationRequired;
         this.minPasswordLength = this.presentSecurityData.MinimumLength;
