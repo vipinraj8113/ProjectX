@@ -15,7 +15,7 @@ import { AuthService, ScreenService, AppInfoService } from './services';
 import { UnauthenticatedContentModule } from './layouts/unauthenticated-content/unauthenticated-content';
 import { AppRoutingModule } from './app-routing.module';
 import { DenialListModule } from './pages/MASTER PAGES/denial/denial-list.component';
-import { AnalyticsDashboardModule } from './pages/analytics-dashboard/analytics-dashboard.component';
+import { AnalyticsDashboardModule } from './pages/HOME/analytics-dashboard/analytics-dashboard.component';
 import { ThemeService } from './services';
 import { DxFormModule } from 'devextreme-angular';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -28,7 +28,6 @@ import { DoctorWithHighDenialsComponent } from './pages/REPORT PAGES/doctor-with
 import { RejectedClaimsComponent } from './pages/REPORT PAGES/rejected-claims/rejected-claims.component';
 import { BalanceAmountToBeReceivedComponent } from './pages/REPORT PAGES/balance-amount-to-be-received/balance-amount-to-be-received.component';
 import { ResubmissionSummaryComponent } from './pages/REPORT PAGES/resubmission-summary/resubmission-summary.component';
-
 
 @NgModule({
   declarations: [
@@ -59,7 +58,7 @@ import { ResubmissionSummaryComponent } from './pages/REPORT PAGES/resubmission-
     DxFormModule,
     ReactiveFormsModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   providers: [AuthService, ScreenService, AppInfoService, ThemeService],
   bootstrap: [AppComponent],

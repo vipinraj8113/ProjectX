@@ -15,7 +15,7 @@ import {
 } from './layouts';
 
 import { DenialListComponent } from './pages/MASTER PAGES/denial/denial-list.component';
-import { AnalyticsDashboardComponent } from './pages/analytics-dashboard/analytics-dashboard.component';
+import { AnalyticsDashboardComponent } from './pages/HOME/analytics-dashboard/analytics-dashboard.component';
 import { AppSignInComponent } from './pages/sign-in-form/sign-in-form.component';
 import { AppSignUpComponent } from './pages/sign-up-form/sign-up-form.component';
 import { AppResetPasswordComponent } from './pages/reset-password-form/reset-password-form.component';
@@ -45,6 +45,7 @@ import { ClinicianProfessionComponent } from './pages/MASTER PAGES/clinician-pro
 import { ClinicianCategoryComponent } from './pages/MASTER PAGES/clinician-category/clinician-category.component';
 import { SecurityPolicyComponent } from './pages/SYSTEM PAGES/security-policy/security-policy.component';
 import { UserLevelMasterComponent } from './pages/MASTER PAGES/user-level-master/user-level-master.component';
+import { ConfigurationComponent } from './pages/SYSTEM PAGES/configuration/configuration.component';
 const routes: Routes = [
   {
     path: '',
@@ -97,7 +98,7 @@ const routes: Routes = [
         canActivate: [AuthGuardService],
       },
       {
-        path: 'insurance-company',
+        path: 'insurance-page',
         component: InsuranceComponent,
         canActivate: [AuthGuardService],
       },
@@ -127,8 +128,13 @@ const routes: Routes = [
         canActivate: [AuthGuardService],
       },
       {
-        path: 'user-levels-page',
+        path: 'user-levels-Master',
         component: UserLevelMasterComponent,
+        canActivate: [AuthGuardService],
+      },
+      {
+        path: 'configuration-page',
+        component: ConfigurationComponent,
         canActivate: [AuthGuardService],
       },
       {
@@ -152,7 +158,7 @@ const routes: Routes = [
         canActivate: [AuthGuardService],
       },
       {
-        path: 'denial-list-page',
+        path: 'denial-type',
         component: DenialTypeComponent,
         canActivate: [AuthGuardService],
       },
@@ -162,7 +168,7 @@ const routes: Routes = [
         canActivate: [AuthGuardService],
       },
       {
-        path: 'facilities-page',
+        path: 'facility-page',
         component: FacilityListComponent,
         canActivate: [AuthGuardService],
       },
@@ -201,7 +207,7 @@ const routes: Routes = [
         component: UserProfileComponent,
       },
       {
-        path: 'claim-summary-date-page',
+        path: 'claim-summary-report',
         component: ClaimSummaryComponent,
         canActivate: [AuthGuardService],
       },

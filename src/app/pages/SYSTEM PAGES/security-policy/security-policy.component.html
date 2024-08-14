@@ -14,35 +14,34 @@
 
         <div class="conditionDiv mt-5">
             <div class="dx-field RadioGrp d-flex align-items-center mb-5 ps-2 pe-2">
-                <div class="me-3">Maximum Condition Required</div>
-                <div class="">
-                    <dx-radio-group [items]="conditionRequired" [(value)]="conditionRequiredValue" layout="horizontal"
+                <div class="dx-field m-1">
+                    <dx-check-box class="" [(value)]="conditionRequiredValue" text="Maximum Condition Required"
                         [readOnly]="readOnlyValue" [disabled]="readOnlyValue"
-                        hint="Should contain characters from X of the following four categories">
-                    </dx-radio-group>
+                        hint="Should contain characters from X of the following four categories"
+                        (valueChange)="onConditionEnableChange($event)"></dx-check-box>
                 </div>
             </div>
 
             <div class="dx-field m-1 mt-3">
                 <dx-check-box class="" [(value)]="isNumberChecked" text="Numbers" [readOnly]="readOnlyValue"
-                    [disabled]="readOnlyValue" hint="Minimum 1 Numbers [0-9] required"></dx-check-box>
+                    [disabled]="conditionEnableValue" hint="Minimum 1 Numbers [0-9] required"></dx-check-box>
             </div>
 
             <div class="dx-field m-1">
                 <dx-check-box class="" [(value)]="isUppercaseChecked" text="Uppercase Characters"
-                    [readOnly]="readOnlyValue" [disabled]="readOnlyValue"
+                    [readOnly]="conditionEnableValue" [disabled]="readOnlyValue"
                     hint="Minimum 1 Uppercase characters required"></dx-check-box>
             </div>
 
             <div class="dx-field m-1">
                 <dx-check-box class="" [(value)]="isLowercaseChecked" text="Lowercase Characters"
-                    [readOnly]="readOnlyValue" [disabled]="readOnlyValue"
+                    [readOnly]="conditionEnableValue" [disabled]="readOnlyValue"
                     hint="Minimum 1 Lowercase characters required"></dx-check-box>
             </div>
 
             <div class="dx-field m-1">
                 <dx-check-box class="" [(value)]="isSpecialCharactersChecked" text="Special Characters"
-                    [readOnly]="readOnlyValue" [disabled]="readOnlyValue"
+                    [readOnly]="conditionEnableValue" [disabled]="readOnlyValue"
                     hint="Minimum 1 Special characters required"></dx-check-box>
             </div>
         </div>
@@ -163,7 +162,7 @@
             </dx-button>
         </div>
         <div>
-            <dx-button stylingMode="contained" text="save" type="default" (onClick)="onClickButton()">
+            <dx-button stylingMode="contained" text="save" type="default" (onClick)="onClickSave()">
             </dx-button>
         </div>
     </div>

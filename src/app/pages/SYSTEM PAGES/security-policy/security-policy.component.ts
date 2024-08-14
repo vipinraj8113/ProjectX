@@ -8,6 +8,7 @@ import {
   DxTemplateModule,
   DxButtonModule,
 } from 'devextreme-angular';
+import notify from 'devextreme/ui/notify';
 import { DxFormModule } from 'devextreme-angular';
 import { SystemServicesService } from '../system-services.service';
 @Component({
@@ -52,18 +53,7 @@ export class SecurityPolicyComponent implements OnInit {
   disableUserOn: number | null = null;
   presentSecurityData: any;
   tooltipData: any;
-  // checkboxStateMap: any = {
-  //   None: {
-  //     numbers: false,
-  //     uppercase: false,
-  //     lowercase: false,
-  //     special: false,
-  //   },
-  //   '1': { numbers: true, uppercase: false, lowercase: false, special: false },
-  //   '2': { numbers: true, uppercase: true, lowercase: false, special: false },
-  //   '3': { numbers: true, uppercase: true, lowercase: true, special: false },
-  //   All: { numbers: true, uppercase: true, lowercase: true, special: true },
-  // };
+  conditionEnableValue: boolean = true;
 
   constructor(private systemService: SystemServicesService) {}
   ngOnInit() {
@@ -72,13 +62,44 @@ export class SecurityPolicyComponent implements OnInit {
 
   get_Present_Security_Policy() {
     this.systemService.get_securityPolicy_List().subscribe((response: any) => {
-      this.presentSecurityData = response.data;
-      this.tooltipData = response.Tooltip;
-      console.log('present data loaded', this.presentSecurityData);
+      if (response) {
+        this.presentSecurityData = response.data;
+        this.tooltipData = response.Tooltip;
+
+        console.log("data received")
+        this.validationRequired =
+          this.presentSecurityData.PasswordValidationRequired;
+        this.minPasswordLength = this.presentSecurityData.MinimumLength;
+        this.conditionRequiredValue =
+          this.presentSecurityData.MinimumCategoriesRequired;
+        this.isNumberChecked = this.presentSecurityData.Numbers;
+        this.isUppercaseChecked = this.presentSecurityData.UppercaseCharacters;
+        this.isLowercaseChecked = this.presentSecurityData.LowercaseCharacters;
+        this.isSpecialCharactersChecked =
+          this.presentSecurityData.SpecialCharacters;
+        this.emailOtp = this.presentSecurityData.OTPEmailOnPasswordChange;
+        this.smsOtp = this.presentSecurityData.OTPSMSOnPasswordChange;
+        this.whatsAppOtp = this.presentSecurityData.whatsAppOTPOnPasswordChange;
+        this.emailAlert = this.presentSecurityData.AlertEmailOnPasswordChange;
+        this.smsAlert = this.presentSecurityData.AlertSMSOnPasswordChange;
+        this.whatsAppAlert =
+          this.presentSecurityData.whatsAppAlertOnPasswordChange;
+        this.LoginAttempts = this.presentSecurityData.AccountLockAttempt;
+        this.resetDuration = this.presentSecurityData.AccountLockDuration;
+        this.failedLoginDuration =
+          this.presentSecurityData.AccountLockFailedLogin;
+        this.changePasswordOnLogin =
+          this.presentSecurityData.UserMustChangePasswordOnLogin;
+        this.passwordExpiryDaysCount = this.presentSecurityData.PasswordAge;
+        this.passwordRepeatCycle = this.presentSecurityData.PasswordRepeatCycle;
+        this.unautherizedMessage =
+          this.presentSecurityData.UnauthorizedBannerMessage;
+        this.disableUserOn = this.presentSecurityData.DisableUserOnInactiveDays;
+      }
     });
   }
 
-  onClickButton() {
+  onClickSave() {
     const formData = {
       validationRequired: this.validationRequired,
       minPasswordLength: this.minPasswordLength,
@@ -103,7 +124,27 @@ export class SecurityPolicyComponent implements OnInit {
       disableUserOn: this.disableUserOn,
     };
     console.log(formData);
-    // this.systemService.save_security_Policy_Data(formData)
+    this.systemService
+      .save_security_Policy_Data(formData)
+      .subscribe((response: any) => {
+        if (response) {
+          notify(
+            {
+              message: `Clinician saved Successfully`,
+              position: { at: 'top right', my: 'top right' },
+            },
+            'success'
+          );
+        } else {
+          notify(
+            {
+              message: `Your Data Not Saved`,
+              position: { at: 'top right', my: 'top right' },
+            },
+            'error'
+          );
+        }
+      });
   }
 
   onClickCancel() {
@@ -128,22 +169,17 @@ export class SecurityPolicyComponent implements OnInit {
     this.passwordRepeatCycle = null;
     this.unautherizedMessage = '';
     this.disableUserOn = null;
-}
+  }
   //===========Change validation enable or not=====================
   onValidationEnableChange(newValue: boolean): void {
     this.validationRequired = newValue;
     this.readOnlyValue = !this.readOnlyValue;
   }
 
-  //============Condition select depends radio button value========
-  // onConditionRequiredChange(newValue: string): void {
-  //   const checkboxState =
-  //     this.checkboxStateMap[newValue] || this.checkboxStateMap['None'];
-  //   this.isNumberChecked = checkboxState.numbers;
-  //   this.isUppercaseChecked = checkboxState.uppercase;
-  //   this.isLowercaseChecked = checkboxState.lowercase;
-  //   this.isSpecialCharactersChecked = checkboxState.special;
-  // }
+  onConditionEnableChange(newValue: boolean) {
+    this.conditionRequiredValue = newValue;
+    this.conditionEnableValue = !this.conditionEnableValue;
+  }
 }
 @NgModule({
   imports: [
