@@ -160,7 +160,7 @@ export class ClaimSummaryComponent implements AfterViewInit {
 
   monthDataSource: { name: string; value: any }[];
   years: number[] = [];
-  selectedmonth: any;
+  selectedmonth: any = '';
   selectedYear: number | null = null;
   columnChooserConfig = {
     enabled: true,
@@ -206,18 +206,26 @@ export class ClaimSummaryComponent implements AfterViewInit {
 
   onYearChanged(e: any): void {
     this.selectedYear = e.value;
-    this.From_Date_Value = new Date(this.selectedYear, 0, 1); // January 1 of the selected year
-    this.To_Date_Value = new Date(this.selectedYear, 11, 31); // December 31 of the selected year
+    if (this.selectedmonth != '') {
+      this.From_Date_Value = new Date(this.selectedYear, this.selectedmonth, 1);
+      this.To_Date_Value = new Date(
+        this.selectedYear,
+        this.selectedmonth + 1,
+        0
+      );
+    } else {
+      this.From_Date_Value = new Date(this.selectedYear, 0, 1);
+      this.To_Date_Value = new Date(this.selectedYear, 11, 31);
+    }
   }
   //================Month value change ===========================
   onMonthValueChanged(e: any) {
     this.selectedmonth = e.value;
-    this.From_Date_Value = new Date(this.selectedYear, this.selectedmonth, 1); // January 1 of the selected year
-    this.To_Date_Value = new Date(this.selectedYear, this.selectedmonth + 1, 0); // December 31 of the selected year
+    this.From_Date_Value = new Date(this.selectedYear, this.selectedmonth, 1);
+    this.To_Date_Value = new Date(this.selectedYear, this.selectedmonth + 1, 0);
   }
   //============Hide drop down after Value Selected======
   onDropdownValueChanged() {
-    // Close the dropdown
     const lookupInstance = this.lookup.instance;
     if (lookupInstance) {
       lookupInstance.close();
@@ -238,9 +246,9 @@ export class ClaimSummaryComponent implements AfterViewInit {
       this.treeView.instance.unselectAll();
     }
   }
-  onTreeViewReady(e: DxTreeViewTypes.ContentReadyEvent) {
-    this.updateSelection(e.component);
-  }
+  // onTreeViewReady(e: DxTreeViewTypes.ContentReadyEvent) {
+  //   this.updateSelection(e.component);
+  // }
   updateSelection(treeView: DxTreeViewComponent['instance']) {
     if (!treeView) return;
 
@@ -253,22 +261,22 @@ export class ClaimSummaryComponent implements AfterViewInit {
     });
   }
 
-  onTreeViewSelectionChanged(e: DxTreeViewTypes.ItemSelectionChangedEvent) {
-    this.Facility_Value = e.component.getSelectedNodeKeys();
-    const allItem = this.Facility_DataSource.find(
-      (item) => item.Name === 'All'
-    );
-    const selectedItems = this.treeView.instance
-      .getSelectedNodes()
-      .map((node) => node.itemData.ID);
+  // onTreeViewSelectionChanged(e: DxTreeViewTypes.ItemSelectionChangedEvent) {
+  //   this.Facility_Value = e.component.getSelectedNodeKeys();
+  //   const allItem = this.Facility_DataSource.find(
+  //     (item) => item.Name === 'All'
+  //   );
+  //   const selectedItems = this.treeView.instance
+  //     .getSelectedNodes()
+  //     .map((node) => node.itemData.ID);
 
-    if (selectedItems.length === this.Facility_DataSource.length - 1) {
-      this.Facility_Value = [allItem.ID, ...selectedItems];
-      this.treeView.instance.selectAll();
-    } else {
-      this.Facility_Value = selectedItems.filter((id) => id !== allItem.ID);
-    }
-  }
+  //   if (selectedItems.length === this.Facility_DataSource.length - 1) {
+  //     this.Facility_Value = [allItem.ID, ...selectedItems];
+  //     this.treeView.instance.selectAll();
+  //   } else {
+  //     this.Facility_Value = selectedItems.filter((id) => id !== allItem.ID);
+  //   }
+  // }
 
   //============Fetching DropDown Init Data==============
   fetch_Dropdown_InitData() {
@@ -311,6 +319,7 @@ export class ClaimSummaryComponent implements AfterViewInit {
     Clinician: any,
     OrderingClinician: any
   ) {
+    this.dataSource = '';
     this.service
       .get_Claim_Summary_Date_wise(
         userId,

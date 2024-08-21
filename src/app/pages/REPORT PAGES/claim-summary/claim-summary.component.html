@@ -13,13 +13,18 @@
         <dxi-item [colSpan]="8">
           <div class="">Facility</div>
           <div class="">
-            <dx-drop-down-box
+            <dx-tag-box
               [(value)]="Facility_Value"
               valueExpr="Code"
               displayExpr="Name"
-              placeholder="select Facility value"
+              placeholder="Select Facility value"
               [showClearButton]="true"
+              [multiline]="false"
+              [searchEnabled]="true"
+              [searchExpr]="['Name', 'Code']"
               [dataSource]="Facility_DataSource"
+              [showSelectionControls]="true"
+              [applyValueMode]="'instantly'"
               (onValueChanged)="onDropDownBoxValueChanged()"
               [dropDownOptions]="{ width: 'auto' }"
             >
@@ -29,23 +34,7 @@
                   message="Facility is required"
                 ></dxi-validation-rule>
               </dx-validator>
-
-              <div>
-                <dx-tree-view
-                  [dataSource]="Facility_DataSource"
-                  keyExpr="Code"
-                  dataStructure="plain"
-                  selectionMode="multiple"
-                  showCheckBoxesMode="normal"
-                  [selectNodesRecursive]="false"
-                  displayExpr="Name"
-                  [selectByClick]="true"
-                  (onContentReady)="onTreeViewReady($event)"
-                  (onItemSelectionChanged)="onTreeViewSelectionChanged($event)"
-                >
-                </dx-tree-view>
-              </div>
-            </dx-drop-down-box>
+            </dx-tag-box>
           </div>
         </dxi-item>
       </dxi-item>
@@ -64,13 +53,17 @@
               displayExpr="Name"
               valueExpr="ID"
               [(value)]="SearchOn_Value"
+              [searchEnabled]="true"
               placeholder="select searchOn value"
               required
               (valueChanged)="onDropdownValueChanged()"
               [dropDownOptions]="{ width: 'auto' }"
             >
-            <dxi-validation-rule type="required" message="Country is required">
-            </dxi-validation-rule>
+              <dxi-validation-rule
+                type="required"
+                message="Country is required"
+              >
+              </dxi-validation-rule>
             </dx-select-box>
           </div>
         </dxi-item>
@@ -82,6 +75,7 @@
             [dataSource]="years"
             (onValueChanged)="onYearChanged($event)"
             placeholder="Year"
+            [width]="'auto'"
           ></dx-select-box>
         </dxi-item>
 
@@ -139,46 +133,58 @@
       >
         <dxi-item [colSpan]="2">
           <div class="">Receiver ID</div>
-          <dx-select-box
+          <dx-tag-box
             [dataSource]="RecieverID_DataSource"
             displayExpr="Name"
             valueExpr="ID"
             [(value)]="ReceiverID_Value"
+            [searchEnabled]="true"
+            [searchExpr]="['Name', 'ID']"
+            [multiline]="false"
+            [applyValueMode]="'instantly'"
             placeholder="select receiver"
-            required
-            (valueChanged)="onDropdownValueChanged()"
             [dropDownOptions]="{ width: 'auto' }"
+           
+            required
           >
-          </dx-select-box>
+          </dx-tag-box>
         </dxi-item>
 
         <dxi-item [colSpan]="2">
           <div class="">Payer ID</div>
-          <dx-select-box
+          <dx-tag-box
             [dataSource]="PayerID_DataSource"
             displayExpr="Name"
             valueExpr="ID"
             [(value)]="PayerID_Value"
+            [searchEnabled]="true"
+            [searchExpr]="['Name', 'ID']"
+            [multiline]="false"
+            [applyValueMode]="'instantly'"
             placeholder="select payer ID"
             required
             (valueChanged)="onDropdownValueChanged()"
             [dropDownOptions]="{ width: 'auto' }"
           >
-          </dx-select-box>
+          </dx-tag-box>
         </dxi-item>
 
         <dxi-item [colSpan]="2">
           <div class="">Payer</div>
-          <dx-select-box
+          <dx-tag-box
             [dataSource]="Payer_DataSource"
             displayExpr="Name"
             valueExpr="ID"
             [(value)]="Payer_Value"
+            [searchEnabled]="true"
+            [searchExpr]="['Name', 'ID']"
+            [multiline]="false"
+            [applyValueMode]="'instantly'"
             placeholder="select payer"
             required
             (valueChanged)="onDropdownValueChanged()"
           >
-          </dx-select-box>
+          </dx-tag-box>
         </dxi-item>
 
         <dxi-item [colSpan]="2">
@@ -204,32 +210,40 @@
       >
         <dxi-item [colSpan]="2">
           <div class="">Clinican</div>
-          <dx-select-box
+          <dx-tag-box
             [dataSource]="Clinician_DataSource"
             displayExpr="Name"
             valueExpr="ID"
             [(value)]="Clinician_Value"
+            [searchEnabled]="true"
+            [searchExpr]="['Name', 'ID']"
+            [multiline]="false"
+            [applyValueMode]="'instantly'"
             placeholder="select Clinician"
             required
             (valueChanged)="onDropdownValueChanged()"
             [dropDownOptions]="{ width: 'auto' }"
           >
-          </dx-select-box>
+          </dx-tag-box>
         </dxi-item>
 
         <dxi-item [colSpan]="2">
           <div class="">Ordering Clinician</div>
-          <dx-select-box
+          <dx-tag-box
             [dataSource]="OrderingClinician_DataSource"
             displayExpr="Name"
             valueExpr="ID"
             [(value)]="OrderingClinician_Value"
+            [searchEnabled]="true"
+            [searchExpr]="['Name', 'ID']"
+            [multiline]="false"
+            [applyValueMode]="'instantly'"
             placeholder="select Clinician"
             required
             (valueChanged)="onDropdownValueChanged()"
             [dropDownOptions]="{ width: 'auto' }"
           >
-          </dx-select-box>
+          </dx-tag-box>
         </dxi-item>
 
         <dxi-item [colSpan]="2">
@@ -240,6 +254,7 @@
               displayExpr="Name"
               valueExpr="ID"
               [(value)]="EncounterType_Value"
+              [searchEnabled]="true"
               placeholder="select encounter Type value"
               (valueChanged)="onDropdownValueChanged()"
             >

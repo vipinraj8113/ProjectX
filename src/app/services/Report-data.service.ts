@@ -12,7 +12,7 @@ const BASE_URL = BaseURL;
 @Injectable()
 export class ReportService {
   private months: { name: string; value: any }[] = [
-    { name: 'All', value: " " },
+    { name: 'All', value: '' },
     { name: 'January', value: 0 },
     { name: 'February', value: 1 },
     { name: 'March', value: 2 },
