@@ -51,6 +51,7 @@
       // ## Item levels customization
       .dx-treeview-node {
         &[aria-level="1"] {
+          color: white;
           font-weight: bold;
           border-bottom: 1px solid var(--border-color);
         }
