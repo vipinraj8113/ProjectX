@@ -99,7 +99,7 @@ export class UserLevelMasterComponent implements OnInit {
         } else {
           notify(
             {
-              message: `Your Data Not Saved`,
+              message:` Your Data Not Saved`,
               position: { at: 'top right', my: 'top right' },
             },
             'error'
@@ -175,6 +175,27 @@ export class UserLevelMasterComponent implements OnInit {
         this.dataGrid.instance.refresh();
         this.fetch_all_UserLevel_list();
       });
+  }
+
+  formatLastModifiedTime(rowData: any): string {
+    const celldate = rowData.LastModifiedTime;
+    if (!celldate) return '';
+    
+    const date = new Date(celldate);
+  
+    // Extract parts of the date
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = date.toLocaleString('en-US', { month: 'short' }).toUpperCase();
+    const year = date.getFullYear();
+    const hours = date.getHours();
+    const minutes = date.getMinutes().toString().padStart(2, '0');
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+  
+    // Convert hours from 24-hour format to 12-hour format
+    const hour12 = hours % 12 || 12;
+  
+    // Construct the formatted string
+    return `${day} ${month} ${year}, ${hour12}:${minutes} ${ampm}`;
   }
 }
 @NgModule({

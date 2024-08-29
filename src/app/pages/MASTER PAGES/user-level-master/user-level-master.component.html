@@ -49,7 +49,8 @@
     </dxo-header-filter>
 
     <dxi-column dataField="UserRoles" caption="User Level"></dxi-column>
-    <dxi-column dataField="LastModifiedTime" Caption="Last Modified Time"></dxi-column>
+    <dxi-column dataField="LastModifiedTime" Caption="Last Modified Time"
+      [calculateCellValue]="formatLastModifiedTime"></dxi-column>
 
   </dx-data-grid>
   <form-popup class="formPopupClass m-2" [(visible)]="isAddFormVisible" titleText="New User Level" [height]="'100vh'"
