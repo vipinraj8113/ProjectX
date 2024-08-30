@@ -91,7 +91,6 @@ export class ReportService {
       REPORT_ID: reportId,
       USER_REPORT_NAME: reportName,
       columns: memoriseColumnData,
-      parameters: filterParameters,
     };
     return this.http.post(url, reqBody);
   }

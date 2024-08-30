@@ -113,3 +113,41 @@
 .Options {
   width: auto;
 }
+
+
+
+
+/* Reduce margin between rows */
+.paramsDiv .dxi-item {
+  margin-bottom: 5px; /* Adjust as needed */
+}
+
+/* Reduce padding within form-group */
+.paramsDiv .form-group.reduced-padding {
+  padding: 5px; /* Adjust as needed */
+}
+
+/* Reduce padding for input fields and labels */
+.paramsDiv .dx-tag-box,
+.paramsDiv .dx-select-box,
+.paramsDiv .dx-date-box,
+.paramsDiv .facility-label,
+.paramsDiv .facility-input {
+  padding: 0 5px; /* Adjust as needed */
+}
+
+/* Reduce margin for buttons */
+.paramsDiv .dx-button {
+  margin-right: 5px; /* Adjust as needed */
+}
+
+/* Adjust margins for specific elements */
+.paramsDiv .importItem.mt-3.ms-3 {
+  margin-top: 5px; /* Adjust as needed */
+  margin-left: 5px; /* Adjust as needed */
+}
+
+.paramsDiv .mt-3.ms-1 {
+  margin-top: 10px; /* Adjust as needed */
+  margin-left: 5px; /* Adjust as needed */
+}

@@ -193,9 +193,9 @@ export class ClaimSummaryComponent implements AfterViewInit {
     this.Parameters.push(parametrs);
     this.systemCurrencyCode = this.service.getSystemCurrencyCode();
     const loadedPAgeFlag = JSON.parse(sessionStorage.getItem('loadedFlag'));
-    // if (loadedPAgeFlag == 'true') {
-    //   this.DataSorce_After_reload_Page();
-    // }
+    if (loadedPAgeFlag == 'true') {
+      this.DataSorce_After_reload_Page();
+    }
   }
   ngAfterViewInit() {
     if (this.dataGrid) {
@@ -261,23 +261,6 @@ export class ClaimSummaryComponent implements AfterViewInit {
     });
   }
 
-  // onTreeViewSelectionChanged(e: DxTreeViewTypes.ItemSelectionChangedEvent) {
-  //   this.Facility_Value = e.component.getSelectedNodeKeys();
-  //   const allItem = this.Facility_DataSource.find(
-  //     (item) => item.Name === 'All'
-  //   );
-  //   const selectedItems = this.treeView.instance
-  //     .getSelectedNodes()
-  //     .map((node) => node.itemData.ID);
-
-  //   if (selectedItems.length === this.Facility_DataSource.length - 1) {
-  //     this.Facility_Value = [allItem.ID, ...selectedItems];
-  //     this.treeView.instance.selectAll();
-  //   } else {
-  //     this.Facility_Value = selectedItems.filter((id) => id !== allItem.ID);
-  //   }
-  // }
-
   //============Fetching DropDown Init Data==============
   fetch_Dropdown_InitData() {
     this.service.get_Init_Data().subscribe((response: any) => {
@@ -320,6 +303,7 @@ export class ClaimSummaryComponent implements AfterViewInit {
     OrderingClinician: any
   ) {
     this.dataSource = '';
+    // this.dataGrid.instance.beginCustomLoading('Loading...');
     this.service
       .get_Claim_Summary_Date_wise(
         userId,
@@ -349,16 +333,13 @@ export class ClaimSummaryComponent implements AfterViewInit {
         this.MemoriseReportColumns = personalReport
           ? personalReport.Columns
           : [];
-        console.log('memo loaded', this.MemoriseReportColumns);
+
         this.columnsData =
           this.memoriseEnable === 'true'
             ? this.MemoriseReportColumns
             : data.ReportColumns;
-        console.log('columns are ', this.columnsData);
-        this.ColumnNames = this.columnsData.map((column) => column.Name);
-        // console.log("columns are fetched",this.columnsData)
 
-        // Assuming columnsData is the array of column objects you provided
+        this.ColumnNames = this.columnsData.map((column) => column.Name);
         this.columnsConfig = this.columnsData.map((column) => {
           return {
             dataField: column.Name,
@@ -370,17 +351,13 @@ export class ClaimSummaryComponent implements AfterViewInit {
                 ? {
                     type: 'fixedPoint',
                     precision: 2,
-                    // currency: this.systemCurrencyCode,
                   }
                 : undefined,
           };
         });
-        console.log('testing 1', this.columnsConfig);
         this.dataSource = data.ReportData;
-        console.log('report data is ', this.dataSource);
-        // sessionStorage.setItem('DataSource', JSON.stringify(data));
         this.show_Pagination = true;
-        // this.refresh;
+        // this.dataGrid.instance.endCustomLoading();
       });
   }
   //============Call DataSource Using Selected Values====
@@ -475,7 +452,7 @@ export class ClaimSummaryComponent implements AfterViewInit {
       ? 'Hide Parameters'
       : 'Show Parameters';
   };
-//=================Show advance filter popup============
+  //=================Show advance filter popup============
   get_advance_Filter() {}
   //============Show Filter Row==========================
   filterClick = () => {
@@ -539,7 +516,7 @@ export class ClaimSummaryComponent implements AfterViewInit {
   //================Save Memorize Reports==============
   save_Memorise_Report() {
     const memoriseName = this.MemoriseReportName;
-    const filterParameters = this.Parameters;
+    const filterParameters = JSON.parse(sessionStorage.getItem('reportData'));
     const reportColumns = this.columnsData;
     const allColumns = this.ColumnNames;
     const columns = this.dataGrid.instance.getVisibleColumns();
@@ -555,13 +532,15 @@ export class ClaimSummaryComponent implements AfterViewInit {
         Visibility: hiddenColumns.includes(column.Name) ? 'false' : 'true',
       };
     });
+
+    console.log('save memorise details', memoriseName, filterParameters);
     this.service
       .save_Memorise_report(
         this.user_Id,
         this.Report_Page,
         memoriseName,
         memoriseReportColumns,
-        this.Parameters
+        filterParameters
       )
       .subscribe((response) => {
         if (response) {

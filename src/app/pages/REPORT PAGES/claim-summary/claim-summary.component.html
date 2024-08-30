@@ -5,14 +5,14 @@
     <dx-form class="theme-dependent searchparamsForm" [visible]="isParamsOpend">
       <dxi-item
         itemType="group"
-        cssClass="form-group"
+        cssClass="form-group reduced-padding"
         class="rowGroup"
         [colCount]="8"
         [colCountByScreen]="{ xs: 8, sm: 8, md: 8, lg: 8 }"
       >
         <dxi-item [colSpan]="8">
-          <div class="">Facility</div>
-          <div class="">
+          <div class="facility-label">Facility</div>
+          <div class="facility-input">
             <dx-tag-box
               [(value)]="Facility_Value"
               valueExpr="Code"
@@ -41,13 +41,13 @@
 
       <dxi-item
         itemType="group"
-        cssClass="form-group"
+        cssClass="form-group reduced-padding"
         [colCount]="8"
         [colCountByScreen]="{ xs: 8, sm: 8, md: 8, lg: 8 }"
       >
         <dxi-item [colSpan]="2">
           <div class="">Search On</div>
-          <div>
+          <div class>
             <dx-select-box
               [dataSource]="SearchOn_DataSource"
               displayExpr="Name"
@@ -302,6 +302,7 @@
   <!-- ====================================Data GRid Table started================================ -->
   <ng-container>
     <dx-data-grid
+      #dataGrid
       id="main-grid"
       class="grid theme-dependent"
       height="100%"
