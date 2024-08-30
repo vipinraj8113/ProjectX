@@ -62,6 +62,7 @@ import {
   DxTabPanelModule,
   DxListModule,
 } from 'devextreme-angular';
+import { ReportEngineService } from '../report-engine.service';
 //======================Dropdown interface=======================
 interface dropdownData {
   ID: number;
@@ -172,7 +173,8 @@ export class ClaimSummaryComponent implements AfterViewInit {
     private service: ReportService,
     private router: Router,
     private route: ActivatedRoute,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private reportEngine: ReportEngineService
   ) {
     this.minDate = new Date(2000, 1, 1); // Set the minimum date
     this.maxDate = new Date(); // Set the maximum date
@@ -193,9 +195,9 @@ export class ClaimSummaryComponent implements AfterViewInit {
     this.Parameters.push(parametrs);
     this.systemCurrencyCode = this.service.getSystemCurrencyCode();
     const loadedPAgeFlag = JSON.parse(sessionStorage.getItem('loadedFlag'));
-    if (loadedPAgeFlag == 'true') {
-      this.DataSorce_After_reload_Page();
-    }
+    // if (loadedPAgeFlag == 'true') {
+    //   this.DataSorce_After_reload_Page();
+    // }
   }
   ngAfterViewInit() {
     if (this.dataGrid) {
@@ -303,7 +305,6 @@ export class ClaimSummaryComponent implements AfterViewInit {
     OrderingClinician: any
   ) {
     this.dataSource = '';
-    // this.dataGrid.instance.beginCustomLoading('Loading...');
     this.service
       .get_Claim_Summary_Date_wise(
         userId,
@@ -333,13 +334,16 @@ export class ClaimSummaryComponent implements AfterViewInit {
         this.MemoriseReportColumns = personalReport
           ? personalReport.Columns
           : [];
-
+        console.log('memo loaded', this.MemoriseReportColumns);
         this.columnsData =
           this.memoriseEnable === 'true'
             ? this.MemoriseReportColumns
             : data.ReportColumns;
-
+        console.log('columns are ', this.columnsData);
         this.ColumnNames = this.columnsData.map((column) => column.Name);
+        // console.log("columns are fetched",this.columnsData)
+
+        // Assuming columnsData is the array of column objects you provided
         this.columnsConfig = this.columnsData.map((column) => {
           return {
             dataField: column.Name,
@@ -351,13 +355,17 @@ export class ClaimSummaryComponent implements AfterViewInit {
                 ? {
                     type: 'fixedPoint',
                     precision: 2,
+                    // currency: this.systemCurrencyCode,
                   }
                 : undefined,
           };
         });
+        console.log('testing 1', this.columnsConfig);
         this.dataSource = data.ReportData;
+        console.log('report data is ', this.dataSource);
+        // sessionStorage.setItem('DataSource', JSON.stringify(data));
         this.show_Pagination = true;
-        // this.dataGrid.instance.endCustomLoading();
+        // this.refresh;
       });
   }
   //============Call DataSource Using Selected Values====
@@ -481,25 +489,7 @@ export class ClaimSummaryComponent implements AfterViewInit {
   //===========Column location finding===================
   makeColumnVisible = (e: any) => {
     const columnName = e.value;
-    const columns = this.dataGrid.instance.getVisibleColumns();
-    const columnIndex = columns.findIndex(
-      (column) => column.dataField === columnName
-    );
-    // console.log('column index:', columnName, columnIndex);
-    if (columnIndex !== -1) {
-      const columnWidth = 200; // Adjust 100 to fit your column width
-      const scrollLeft = (columnIndex - 1) * columnWidth;
-      this.dataGrid.instance.getScrollable().scrollTo({ left: scrollLeft });
-
-      this.dataGrid.instance.columnOption(
-        columnName,
-        'cssClass',
-        'highlighted-column'
-      );
-      setTimeout(() => {
-        this.dataGrid.instance.columnOption(columnName, 'cssClass', null);
-      }, 3000); // 1000 milliseconds = 1 second
-    }
+    this.reportEngine.makeColumnVisible(this.dataGrid, columnName);
   };
   //================Exporting Function===================
   onExporting(e: any) {
