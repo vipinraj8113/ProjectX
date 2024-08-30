@@ -512,11 +512,28 @@ body {
   background-color: rgba(8, 8, 8, 0.211);
 }
 
-// .dx-treeview-item .dx-treeview-item-content .dx-icon {
-//   margin-inline-end: 8px;
-//   color: white;
-// }
+.dx-layout-manager {
+  .dx-field-item {
+    &:not(.dx-last-col) {
+      padding-inline-end: 4px;
+    }
 
-// .dx-treeview-item .dx-treeview-item-content::hover {
-//   background-color: rgba(255, 255, 255, 0.529);
-// }
+    &:not(.dx-first-col) {
+      padding-inline-start: 4px;
+    }
+
+    &:not(.dx-first-row) {
+      padding-top: 3px;
+    }
+
+    padding-bottom:3px;
+    // font-size: $fluent-form-label-font-size;
+
+    .dx-field-item {
+      &.dx-last-row {
+        padding-bottom: 0;
+      }
+    }
+  }
+}
+

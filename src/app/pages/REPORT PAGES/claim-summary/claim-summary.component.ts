@@ -475,6 +475,8 @@ export class ClaimSummaryComponent implements AfterViewInit {
       ? 'Hide Parameters'
       : 'Show Parameters';
   };
+//=================Show advance filter popup============
+  get_advance_Filter() {}
   //============Show Filter Row==========================
   filterClick = () => {
     this.isFilterOpened = !this.isFilterOpened;
