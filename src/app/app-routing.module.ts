@@ -19,7 +19,6 @@ import { AnalyticsDashboardComponent } from './pages/HOME/analytics-dashboard/an
 import { AppSignInComponent } from './pages/sign-in-form/sign-in-form.component';
 import { AppSignUpComponent } from './pages/sign-up-form/sign-up-form.component';
 import { AppResetPasswordComponent } from './pages/reset-password-form/reset-password-form.component';
-import { UserProfileComponent } from './pages/user-profile/user-profile.component';
 import { ClaimSummaryComponent } from './pages/REPORT PAGES/claim-summary/claim-summary.component';
 import { ClaimSummaryMonthWiseComponent } from './pages/REPORT PAGES/claim-summary-month-wise/claim-summary-month-wise.component';
 import { ResubmissionSummaryComponent } from './pages/REPORT PAGES/resubmission-summary/resubmission-summary.component';
@@ -201,10 +200,6 @@ const routes: Routes = [
         path: 'reset-password-form',
         component: AppResetPasswordComponent,
         canActivate: [AuthGuardService],
-      },
-      {
-        path: 'user-profile',
-        component: UserProfileComponent,
       },
       {
         path: 'claim-summary-report',
