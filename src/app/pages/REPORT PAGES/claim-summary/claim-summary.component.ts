@@ -63,6 +63,8 @@ import {
   DxListModule,
 } from 'devextreme-angular';
 import { ReportEngineService } from '../report-engine.service';
+import { AdvanceFilterPopupComponent } from '../../POP-UP_PAGES/advance-filter-popup/advance-filter-popup.component';
+import { AdvanceFilterPopupModule } from '../../POP-UP_PAGES/advance-filter-popup/advance-filter-popup.component';
 //======================Dropdown interface=======================
 interface dropdownData {
   ID: number;
@@ -168,6 +170,8 @@ export class ClaimSummaryComponent implements AfterViewInit {
     height: 400, // Set your desired height here
     width: 250, // Set your desired width here
   };
+  isAdvancefilterOpened: boolean = false;
+  filterpopupWidth: any = '70%';
   //=======================Constructor==================
   constructor(
     private service: ReportService,
@@ -461,7 +465,9 @@ export class ClaimSummaryComponent implements AfterViewInit {
       : 'Show Parameters';
   };
   //=================Show advance filter popup============
-  get_advance_Filter() {}
+  get_advance_Filter() {
+    this.isAdvancefilterOpened = true;
+  }
   //============Show Filter Row==========================
   filterClick = () => {
     this.isFilterOpened = !this.isFilterOpened;
@@ -552,6 +558,7 @@ export class ClaimSummaryComponent implements AfterViewInit {
         }
       });
   }
+  import_Advance_Filter() {}
 }
 
 @NgModule({
@@ -584,6 +591,7 @@ export class ClaimSummaryComponent implements AfterViewInit {
     DxTabPanelModule,
     DxListModule,
     DxValidatorModule,
+    AdvanceFilterPopupModule,
   ],
   providers: [],
   exports: [],

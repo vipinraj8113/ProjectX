@@ -302,7 +302,7 @@
   <!-- ====================================Data GRid Table started================================ -->
   <ng-container>
     <dx-data-grid
-    #dataGrid
+      #dataGrid
       id="main-grid"
       class="grid theme-dependent"
       height="100%"
@@ -635,4 +635,14 @@
       class="save-button"
     ></dx-button>
   </dx-popup>
+  <form-popup
+    class="formPopupClass hide-buttons"
+    [(visible)]="isAdvancefilterOpened"
+    titleText="Advance filter"
+    height="70vh"
+    [width]="filterpopupWidth"
+    [visibleButtons]="false"
+  >
+    <app-advance-filter-popup></app-advance-filter-popup>
+  </form-popup>
 </div>
