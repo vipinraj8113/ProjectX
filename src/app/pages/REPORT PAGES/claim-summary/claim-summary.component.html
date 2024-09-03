@@ -275,7 +275,7 @@
           <dx-button
             class="add-card"
             icon="download"
-            text=""
+            text="Import"
             type="default"
             stylingMode="contained"
             (onClick)="get_advance_Filter()"
@@ -600,7 +600,7 @@
   <dx-popup
     [(visible)]="isSaveMemorisedOpened"
     [title]="'Memorise Report'"
-    [width]="400"
+    [width]="350"
     height="60vh"
   >
     <dx-form id="form">
@@ -639,9 +639,12 @@
     class="formPopupClass hide-buttons"
     [(visible)]="isAdvancefilterOpened"
     titleText="Advance filter"
-    height="70vh"
+    height="80vh"
+    [width]="350"
     [width]="filterpopupWidth"
-    [visibleButtons]="false"
+    [visibleButtons]="true"
+    saveButtonText="Apply"
+    (save)="import_Advance_Filter()"
   >
     <app-advance-filter-popup></app-advance-filter-popup>
   </form-popup>

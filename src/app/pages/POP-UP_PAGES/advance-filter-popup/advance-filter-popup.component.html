@@ -1,1 +1,68 @@
-<p>advance-filter-popup works!</p>
+<dx-data-grid
+  [dataSource]="gridDataSource"
+  [columns]="gridColumns"
+  [showBorders]="true"
+  [paging]="{ pageSize: 10 }"
+  [pager]="{ showPageSizeSelector: true, allowedPageSizes: [10, 25, 50] }"
+  [filterRow]="{ visible: false }"
+  [headerFilter]="{ visible: false }"
+  [columnResizingMode]="'widget'"
+  [allowColumnResizing]="true"
+  [allowColumnReordering]="true"
+  [columnAutoWidth]="true"
+  [columnFixing]="{ enabled: true }"
+  [columnChooser]="{ enabled: true, mode: 'select', height: 400 }"
+  [height]="'100%'"
+  [width]="'100%'"
+>
+  <dxo-toolbar class="toolBarDiv p-0 m-0">
+    <dxi-item name="columnChooserButton" locateInMenu="auto"></dxi-item>
+    <dxi-item location="after" locateInMenu="auto">
+      <div class="separator"></div>
+    </dxi-item>
+    <dxi-item
+      location="after"
+      locateInMenu="auto"
+      showText="inMenu"
+      widget="dxButton"
+      [options]="{
+        text: 'Refresh',
+        icon: 'refresh',
+        onClick: refresh,
+        stylingMode: 'text'
+      }"
+    ></dxi-item>
+    <dxi-item location="after" locateInMenu="auto">
+      <div class="separator"></div>
+    </dxi-item>
+    <!-- <dx-button
+      text="Import"
+      icon="import"
+      type="default"
+      stylingMode="contained"
+      (onClick)="fileInput.click()"
+    ></dx-button>
+    <input
+      #fileInput
+      type="file"
+      style="display: none"
+      (change)="import_ExcelData($event)"
+    /> -->
+    <dxi-item location="after" locateInMenu="auto">
+      <dx-button
+        text="Import "
+        icon="import"
+        type="default"
+        stylingMode="contained"
+        (onClick)="fileInput.click()"
+      ></dx-button>
+    </dxi-item>
+  </dxo-toolbar>
+  <input
+    #fileInput
+    type="file"
+    accept=".xlsx, .xls"
+    style="display: none"
+    (change)="import_ExcelData($event)"
+  />
+</dx-data-grid>

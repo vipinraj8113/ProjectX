@@ -77,6 +77,9 @@ interface dropdownData {
   providers: [ReportService],
 })
 export class ClaimSummaryComponent implements AfterViewInit {
+  @ViewChild(AdvanceFilterPopupComponent, { static: false })
+  advanceFilter: AdvanceFilterPopupComponent;
+
   @ViewChild(DxValidatorComponent, { static: false })
   validator: DxValidatorComponent;
 
@@ -501,7 +504,7 @@ export class ClaimSummaryComponent implements AfterViewInit {
   onExporting(e: any) {
     this.service.exportDataGrid(e);
   }
-  //==========show memorise save pop up=================
+  //==========show memorise save pop up==================
   show_Memorise_popup = () => {
     this.isSaveMemorisedOpened = !this.isSaveMemorisedOpened;
   };
@@ -509,7 +512,7 @@ export class ClaimSummaryComponent implements AfterViewInit {
   onMemoriseReportNameChanged(e) {
     this.MemoriseReportName = e.value;
   }
-  //================Save Memorize Reports==============
+  //================Save Memorize Reports=================
   save_Memorise_Report() {
     const memoriseName = this.MemoriseReportName;
     const filterParameters = JSON.parse(sessionStorage.getItem('reportData'));
@@ -558,7 +561,9 @@ export class ClaimSummaryComponent implements AfterViewInit {
         }
       });
   }
-  import_Advance_Filter() {}
+  import_Advance_Filter() {
+    console.log('Fetched Data from Datagrid', this.advanceFilter.fetch_DataGrid_Data);
+  }
 }
 
 @NgModule({

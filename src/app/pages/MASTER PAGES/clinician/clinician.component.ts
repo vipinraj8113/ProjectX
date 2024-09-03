@@ -87,10 +87,6 @@ export class ClinicianComponent implements OnInit {
       .subscribe((response: any) => {
         this.clinicianCategoryDatasource = response;
       });
-
-    // this.masterService.Get_GropDown('GENDER').subscribe((response: any) => {
-    //   this.genderDatasource = response;
-    // });
   }
 
   //========================Get Datasource =======================

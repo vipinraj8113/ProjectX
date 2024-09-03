@@ -34,7 +34,7 @@
         padding: var(--toolbar-margin-bottom) 0;
       }
 
-      .dx-datagrid-content .dx-row   {
+      .dx-datagrid-content .dx-row {
         cursor: pointer;
         height: 3rem;
         // padding: 0px
@@ -60,11 +60,9 @@
   bottom: 35px;
   right: 25px;
 }
-.importItem{
-  width: 600px
+.importItem {
+  width: 600px;
 }
-
-
 
 // -------------------------------------------
 
@@ -109,13 +107,9 @@
   margin-top: 18px;
 }
 
-
 .Options {
   width: auto;
 }
-
-
-
 
 /* Reduce margin between rows */
 .paramsDiv .dxi-item {
@@ -151,3 +145,4 @@
   margin-top: 10px; /* Adjust as needed */
   margin-left: 5px; /* Adjust as needed */
 }
+

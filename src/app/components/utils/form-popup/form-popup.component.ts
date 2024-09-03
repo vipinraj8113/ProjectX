@@ -35,8 +35,10 @@ export class FormPopupComponent {
   @Input() wrapperAttr: Record<string, string> = {};
 
   @Input() visible = false;
+
+  @Input() visibleButtons = true;
   
-  @Input() visibleButtons = false;
+  @Input() saveButtonText:any='Save'
 
   @Input() isSaveDisabled = false;
 
