@@ -1,4 +1,5 @@
 <dx-data-grid
+  #dataGrid
   [dataSource]="gridDataSource"
   [columns]="gridColumns"
   [showBorders]="true"
@@ -35,19 +36,6 @@
     <dxi-item location="after" locateInMenu="auto">
       <div class="separator"></div>
     </dxi-item>
-    <!-- <dx-button
-      text="Import"
-      icon="import"
-      type="default"
-      stylingMode="contained"
-      (onClick)="fileInput.click()"
-    ></dx-button>
-    <input
-      #fileInput
-      type="file"
-      style="display: none"
-      (change)="import_ExcelData($event)"
-    /> -->
     <dxi-item location="after" locateInMenu="auto">
       <dx-button
         text="Import "

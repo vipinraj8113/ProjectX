@@ -59,11 +59,13 @@
               (valueChanged)="onDropdownValueChanged()"
               [dropDownOptions]="{ width: 'auto' }"
             >
-              <dxi-validation-rule
-                type="required"
-                message="Country is required"
-              >
-              </dxi-validation-rule>
+              <dx-validator>
+                <dxi-validation-rule
+                  type="required"
+                  message="Country is required"
+                >
+                </dxi-validation-rule>
+              </dx-validator>
             </dx-select-box>
           </div>
         </dxi-item>
@@ -146,6 +148,13 @@
             [dropDownOptions]="{ width: 'auto' }"
             required
           >
+            <dx-validator>
+              <dxi-validation-rule
+                type="required"
+                message="Receiver ID is required"
+              >
+              </dxi-validation-rule>
+            </dx-validator>
           </dx-tag-box>
         </dxi-item>
 
@@ -165,6 +174,13 @@
             (valueChanged)="onDropdownValueChanged()"
             [dropDownOptions]="{ width: 'auto' }"
           >
+            <dx-validator>
+              <dxi-validation-rule
+                type="required"
+                message="Payer ID is required"
+              >
+              </dxi-validation-rule>
+            </dx-validator>
           </dx-tag-box>
         </dxi-item>
 
@@ -183,6 +199,10 @@
             required
             (valueChanged)="onDropdownValueChanged()"
           >
+            <dx-validator>
+              <dxi-validation-rule type="required" message="Payeris required">
+              </dxi-validation-rule>
+            </dx-validator>
           </dx-tag-box>
         </dxi-item>
 
@@ -223,6 +243,13 @@
             (valueChanged)="onDropdownValueChanged()"
             [dropDownOptions]="{ width: 'auto' }"
           >
+            <dx-validator>
+              <dxi-validation-rule
+                type="required"
+                message="Clinician is required"
+              >
+              </dxi-validation-rule>
+            </dx-validator>
           </dx-tag-box>
         </dxi-item>
 
@@ -242,6 +269,13 @@
             (valueChanged)="onDropdownValueChanged()"
             [dropDownOptions]="{ width: 'auto' }"
           >
+            <dx-validator>
+              <dxi-validation-rule
+                type="required"
+                message="Ordering Clinican is required"
+              >
+              </dxi-validation-rule>
+            </dx-validator>
           </dx-tag-box>
         </dxi-item>
 
@@ -257,6 +291,13 @@
               placeholder="select encounter Type value"
               (valueChanged)="onDropdownValueChanged()"
             >
+              <dx-validator>
+                <dxi-validation-rule
+                  type="required"
+                  message="Encounter Type is required"
+                >
+                </dxi-validation-rule>
+              </dx-validator>
             </dx-select-box>
           </div>
         </dxi-item>
@@ -275,7 +316,7 @@
           <dx-button
             class="add-card"
             icon="download"
-            text="Import"
+            text=""
             type="default"
             stylingMode="contained"
             (onClick)="get_advance_Filter()"
@@ -597,6 +638,7 @@
       </dxo-summary>
     </dx-data-grid>
   </ng-container>
+
   <dx-popup
     [(visible)]="isSaveMemorisedOpened"
     [title]="'Memorise Report'"
@@ -635,6 +677,7 @@
       class="save-button"
     ></dx-button>
   </dx-popup>
+
   <form-popup
     class="formPopupClass hide-buttons"
     [(visible)]="isAdvancefilterOpened"

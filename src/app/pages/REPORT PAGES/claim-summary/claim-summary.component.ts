@@ -74,7 +74,7 @@ interface dropdownData {
 @Component({
   templateUrl: './claim-summary.component.html',
   styleUrls: ['./claim-summary.component.scss'],
-  providers: [ReportService],
+  providers: [ReportService, ReportEngineService],
 })
 export class ClaimSummaryComponent implements AfterViewInit {
   @ViewChild(AdvanceFilterPopupComponent, { static: false })
@@ -125,11 +125,11 @@ export class ClaimSummaryComponent implements AfterViewInit {
   From_Date_Value: any = new Date();
   To_Date_Value: any = new Date();
   AsOnDate: any = new Date();
-  ReceiverID_Value: any;
-  PayerID_Value: any;
-  Payer_Value: any;
-  Clinician_Value: any;
-  OrderingClinician_Value: any;
+  ReceiverID_Value: any[];
+  PayerID_Value: any[];
+  Payer_Value: any[];
+  Clinician_Value: any[];
+  OrderingClinician_Value: any[];
   initial_net_amount: any;
   //===========Variables For DataSource Of Multiple DropDowns=========
   SearchOn_DataSource: any;
@@ -562,7 +562,12 @@ export class ClaimSummaryComponent implements AfterViewInit {
       });
   }
   import_Advance_Filter() {
-    console.log('Fetched Data from Datagrid', this.advanceFilter.fetch_DataGrid_Data);
+    const filterData = this.reportEngine.getData();
+    console.log('Advance filter Data', filterData);
+    const ReceiverID = filterData.ReceiverID.split(',');
+    this.ReceiverID_Value = this.RecieverID_DataSource.filter((item) =>
+      ReceiverID.includes(item.Name)
+    ).map((item) => item.ID);
   }
 }
 

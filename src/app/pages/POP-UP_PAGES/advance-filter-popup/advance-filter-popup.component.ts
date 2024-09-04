@@ -7,6 +7,7 @@ import {
   DxButtonModule,
   DxDataGridComponent,
 } from 'devextreme-angular';
+import { ReportEngineService } from '../../REPORT PAGES/report-engine.service';
 @Component({
   selector: 'app-advance-filter-popup',
   templateUrl: './advance-filter-popup.component.html',
@@ -15,131 +16,114 @@ import {
 export class AdvanceFilterPopupComponent {
   @ViewChild(DxDataGridComponent, { static: true })
   dataGrid: DxDataGridComponent;
+
   @ViewChild('fileInput') fileInput!: ElementRef;
 
   gridColumns: any[] = [
-    { dataField: 'Facility', caption: 'Facility', allowHiding: false },
-    { dataField: 'SearchOn', caption: 'Search On' },
-    { dataField: 'Year', caption: 'Year' },
-    { dataField: 'Month', caption: 'Month' },
-    { dataField: 'ReceiverID', caption: 'Receiver ID', allowHiding: false },
-    { dataField: 'PayerID', caption: 'Payer ID' },
-    { dataField: 'Payer', caption: 'Payer' },
     {
-      dataField: 'AsOnDate',
-      caption: 'As On Date',
-      dataType: 'date',
+      dataField: 'ClaimNumber',
+      caption: 'ClaimNumber',
+      values: '',
     },
-    { dataField: 'Clinician', caption: 'Clinician', allowHiding: false },
     {
-      dataField: 'OrderingClinician',
-      caption: 'Ordering Clinician',
+      dataField: 'ReceiverID',
+      caption: 'ReceiverID',
+      values: '',
     },
-    { dataField: 'EncounterType', caption: 'Encounter Type' },
+    {
+      dataField: 'PayerID',
+      caption: 'PayerID',
+      values: '',
+    },
+    {
+      dataField: 'Clinician',
+      caption: 'Clinician',
+      values: '',
+    },
+    {
+      dataField: 'Clinician',
+      caption: 'Clinician',
+      values: '',
+    },
   ];
   gridDataSource: any[] = [];
   formattedData: any;
-  GridTabledata: any;
-  ResultData: any;
-  constructor() {}
+  ResultData: any[];
+  GridTabledata: any[];
+  constructor(private reportEngine: ReportEngineService) {}
 
-  //==========Function to import Excel data=======
+  //===================Import Excel Data to datagrid==================
   import_ExcelData(event: any) {
     const target: DataTransfer = <DataTransfer>event.target;
     const reader: FileReader = new FileReader();
+
     reader.onload = (e: any) => {
       const bstr: string = e.target.result;
       const wb: XLSX.WorkBook = XLSX.read(bstr, { type: 'binary' });
       const wsname: string = wb.SheetNames[0];
       const ws: XLSX.WorkSheet = wb.Sheets[wsname];
       const data = XLSX.utils.sheet_to_json(ws, { header: 1 });
-
       // Extract the first row as column names from the Excel sheet and convert to lowercase
       const excelColumnNames: string[] = (data[0] as string[]).map(
         (col: string) => col.toLowerCase()
       );
-
-      // Get DataGrid column names, convert to lowercase, and include only visible columns
-      const dataGridColumnNames: string[] = this.dataGrid.instance
-        .getVisibleColumns()
-        .map((col) => col.dataField.toLowerCase());
-      // Convert the Excel data to the required format
-      if (
-        JSON.stringify(excelColumnNames) == JSON.stringify(dataGridColumnNames)
-      ) {
-        this.gridDataSource = this.formatData(data);
-      } else {
+      // Get DataGrid columns and convert them to lowercase
+      const dataGridColumns = this.dataGrid.instance.getVisibleColumns();
+      const dataGridColumnNames: string[] = dataGridColumns.map((col: any) =>
+        col.dataField.toLowerCase()
+      );
+      // Check if the number of columns and their names match exactly
+      const columnsMatched =
+        excelColumnNames.length === dataGridColumnNames.length &&
+        excelColumnNames.every((col) => dataGridColumnNames.includes(col));
+      if (!columnsMatched) {
         notify(
           {
-            message: `Columns are not matched`,
+            message: `Column count or names do not match.`,
             position: { at: 'top right', my: 'top right' },
           },
           'error'
         );
+        return; // Exit if columns do not match
       }
+      // Proceed to map the data if columns match
+      const mappedData: any[] = [];
+      // Loop through each row in the Excel data (skip the first row as it's the header)
+      data.slice(1).forEach((row: any[]) => {
+        const rowData: any = {};
+        // Loop through each DataGrid column
+        dataGridColumns.forEach((column) => {
+          const dataField = column.dataField.toLowerCase();
+          const excelColumnIndex = excelColumnNames.indexOf(dataField);
+          // Assign values if available
+          if (excelColumnIndex !== -1) {
+            rowData[column.dataField] = row[excelColumnIndex];
+          }
+        });
+        // Add the row data if all columns are present
+        mappedData.push(rowData);
+      });
+      // Set the DataGrid data source
+      this.gridDataSource = mappedData;
+      const formattedObject = this.ConvertDataFormat(this.gridDataSource);
+      this.reportEngine.setData(formattedObject);
     };
     reader.readAsBinaryString(target.files[0]);
   }
-  //===========format Excel Data============
-  formatData(data: any[]): any[] {
-    const formattedData: any[] = [];
-    data.slice(1).forEach((row: any) => {
-      const rowData = {
-        Facility: row[0],
-        SearchOn: row[1],
-        Year: row[2],
-        Month: row[3],
-        ReceiverID: row[4],
-        PayerID: row[5],
-        Payer: row[6],
-        AsOnDate: row[7] ? this.format_display_Date_(new Date(row[7])) : null,
-        Clinician: row[8],
-        OrderingClinician: row[9],
-        EncounterType: row[10],
-      };
-      formattedData.push(rowData);
+  //===========Convert the data to API input format============
+  ConvertDataFormat(data: any[]): any {
+    // Get the column names from the DataGrid instance
+    const columnNames = this.dataGrid.instance
+      .getVisibleColumns()
+      .map((col) => col.dataField);
+    const formattedData: any = {};
+    columnNames.forEach((column) => {
+      const columnValues = data.map((item) => item[column] || '').join(', ');
+      formattedData[column] = columnValues;
     });
     return formattedData;
   }
 
-  format_display_Date_(date: Date): string {
-    const options: Intl.DateTimeFormatOptions = {
-      day: '2-digit',
-      month: 'short',
-      year: 'numeric',
-    };
-    return date.toLocaleDateString('en-GB', options);
-  }
-
-  //========Fetch data from datagrid===========
-  fetch_DataGrid_Data = () => {
-    const dataSource = this.dataGrid.instance.getDataSource();
-    this.GridTabledata = dataSource.items();
-    return this.ConvertDataFormat(this.GridTabledata);
-  };
-  //===========Convert the data to API input format============
-  ConvertDataFormat(data: any[]) {
-    this.formattedData = data.map((item) => ({
-      SearchOn: item.SearchOn || '',
-      DateFrom: this.formatDate(item.AsOnDate), // Adjust as needed
-      DateTo: this.formatDate(item.AsOnDate), // Adjust as needed
-      EncounterType: item.EncounterType || 'All',
-      Facility: item.Facility
-        ? item.Facility.split(',')
-            .map((facility) => facility.trim())
-            .join(', ')
-        : 'All',
-    }));
-    return this.formattedData;
-  }
-  //============Format the date==============
-  formatDate(date: Date): string {
-    if (!date) return '';
-    const formattedDate = new Date(date).toISOString().split('T')[0];
-    return formattedDate;
-  }
-
-  getResultData = () => ({ ...this.fetch_DataGrid_Data });
   //===============Refresh datagrid============
   refresh = () => {
     this.dataGrid.instance.refresh();
