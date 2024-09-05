@@ -25,9 +25,6 @@ import { exportDataGrid as exportDataGridToPdf } from 'devextreme/pdf_exporter';
 import { exportDataGrid as exportDataGridToXLSX } from 'devextreme/excel_exporter';
 import DataSource from 'devextreme/data/data_source';
 import { CommonModule } from '@angular/common';
-import { Workbook } from 'exceljs';
-import { saveAs } from 'file-saver-es';
-import { jsPDF } from 'jspdf';
 import { FormPopupModule } from 'src/app/components';
 import notify from 'devextreme/ui/notify';
 import { ContactPanelModule } from 'src/app/components/library/contact-panel/contact-panel.component';
@@ -84,8 +81,6 @@ export class ClaimSummaryComponent implements AfterViewInit {
 
   @ViewChild(DxValidatorComponent, { static: false })
   validator: DxValidatorComponent;
-
-  @ViewChild('myForm', { static: false }) formInstance: DxFormComponent;
 
   @ViewChild(DxDataGridComponent, { static: true })
   dataGrid: DxDataGridComponent;
@@ -205,7 +200,6 @@ export class ClaimSummaryComponent implements AfterViewInit {
     }
     //=============month field datasource============
     this.monthDataSource = this.service.getMonths();
-
     this.logData = JSON.parse(localStorage.getItem('logData'));
     this.user_Id = this.logData.UserID;
     this.Report_Page = this.router.url.slice(1);
@@ -217,6 +211,8 @@ export class ClaimSummaryComponent implements AfterViewInit {
     //   this.DataSorce_After_reload_Page();
     // }
   }
+
+
   ngAfterViewInit() {
     if (this.dataGrid) {
       const columns = this.dataGrid.instance.getVisibleColumns();
@@ -329,7 +325,12 @@ export class ClaimSummaryComponent implements AfterViewInit {
         Facility,
         encounterType,
         fromData,
-        toDate
+        toDate,
+        receiverId,
+        payerId,
+        payer,
+        Clinician,
+        OrderingClinician
       )
       .subscribe((data: any) => {
         console.log('report data loaded', data);

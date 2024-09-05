@@ -294,13 +294,6 @@
               placeholder="select encounter Type value"
               (valueChanged)="onDropdownValueChanged()"
             >
-              <!-- <dx-validator>
-                <dxi-validation-rule
-                  type="required"
-                  message="Encounter Type is required"
-                >
-                </dxi-validation-rule>
-              </dx-validator> -->
             </dx-select-box>
           </div>
         </dxi-item>
@@ -349,7 +342,7 @@
       #dataGrid
       id="main-grid"
       class="grid theme-dependent"
-      height="100%"
+      [height]="'100vh'"
       noDataText="no data"
       [dataSource]="dataSource"
       [showBorders]="true"
