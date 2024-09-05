@@ -16,6 +16,7 @@ import {
   DxFormModule,
   DxLookupComponent,
   DxValidatorComponent,
+  DxValidationSummaryModule,
 } from 'devextreme-angular';
 import { DxPopupModule } from 'devextreme-angular/ui/popup';
 import { DxDateBoxModule } from 'devextreme-angular';
@@ -55,13 +56,14 @@ import {
   DxTreeViewModule,
   DxTreeViewTypes,
 } from 'devextreme-angular/ui/tree-view';
-import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import {
   DxSortableModule,
   DxTabPanelModule,
   DxListModule,
 } from 'devextreme-angular';
+import { DxFormComponent } from 'devextreme-angular';
 import { ReportEngineService } from '../report-engine.service';
 import { AdvanceFilterPopupComponent } from '../../POP-UP_PAGES/advance-filter-popup/advance-filter-popup.component';
 import { AdvanceFilterPopupModule } from '../../POP-UP_PAGES/advance-filter-popup/advance-filter-popup.component';
@@ -82,6 +84,8 @@ export class ClaimSummaryComponent implements AfterViewInit {
 
   @ViewChild(DxValidatorComponent, { static: false })
   validator: DxValidatorComponent;
+
+  @ViewChild('myForm', { static: false }) formInstance: DxFormComponent;
 
   @ViewChild(DxDataGridComponent, { static: true })
   dataGrid: DxDataGridComponent;
@@ -120,16 +124,16 @@ export class ClaimSummaryComponent implements AfterViewInit {
 
   //================Variables for Storing selected Parameters========
   SearchOn_Value: any = null;
-  Facility_Value: any[];
+  Facility_Value: any = [];
   EncounterType_Value: any = null;
   From_Date_Value: any = new Date();
   To_Date_Value: any = new Date();
   AsOnDate: any = new Date();
-  ReceiverID_Value: any[];
-  PayerID_Value: any[];
-  Payer_Value: any[];
-  Clinician_Value: any[];
-  OrderingClinician_Value: any[];
+  ReceiverID_Value: any[] = [];
+  PayerID_Value: any[] = [];
+  Payer_Value: any[] = [];
+  Clinician_Value: any[] = [];
+  OrderingClinician_Value: any[] = [];
   initial_net_amount: any;
   //===========Variables For DataSource Of Multiple DropDowns=========
   SearchOn_DataSource: any;
@@ -175,6 +179,7 @@ export class ClaimSummaryComponent implements AfterViewInit {
   };
   isAdvancefilterOpened: boolean = false;
   filterpopupWidth: any = '70%';
+  advanceFilterGridColumns: any;
   //=======================Constructor==================
   constructor(
     private service: ReportService,
@@ -183,6 +188,12 @@ export class ClaimSummaryComponent implements AfterViewInit {
     private fb: FormBuilder,
     private reportEngine: ReportEngineService
   ) {
+    console.log(
+      '',
+      this.Facility_Value,
+      this.ReceiverID_Value,
+      this.PayerID_Value
+    );
     this.minDate = new Date(2000, 1, 1); // Set the minimum date
     this.maxDate = new Date(); // Set the maximum date
     // this.fetch_Dropdown_InitData();
@@ -255,9 +266,7 @@ export class ClaimSummaryComponent implements AfterViewInit {
       this.treeView.instance.unselectAll();
     }
   }
-  // onTreeViewReady(e: DxTreeViewTypes.ContentReadyEvent) {
-  //   this.updateSelection(e.component);
-  // }
+
   updateSelection(treeView: DxTreeViewComponent['instance']) {
     if (!treeView) return;
 
@@ -294,6 +303,7 @@ export class ClaimSummaryComponent implements AfterViewInit {
       this.Payer_DataSource = response.Payer;
       this.Clinician_DataSource = response.Clinician;
       this.OrderingClinician_DataSource = response.OrderingClinician;
+      this.advanceFilterGridColumns = response.AdvanceFilter;
     });
   }
 
@@ -378,6 +388,7 @@ export class ClaimSummaryComponent implements AfterViewInit {
   //============Call DataSource Using Selected Values====
   get_Report_DataSource() {
     const validationResult = this.validator.instance.validate();
+
     if (validationResult.isValid) {
       var userId = this.user_Id;
       var searchOn = this.SearchOn_Value;
@@ -385,11 +396,11 @@ export class ClaimSummaryComponent implements AfterViewInit {
       var EncounterType = this.EncounterType_Value;
       var fromDate = this.formatDate(this.From_Date_Value);
       var toDate = this.formatDate(this.To_Date_Value);
-      var receiverId = this.ReceiverID_Value;
-      var payerId = this.PayerID_Value;
-      var payer = this.Payer_Value;
-      var Clinician = this.Clinician_Value;
-      var OrderingClinician = this.OrderingClinician_Value;
+      var receiverId = this.ReceiverID_Value.join(', ');
+      var payerId = this.PayerID_Value.join(', ');
+      var payer = this.Payer_Value.join(', ');
+      var Clinician = this.Clinician_Value.join(', ');
+      var OrderingClinician = this.OrderingClinician_Value.join(', ');
 
       // Create an object with the variables
       var reportData = {
@@ -563,10 +574,29 @@ export class ClaimSummaryComponent implements AfterViewInit {
   }
   import_Advance_Filter() {
     const filterData = this.reportEngine.getData();
-    console.log('Advance filter Data', filterData);
-    const ReceiverID = filterData.ReceiverID.split(',');
+    console.log('advance filter imported data', filterData);
+    this.Facility_Value = this.Facility_DataSource.filter((item) =>
+      filterData.ReceiverID.split(',').includes(item.Name)
+    ).map((item) => item.ID);
+
     this.ReceiverID_Value = this.RecieverID_DataSource.filter((item) =>
-      ReceiverID.includes(item.Name)
+      filterData.ReceiverID.split(',').includes(item.Name)
+    ).map((item) => item.ID);
+
+    this.PayerID_Value = this.PayerID_DataSource.filter((item) =>
+      filterData.PayerID.split(',').includes(item.Name)
+    ).map((item) => item.ID);
+
+    this.Payer_Value = this.Payer_DataSource.filter((item) =>
+      filterData.ReceiverID.split(',').includes(item.Name)
+    ).map((item) => item.ID);
+
+    this.Clinician_Value = this.Clinician_DataSource.filter((item) =>
+      filterData.Clinician.split(',').includes(item.Name)
+    ).map((item) => item.ID);
+
+    this.OrderingClinician_Value = this.OrderingClinician_DataSource.filter(
+      (item) => filterData.OrderingClinician.split(',').includes(item.Name)
     ).map((item) => item.ID);
   }
 }
@@ -602,6 +632,7 @@ export class ClaimSummaryComponent implements AfterViewInit {
     DxListModule,
     DxValidatorModule,
     AdvanceFilterPopupModule,
+    DxValidationSummaryModule,
   ],
   providers: [],
   exports: [],

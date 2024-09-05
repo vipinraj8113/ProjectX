@@ -1,5 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, NgModule, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  Input,
+  NgModule,
+  ViewChild,
+} from '@angular/core';
 import * as XLSX from 'xlsx';
 import notify from 'devextreme/ui/notify';
 import {
@@ -14,49 +20,25 @@ import { ReportEngineService } from '../../REPORT PAGES/report-engine.service';
   styleUrls: ['./advance-filter-popup.component.scss'],
 })
 export class AdvanceFilterPopupComponent {
+  @Input() columnData: any | null;
+
   @ViewChild(DxDataGridComponent, { static: true })
   dataGrid: DxDataGridComponent;
 
   @ViewChild('fileInput') fileInput!: ElementRef;
 
-  gridColumns: any[] = [
-    {
-      dataField: 'ClaimNumber',
-      caption: 'ClaimNumber',
-      values: '',
-    },
-    {
-      dataField: 'ReceiverID',
-      caption: 'ReceiverID',
-      values: '',
-    },
-    {
-      dataField: 'PayerID',
-      caption: 'PayerID',
-      values: '',
-    },
-    {
-      dataField: 'Clinician',
-      caption: 'Clinician',
-      values: '',
-    },
-    {
-      dataField: 'Clinician',
-      caption: 'Clinician',
-      values: '',
-    },
-  ];
   gridDataSource: any[] = [];
   formattedData: any;
   ResultData: any[];
   GridTabledata: any[];
+  isFileNameAvailable: boolean = false;
+  importedFileName: string;
   constructor(private reportEngine: ReportEngineService) {}
 
   //===================Import Excel Data to datagrid==================
   import_ExcelData(event: any) {
     const target: DataTransfer = <DataTransfer>event.target;
     const reader: FileReader = new FileReader();
-
     reader.onload = (e: any) => {
       const bstr: string = e.target.result;
       const wb: XLSX.WorkBook = XLSX.read(bstr, { type: 'binary' });
