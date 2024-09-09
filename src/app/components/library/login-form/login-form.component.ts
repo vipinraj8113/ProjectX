@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, NgModule, Input, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
-
+import { confirm } from 'devextreme/ui/dialog';
 import { LoginOauthModule } from 'src/app/components/library/login-oauth/login-oauth.component';
 import { DxFormModule } from 'devextreme-angular/ui/form';
 import { DxLoadIndicatorModule } from 'devextreme-angular/ui/load-indicator';
@@ -48,30 +48,61 @@ export class LoginFormComponent implements OnInit {
   //==================Login Function=====================
   async onSubmit(e: Event) {
     e.preventDefault();
+    const forcelogin = false;
     const { username, password } = this.formData;
     this.sharedService.triggerLoadComponent(true);
     this.authService.initializeProject().subscribe((response: any) => {
       if (response) {
         this.sharedService.triggerLoadComponent(false);
         this.authService
-          .logIn(username, password)
+          .logIn(username, password, forcelogin)
           .subscribe((response: any) => {
             if (response.flag == 1) {
+              this.authService.setUserData(response.data);
               localStorage.setItem('logData', JSON.stringify(response.data));
-              localStorage.setItem('Token', JSON.stringify(response.data.Token));
+              localStorage.setItem(
+                'Token',
+                JSON.stringify(response.data.Token)
+              );
               localStorage.setItem(
                 'sidemenuItems',
                 JSON.stringify(response.menus)
               );
               this.router.navigateByUrl('/analytics-dashboard');
             } else {
-              notify(
-                {
-                  message: `invalid username or password...!!!`,
-                  position: { at: 'top right', my: 'top right' },
-                },
-                'error'
+              const result = confirm(
+                'You are already logged in on another device. Do you want to force the login process?',
+                'Force Login'
               );
+              result.then((dialogResult: boolean) => {
+                if (dialogResult) {
+                  const forcelogin = true;
+                  this.authService
+                    .logIn(username, password, forcelogin)
+                    .subscribe((response: any) => {
+                      if (response.flag == 1) {
+                        localStorage.setItem(
+                          'logData',
+                          JSON.stringify(response.data)
+                        );
+                        localStorage.setItem(
+                          'Token',
+                          JSON.stringify(response.data.Token)
+                        );
+                        localStorage.setItem(
+                          'sidemenuItems',
+                          JSON.stringify(response.menus)
+                        );
+                        this.router.navigateByUrl('/analytics-dashboard');
+                      }
+                    });
+                  // You can add any additional logic here, like resetting the form or showing another attempt
+                } else {
+                  // User chose to cancel the login process
+                  console.log('User chose not to continue');
+                  // You can handle the cancellation here, like resetting the form or redirecting the user
+                }
+              });
             }
           });
       }
