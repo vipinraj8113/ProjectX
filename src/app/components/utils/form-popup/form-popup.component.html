@@ -9,6 +9,7 @@
 >
   <dxi-toolbar-item toolbar="bottom" location="center">
     <div
+    *ngIf="visibleButtons"
       class="form-popup-buttons-container"
       [class.flex-buttons]="width <= 360"
     >
@@ -19,7 +20,7 @@
         (onClick)="close()"
       ></dx-button>
       <dx-button
-        text="Save"
+        [text]="saveButtonText"
         stylingMode="contained"
         type="default"
         [disabled]="isSaveDisabled"

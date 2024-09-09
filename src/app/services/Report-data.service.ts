@@ -41,7 +41,14 @@ export class ReportService {
     Facility: any,
     EncounterType: any,
     DateFrom: any,
-    DateTo: any
+    DateTo: any,
+    ReceiverId:any,
+    PayerId:any,
+    Payer:any,
+    Clinician:any,
+    OrderingClinician:any,
+
+
   ) {
     const url = `${BASE_URL}reports/claimdetails`;
     const reqBodyData = {
@@ -51,6 +58,14 @@ export class ReportService {
       DateTo: DateTo,
       EncounterType: EncounterType,
       Facility: Facility,
+      ReceiverId:ReceiverId,
+      PayerId:PayerId,
+      Payer:Payer,
+      Clinician:Clinician,
+      OrderingClinician:OrderingClinician
+
+
+
     };
     return this.http.post(url, reqBodyData);
   }
@@ -91,7 +106,6 @@ export class ReportService {
       REPORT_ID: reportId,
       USER_REPORT_NAME: reportName,
       columns: memoriseColumnData,
-      parameters: filterParameters,
     };
     return this.http.post(url, reqBody);
   }

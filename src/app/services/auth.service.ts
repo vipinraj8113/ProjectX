@@ -39,6 +39,7 @@ export class AuthService {
 
   SideMenu: any;
   private _user: IUser | null = defaultUser;
+  UserData: any;
   // private User:any
 
   // Getter for loginName that retrieves it from session storage
@@ -63,6 +64,13 @@ export class AuthService {
 
   constructor(private router: Router, private http: HttpClient) {}
 
+  setUserData(data: any) {
+    this.UserData = data;
+  }
+
+  getUserData() {
+    return this.UserData;
+  }
   //=================internet ip of system================================
   getIPAddress() {
     return this.http.get('https://api.ipify.org/?format=json');
@@ -72,7 +80,7 @@ export class AuthService {
     return this.http.post(`${BaseURL}CustomerInfo/getinfo`, {});
   }
   //================Log In function===============================
-  logIn(username: any, password: any) {
+  logIn(username: any, password: any, forcelogin: any) {
     const API_URL = ` ${BaseURL}user/LOGIN`;
     const ReqBody = {
       LoginName: username,
@@ -83,7 +91,7 @@ export class AuthService {
       ComputerUser: 'User1',
       InternetIP: '192.158.1.38',
       SystemTimeUTC: '2020-09-07T00:08:09',
-      ForceLogin: true,
+      ForceLogin: forcelogin,
     };
     return this.http.post<any>(API_URL, ReqBody);
   }

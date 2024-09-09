@@ -512,11 +512,27 @@ body {
   background-color: rgba(8, 8, 8, 0.211);
 }
 
-// .dx-treeview-item .dx-treeview-item-content .dx-icon {
-//   margin-inline-end: 8px;
-//   color: white;
-// }
 
-// .dx-treeview-item .dx-treeview-item-content::hover {
-//   background-color: rgba(255, 255, 255, 0.529);
-// }
+.reduced-padding {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.facility-label {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.facility-input {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.toolBarDiv {
+  padding: 0px;
+}
+
+
+
+
+

@@ -72,10 +72,6 @@ export class SystemServicesService {
       LoginName: LoginName,
       Password: Password,
     };
-    // const headers = new HttpHeaders({
-    //   'Content-Type': 'application/json',
-    //   'x-api-key': Token,
-    // });
     return this.http.post(url, reqBody);
   }
 }

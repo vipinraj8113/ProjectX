@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, NgModule, Input, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
-
 import { LoginOauthModule } from 'src/app/components/library/login-oauth/login-oauth.component';
 import { DxFormModule } from 'devextreme-angular/ui/form';
 import { DxLoadIndicatorModule } from 'devextreme-angular/ui/load-indicator';
@@ -9,6 +8,7 @@ import { DxButtonModule, DxButtonTypes } from 'devextreme-angular/ui/button';
 import notify from 'devextreme/ui/notify';
 import { AuthService, IResponse, ThemeService } from 'src/app/services';
 import { SharedServiceService } from 'src/app/services/shared-service.service';
+import { confirm } from 'devextreme/ui/dialog';
 
 @Component({
   selector: 'app-login-form',
@@ -48,13 +48,14 @@ export class LoginFormComponent implements OnInit {
   //==================Login Function=====================
   async onSubmit(e: Event) {
     e.preventDefault();
+    const forcelogin = true;
     const { username, password } = this.formData;
     this.sharedService.triggerLoadComponent(true);
     this.authService.initializeProject().subscribe((response: any) => {
       if (response) {
         this.sharedService.triggerLoadComponent(false);
         this.authService
-          .logIn(username, password)
+          .logIn(username, password, forcelogin)
           .subscribe((response: any) => {
             if(response.data.ChangePasswordOnLogin==='true'){
               this.router.navigateByUrl('/change-password');
@@ -63,14 +64,50 @@ export class LoginFormComponent implements OnInit {
             if (response.flag == 1) {
               sessionStorage.setItem('loginName', response.data.LoginName);
               console.log("loginname",this.authService.loginName)
+              this.authService.setUserData(response.data);
               localStorage.setItem('logData', JSON.stringify(response.data));
-              localStorage.setItem('Token', JSON.stringify(response.data.Token));
+              localStorage.setItem(
+                'Token',
+                JSON.stringify(response.data.Token)
+              );
               localStorage.setItem(
                 'sidemenuItems',
                 JSON.stringify(response.menus)
               );
               this.router.navigateByUrl('/analytics-dashboard');
-            } else {
+            } else if (response.flag == 2) {
+              const result = confirm(
+                'You are already logged in on another device. Do you want to force the login process?',
+                'Force Login'
+              );
+              result.then((dialogResult: boolean) => {
+                if (dialogResult) {
+                  const forcelogin = true;
+                  this.authService
+                    .logIn(username, password, forcelogin)
+                    .subscribe((response: any) => {
+                      if (response.flag == 1) {
+                        localStorage.setItem(
+                          'logData',
+                          JSON.stringify(response.data)
+                        );
+                        localStorage.setItem(
+                          'Token',
+                          JSON.stringify(response.data.Token)
+                        );
+                        localStorage.setItem(
+                          'sidemenuItems',
+                          JSON.stringify(response.menus)
+                        );
+                        this.router.navigateByUrl('/analytics-dashboard');
+                      }
+                    });
+                } else {
+                  console.log('User chose not to continue');
+                }
+              });
+            }
+            else {
               notify(
                 {
                   message: `invalid username or password...!!!`,

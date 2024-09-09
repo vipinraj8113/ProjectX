@@ -28,9 +28,9 @@ import { MasterReportService } from '../master-report.service';
 import { ReportService } from 'src/app/services/Report-data.service';
 
 @Component({
-  selector: 'app-user-level-master',
-  templateUrl: './user-level-master.component.html',
-  styleUrls: ['./user-level-master.component.scss'],
+  selector: 'app-user-role-master',
+  templateUrl: './user-role-master.component.html',
+  styleUrls: ['./user-role-master.component.scss'],
   providers: [MasterReportService, ReportService],
 })
 export class UserLevelMasterComponent implements OnInit {
@@ -180,9 +180,9 @@ export class UserLevelMasterComponent implements OnInit {
   formatLastModifiedTime(rowData: any): string {
     const celldate = rowData.LastModifiedTime;
     if (!celldate) return '';
-    
+
     const date = new Date(celldate);
-  
+
     // Extract parts of the date
     const day = date.getDate().toString().padStart(2, '0');
     const month = date.toLocaleString('en-US', { month: 'short' }).toUpperCase();
@@ -190,10 +190,10 @@ export class UserLevelMasterComponent implements OnInit {
     const hours = date.getHours();
     const minutes = date.getMinutes().toString().padStart(2, '0');
     const ampm = hours >= 12 ? 'PM' : 'AM';
-  
+
     // Convert hours from 24-hour format to 12-hour format
     const hour12 = hours % 12 || 12;
-  
+
     // Construct the formatted string
     return `${day} ${month} ${year}, ${hour12}:${minutes} ${ampm}`;
   }

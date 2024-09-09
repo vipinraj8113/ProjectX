@@ -19,7 +19,6 @@ import { AnalyticsDashboardComponent } from './pages/HOME/analytics-dashboard/an
 import { AppSignInComponent } from './pages/sign-in-form/sign-in-form.component';
 import { AppSignUpComponent } from './pages/sign-up-form/sign-up-form.component';
 import { AppResetPasswordComponent } from './pages/reset-password-form/reset-password-form.component';
-import { UserProfileComponent } from './pages/user-profile/user-profile.component';
 import { ClaimSummaryComponent } from './pages/REPORT PAGES/claim-summary/claim-summary.component';
 import { ClaimSummaryMonthWiseComponent } from './pages/REPORT PAGES/claim-summary-month-wise/claim-summary-month-wise.component';
 import { ResubmissionSummaryComponent } from './pages/REPORT PAGES/resubmission-summary/resubmission-summary.component';
@@ -44,7 +43,7 @@ import { ClinicianMajorComponent } from './pages/MASTER PAGES/clinician-major/cl
 import { ClinicianProfessionComponent } from './pages/MASTER PAGES/clinician-profession/clinician-profession.component';
 import { ClinicianCategoryComponent } from './pages/MASTER PAGES/clinician-category/clinician-category.component';
 import { SecurityPolicyComponent } from './pages/SYSTEM PAGES/security-policy/security-policy.component';
-import { UserLevelMasterComponent } from './pages/MASTER PAGES/user-level-master/user-level-master.component';
+import { UserLevelMasterComponent } from './pages/MASTER PAGES/user-role-master/user-role-master.component';
 import { ConfigurationComponent } from './pages/SYSTEM PAGES/configuration/configuration.component';
 import { UserComponent } from './pages/MASTER PAGES/user/user.component';
 import { ChangePasswordComponent } from './pages/PROFILE PAGES/change-password/change-password.component';
@@ -213,10 +212,6 @@ const routes: Routes = [
         path: 'reset-password-form',
         component: AppResetPasswordComponent,
         canActivate: [AuthGuardService],
-      },
-      {
-        path: 'user-profile',
-        component: UserProfileComponent,
       },
       {
         path: 'claim-summary-report',

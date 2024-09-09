@@ -16,6 +16,7 @@ import {
   DxFormModule,
   DxLookupComponent,
   DxValidatorComponent,
+  DxValidationSummaryModule,
 } from 'devextreme-angular';
 import { DxPopupModule } from 'devextreme-angular/ui/popup';
 import { DxDateBoxModule } from 'devextreme-angular';
@@ -24,9 +25,6 @@ import { exportDataGrid as exportDataGridToPdf } from 'devextreme/pdf_exporter';
 import { exportDataGrid as exportDataGridToXLSX } from 'devextreme/excel_exporter';
 import DataSource from 'devextreme/data/data_source';
 import { CommonModule } from '@angular/common';
-import { Workbook } from 'exceljs';
-import { saveAs } from 'file-saver-es';
-import { jsPDF } from 'jspdf';
 import { FormPopupModule } from 'src/app/components';
 import notify from 'devextreme/ui/notify';
 import { ContactPanelModule } from 'src/app/components/library/contact-panel/contact-panel.component';
@@ -55,13 +53,17 @@ import {
   DxTreeViewModule,
   DxTreeViewTypes,
 } from 'devextreme-angular/ui/tree-view';
-import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import {
   DxSortableModule,
   DxTabPanelModule,
   DxListModule,
 } from 'devextreme-angular';
+import { DxFormComponent } from 'devextreme-angular';
+import { ReportEngineService } from '../report-engine.service';
+import { AdvanceFilterPopupComponent } from '../../POP-UP_PAGES/advance-filter-popup/advance-filter-popup.component';
+import { AdvanceFilterPopupModule } from '../../POP-UP_PAGES/advance-filter-popup/advance-filter-popup.component';
 //======================Dropdown interface=======================
 interface dropdownData {
   ID: number;
@@ -71,9 +73,12 @@ interface dropdownData {
 @Component({
   templateUrl: './claim-summary.component.html',
   styleUrls: ['./claim-summary.component.scss'],
-  providers: [ReportService],
+  providers: [ReportService, ReportEngineService],
 })
 export class ClaimSummaryComponent implements AfterViewInit {
+  @ViewChild(AdvanceFilterPopupComponent, { static: false })
+  advanceFilter: AdvanceFilterPopupComponent;
+
   @ViewChild(DxValidatorComponent, { static: false })
   validator: DxValidatorComponent;
 
@@ -114,16 +119,16 @@ export class ClaimSummaryComponent implements AfterViewInit {
 
   //================Variables for Storing selected Parameters========
   SearchOn_Value: any = null;
-  Facility_Value: any[];
+  Facility_Value: any = [];
   EncounterType_Value: any = null;
   From_Date_Value: any = new Date();
   To_Date_Value: any = new Date();
   AsOnDate: any = new Date();
-  ReceiverID_Value: any;
-  PayerID_Value: any;
-  Payer_Value: any;
-  Clinician_Value: any;
-  OrderingClinician_Value: any;
+  ReceiverID_Value: any[] = [];
+  PayerID_Value: any[] = [];
+  Payer_Value: any[] = [];
+  Clinician_Value: any[] = [];
+  OrderingClinician_Value: any[] = [];
   initial_net_amount: any;
   //===========Variables For DataSource Of Multiple DropDowns=========
   SearchOn_DataSource: any;
@@ -167,13 +172,23 @@ export class ClaimSummaryComponent implements AfterViewInit {
     height: 400, // Set your desired height here
     width: 250, // Set your desired width here
   };
+  isAdvancefilterOpened: boolean = false;
+  filterpopupWidth: any = '70%';
+  advanceFilterGridColumns: any;
   //=======================Constructor==================
   constructor(
     private service: ReportService,
     private router: Router,
     private route: ActivatedRoute,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private reportEngine: ReportEngineService
   ) {
+    console.log(
+      '',
+      this.Facility_Value,
+      this.ReceiverID_Value,
+      this.PayerID_Value
+    );
     this.minDate = new Date(2000, 1, 1); // Set the minimum date
     this.maxDate = new Date(); // Set the maximum date
     // this.fetch_Dropdown_InitData();
@@ -185,7 +200,6 @@ export class ClaimSummaryComponent implements AfterViewInit {
     }
     //=============month field datasource============
     this.monthDataSource = this.service.getMonths();
-
     this.logData = JSON.parse(localStorage.getItem('logData'));
     this.user_Id = this.logData.UserID;
     this.Report_Page = this.router.url.slice(1);
@@ -197,6 +211,8 @@ export class ClaimSummaryComponent implements AfterViewInit {
     //   this.DataSorce_After_reload_Page();
     // }
   }
+
+
   ngAfterViewInit() {
     if (this.dataGrid) {
       const columns = this.dataGrid.instance.getVisibleColumns();
@@ -246,9 +262,7 @@ export class ClaimSummaryComponent implements AfterViewInit {
       this.treeView.instance.unselectAll();
     }
   }
-  // onTreeViewReady(e: DxTreeViewTypes.ContentReadyEvent) {
-  //   this.updateSelection(e.component);
-  // }
+
   updateSelection(treeView: DxTreeViewComponent['instance']) {
     if (!treeView) return;
 
@@ -260,23 +274,6 @@ export class ClaimSummaryComponent implements AfterViewInit {
       treeView.selectItem(value);
     });
   }
-
-  // onTreeViewSelectionChanged(e: DxTreeViewTypes.ItemSelectionChangedEvent) {
-  //   this.Facility_Value = e.component.getSelectedNodeKeys();
-  //   const allItem = this.Facility_DataSource.find(
-  //     (item) => item.Name === 'All'
-  //   );
-  //   const selectedItems = this.treeView.instance
-  //     .getSelectedNodes()
-  //     .map((node) => node.itemData.ID);
-
-  //   if (selectedItems.length === this.Facility_DataSource.length - 1) {
-  //     this.Facility_Value = [allItem.ID, ...selectedItems];
-  //     this.treeView.instance.selectAll();
-  //   } else {
-  //     this.Facility_Value = selectedItems.filter((id) => id !== allItem.ID);
-  //   }
-  // }
 
   //============Fetching DropDown Init Data==============
   fetch_Dropdown_InitData() {
@@ -302,6 +299,7 @@ export class ClaimSummaryComponent implements AfterViewInit {
       this.Payer_DataSource = response.Payer;
       this.Clinician_DataSource = response.Clinician;
       this.OrderingClinician_DataSource = response.OrderingClinician;
+      this.advanceFilterGridColumns = response.AdvanceFilter;
     });
   }
 
@@ -327,7 +325,12 @@ export class ClaimSummaryComponent implements AfterViewInit {
         Facility,
         encounterType,
         fromData,
-        toDate
+        toDate,
+        receiverId,
+        payerId,
+        payer,
+        Clinician,
+        OrderingClinician
       )
       .subscribe((data: any) => {
         console.log('report data loaded', data);
@@ -386,6 +389,7 @@ export class ClaimSummaryComponent implements AfterViewInit {
   //============Call DataSource Using Selected Values====
   get_Report_DataSource() {
     const validationResult = this.validator.instance.validate();
+
     if (validationResult.isValid) {
       var userId = this.user_Id;
       var searchOn = this.SearchOn_Value;
@@ -393,11 +397,11 @@ export class ClaimSummaryComponent implements AfterViewInit {
       var EncounterType = this.EncounterType_Value;
       var fromDate = this.formatDate(this.From_Date_Value);
       var toDate = this.formatDate(this.To_Date_Value);
-      var receiverId = this.ReceiverID_Value;
-      var payerId = this.PayerID_Value;
-      var payer = this.Payer_Value;
-      var Clinician = this.Clinician_Value;
-      var OrderingClinician = this.OrderingClinician_Value;
+      var receiverId = this.ReceiverID_Value.join(', ');
+      var payerId = this.PayerID_Value.join(', ');
+      var payer = this.Payer_Value.join(', ');
+      var Clinician = this.Clinician_Value.join(', ');
+      var OrderingClinician = this.OrderingClinician_Value.join(', ');
 
       // Create an object with the variables
       var reportData = {
@@ -475,6 +479,10 @@ export class ClaimSummaryComponent implements AfterViewInit {
       ? 'Hide Parameters'
       : 'Show Parameters';
   };
+  //=================Show advance filter popup============
+  get_advance_Filter() {
+    this.isAdvancefilterOpened = true;
+  }
   //============Show Filter Row==========================
   filterClick = () => {
     this.isFilterOpened = !this.isFilterOpened;
@@ -502,31 +510,13 @@ export class ClaimSummaryComponent implements AfterViewInit {
   //===========Column location finding===================
   makeColumnVisible = (e: any) => {
     const columnName = e.value;
-    const columns = this.dataGrid.instance.getVisibleColumns();
-    const columnIndex = columns.findIndex(
-      (column) => column.dataField === columnName
-    );
-    // console.log('column index:', columnName, columnIndex);
-    if (columnIndex !== -1) {
-      const columnWidth = 200; // Adjust 100 to fit your column width
-      const scrollLeft = (columnIndex - 1) * columnWidth;
-      this.dataGrid.instance.getScrollable().scrollTo({ left: scrollLeft });
-
-      this.dataGrid.instance.columnOption(
-        columnName,
-        'cssClass',
-        'highlighted-column'
-      );
-      setTimeout(() => {
-        this.dataGrid.instance.columnOption(columnName, 'cssClass', null);
-      }, 3000); // 1000 milliseconds = 1 second
-    }
+    this.reportEngine.makeColumnVisible(this.dataGrid, columnName);
   };
   //================Exporting Function===================
   onExporting(e: any) {
     this.service.exportDataGrid(e);
   }
-  //==========show memorise save pop up=================
+  //==========show memorise save pop up==================
   show_Memorise_popup = () => {
     this.isSaveMemorisedOpened = !this.isSaveMemorisedOpened;
   };
@@ -534,10 +524,10 @@ export class ClaimSummaryComponent implements AfterViewInit {
   onMemoriseReportNameChanged(e) {
     this.MemoriseReportName = e.value;
   }
-  //================Save Memorize Reports==============
+  //================Save Memorize Reports=================
   save_Memorise_Report() {
     const memoriseName = this.MemoriseReportName;
-    const filterParameters = this.Parameters;
+    const filterParameters = JSON.parse(sessionStorage.getItem('reportData'));
     const reportColumns = this.columnsData;
     const allColumns = this.ColumnNames;
     const columns = this.dataGrid.instance.getVisibleColumns();
@@ -553,13 +543,15 @@ export class ClaimSummaryComponent implements AfterViewInit {
         Visibility: hiddenColumns.includes(column.Name) ? 'false' : 'true',
       };
     });
+
+    console.log('save memorise details', memoriseName, filterParameters);
     this.service
       .save_Memorise_report(
         this.user_Id,
         this.Report_Page,
         memoriseName,
         memoriseReportColumns,
-        this.Parameters
+        filterParameters
       )
       .subscribe((response) => {
         if (response) {
@@ -580,6 +572,33 @@ export class ClaimSummaryComponent implements AfterViewInit {
           );
         }
       });
+  }
+  import_Advance_Filter() {
+    const filterData = this.reportEngine.getData();
+    console.log('advance filter imported data', filterData);
+    this.Facility_Value = this.Facility_DataSource.filter((item) =>
+      filterData.ReceiverID.split(',').includes(item.Name)
+    ).map((item) => item.ID);
+
+    this.ReceiverID_Value = this.RecieverID_DataSource.filter((item) =>
+      filterData.ReceiverID.split(',').includes(item.Name)
+    ).map((item) => item.ID);
+
+    this.PayerID_Value = this.PayerID_DataSource.filter((item) =>
+      filterData.PayerID.split(',').includes(item.Name)
+    ).map((item) => item.ID);
+
+    this.Payer_Value = this.Payer_DataSource.filter((item) =>
+      filterData.ReceiverID.split(',').includes(item.Name)
+    ).map((item) => item.ID);
+
+    this.Clinician_Value = this.Clinician_DataSource.filter((item) =>
+      filterData.Clinician.split(',').includes(item.Name)
+    ).map((item) => item.ID);
+
+    this.OrderingClinician_Value = this.OrderingClinician_DataSource.filter(
+      (item) => filterData.OrderingClinician.split(',').includes(item.Name)
+    ).map((item) => item.ID);
   }
 }
 
@@ -613,6 +632,8 @@ export class ClaimSummaryComponent implements AfterViewInit {
     DxTabPanelModule,
     DxListModule,
     DxValidatorModule,
+    AdvanceFilterPopupModule,
+    DxValidationSummaryModule,
   ],
   providers: [],
   exports: [],
