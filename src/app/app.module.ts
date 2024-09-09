@@ -28,6 +28,11 @@ import { DoctorWithHighDenialsComponent } from './pages/REPORT PAGES/doctor-with
 import { RejectedClaimsComponent } from './pages/REPORT PAGES/rejected-claims/rejected-claims.component';
 import { BalanceAmountToBeReceivedComponent } from './pages/REPORT PAGES/balance-amount-to-be-received/balance-amount-to-be-received.component';
 import { ResubmissionSummaryComponent } from './pages/REPORT PAGES/resubmission-summary/resubmission-summary.component';
+import { UserModule } from './pages/MASTER PAGES/user/user.component';
+import { UserNewFormModule } from './pages/POP-UP_PAGES/user-new-form/user-new-form.component';
+import { UserEditFormModule } from './pages/POP-UP_PAGES/user-edit-form/user-edit-form.component';
+import { ResetPasswordModule } from './pages/POP-UP_PAGES/reset-password/reset-password.component';
+import { ChangePasswordModule } from './pages/PROFILE PAGES/change-password/change-password.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +44,7 @@ import { ResubmissionSummaryComponent } from './pages/REPORT PAGES/resubmission-
     RejectedClaimsComponent,
     BalanceAmountToBeReceivedComponent,
     ResubmissionSummaryComponent,
+    
   ],
   imports: [
     TaskListModule,
@@ -59,6 +65,11 @@ import { ResubmissionSummaryComponent } from './pages/REPORT PAGES/resubmission-
     ReactiveFormsModule,
     AppRoutingModule,
     HttpClientModule,
+    UserModule,
+    UserNewFormModule,
+    UserEditFormModule,
+    ResetPasswordModule,
+    ChangePasswordModule
   ],
   providers: [AuthService, ScreenService, AppInfoService, ThemeService],
   bootstrap: [AppComponent],

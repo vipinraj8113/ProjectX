@@ -6,44 +6,45 @@
         </div>
         <div class="m-0">
             <dx-number-box [(value)]="minPasswordLength" labelMode="floating" labelLocation="left"
-                label="Minimum Password Length" [showSpinButtons]="true" [width]="'50%'" [readOnly]="readOnlyValue"
+                label="Minimum Password Length" [showSpinButtons]="true" [width]="'22%'" [readOnly]="readOnlyValue"
                 [disabled]="readOnlyValue" hint="Minimum length of a Password">
                 <dxi-button name="spins"></dxi-button>
             </dx-number-box>
         </div>
 
-        <div class="conditionDiv mt-5">
-            <div class="dx-field RadioGrp d-flex align-items-center mb-5 ps-2 pe-2">
+        <div>
+            <!-- <div class="dx-field RadioGrp d-flex align-items-center mb-5 ps-2 pe-2">
                 <div class="dx-field m-1">
                     <dx-check-box class="" [(value)]="conditionRequiredValue" text="Maximum Condition Required"
                         [readOnly]="readOnlyValue" [disabled]="readOnlyValue"
                         hint="Should contain characters from X of the following four categories"
                         (valueChange)="onConditionEnableChange($event)"></dx-check-box>
                 </div>
-            </div>
+            </div> -->
 
             <div class="dx-field m-1 mt-3">
-                <dx-check-box class="" [(value)]="isNumberChecked" text="Numbers" [readOnly]="readOnlyValue"
-                    [disabled]="conditionEnableValue" hint="Minimum 1 Numbers [0-9] required"></dx-check-box>
+                <dx-check-box class="" [(value)]="isNumberChecked" text="Minimum 1 Number [0-9] required" [readOnly]="readOnlyValue"
+                     hint="Password should contain atleast one number"></dx-check-box>
             </div>
 
             <div class="dx-field m-1">
-                <dx-check-box class="" [(value)]="isUppercaseChecked" text="Uppercase Characters"
-                    [readOnly]="conditionEnableValue" [disabled]="readOnlyValue"
-                    hint="Minimum 1 Uppercase characters required"></dx-check-box>
+                <dx-check-box class="" [(value)]="isUppercaseChecked" text="Minimum 1 Uppercase character required"
+                    [readOnly]="readOnlyValue"
+                    hint="Password should contain atleast one Uppercase character"></dx-check-box>
             </div>
 
             <div class="dx-field m-1">
-                <dx-check-box class="" [(value)]="isLowercaseChecked" text="Lowercase Characters"
-                    [readOnly]="conditionEnableValue" [disabled]="readOnlyValue"
-                    hint="Minimum 1 Lowercase characters required"></dx-check-box>
+                <dx-check-box class="" [(value)]="isLowercaseChecked" text="Minimum 1 Lowercase character required"
+                    [readOnly]="readOnlyValue"
+                    hint="Password should contain atleast one Lowercase character"></dx-check-box>
             </div>
 
             <div class="dx-field m-1">
-                <dx-check-box class="" [(value)]="isSpecialCharactersChecked" text="Special Characters"
-                    [readOnly]="conditionEnableValue" [disabled]="readOnlyValue"
-                    hint="Minimum 1 Special characters required"></dx-check-box>
+                <dx-check-box class="" [(value)]="isSpecialCharactersChecked" text="Minimum 1 Special character required"
+                    [readOnly]="readOnlyValue"
+                    hint="Password should contain atleast one Special character"></dx-check-box>
             </div>
+            
         </div>
     </div>
 
@@ -129,7 +130,6 @@
                     hint="Maximum password age (days)">
                 </dx-number-box>
             </div>
-
             <div class="mt-3  items">
                 <dx-number-box [(value)]="passwordRepeatCycle" labelMode="floating" labelLocation="left"
                     label="Password Repeat Cycle" [width]="'75%'"

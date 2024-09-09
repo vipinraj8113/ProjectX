@@ -38,10 +38,21 @@
     <dxi-item location="after" locateInMenu="auto" menuItemTemplate="menuItem">
       <div *dxTemplate="let data of 'item'">
         <user-panel
-          [user]="user"
-          [menuItems]="userMenuItems"
-          menuMode="context"
-        ></user-panel>
+        [user]="user"
+        [menuItems]="userMenuItems"
+        menuMode="context"
+        id="userPanel"
+      ></user-panel>
+      <!-- Tooltip to display loginName -->
+      <dx-tooltip
+        target="#userPanel"
+        [visible]="true"
+        showEvent="mouseenter"
+        hideEvent="mouseleave"
+      >
+      <span>{{ user.name }}</span>
+    </dx-tooltip>
+        
       </div>
     </dxi-item>
     <div *dxTemplate="let data of 'menuItem'">

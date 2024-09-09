@@ -12,4 +12,5 @@ export class UserService {
     const UserAddData = { EMAIL, PASSWORD };
     return this.http.post(`${BASE_URL}insert`, UserAddData);
   }
+  
 }

@@ -28,7 +28,6 @@ export const defaultUser: IUser = {
     'https://js.devexpress.com/Demos/WidgetsGallery/JSDemos/images/employees/01.png',
 };
 //============================================================
-
 @Injectable({
   providedIn: 'root',
 })
@@ -36,9 +35,21 @@ export class AuthService {
   private loggedin = new BehaviorSubject<boolean>(false);
   private menuData = new BehaviorSubject<any>(null);
 
+  private _loginName: string;
+
   SideMenu: any;
   private _user: IUser | null = defaultUser;
   // private User:any
+
+  // Getter for loginName that retrieves it from session storage
+  get loginName(): string {
+    return sessionStorage.getItem('loginName') || '';
+  }
+
+  // Setter for loginName that sets it to session storage
+  set loginName(value: string) {
+    sessionStorage.setItem('loginName', value);
+  }
 
   get loggedIn(): boolean {
     return !!this._user;

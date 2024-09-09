@@ -9,6 +9,8 @@ import { DxToolbarModule } from 'devextreme-angular/ui/toolbar';
 import { UserPanelModule } from '../user-panel/user-panel.component';
 import { AuthService, IUser } from 'src/app/services';
 import { ThemeSwitcherModule } from 'src/app/components/library/theme-switcher/theme-switcher.component';
+import { DxTooltipModule } from 'devextreme-angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -29,6 +31,13 @@ export class AppHeaderComponent implements OnInit {
   user: IUser | null = { email: '' };
 
   userMenuItems = [
+    {
+      text: 'Change Password',
+      icon: 'key',
+      onClick: () => {
+        this.changePassword();
+      },
+    },
   {
     text: 'Logout',
     icon: 'runner',
@@ -37,10 +46,19 @@ export class AppHeaderComponent implements OnInit {
     },
   }];
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService,private router:Router) { }
 
   ngOnInit() {
-    this.authService.getUser().then((e) => this.user = e.data);
+    // Fetch the user and set the loginName
+    this.authService.getUser().then((response) => {
+      if (response.isOk && response.data) {
+        this.user = response.data;
+        this.user.name = this.authService.loginName; // Bind loginName
+      }
+    });
+  }
+  changePassword(){
+    this.router.navigateByUrl('/change-password');
   }
 
   toggleMenu = () => {
@@ -55,6 +73,7 @@ export class AppHeaderComponent implements OnInit {
     DxToolbarModule,
     ThemeSwitcherModule,
     UserPanelModule,
+    DxTooltipModule,
   ],
   declarations: [AppHeaderComponent],
   exports: [AppHeaderComponent],

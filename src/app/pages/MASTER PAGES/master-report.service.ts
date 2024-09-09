@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BaseURL } from '../../services/constant-url.service';
+import { Observable} from 'rxjs';
 
 const BASE_URL = BaseURL;
 const Token = JSON.parse(localStorage.getItem('Token'));
@@ -918,4 +919,88 @@ export class MasterReportService {
     // });
     return this.http.post(`${BASE_URL}cliniciancategory/delete/${id}`, {});
   }
+  
+
+  getUserSecurityPolicityData(){
+    return this.http.post(`${BASE_URL}usersecurity/usersecuritylist`,{})
+  }
+  getCountryList(){
+    return this.http.post(`http://103.180.120.134/veztaretail/api/country/list`,{});
+  }
+
+  get_User_data(){
+    return this.http.post(`${BASE_URL}user/list`,{})
+  }
+  get_User_Data_By_Id(id:number){
+    return this.http.post(`${BASE_URL}user/select/`+id,{});
+  }
+
+  insert_User_Data(data:any) {
+    const url = `${BASE_URL}/user/insert`;
+    const reqBody = {
+        UserName: data.UserName,
+        LoginName: data.LoginName,
+        Password: data.Password,
+        UserRoleID: data.UserRoleID,
+        DateofBirth: data.DateofBirth,
+        GenderID: data.GenderID,
+        Email: data.Email,
+        Mobile: data.Mobile,
+        Whatsapp: data.Whatsapp,
+        LoginExpiryDate: data.LoginExpiryDate,
+        IsInactive: data.IsInactive,
+        InactiveReason: data.InactiveReason,
+        IsLocked: data.IsLocked,
+        LockDateFrom: data.LockDateFrom,
+        LockDateTo: data.LockDateTo,
+        LockReason: data.LockReason,
+        PhotoFile: data.PhotoFile,
+        user_facility:data.user_facility,
+        changePasswordOnLogin:data.changePasswordOnLogin,
+        LoginExpiryReason:''
+      }
+      console.log(reqBody,"reqbody")
+      return this.http.post(url,reqBody); 
+    };
+
+    update_User_Data(data:any) {
+      const url = `${BASE_URL}/user/update`;
+      const reqBody = {
+          UserID : data.UserID,
+          UserName: data.UserName,
+          LoginName: data.LoginName,
+          Password: data.Password,
+          UserRoleID: data.UserRoleID,
+          DateofBirth: data.DateofBirth,
+          GenderID: data.GenderID,
+          Email: data.Email,
+          Mobile: data.Mobile,
+          Whatsapp: data.Whatsapp,
+          LoginExpiryDate: data.LoginExpiryDate,
+          IsInactive: data.IsInactive,
+          InactiveReason: data.InactiveReason,
+          IsLocked: data.IsLocked,
+          LockDateFrom: data.LockDateFrom,
+          LockDateTo: data.LockDateTo,
+          LockReason: data.LockReason,
+          PhotoFile: data.PhotoFile,
+          user_facility:data.user_facility,
+          changePasswordOnLogin:data.changePasswordOnLogin,
+          LoginExpiryReason:''
+        }
+        console.log(reqBody,"reqbody")
+        return this.http.post(url,reqBody); 
+      };
+
+      remove_User_Data(id: any) {
+        return this.http.post(`${BASE_URL}user/delete/`+id, {});
+      }
+
+    reset_Password(data: any): Observable<any> {  // Ensure the function returns an Observable<any>
+      const url = `${BASE_URL}changepassword/password`;
+      console.log(data,"dataonpayload")
+      return this.http.post(url, data)
+    
+    }
+
 }

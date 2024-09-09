@@ -21,7 +21,7 @@ export class SecurityPolicyComponent implements OnInit {
   readOnlyValue: boolean = true;
 
   minPasswordLength: any | null = null;
-  conditionRequiredValue: any = '';
+  conditionRequiredValue: boolean =false;
 
   isNumberChecked: boolean = false;
   isUppercaseChecked: boolean = false;
@@ -65,20 +65,22 @@ export class SecurityPolicyComponent implements OnInit {
         this.validationRequired =
           this.presentSecurityData.PasswordValidationRequired;
         this.minPasswordLength = this.presentSecurityData.MinimumLength;
-        this.conditionRequiredValue =
-          this.presentSecurityData.MinimumCategoriesRequired;
+        // this.conditionRequiredValue =
+        //   this.presentSecurityData.MinimumCategoriesRequired;
         this.isNumberChecked = this.presentSecurityData.Numbers;
         this.isUppercaseChecked = this.presentSecurityData.UppercaseCharacters;
         this.isLowercaseChecked = this.presentSecurityData.LowercaseCharacters;
         this.isSpecialCharactersChecked =
-          this.presentSecurityData.SpecialCharacters;
+        this.presentSecurityData.SpecialCharacters;
         this.emailOtp = this.presentSecurityData.OTPEmailOnPasswordChange;
         this.smsOtp = this.presentSecurityData.OTPSMSOnPasswordChange;
-        this.whatsAppOtp = this.presentSecurityData.whatsAppOTPOnPasswordChange;
+        this.whatsAppOtp = this.presentSecurityData.OTPWhatsappOnPasswordChange;
         this.emailAlert = this.presentSecurityData.AlertEmailOnPasswordChange;
         this.smsAlert = this.presentSecurityData.AlertSMSOnPasswordChange;
         this.whatsAppAlert =
-          this.presentSecurityData.whatsAppAlertOnPasswordChange;
+          this.presentSecurityData.
+          AlertWhatsappOnPasswordChange;  
+
         this.LoginAttempts = this.presentSecurityData.AccountLockAttempt;
         this.resetDuration = this.presentSecurityData.AccountLockDuration;
         this.failedLoginDuration =
@@ -98,7 +100,7 @@ export class SecurityPolicyComponent implements OnInit {
     const formData = {
       validationRequired: this.validationRequired,
       minPasswordLength: this.minPasswordLength,
-      conditionRequiredValue: this.conditionRequiredValue,
+      // conditionRequiredValue: this.conditionRequiredValue,
       isNumberChecked: this.isNumberChecked,
       isUppercaseChecked: this.isUppercaseChecked,
       isLowercaseChecked: this.isLowercaseChecked,
@@ -125,7 +127,7 @@ export class SecurityPolicyComponent implements OnInit {
         if (response) {
           notify(
             {
-              message: `Clinician saved Successfully`,
+              message: `Security Policy saved Successfully`,
               position: { at: 'top right', my: 'top right' },
             },
             'success'
@@ -145,7 +147,7 @@ export class SecurityPolicyComponent implements OnInit {
   onClickCancel() {
     this.validationRequired = false;
     this.minPasswordLength = null;
-    this.conditionRequiredValue = null;
+    // this.conditionRequiredValue = null;
     this.isNumberChecked = false;
     this.isUppercaseChecked = false;
     this.isLowercaseChecked = false;
@@ -171,10 +173,10 @@ export class SecurityPolicyComponent implements OnInit {
     this.readOnlyValue = !this.readOnlyValue;
   }
 
-  onConditionEnableChange(newValue: boolean) {
-    this.conditionRequiredValue = newValue;
-    this.conditionEnableValue = !this.conditionEnableValue;
-  }
+  // onConditionEnableChange(newValue: boolean) {
+  //   this.conditionRequiredValue = newValue;
+  //   this.conditionEnableValue = !this.conditionEnableValue;
+  // }
 }
 @NgModule({
   imports: [

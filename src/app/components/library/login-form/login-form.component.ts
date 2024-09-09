@@ -56,7 +56,13 @@ export class LoginFormComponent implements OnInit {
         this.authService
           .logIn(username, password)
           .subscribe((response: any) => {
+            if(response.data.ChangePasswordOnLogin==='true'){
+              this.router.navigateByUrl('/change-password');
+            }
+              
             if (response.flag == 1) {
+              sessionStorage.setItem('loginName', response.data.LoginName);
+              console.log("loginname",this.authService.loginName)
               localStorage.setItem('logData', JSON.stringify(response.data));
               localStorage.setItem('Token', JSON.stringify(response.data.Token));
               localStorage.setItem(
