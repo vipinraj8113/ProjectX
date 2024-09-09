@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, NgModule, Input, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
-import { confirm } from 'devextreme/ui/dialog';
 import { LoginOauthModule } from 'src/app/components/library/login-oauth/login-oauth.component';
 import { DxFormModule } from 'devextreme-angular/ui/form';
 import { DxLoadIndicatorModule } from 'devextreme-angular/ui/load-indicator';
@@ -9,6 +8,7 @@ import { DxButtonModule, DxButtonTypes } from 'devextreme-angular/ui/button';
 import notify from 'devextreme/ui/notify';
 import { AuthService, IResponse, ThemeService } from 'src/app/services';
 import { SharedServiceService } from 'src/app/services/shared-service.service';
+import { confirm } from 'devextreme/ui/dialog';
 
 @Component({
   selector: 'app-login-form',
@@ -48,7 +48,7 @@ export class LoginFormComponent implements OnInit {
   //==================Login Function=====================
   async onSubmit(e: Event) {
     e.preventDefault();
-    const forcelogin = false;
+    const forcelogin = true;
     const { username, password } = this.formData;
     this.sharedService.triggerLoadComponent(true);
     this.authService.initializeProject().subscribe((response: any) => {
@@ -69,7 +69,7 @@ export class LoginFormComponent implements OnInit {
                 JSON.stringify(response.menus)
               );
               this.router.navigateByUrl('/analytics-dashboard');
-            } else {
+            } else if (response.flag == 2) {
               const result = confirm(
                 'You are already logged in on another device. Do you want to force the login process?',
                 'Force Login'
@@ -96,13 +96,19 @@ export class LoginFormComponent implements OnInit {
                         this.router.navigateByUrl('/analytics-dashboard');
                       }
                     });
-                  // You can add any additional logic here, like resetting the form or showing another attempt
                 } else {
-                  // User chose to cancel the login process
                   console.log('User chose not to continue');
-                  // You can handle the cancellation here, like resetting the form or redirecting the user
                 }
               });
+            }
+            else {
+              notify(
+                {
+                  message: `invalid username or password...!!!`,
+                  position: { at: 'top right', my: 'top right' },
+                },
+                'error'
+              );
             }
           });
       }
