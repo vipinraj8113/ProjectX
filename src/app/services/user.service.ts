@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { CanActivate, Router, ActivatedRouteSnapshot } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 
-const BASE_URL = 'http://localhost/projectx/api/users/';
+import { environment } from 'src/environments/environment';
+const BASE_URL = environment.PROJECTX_API_BASE_URL;
 
 @Injectable()
 export class UserService {
@@ -12,5 +13,4 @@ export class UserService {
     const UserAddData = { EMAIL, PASSWORD };
     return this.http.post(`${BASE_URL}insert`, UserAddData);
   }
-  
 }

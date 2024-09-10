@@ -47,6 +47,7 @@ import { UserLevelMasterComponent } from './pages/MASTER PAGES/user-role-master/
 import { ConfigurationComponent } from './pages/SYSTEM PAGES/configuration/configuration.component';
 import { UserComponent } from './pages/MASTER PAGES/user/user.component';
 import { ChangePasswordComponent } from './pages/PROFILE PAGES/change-password/change-password.component';
+import { LicenseInfoComponent } from './pages/SYSTEM PAGES/license-info/license-info.component';
 const routes: Routes = [
   {
     path: '',
@@ -251,6 +252,11 @@ const routes: Routes = [
       {
         path: 'resubmission-summary-page',
         component: ResubmissionSummaryComponent,
+        canActivate: [AuthGuardService],
+      },
+      {
+        path: 'license-info-page',
+        component: LicenseInfoComponent,
         canActivate: [AuthGuardService],
       },
       {

@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { BaseURL } from '../../services/constant-url.service';
+
 import { Observable} from 'rxjs';
 
-const BASE_URL = BaseURL;
+import { environment } from 'src/environments/environment';
+const BASE_URL=environment.PROJECTX_API_BASE_URL
+
 const Token = JSON.parse(localStorage.getItem('Token'));
 
 const gender: any = [
@@ -919,7 +921,7 @@ export class MasterReportService {
     // });
     return this.http.post(`${BASE_URL}cliniciancategory/delete/${id}`, {});
   }
-  
+
 
   getUserSecurityPolicityData(){
     return this.http.post(`${BASE_URL}usersecurity/usersecuritylist`,{})
@@ -960,7 +962,7 @@ export class MasterReportService {
         LoginExpiryReason:''
       }
       console.log(reqBody,"reqbody")
-      return this.http.post(url,reqBody); 
+      return this.http.post(url,reqBody);
     };
 
     update_User_Data(data:any) {
@@ -989,7 +991,7 @@ export class MasterReportService {
           LoginExpiryReason:''
         }
         console.log(reqBody,"reqbody")
-        return this.http.post(url,reqBody); 
+        return this.http.post(url,reqBody);
       };
 
       remove_User_Data(id: any) {
@@ -1000,7 +1002,7 @@ export class MasterReportService {
       const url = `${BASE_URL}changepassword/password`;
       console.log(data,"dataonpayload")
       return this.http.post(url, data)
-    
+
     }
 
 }

@@ -6,11 +6,13 @@ import { map, groupBy, mergeMap, toArray } from 'rxjs/operators';
 import { Task } from 'src/app/types/task';
 import { Contact } from 'src/app/types/contact';
 import { Sale, SalesOrOpportunitiesByCategory } from '../types/analytics';
-import {BaseURL} from '../services/constant-url.service'
+import { environment } from 'src/environments/environment';
+
+const BaseURL=environment.PROJECTX_API_BASE_URL
 
 const API_URL = 'https://js.devexpress.com/Demos/RwaService/api';
 
-const BASE_URL = BaseURL;
+
 const Token = JSON.parse(localStorage.getItem('Token'));
 
 

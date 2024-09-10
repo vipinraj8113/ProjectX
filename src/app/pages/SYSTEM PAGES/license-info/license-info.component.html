@@ -1,0 +1,98 @@
+<!-- <div class="view-wrapper titleDiv m-3">
+  <h4>License Info</h4>
+</div> -->
+<div class="view-wrapper list-page">
+  <dx-data-grid
+    class="grid theme-dependent"
+    noDataText=" No Data"
+    height="600"
+    [dataSource]="DataSource"
+    [columns]="columnData"
+    [showBorders]="true"
+    [allowColumnResizing]="true"
+    [allowColumnReordering]="true"
+    [rowAlternationEnabled]="true"
+    rowAlternationInterval="2"
+    (onExporting)="onExporting($event)"
+    height="84vh"
+  >
+    <dxo-paging [pageSize]="10"></dxo-paging>
+    <dxo-pager
+      [visible]="true"
+      [allowedPageSizes]="allowedPageSizes"
+      [displayMode]="displayMode"
+      [showPageSizeSelector]="showPageSizeSelector"
+      [showInfo]="showInfo"
+      [showNavigationButtons]="showNavButtons"
+    >
+    </dxo-pager>
+    <dxo-load-panel [showPane]="false"></dxo-load-panel>
+    <dxo-scrolling mode="virtual"></dxo-scrolling>
+    <dxo-sorting mode="multiple"></dxo-sorting>
+    <dxo-header-filter [visible]="true"></dxo-header-filter>
+    <dxo-filter-row [visible]="true"></dxo-filter-row>
+
+    <!-- <dxo-column-chooser [enabled]="true" [height]="400"></dxo-column-chooser> -->
+    <dxo-search-panel [visible]="true" placeholder=" Search"></dxo-search-panel>
+    <dxo-export
+      [enabled]="true"
+      [allowExportSelectedData]="true"
+      [formats]="['xlsx', 'pdf']"
+    >
+    </dxo-export>
+    <dxo-toolbar>
+      <dxi-item location="before">
+        <div class="grid-header">License Info</div>
+      </dxi-item>
+      <dxi-item location="before">
+        <div>
+          <dx-text-box
+            [(value)]="ProductKey"
+            labelMode="floating"
+            labelLocation="left"
+            label="Product Key"
+            [width]="250"
+          >
+          </dx-text-box>
+        </div>
+      </dxi-item>
+      <dxi-item class="ms-1" location="center">
+        <div>
+          <dx-text-box
+            [(value)]="ProductKey"
+            labelMode="floating"
+            labelLocation="left"
+            label="Licensed To"
+            [width]="250"
+          >
+          </dx-text-box>
+        </div>
+      </dxi-item>
+      <dxi-item
+        location="after"
+        locateInMenu="auto"
+        showText="inMenu"
+        widget="dxButton"
+        [options]="{
+          text: 'Refresh',
+          icon: 'refresh',
+          onClick: refresh,
+          stylingMode: 'text'
+        }"
+      ></dxi-item>
+      <dxi-item location="after" locateInMenu="auto">
+        <div class="separator"></div>
+      </dxi-item>
+      <dxi-item name="exportButton"></dxi-item>
+      <dxi-item location="after" locateInMenu="auto">
+        <div class="separator"></div>
+      </dxi-item>
+      <dxi-item name="searchPanel" locateInMenu="auto"></dxi-item>
+    </dxo-toolbar>
+
+    <!-- <dxo-selection mode="multiple"></dxo-selection> -->
+    <dxo-header-filter [visible]="true">
+      <dxo-search [enabled]="true"></dxo-search>
+    </dxo-header-filter>
+  </dx-data-grid>
+</div>

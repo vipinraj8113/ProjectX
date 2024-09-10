@@ -57,10 +57,10 @@ export class LoginFormComponent implements OnInit {
         this.authService
           .logIn(username, password, forcelogin)
           .subscribe((response: any) => {
-            if(response.data.ChangePasswordOnLogin==='true'){
-              this.router.navigateByUrl('/change-password');
-            }
-              
+            // if(response.data.ChangePasswordOnLogin==='true'){
+            //   this.router.navigateByUrl('/change-password');
+            // }
+
             if (response.flag == 1) {
               sessionStorage.setItem('loginName', response.data.LoginName);
               console.log("loginname",this.authService.loginName)
@@ -103,7 +103,13 @@ export class LoginFormComponent implements OnInit {
                       }
                     });
                 } else {
-                  console.log('User chose not to continue');
+                  notify(
+                    {
+                      message: `invalid login...!!!`,
+                      position: { at: 'top right', my: 'top right' },
+                    },
+                    'error'
+                  );
                 }
               });
             }
