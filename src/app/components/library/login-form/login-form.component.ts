@@ -48,7 +48,7 @@ export class LoginFormComponent implements OnInit {
   //==================Login Function=====================
   async onSubmit(e: Event) {
     e.preventDefault();
-    const forcelogin = true;
+    const forcelogin = false;
     const { username, password } = this.formData;
     this.sharedService.triggerLoadComponent(true);
     this.authService.initializeProject().subscribe((response: any) => {

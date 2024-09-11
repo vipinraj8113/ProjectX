@@ -7,7 +7,6 @@
     noDataText=" No Data"
     height="600"
     [dataSource]="DataSource"
-    [columns]="columnData"
     [showBorders]="true"
     [allowColumnResizing]="true"
     [allowColumnReordering]="true"
@@ -37,7 +36,7 @@
     <dxo-export
       [enabled]="true"
       [allowExportSelectedData]="true"
-      [formats]="['xlsx', 'pdf']"
+      [formats]="['xlsx']"
     >
     </dxo-export>
     <dxo-toolbar>
@@ -51,7 +50,7 @@
             labelMode="floating"
             labelLocation="left"
             label="Product Key"
-            [width]="250"
+            [width]="200"
           >
           </dx-text-box>
         </div>
@@ -59,11 +58,11 @@
       <dxi-item location="center">
         <div>
           <dx-text-box
-            [(value)]="ProductKey"
+            [(value)]="LicensedTo"
             labelMode="floating"
             labelLocation="left"
             label="Licensed To"
-            [width]="250"
+            [width]="400"
           >
           </dx-text-box>
         </div>
@@ -94,5 +93,22 @@
     <dxo-header-filter [visible]="true">
       <dxo-search [enabled]="true"></dxo-search>
     </dxo-header-filter>
+    <dxi-column
+      dataField="serialNumber"
+      caption="SL No"
+      [width]="'auto'"
+    ></dxi-column>
+    <dxi-column
+      dataField="FacilityLicense"
+      caption="Facility License"
+    ></dxi-column>
+    <dxi-column dataField="FacilityName" caption="Facility Name"></dxi-column>
+    <dxi-column
+      dataField="FacilityRegion"
+      caption="Facility Region"
+    ></dxi-column>
+    <dxi-column dataField="PostOffice" caption="Post Office"></dxi-column>
+    <dxi-column dataField="status" caption="status"></dxi-column>
+    <dxi-column dataField="Expiry_Date" caption="Expiry_Date"></dxi-column>
   </dx-data-grid>
 </div>

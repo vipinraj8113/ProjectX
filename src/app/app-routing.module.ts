@@ -48,6 +48,7 @@ import { ConfigurationComponent } from './pages/SYSTEM PAGES/configuration/confi
 import { UserComponent } from './pages/MASTER PAGES/user/user.component';
 import { ChangePasswordComponent } from './pages/PROFILE PAGES/change-password/change-password.component';
 import { LicenseInfoComponent } from './pages/SYSTEM PAGES/license-info/license-info.component';
+import { FacilityRegionComponent } from './pages/MASTER PAGES/facility-region/facility-region.component';
 const routes: Routes = [
   {
     path: '',
@@ -192,6 +193,11 @@ const routes: Routes = [
       {
         path: 'facility-type',
         component: FacilityTypeComponent,
+        canActivate: [AuthGuardService],
+      },
+      {
+        path: 'facility-region-page',
+        component: FacilityRegionComponent,
         canActivate: [AuthGuardService],
       },
       {

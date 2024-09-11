@@ -28,35 +28,34 @@ export class LicenseInfoComponent {
   showPageSizeSelector = true;
   showInfo = true;
   showNavButtons = true;
-  columnData: any = [
-    {
-      caption: 'SL No',
-      calculateCellValue: (data) => {
-        return this.DataSource.indexOf(data) + 1;
-      },
-      allowSorting: false,
-      allowFiltering: false,
-      width: 'auto',
-    },
-    ,
-    'facility ID',
-    'Facility Name',
-    'Region',
-    'Post Office',
-    'Status',
-    'Expiry',
-  ];
   DataSource: any; //===DataSorce Variable==
   ProductKey: any;
+  LicensedTo: any;
 
   constructor(
     private service: ReportService,
     private systemService: SystemServicesService
-  ) {}
+  ) {
+    this.get_list_dataSource();
+  }
 
   //====================Get all listing Data======================
   get_list_dataSource() {
     this.systemService.list_license_info_data().subscribe((response: any) => {
+      this.LicensedTo = response.CustomerName;
+      this.ProductKey = response.ProductKey;
+      // Modify the response data to add the serial number and format the expiry date
+      response.data.forEach((item: any, index: number) => {
+        item.serialNumber = index + 1;
+
+        const expiryDate = new Date(item.Expiry_Date);
+        item.Expiry_Date = expiryDate.toLocaleDateString('en-GB', {
+          day: '2-digit',
+          month: 'short',
+          year: 'numeric',
+        });
+      });
+
       this.DataSource = response.data;
     });
   }
