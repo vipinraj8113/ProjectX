@@ -30,7 +30,7 @@
     <dxo-scrolling mode="virtual"></dxo-scrolling>
     <dxo-sorting mode="multiple"></dxo-sorting>
     <dxo-header-filter [visible]="true"></dxo-header-filter>
-    <dxo-filter-row [visible]="true"></dxo-filter-row>
+    <dxo-filter-row [visible]="false"></dxo-filter-row>
 
     <!-- <dxo-column-chooser [enabled]="true" [height]="400"></dxo-column-chooser> -->
     <dxo-search-panel [visible]="true" placeholder=" Search"></dxo-search-panel>
@@ -56,7 +56,7 @@
           </dx-text-box>
         </div>
       </dxi-item>
-      <dxi-item class="ms-1" location="center">
+      <dxi-item location="center">
         <div>
           <dx-text-box
             [(value)]="ProductKey"

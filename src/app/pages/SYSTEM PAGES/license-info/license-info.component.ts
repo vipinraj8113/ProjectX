@@ -10,6 +10,7 @@ import {
   DxDataGridComponent,
 } from 'devextreme-angular';
 import { ReportService } from 'src/app/services/Report-data.service';
+import { SystemServicesService } from '../system-services.service';
 
 @Component({
   selector: 'app-license-info',
@@ -27,18 +28,44 @@ export class LicenseInfoComponent {
   showPageSizeSelector = true;
   showInfo = true;
   showNavButtons = true;
-  columnData: any = ['facility ID', 'Facility Name', 'Region', 'Post Office'];
+  columnData: any = [
+    {
+      caption: 'SL No',
+      calculateCellValue: (data) => {
+        return this.DataSource.indexOf(data) + 1;
+      },
+      allowSorting: false,
+      allowFiltering: false,
+      width: 'auto',
+    },
+    ,
+    'facility ID',
+    'Facility Name',
+    'Region',
+    'Post Office',
+    'Status',
+    'Expiry',
+  ];
   DataSource: any; //===DataSorce Variable==
   ProductKey: any;
 
-  
-  constructor(private service: ReportService) {}
+  constructor(
+    private service: ReportService,
+    private systemService: SystemServicesService
+  ) {}
+
+  //====================Get all listing Data======================
+  get_list_dataSource() {
+    this.systemService.list_license_info_data().subscribe((response: any) => {
+      this.DataSource = response.data;
+    });
+  }
 
   //========================Export data ==========================
   onExporting(event: any) {
     this.service.exportDataGrid(event);
   }
-  //=================== Page refreshing==========================
+  //=================== Page refreshing===========================
   refresh = () => {
     this.dataGrid.instance.refresh();
   };

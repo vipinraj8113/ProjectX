@@ -76,5 +76,8 @@ export class SystemServicesService {
     return this.http.post(url, reqBody);
   }
   // ------------------------------------------License Info---------------------------------------------------
-  list_license_info_data() {}
+  list_license_info_data() {
+    const url = `${BASE_URL}/facilitycredentials/update`;
+    return this.http.post(url, {});
+  }
 }
