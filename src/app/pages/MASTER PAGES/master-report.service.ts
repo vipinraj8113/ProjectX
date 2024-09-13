@@ -359,8 +359,62 @@ export class MasterReportService {
     //   'Content-Type': 'application/json',
     //   'x-api-key': Token,
     // });
-    return this.http.post(`${BASE_URL}facilitygroup/delete/${id}`, {});
+    return this.http.post(`${BASE_URL}facilitygroup/delete/${id}`, {})
   }
+
+
+
+
+
+  //================================================FACILITY REGION=================================================
+  //=====Fetch all Facility Type data======
+  Get_Facility_Region_Data() {
+    const Url = `${BASE_URL}/facilityregion/list`;
+    const reqBody = {
+      list: [],
+    };
+    // const headers = new HttpHeaders({
+    //   'Content-Type': 'application/json',
+    //   'x-api-key': Token,
+    // });
+    return this.http.post(Url, reqBody);
+  }
+  //====Add facility Type data=======
+  Insert_FacilityRegion_Data(FacilityRegion: any, description: any) {
+    const url = `${BASE_URL}/facilityregion/insert`;
+    const reqBody = {
+      FacilityRegion: FacilityRegion,
+      Description: description,
+    };
+    // const headers = new HttpHeaders({
+    //   'Content-Type': 'application/json',
+    //   'x-api-key': Token,
+    // });
+    return this.http.post(url, reqBody);
+  }
+  //====Update Facility Type data====
+  update_facilityRegion_data(id: any, FacilityRegion: any, description: any) {
+    const url = `${BASE_URL}/facilityregion/update`;
+    const reqBody = {
+      ID: id,
+      FacilityRegion: FacilityRegion,
+      Description: description,
+    };
+    // const headers = new HttpHeaders({
+    //   'Content-Type': 'application/json',
+    //   'x-api-key': Token,
+    // });
+    return this.http.post(url, reqBody);
+  }
+  //====Remove Facility Type Data=========
+  Remove_FacilityRegion_Row_Data(id: any) {
+    // const headers = new HttpHeaders({
+    //   'Content-Type': 'application/json',
+    //   'x-api-key': Token,
+    // });
+    return this.http.post(`${BASE_URL}facilityregion/delete/${id}`, {});
+  }
+
 
   //==========================================CPT MASTER==========================================================
   //======Cpt Master List===========
