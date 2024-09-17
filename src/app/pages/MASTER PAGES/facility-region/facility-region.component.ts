@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, NgModule, ViewChild } from '@angular/core';
+import { Component, NgModule, OnInit, ViewChild } from '@angular/core';
 import {
   DxDataGridModule,
   DxButtonModule,
@@ -22,7 +22,7 @@ import { MasterReportService } from '../master-report.service';
   styleUrls: ['./facility-region.component.scss'],
   providers: [ReportService],
 })
-export class FacilityRegionComponent {
+export class FacilityRegionComponent implements OnInit {
   @ViewChild(DxDataGridComponent, { static: true })
   dataGrid: DxDataGridComponent;
   @ViewChild(FacilityRegionNewFormComponent, { static: false })
