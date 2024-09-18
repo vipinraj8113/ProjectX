@@ -1,3 +1,4 @@
+
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CanActivate, Router, ActivatedRouteSnapshot } from '@angular/router';
@@ -18,7 +19,8 @@ export interface IResponse {
 const defaultPath = '/';
 
 //=============================Base url==============================
-import { BaseURL } from '../services/constant-url.service';
+import { environment } from 'src/environments/environment';
+const BaseURL=environment.PROJECTX_API_BASE_URL
 
 //==================================Default USer Name and details=======================
 export const defaultUser: IUser = {

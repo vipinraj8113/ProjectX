@@ -1,12 +1,14 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BaseURL } from '../services/constant-url.service';
+
 import { exportDataGrid as exportDataGridToPdf } from 'devextreme/pdf_exporter';
 import { exportDataGrid as exportDataGridToXLSX } from 'devextreme/excel_exporter';
 import { jsPDF } from 'jspdf';
 import { Workbook } from 'exceljs';
 import { saveAs } from 'file-saver-es';
-const BASE_URL = BaseURL;
+
+import { environment } from 'src/environments/environment';
+const BASE_URL=environment.PROJECTX_API_BASE_URL
 // const baseURL2 = InitData_URL;
 
 @Injectable()

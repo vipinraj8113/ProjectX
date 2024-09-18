@@ -11,7 +11,7 @@
       <div *dxTemplate>
         <form-textbox
           label="Facility Type"
-          [(value)]="newFacilityTypeData.FacilityTypeValue"
+          [(value)]="newFacilityRegionData.FacilityregionValue"
           [isEditing]="true"
         >
         </form-textbox>
@@ -22,8 +22,8 @@
       <div *dxTemplate>
         <dx-text-area
           label="Description"
-          [(value)]="newFacilityTypeData.DescriptionValue"
-          [height]="100"
+          [(value)]="newFacilityRegionData.DescriptionValue"
+          [height]="300"
           [width]="'100%'"
           [maxHeight]="200"
           [minHeight]="50"
@@ -34,3 +34,4 @@
     </dxi-item>
   </dxi-item>
 </dx-form>
+

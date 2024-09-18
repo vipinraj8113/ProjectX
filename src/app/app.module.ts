@@ -44,7 +44,7 @@ import { ChangePasswordModule } from './pages/PROFILE PAGES/change-password/chan
     RejectedClaimsComponent,
     BalanceAmountToBeReceivedComponent,
     ResubmissionSummaryComponent,
-    
+
   ],
   imports: [
     TaskListModule,

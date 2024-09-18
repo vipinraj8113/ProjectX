@@ -48,7 +48,7 @@ export class LoginFormComponent implements OnInit {
   //==================Login Function=====================
   async onSubmit(e: Event) {
     e.preventDefault();
-    const forcelogin = true;
+    const forcelogin = false;
     const { username, password } = this.formData;
     this.sharedService.triggerLoadComponent(true);
     this.authService.initializeProject().subscribe((response: any) => {
@@ -60,7 +60,6 @@ export class LoginFormComponent implements OnInit {
             // if(response.data.ChangePasswordOnLogin==='true'){
             //   this.router.navigateByUrl('/change-password');
             // }
-  
             if (response.flag == 1) {
               sessionStorage.setItem('loginName', response.data.LoginName);
               sessionStorage.setItem('UserID', response.data.UserID);
@@ -104,7 +103,13 @@ export class LoginFormComponent implements OnInit {
                       }
                     });
                 } else {
-                  console.log('User chose not to continue');
+                  notify(
+                    {
+                      message: `invalid login...!!!`,
+                      position: { at: 'top right', my: 'top right' },
+                    },
+                    'error'
+                  );
                 }
               });
             }

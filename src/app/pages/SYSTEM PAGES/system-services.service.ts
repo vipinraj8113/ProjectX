@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { BaseURL } from '../../services/constant-url.service';
 
-const BASE_URL = BaseURL;
+import { environment } from 'src/environments/environment';
+const BASE_URL = environment.PROJECTX_API_BASE_URL;
+
 const Token = JSON.parse(localStorage.getItem('Token'));
 @Injectable({
   providedIn: 'root',
@@ -73,5 +74,10 @@ export class SystemServicesService {
       Password: Password,
     };
     return this.http.post(url, reqBody);
+  }
+  // ------------------------------------------License Info---------------------------------------------------
+  list_license_info_data() {
+    const url = `${BASE_URL}/facility/licensefacilityInfo`;
+    return this.http.post(url, {});
   }
 }

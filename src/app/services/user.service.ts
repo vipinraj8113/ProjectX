@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { CanActivate, Router, ActivatedRouteSnapshot } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Observable} from 'rxjs';
-import { BaseURL } from '../services/constant-url.service';
 
-const BASE_URL = BaseURL;
+import { environment } from 'src/environments/environment';
+const BASE_URL = environment.PROJECTX_API_BASE_URL;
 
 @Injectable()
 export class UserService {
@@ -20,5 +20,4 @@ export class UserService {
     console.log(data,"dataonpayload")
     return this.http.post(url, data)
   }
-  
 }

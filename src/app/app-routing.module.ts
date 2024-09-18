@@ -47,6 +47,9 @@ import { UserLevelMasterComponent } from './pages/MASTER PAGES/user-role-master/
 import { ConfigurationComponent } from './pages/SYSTEM PAGES/configuration/configuration.component';
 import { UserComponent } from './pages/MASTER PAGES/user/user.component';
 import { ChangePasswordComponent } from './pages/PROFILE PAGES/change-password/change-password.component';
+import { LicenseInfoComponent } from './pages/SYSTEM PAGES/license-info/license-info.component';
+import { FacilityRegionComponent } from './pages/MASTER PAGES/facility-region/facility-region.component';
+import { NotificationSettingsComponent } from './pages/SYSTEM PAGES/notificarion-settings/notificarion-settings.component';
 const routes: Routes = [
   {
     path: '',
@@ -96,6 +99,11 @@ const routes: Routes = [
       {
         path: 'security-policy',
         component: SecurityPolicyComponent,
+        canActivate: [AuthGuardService],
+      },
+      {
+        path: 'notification-settings-page',
+        component: NotificationSettingsComponent,
         canActivate: [AuthGuardService],
       },
       {
@@ -194,6 +202,11 @@ const routes: Routes = [
         canActivate: [AuthGuardService],
       },
       {
+        path: 'facility-region-page',
+        component: FacilityRegionComponent,
+        canActivate: [AuthGuardService],
+      },
+      {
         path: 'analytics-dashboard',
         component: AnalyticsDashboardComponent,
         canActivate: [AuthGuardService],
@@ -251,6 +264,11 @@ const routes: Routes = [
       {
         path: 'resubmission-summary-page',
         component: ResubmissionSummaryComponent,
+        canActivate: [AuthGuardService],
+      },
+      {
+        path: 'license-info-page',
+        component: LicenseInfoComponent,
         canActivate: [AuthGuardService],
       },
       {

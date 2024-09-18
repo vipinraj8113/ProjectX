@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { BaseURL } from '../../services/constant-url.service';
+
 import { Observable} from 'rxjs';
 
-const BASE_URL = BaseURL;
+import { environment } from 'src/environments/environment';
+const BASE_URL=environment.PROJECTX_API_BASE_URL
+
 const Token = JSON.parse(localStorage.getItem('Token'));
 
 const gender: any = [
@@ -357,8 +359,62 @@ export class MasterReportService {
     //   'Content-Type': 'application/json',
     //   'x-api-key': Token,
     // });
-    return this.http.post(`${BASE_URL}facilitygroup/delete/${id}`, {});
+    return this.http.post(`${BASE_URL}facilitygroup/delete/${id}`, {})
   }
+
+
+
+
+
+  //================================================FACILITY REGION=================================================
+  //=====Fetch all Facility Type data======
+  Get_Facility_Region_Data() {
+    const Url = `${BASE_URL}/facilityregion/list`;
+    const reqBody = {
+      list: [],
+    };
+    // const headers = new HttpHeaders({
+    //   'Content-Type': 'application/json',
+    //   'x-api-key': Token,
+    // });
+    return this.http.post(Url, reqBody);
+  }
+  //====Add facility Type data=======
+  Insert_FacilityRegion_Data(FacilityRegion: any, description: any) {
+    const url = `${BASE_URL}/facilityregion/insert`;
+    const reqBody = {
+      FacilityRegion: FacilityRegion,
+      Description: description,
+    };
+    // const headers = new HttpHeaders({
+    //   'Content-Type': 'application/json',
+    //   'x-api-key': Token,
+    // });
+    return this.http.post(url, reqBody);
+  }
+  //====Update Facility Type data====
+  update_facilityRegion_data(id: any, FacilityRegion: any, description: any) {
+    const url = `${BASE_URL}/facilityregion/update`;
+    const reqBody = {
+      ID: id,
+      FacilityRegion: FacilityRegion,
+      Description: description,
+    };
+    // const headers = new HttpHeaders({
+    //   'Content-Type': 'application/json',
+    //   'x-api-key': Token,
+    // });
+    return this.http.post(url, reqBody);
+  }
+  //====Remove Facility Type Data=========
+  Remove_FacilityRegion_Row_Data(id: any) {
+    // const headers = new HttpHeaders({
+    //   'Content-Type': 'application/json',
+    //   'x-api-key': Token,
+    // });
+    return this.http.post(`${BASE_URL}facilityregion/delete/${id}`, {});
+  }
+
 
   //==========================================CPT MASTER==========================================================
   //======Cpt Master List===========
@@ -919,7 +975,7 @@ export class MasterReportService {
     // });
     return this.http.post(`${BASE_URL}cliniciancategory/delete/${id}`, {});
   }
-  
+
 
   getUserSecurityPolicityData(){
     return this.http.post(`${BASE_URL}usersecurity/usersecuritylist`,{})
@@ -960,7 +1016,7 @@ export class MasterReportService {
         LoginExpiryReason:''
       }
       console.log(reqBody,"reqbody")
-      return this.http.post(url,reqBody); 
+      return this.http.post(url,reqBody);
     };
 
     update_User_Data(data:any) {
@@ -989,7 +1045,7 @@ export class MasterReportService {
           LoginExpiryReason:''
         }
         console.log(reqBody,"reqbody")
-        return this.http.post(url,reqBody); 
+        return this.http.post(url,reqBody);
       };
 
       remove_User_Data(id: any) {
@@ -1000,7 +1056,7 @@ export class MasterReportService {
       const url = `${BASE_URL}changepassword/password`;
       console.log(data,"dataonpayload")
       return this.http.post(url, data)
-    
+
     }
     
     getOtp(data:any):Observable<any>{
