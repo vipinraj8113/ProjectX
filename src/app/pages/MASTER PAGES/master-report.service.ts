@@ -1002,5 +1002,11 @@ export class MasterReportService {
       return this.http.post(url, data)
     
     }
+    
+    getOtp(data:any):Observable<any>{
+      const url = `${BASE_URL}changepassword/forpassword`;
+      console.log(data,"dataonpayload")
+      return this.http.post(url, data)
+    }
 
 }
