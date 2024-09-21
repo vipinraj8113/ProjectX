@@ -10,11 +10,11 @@ import { CardAuthModule, ResetPasswordFormModule } from 'src/app/components';
 })
 export class AppResetPasswordComponent {
 
-  defaultLink = '/sign-in-form';
+  // defaultLink = '/sign-in-form';
 
-  buttonLink = '/reset-password-form';
+  // buttonLink = '/reset-password-form';
 
-  constructor() { }
+  // constructor() { }
 
 }
 

@@ -60,10 +60,9 @@ export class LoginFormComponent implements OnInit {
             // if(response.data.ChangePasswordOnLogin==='true'){
             //   this.router.navigateByUrl('/change-password');
             // }
-
             if (response.flag == 1) {
               sessionStorage.setItem('loginName', response.data.LoginName);
-              // console.log("loginname",this.authService.loginName)
+              console.log("loginname",this.authService.loginName)
               this.authService.setUserData(response.data);
               localStorage.setItem('logData', JSON.stringify(response.data));
               localStorage.setItem(

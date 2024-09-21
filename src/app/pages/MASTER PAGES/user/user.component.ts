@@ -30,7 +30,7 @@ export class UserComponent implements OnInit {
   userNewForm: UserNewFormComponent;
   popupwidth:any='65%'
   datasource:any;
-
+  
   isAddFormPopupOpened:boolean=false;
   isEditPopupOpened:boolean=false;
   selectedRowData:any;

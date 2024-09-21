@@ -54,6 +54,14 @@ export class AuthService {
     sessionStorage.setItem('loginName', value);
   }
 
+  get UserID(): string {
+    return sessionStorage.getItem('UserID') || '';
+  }
+  
+  set UserID(value: string) {
+    sessionStorage.setItem('UserID', value);
+  }
+
   get loggedIn(): boolean {
     return !!this._user;
   }

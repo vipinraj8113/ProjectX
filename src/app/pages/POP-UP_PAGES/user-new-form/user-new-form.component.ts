@@ -482,11 +482,6 @@ export class UserNewFormComponent implements OnInit,AfterViewChecked {
       console.error('Error copying password to clipboard', err);
     });
   }
-
-  
-  
-
-
 }
 @NgModule({
   imports: [
