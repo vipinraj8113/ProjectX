@@ -15,6 +15,7 @@ import { ClinicianCategoryNewFormModule } from '../../POP-UP_PAGES/clinician-cat
 import { CommonModule } from '@angular/common';
 import { ClinicianCategoryNewFormComponent } from '../../POP-UP_PAGES/clinician-category-new-form/clinician-category-new-form.component';
 import { FormPopupModule } from 'src/app/components';
+
 @Component({
   selector: 'app-clinician-category',
   templateUrl: './clinician-category.component.html',
@@ -24,12 +25,14 @@ import { FormPopupModule } from 'src/app/components';
 export class ClinicianCategoryComponent {
   @ViewChild(DxDataGridComponent, { static: true })
   dataGrid: DxDataGridComponent;
+
   @ViewChild(ClinicianCategoryNewFormComponent, { static: false })
   ClinicianCategory: ClinicianCategoryNewFormComponent;
 
   isAddFormPopupOpened: any = false;
   dataSource: any;
-  //========Variables for Pagination ====================
+  showSearchIcon: boolean = false; 
+  showSearchBox: boolean = false;  
   readonly allowedPageSizes: any = [5, 10, 'all'];
   displayMode: any = 'full';
   showPageSizeSelector = true;
@@ -43,13 +46,30 @@ export class ClinicianCategoryComponent {
   ) {}
 
   ngOnInit(): void {
+    this.showSearchIcon = true;
     this.get_clinicianCategory_List();
   }
-  //=============Showing the new Facility Form===================
+
+  ShowSearch = () => {
+    this.showSearchIcon = !this.showSearchIcon;
+    this.showSearchBox = !this.showSearchBox;
+    
+    // Trigger data grid update for search panel visibility
+    this.dataGrid.instance.option('searchPanel.visible', this.showSearchBox);
+  };
+  
+  // Update data grid based on search query
+  onSearchQueryChanged(event: any) {
+    const query = event.value;
+    this.dataGrid.instance.searchByText(query);
+  }
+
+  // Show new form popup
   show_new_InsuranceClassification_Form() {
     this.isAddFormPopupOpened = true;
   }
-  //========================Get Datasource =======================
+
+  // Get clinician category list
   get_clinicianCategory_List() {
     this.masterService
       .Get_ClinicianCategory_Data()
@@ -57,11 +77,13 @@ export class ClinicianCategoryComponent {
         this.dataSource = response.data;
       });
   }
-  //========================Export data ==========================
+
+  // Export data grid
   onExporting(event: any) {
     this.service.exportDataGrid(event);
   }
-  //====================Add data ================================
+
+  // Save new data
   onClickSaveNewData = () => {
     const { CategoryValue, DescriptionValue } =
       this.ClinicianCategory.getNewclinicianCategory();
@@ -91,7 +113,7 @@ export class ClinicianCategoryComponent {
       });
   };
 
-  //====================Row Data Deleting========================
+  // Remove row data
   onRowRemoving(event: any) {
     event.cancel = true;
     let SelectedRow = event.key;
@@ -122,7 +144,8 @@ export class ClinicianCategoryComponent {
         this.get_clinicianCategory_List();
       });
   }
-  //===================RTow Data Update==========================
+
+  // Update row data
   onRowUpdating(event: any) {
     const updataDate = event.newData;
     const oldData = event.oldData;
@@ -162,11 +185,13 @@ export class ClinicianCategoryComponent {
 
     event.cancel = true;
   }
-  //=================== Page refreshing==========================
+
+  // Refresh data grid
   refresh = () => {
     this.dataGrid.instance.refresh();
   };
 }
+
 @NgModule({
   imports: [
     CommonModule,

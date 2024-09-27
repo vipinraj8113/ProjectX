@@ -1,3 +1,198 @@
+<!-- 
+<div class="view-wrapper list-page">
+  <dx-data-grid
+    class="grid theme-dependent"
+    noDataText="No data available"
+    height="600"
+    [dataSource]="dataSource"
+    [showBorders]="true"
+    [allowColumnResizing]="true"
+    [allowColumnReordering]="true"
+    [rowAlternationEnabled]="true"
+    rowAlternationInterval="2"
+    (onExporting)="onExporting($event)"
+    (onRowRemoving)="onRowRemoving($event)"
+    (onRowUpdating)="onRowUpdating($event)"
+    height="84vh"
+  >
+    
+    <dxo-paging [pageSize]="10"></dxo-paging>
+
+    
+    <dxo-editing
+      mode="popup"
+      [allowUpdating]="true"
+      [allowDeleting]="true"
+      [allowAdding]="true"
+      [popup]="{ width: '40%', height: 'auto' }"
+    >
+      <dxo-popup title="Edit Clinician" [showTitle]="true">
+        <dxo-form [colCount]="1"></dxo-form>
+      </dxo-popup>
+    </dxo-editing>
+
+    
+    <dxo-pager
+      [visible]="true"
+      [allowedPageSizes]="allowedPageSizes"
+      [displayMode]="displayMode"
+      [showPageSizeSelector]="showPageSizeSelector"
+      [showInfo]="true" 
+      [showNavigationButtons]="true"
+    >
+    </dxo-pager>
+
+  
+    <dxo-load-panel [showPane]="false"></dxo-load-panel>
+    <dxo-scrolling mode="virtual"></dxo-scrolling>
+    <dxo-sorting mode="multiple"></dxo-sorting>
+    <dxo-header-filter [visible]="true"></dxo-header-filter>
+    <dxo-filter-row [visible]="true" [applyFilter]="auto"></dxo-filter-row>
+
+  
+    <dxo-search-panel
+      [visible]="true"
+      placeholder="Search Clinicians"
+      [highlightCaseSensitive]="false"
+    ></dxo-search-panel>
+    <div class="search-container">
+      <div class="search-icon">
+      <i
+        class="search-icon dx-icon dx-icon-search"
+        (mouseenter)="onShowSearchBar()"
+        (mouseleave)="onHideSearchBar()"
+      ></i>
+        <div
+        class="search-bar"
+        *ngIf="showSearchBar"
+        (mouseenter)="onShowSearchBar()"
+        (mouseleave)="onHideSearchBar()"
+      >
+        <dx-text-box
+          placeholder="Search..."
+          [showClearButton]=true
+          mode="search"
+          (onValueChanged)="onSearchQueryChanged($event)"
+        ></dx-text-box>
+        </div>
+      </div>
+    </div>
+  
+    <dxo-export
+      [enabled]="true"
+      [allowExportSelectedData]="true"
+      [formats]="['xlsx', 'pdf']"
+    >
+    </dxo-export>
+
+  
+    <dxo-toolbar>
+      <dxi-item location="before">
+        <div class="grid-header">Clinician Management</div>
+      </dxi-item>
+
+      
+      <dxi-item name="searchPanel" locateInMenu="auto"></dxi-item>
+
+    
+      <dxi-item location="after" locateInMenu="auto">
+        <dx-button
+        text=""
+        icon="plus"
+        type="default"
+        stylingMode="contained"
+        [width]="40"
+        class="add-button"
+        (onClick)="show_new__Form()"
+        ></dx-button>
+      </dxi-item>
+
+    
+      <dxi-item
+        location="after"
+        locateInMenu="auto"
+        showText="inMenu"
+        widget="dxButton"
+        [options]="{
+          text: 'Refresh',
+          icon: 'refresh',
+          onClick: refresh,
+          stylingMode: 'text'
+        }"
+      ></dxi-item>
+
+      <dxi-item location="after" locateInMenu="auto">
+        <div class="separator"></div>
+      </dxi-item>
+
+     
+      <dxi-item name="exportButton"></dxi-item>
+
+      <dxi-item location="after" locateInMenu="auto">
+        <div class="separator"></div>
+      </dxi-item>
+    </dxo-toolbar>
+
+
+    <dxi-column dataField="ClinicianLicense" caption="Clinician License"></dxi-column>
+    <dxi-column dataField="ClinicianName" caption="Clinician Name"></dxi-column>
+    <dxi-column dataField="ClinicianShortName" caption="Clinician Short Name"></dxi-column>
+
+
+    <dxi-column dataField="SpecialityID" caption="Speciality">
+      <dxo-lookup
+        [dataSource]="specialityDatasource"
+        displayExpr="DESCRIPTION"
+        valueExpr="ID"
+      ></dxo-lookup>
+    </dxi-column>
+
+
+    <dxi-column dataField="MajorID" caption="Major">
+      <dxo-lookup
+        [dataSource]="clinicianMajorDatasource"
+        displayExpr="DESCRIPTION"
+        valueExpr="ID"
+      ></dxo-lookup>
+    </dxi-column>
+
+    <dxi-column dataField="ProfessionID" caption="Profession">
+      <dxo-lookup
+        [dataSource]="clinicianProfessionDatasource"
+        displayExpr="DESCRIPTION"
+        valueExpr="ID"
+      ></dxo-lookup>
+    </dxi-column>
+
+
+    <dxi-column dataField="CategoryID" caption="Category">
+      <dxo-lookup
+        [dataSource]="clinicianCategoryDatasource"
+        displayExpr="DESCRIPTION"
+        valueExpr="ID"
+      ></dxo-lookup>
+    </dxi-column>
+
+    <dxi-column dataField="Gender" caption="Gender">
+      <dxo-lookup
+        [dataSource]="genderDatasource"
+        displayExpr="description"
+      ></dxo-lookup>
+    </dxi-column>
+  </dx-data-grid>
+
+
+  <form-popup
+    class="formPopupClass"
+    [(visible)]="isAddClinicianPopupOpened"
+    (save)="onClickSaveNewClinician()"
+    titleText="New Clinician"
+    height="70vh"
+  >
+    <app-clinician-new-form></app-clinician-new-form>
+  </form-popup>
+</div>
+ -->
 
  <div class="view-wrapper list-page">
   <dx-data-grid
@@ -43,35 +238,11 @@
     <dxo-header-filter [visible]="true"></dxo-header-filter>
     <dxo-filter-row [visible]="true" [applyFilter]="auto"></dxo-filter-row>
 
-    <dxo-search-panel
-      [visible]="true"
-      placeholder="Search Clinicians"
-      [highlightCaseSensitive]="false"
-    ></dxo-search-panel>
-
-    <!-- Custom Search Bar -->
-    <div class="search-container">
-      <div class="search-icon">
-        <i
-          class="search-icon dx-icon dx-icon-search"
-          (mouseenter)="onShowSearchBar()"
-          (mouseleave)="onHideSearchBar()"
-        ></i>
-        <div
-          class="search-bar"
-          *ngIf="showSearchBar"
-          (mouseenter)="onShowSearchBar()"
-          (mouseleave)="onHideSearchBar()"
-        >
-          <dx-text-box
-            placeholder="Search..."
-            [showClearButton]="true"
-            mode="search"
-            (onValueChanged)="onSearchQueryChanged($event)"
-          ></dx-text-box>
-        </div>
-      </div>
-    </div>
+    
+      <dxi-item location="after" locateInMenu="auto">
+        <div class="separator"></div>
+      </dxi-item>
+    
 
     <dxo-export
       [enabled]="true"
@@ -85,6 +256,24 @@
       </dxi-item>
 
       <dxi-item name="searchPanel" locateInMenu="auto"></dxi-item>
+      <dxo-search-panel
+    [visible]="showSearchBox"
+    placeholder=" Search"
+  ></dxo-search-panel>
+  
+    <dxi-item
+    [visible]="showSearchIcon"
+    showText="inMenu"
+    widget="dxButton"
+    [options]="{
+      text: 'Search',
+      icon: 'search',
+      onClick: ShowSearch,
+      stylingMode: 'text'
+    }"
+  ></dxi-item>
+  
+
 
       <dxi-item location="after" locateInMenu="auto">
         <dx-button
@@ -107,7 +296,8 @@
           text: 'Refresh',
           icon: 'refresh',
           onClick: refresh,
-          stylingMode: 'text'
+          stylingMode: 'text',
+          elementAttr: { class: 'commonButtons' }
         }"
       ></dxi-item>
 
@@ -122,10 +312,20 @@
       </dxi-item>
     </dxo-toolbar>
 
-    <dxi-column dataField="ClinicianLicense" caption="Clinician License"></dxi-column>
-    <dxi-column dataField="ClinicianName" caption="Clinician Name"></dxi-column>
-    <dxi-column dataField="ClinicianShortName" caption="Clinician Short Name"></dxi-column>
+    <!-- <dxo-selection mode="multiple"></dxo-selection> -->
+    <dxo-header-filter [visible]="true">
+      <dxo-search [enabled]="true"></dxo-search>
+    </dxo-header-filter>
 
+    <dxi-column
+      dataField="ClinicianLicense"
+      caption="License"
+    ></dxi-column>
+    <dxi-column dataField="ClinicianName" caption="Name"></dxi-column>
+    <dxi-column
+      dataField="ClinicianShortName"
+      caption="Short Name"
+    ></dxi-column>
     <dxi-column dataField="SpecialityID" caption="Speciality">
       <dxo-lookup
         [dataSource]="specialityDatasource"

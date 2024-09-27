@@ -8,6 +8,7 @@ import {
   DxLookupModule,
   DxSelectBoxModule,
   DxTextBoxModule,
+  DxToolbarModule,
 } from 'devextreme-angular';
 import { FormPopupModule } from 'src/app/components';
 import { ReportService } from 'src/app/services/Report-data.service';
@@ -32,6 +33,9 @@ export class ClinicianComponent implements OnInit {
 
   isAddClinicianPopupOpened: any = false;
   dataSource: any;
+  showSearchBox = false;
+  showSearchIcon = true;
+  searchValue: string = '';
   // Variables for Pagination
   readonly allowedPageSizes: any = [5, 10, 'all'];
   displayMode: any = 'full';
@@ -46,8 +50,7 @@ export class ClinicianComponent implements OnInit {
   genderDatasource: any;
   auto: string = 'auto';
 
-  
-  showSearchBar: boolean = false; 
+  showSearchBar: boolean = false; // Define this as a boolean property
 
   constructor(
     private service: ReportService,
@@ -59,11 +62,18 @@ export class ClinicianComponent implements OnInit {
     this.get_Clinician_Data_List();
   }
 
- 
+  ShowSearch = () => {
+    this.showSearchIcon = !this.showSearchIcon;
+    this.showSearchBox = !this.showSearchBox;
+    
+    // Trigger data grid update for search panel visibility
+    this.dataGrid.instance.option('searchPanel.visible', this.showSearchBox);
+  };
+  
+
   show_new__Form() {
     this.isAddClinicianPopupOpened = true;
   }
-
  
   get_gender_dropDown() {
     this.masterService.get_gender_Data().subscribe((res: any) => {
@@ -277,6 +287,7 @@ export class ClinicianComponent implements OnInit {
     DxLookupModule,
     FormPopupModule,
     ClinicianNewFormModule,
+    DxToolbarModule,
   ],
   providers: [],
   exports: [],

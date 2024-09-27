@@ -87,6 +87,7 @@ export class ClinicianNewFormComponent {
       });
       
   }
+  
 }
 
 @NgModule({
@@ -105,3 +106,5 @@ export class ClinicianNewFormComponent {
   exports: [ClinicianNewFormComponent],
 })
 export class ClinicianNewFormModule {}
+
+

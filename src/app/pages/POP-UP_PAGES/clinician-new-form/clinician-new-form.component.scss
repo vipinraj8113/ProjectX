@@ -1,27 +1,41 @@
+
+:root {
+  --background-color: #fdfdfd;
+  --text-color: #000;
+  --button-bg-color: #007bff;
+  --button-text-color: #fff;
+}
+
+.night-mode {
+  --background-color: #1a1a1a; // Dark background
+  --text-color: #fdfdfd;       // Light text
+  --button-bg-color: #333;     // Darker button background
+  --button-text-color: #fdfdfd; // Light button text
+}
+
 .plain-styled-form {
-    background-color: #fdfdfd;
-    padding: 20px;
-  
-    
-    .dx-item {
-      margin-bottom: 0px; 
-    }
-  
-    
-    .dx-textbox,
-    .dx-selectbox {
-      width: 100%; 
-      padding: 5px;
-      font-size: 14px; 
-    }
-  
-   
-    .dx-field-label {
-      font-weight: bold;
-      margin-bottom: 6px;
-    }
-  
-   
+  background-color: var(--background-color);
+  padding: 20px;
+
+  .dx-item {
+    margin-bottom: 0px; 
+  }
+
+  .dx-textbox,
+  .dx-selectbox {
+    width: 100%; 
+    padding: 5px;
+    font-size: 14px; 
+    background-color: var(--background-color);
+    color: var(--text-color);
+  }
+
+  .dx-field-label {
+    font-weight: bold;
+    margin-bottom: 6px;
+    color: var(--text-color);
+  }
+
   .buttons-container {
     display: flex;
     justify-content: flex-end;
@@ -43,8 +57,8 @@
   }
 
   .save-btn {
-    background-color: #007bff; 
-    color: white; 
+    background-color: var(--button-bg-color); 
+    color: var(--button-text-color); 
     border: none; 
     cursor: pointer; 
   }
